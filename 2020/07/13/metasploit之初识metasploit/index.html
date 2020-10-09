@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="HacKerQWQ">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="HacKerQWQ">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="">
+    <meta name="description" content="什么是渗透测试渗透测试的起源和定义起源：20世纪90年代，一群受过职业训练的安全专家作为“红队”，对接收测试的防御方“蓝队”进行攻击，以实战的方式来检验目标系统防御体系与安全响应计划的有效性，简而言之，攻击方是红队，防守方是蓝队定义：渗透测试就是一种通过模拟恶意攻击者的技术与方法，挫败目标系统安全控制措施，取得访问控制权。并发现具备业务影响后果安全隐患的一种安全测试与评估方式。 渗透测试的分类渗透">
+<meta property="og:type" content="article">
+<meta property="og:title" content="metasploit魔鬼训练营之初识metasploit">
+<meta property="og:url" content="https://hackerqwq.github.io/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="什么是渗透测试渗透测试的起源和定义起源：20世纪90年代，一群受过职业训练的安全专家作为“红队”，对接收测试的防御方“蓝队”进行攻击，以实战的方式来检验目标系统防御体系与安全响应计划的有效性，简而言之，攻击方是红队，防守方是蓝队定义：渗透测试就是一种通过模拟恶意攻击者的技术与方法，挫败目标系统安全控制措施，取得访问控制权。并发现具备业务影响后果安全隐患的一种安全测试与评估方式。 渗透测试的分类渗透">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/1.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/2.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/3.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/4.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/5.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/6.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/7.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/8.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/9.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/10.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/11.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/12.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/13.png">
+<meta property="article:published_time" content="2020-07-13T04:44:30.000Z">
+<meta property="article:modified_time" content="2020-07-13T09:52:21.659Z">
+<meta property="article:author" content="HacKerQWQ">
+<meta property="article:tag" content="metasploit">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackerqwq.github.io/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/1.png">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>metasploit魔鬼训练营之初识metasploit · HacKerQWQ&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/avatar/picture.jpeg" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >HacKerQWQ&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">metasploit魔鬼训练营之初识metasploit</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>HacKerQWQ's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            metasploit魔鬼训练营之初识metasploit
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "metasploit">metasploit</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">2.3k</span>Reading time: <span class="post-count reading-time">8 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/07/13</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            
+<main class="main post-page">
+    <article class="article-entry">
+        <h1 id="什么是渗透测试"><a href="#什么是渗透测试" class="headerlink" title="什么是渗透测试"></a>什么是渗透测试</h1><h2 id="渗透测试的起源和定义"><a href="#渗透测试的起源和定义" class="headerlink" title="渗透测试的起源和定义"></a>渗透测试的起源和定义</h2><p><strong>起源</strong>：20世纪90年代，一群受过职业训练的安全专家作为“红队”，对接收测试的防御方“蓝队”进行攻击，以实战的方式来检验目标系统防御体系与安全响应计划的有效性，简而言之，攻击方是<strong>红队</strong>，防守方是<strong>蓝队</strong><br><strong>定义</strong>：渗透测试就是一种通过模拟恶意攻击者的技术与方法，挫败目标系统安全控制措施，取得访问控制权。并发现具备业务影响后果安全隐患的一种安全测试与评估方式。</p>
+<h2 id="渗透测试的分类"><a href="#渗透测试的分类" class="headerlink" title="渗透测试的分类"></a>渗透测试的分类</h2><p>渗透测试分为黑盒测试、白盒测试和灰盒测试</p>
+<h3 id="黑盒测试"><a href="#黑盒测试" class="headerlink" title="黑盒测试"></a>黑盒测试</h3><p>黑盒测试没有任何目标网络内部的拓扑等信息，最符合真实情况下黑客的攻击方式，但是比较费时费力，同时需要渗透测试者具备较高的技术能力</p>
+<h3 id="白盒测试"><a href="#白盒测试" class="headerlink" title="白盒测试"></a>白盒测试</h3><p>白盒测试也叫内部测试，攻击方了解内部环境的所有知识，时间代价比黑盒测试小得多，但是问题在于无法有效的测试客户组织的应急响应程序，也无法判断出他们的安全防护计划对检测特定攻击的效率</p>
+<h3 id="灰盒测试"><a href="#灰盒测试" class="headerlink" title="灰盒测试"></a>灰盒测试</h3><p>灰盒测试就是集中两者的优点，掌握有限的知识与信息，从这些信息中判断出最好的攻击途径与方式，点对点的解决漏洞问题</p>
+<h2 id="渗透测试的方法和流程"><a href="#渗透测试的方法和流程" class="headerlink" title="渗透测试的方法和流程"></a>渗透测试的方法和流程</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.isecom.org/OSSTMM.3.pdf">安全测试方法学开源手册（OSSTMM）</a></li>
+<li><a target="_blank" rel="noopener" href="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-42.pdf">NIST SP 800-42网络安全测试指南</a></li>
+<li><a target="_blank" rel="noopener" href="https://owasp.org/www-project-top-ten/">OWASP 十大Web应用安全威胁项目（OWASP Top Ten）</a></li>
+<li><a target="_blank" rel="noopener" href="http://projects.webappsec.org/w/page/13246978/Threat%20Classification">Web安全威胁分类标准（WASC-TC）</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.pentest-standard.org/">PTES渗透测试执行标准</a></li>
+</ul>
+<h2 id="渗透测试过程环节"><a href="#渗透测试过程环节" class="headerlink" title="渗透测试过程环节"></a>渗透测试过程环节</h2><ol>
+<li><p><strong>前期交互阶段</strong><br>前期渗透测试团队需要与客户组织进行交互讨论，确定客户需求、准备测试计划、定义测试范围与边界、定义业务目标、项目管理与规划等活动</p>
+</li>
+<li><p><strong>情报收集阶段</strong><br>情报收集信息暴扣公开来源信息查询、Google Hacking、社工、网络踩点、扫描探测、被动监听、服务差点等等</p>
+</li>
+<li><p><strong>威胁建模阶段</strong><br>团队成员根据获取到的信息进行威胁建模与攻击规划，并从中理清头绪，确定最可行的攻击通道</p>
+</li>
+<li><p><strong>漏洞分析阶段</strong><br>根据前几个阶段获取并汇总的情报信息，特别是安全漏洞扫描结果，服务查点信息，搜索相应的渗透代码资源，找出可以实施渗透攻击的攻击点，并在实验环境中验证</p>
+</li>
+<li><p><strong>渗透攻击阶段</strong><br>渗透攻击是渗透测试过程中最核心的环节，渗透测试团队需要用获得的目标系统安全漏洞，根据目标系统的特性来定制渗透攻击，在黑盒测试中还要注意避免引起目标组织安全响应团队的警觉和发现</p>
+</li>
+<li><p><strong>后渗透攻击阶段</strong><br>识别客户组织最有价值的信息和资产进行攻击</p>
+</li>
+<li><p><strong>报告阶段</strong><br>形成一份凝聚了关键情报信息、探测和发掘出的系统安全漏洞、成功渗透攻击的过程，还要站在防御者的角度上，帮助他们分析安全防御体系中的薄弱环节、存在的问题，以及修补与升级技术的方案</p>
+</li>
+</ol>
+<h1 id="漏洞分析与利用"><a href="#漏洞分析与利用" class="headerlink" title="漏洞分析与利用"></a>漏洞分析与利用</h1><h2 id="安全漏洞生命周期"><a href="#安全漏洞生命周期" class="headerlink" title="安全漏洞生命周期"></a>安全漏洞生命周期</h2><p>利用安全漏洞来造成入侵或破坏效果的程序就成为渗透代码（Exploit），或者漏洞利用代码<br>一个典型的安全漏洞生命周期包括以下七个部分：</p>
+<ol>
+<li><p><strong>安全漏洞研究与挖掘</strong>：主要方式有源代码审计（白盒测试）、逆向工程（会和测试）、Fuzz测试（黑盒测试）</p>
+</li>
+<li><p><strong>渗透代码开发与测试</strong>：挖掘安全漏洞时，hackers会利用概念验证性的渗透攻击代码（POC），用于验证找到的安全漏洞是否存在</p>
+</li>
+<li><p><strong>安全漏洞和渗透代码在封闭团队中流传</strong>：白帽子告知厂商，黑帽子在团队中秘密共享</p>
+</li>
+<li><p><strong>安全漏洞和渗透代码开始扩散</strong>：这个阶段，黑帽子们会快速掌握和应用，代码会在安全社区中开始快速扩散</p>
+</li>
+<li><p><strong>恶意程序出现并开始传播</strong>：黑帽们在代码基础上加工包装，开发出传播性强的恶意程序，并在互联网传播，厂商也在此之前或之后完成补丁程序</p>
+</li>
+<li><p><strong>渗透代码/恶意程序大规模传播并危害互联网</strong>：补丁程序的发布和安全警报让更多黑客了解到漏洞存在，并恶意使用已经传播开的恶意程序，对互联网的危害也在这个阶段达到顶峰</p>
+</li>
+<li><p><strong>渗透攻击代码/攻击工具/恶意程序逐渐消亡</strong></p>
+</li>
+</ol>
+<p><img src="/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/1.png"></p>
+<h2 id="安全漏洞披露方式"><a href="#安全漏洞披露方式" class="headerlink" title="安全漏洞披露方式"></a>安全漏洞披露方式</h2><ol>
+<li><p><strong>完全公开披露</strong>：直接向公众开放</p>
+</li>
+<li><p><strong>负责任的公开披露</strong>：披露前对厂商进行知会</p>
+</li>
+<li><p><strong>进入地下经济链</strong></p>
+</li>
+<li><p><strong>小范围利用直至被动披露</strong></p>
+</li>
+</ol>
+<h2 id="安全漏洞公共资源库"><a href="#安全漏洞公共资源库" class="headerlink" title="安全漏洞公共资源库"></a>安全漏洞公共资源库</h2><p>国内：<br>CNNVD、CNVD、乌云、scap中文社区<br>国外：<br>CVE、NVD、SecurityFocus、OSVDB</p>
+<p><img src="/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/2.png"><br><img src="/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/3.png"></p>
+<h1 id="渗透测试神器Metasploit"><a href="#渗透测试神器Metasploit" class="headerlink" title="渗透测试神器Metasploit"></a>渗透测试神器Metasploit</h1><p>由来:Metasploit是由现任Rapid7首席安全官及Metasploit首席架构师HD Moore创始的</p>
+<h2 id="渗透测试框架软件"><a href="#渗透测试框架软件" class="headerlink" title="渗透测试框架软件"></a>渗透测试框架软件</h2><p>Metasploit支持情报收集、威胁建模、漏洞分析、后渗透攻击与报告生成</p>
+<ol>
+<li><p><strong>情报收集阶段</strong>：Metasploit可以通过自带的辅助模块来探测信息，也可以用过插件机制调用Nmap、Nessus、OpenVAS工具进行信息收集</p>
+</li>
+<li><p><strong>威胁建模阶段</strong>：可以将探测到的信息存在PostgreSQL、MySQL或者SQLite数据库中，方便查看</p>
+</li>
+<li><p><strong>漏洞分析阶段</strong>：Metasploit提供了大量的Fuzz测试器和Web应用探测分析模块</p>
+</li>
+<li><p><strong>后渗透攻击阶段</strong>：Meterpreter可以仅仅驻留在内存中并且具有免杀功能，这个平台实现了特权提升、信息攫取、系统监控、跳板攻击和内网渗透等功能</p>
+</li>
+<li><p><strong>报告阶段</strong>： 商业版的Metasploit Pro具备了更加强大的报告自动生成功能，可以输出HTML、XML、Word和PDF格式的报告</p>
+</li>
+</ol>
+<h2 id="Metasploit体系框架"><a href="#Metasploit体系框架" class="headerlink" title="Metasploit体系框架"></a>Metasploit体系框架</h2><p><img src="/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/4.png"></p>
+<h2 id="各个模块"><a href="#各个模块" class="headerlink" title="各个模块"></a>各个模块</h2><ol>
+<li><p><strong>辅助模块</strong>：包括针对网络服务的扫描和查点、构建虚假服务收集登录密码、口令猜测破解、敏感信息嗅探、探查敏感信息泄露、Fuzz测试发掘漏洞、实施网络协议欺骗等</p>
+</li>
+<li><p><strong>渗透攻击模块</strong>：利用发现的安全漏洞或配置弱点对远程目标系统进行攻击，以植入和运行攻击在和，从而获得对远程目标系统访问权的代码组件。</p>
+</li>
+</ol>
+<p><strong><em>渗透攻击</em></strong>分为<strong>主动渗透攻击</strong>（服务端）和<strong>被动渗透攻击</strong>（客户端）</p>
+<ol start="3">
+<li><strong>攻击载荷模块</strong>：攻击载荷是在渗透成功后促使目标系统运行的一段植入代码，例如meterpreter</li>
+</ol>
+<p>metasploit攻击载荷分为<strong>独立</strong>（Singles）、传输器（Stager）、传输体（Stage）三种</p>
+<ul>
+<li><p>独立攻击载荷是自包含的，能够直接植入目标系统进行执行，比如”windows/shell_bind_tcp”</p>
+</li>
+<li><p>传输器和传输体是组合使用的，比如”windows/shell/bind_tcp”是由一个传输器载荷（bind_tcp)和一个传输体载荷（Shell)组成的等同于独立攻击载荷”windows/shell_bind_tcp”</p>
+</li>
+</ul>
+<ol start="4">
+<li><p><strong>空指令模块</strong>：<br>空指令（NOP）是一些对程序运行状态不会造成<strong>任何</strong>实质影响的空操作或无关操作指令，最典型的就是空操作<br>常常要在ShellCode前面添加一段空指令区，一面发生内存地址随机化、返回地址计算偏差等错误，提高渗透攻击的可靠性</p>
+</li>
+<li><p><strong>编码器模块</strong>：用于处理生成指令序列之后的“坏字符”和“免杀”处理</p>
+</li>
+<li><p><strong>后渗透攻击模块</strong>：用于在获得目标系统远程控制权限后，在目标系统中进行各式各样的后渗透攻击动作，比如获得敏感信息、进一步拓展、实施跳板攻击等。比如<strong>meterpreter</strong></p>
+</li>
+</ol>
+<h1 id="Metasploit接口"><a href="#Metasploit接口" class="headerlink" title="Metasploit接口"></a>Metasploit接口</h1><h2 id="armitage-前msfgui-图形化界面工具"><a href="#armitage-前msfgui-图形化界面工具" class="headerlink" title="armitage(前msfgui)图形化界面工具"></a>armitage(前msfgui)图形化界面工具</h2><p>kali的命令行下输入armitage下就可以调用</p>
+<p><img src="/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/5.png"></p>
+<h2 id="msfconsole控制台终端"><a href="#msfconsole控制台终端" class="headerlink" title="msfconsole控制台终端"></a>msfconsole控制台终端</h2><p>优势：</p>
+<ol>
+<li><p>提供一站式的交互接口，可以执行外部的Shell的命令和第三方工具比如Nmap，使得在msfconsole中完成渗透测试工作更加方便</p>
+</li>
+<li><p>提供非常便利且符合Linux操作习惯的交互</p>
+</li>
+<li><p>MSF终端更新最及时，用户接口最稳定</p>
+</li>
+</ol>
+<p><strong>Tip</strong>：可以输入help命令了解MSF终端支持的命令，对于特定的命令可以使用help [commend]的形式查询，比如说help search</p>
+<p><img src="/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/6.png"></p>
+<p>界面老帅了</p>
+<h2 id="msfconsole-x-前msfcli命令行程序"><a href="#msfconsole-x-前msfcli命令行程序" class="headerlink" title="msfconsole -x(前msfcli命令行程序)"></a>msfconsole -x(前msfcli命令行程序)</h2><p>使用msfconsole -x相较于控制台在操作多个目标时更加便捷，相当于windows下的bat批处理命令</p>
+<p>示例：msfconsole -x “use exploit/windows/smb/ms17_010_eternalblue;set RHOSTS $IP;set PAYLOAD ….;exploit”<br><img src="/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/7.png"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><img src="/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/8.png"><br><img src="/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/9.png"></p>
+<p><strong>例子</strong>：<br><img src="/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/10.png"><br><img src="/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/11.png"></p>
+<p><strong>解答</strong>：<br><img src="/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/12.png"><br><img src="/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/13.png"></p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
+            <p>原文链接：<a href="https://hackerqwq.github.io/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/">https://hackerqwq.github.io/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/</a>
+            <p>发表日期：<a href="https://hackerqwq.github.io/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/">July 13th 2020, 12:44:30 pm</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/">July 13th 2020, 5:52:21 pm</a>
+            <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/07/19/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B7%A5%E5%85%B7-%E7%BD%91%E7%AB%99%E6%95%B4%E7%90%86/" title= "信息收集工具/网站整理">
+                    <div class="nextTitle">信息收集工具/网站整理</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/07/01/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0/" title= "PHP代码审计学习">
+                    <div class="prevTitle">PHP代码审计学习</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:a785745707@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/HacKerQWQ" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/Misaka.jpg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95"><span class="toc-number">1.</span> <span class="toc-text">什么是渗透测试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%9A%84%E8%B5%B7%E6%BA%90%E5%92%8C%E5%AE%9A%E4%B9%89"><span class="toc-number">1.1.</span> <span class="toc-text">渗透测试的起源和定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.2.</span> <span class="toc-text">渗透测试的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95"><span class="toc-number">1.2.1.</span> <span class="toc-text">黑盒测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BD%E7%9B%92%E6%B5%8B%E8%AF%95"><span class="toc-number">1.2.2.</span> <span class="toc-text">白盒测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%81%B0%E7%9B%92%E6%B5%8B%E8%AF%95"><span class="toc-number">1.2.3.</span> <span class="toc-text">灰盒测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%9A%84%E6%96%B9%E6%B3%95%E5%92%8C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">渗透测试的方法和流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E8%BF%87%E7%A8%8B%E7%8E%AF%E8%8A%82"><span class="toc-number">1.4.</span> <span class="toc-text">渗透测试过程环节</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B8%8E%E5%88%A9%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">漏洞分析与利用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">2.1.</span> <span class="toc-text">安全漏洞生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E%E6%8A%AB%E9%9C%B2%E6%96%B9%E5%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">安全漏洞披露方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%BC%8F%E6%B4%9E%E5%85%AC%E5%85%B1%E8%B5%84%E6%BA%90%E5%BA%93"><span class="toc-number">2.3.</span> <span class="toc-text">安全漏洞公共资源库</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%A5%9E%E5%99%A8Metasploit"><span class="toc-number">3.</span> <span class="toc-text">渗透测试神器Metasploit</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E8%BD%AF%E4%BB%B6"><span class="toc-number">3.1.</span> <span class="toc-text">渗透测试框架软件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Metasploit%E4%BD%93%E7%B3%BB%E6%A1%86%E6%9E%B6"><span class="toc-number">3.2.</span> <span class="toc-text">Metasploit体系框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%84%E4%B8%AA%E6%A8%A1%E5%9D%97"><span class="toc-number">3.3.</span> <span class="toc-text">各个模块</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Metasploit%E6%8E%A5%E5%8F%A3"><span class="toc-number">4.</span> <span class="toc-text">Metasploit接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#armitage-%E5%89%8Dmsfgui-%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%95%8C%E9%9D%A2%E5%B7%A5%E5%85%B7"><span class="toc-number">4.1.</span> <span class="toc-text">armitage(前msfgui)图形化界面工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#msfconsole%E6%8E%A7%E5%88%B6%E5%8F%B0%E7%BB%88%E7%AB%AF"><span class="toc-number">4.2.</span> <span class="toc-text">msfconsole控制台终端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#msfconsole-x-%E5%89%8Dmsfcli%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F"><span class="toc-number">4.3.</span> <span class="toc-text">msfconsole -x(前msfcli命令行程序)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 42
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/07</span><a class="archive-post-title" href= "/2020/10/07/hello-world/" >Hello World</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2020/09/26/CRC32%E7%A2%B0%E6%92%9E%E6%81%A2%E5%A4%8Dpng/" >CRC32碰撞恢复png(含png块的知识)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2020/09/10/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Reverse-it-xxd%E3%80%81tr%E3%80%81rev%E5%91%BD%E4%BB%A4/" >攻防世界-Reverse-it(xxd、tr、rev命令)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2020/09/06/%E7%A0%B4%E8%A7%A3zip%E5%AF%86%E7%A0%81%E5%91%BD%E4%BB%A4/" >破解zip密码命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/26</span><a class="archive-post-title" href= "/2020/08/26/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-stegnao-%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%8E%9F%E7%90%86/" >攻防世界-stegnao-二维码原理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2020/08/21/2020%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-%E5%88%9D%E8%B5%9B%E9%83%A8%E5%88%86writeup/" >2020全国大学生信息安全大赛-初赛部分writeup</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-CAT-PHP-curl/" >宽字节注入+curl读取文件+Django框架漏洞的组合拳</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/flask%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" >flask模板注入(内含其他的ssti注入链接)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Web_php_unserialize/" >__wakeup()的绕过和正则绕过</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E7%BD%91%E9%BC%8E%E6%9D%AF-2018-Web-Unfinish/" >二次注入在实战的运用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/18</span><a class="archive-post-title" href= "/2020/08/18/Jarvis-PHPINFO/" >php反序列化漏洞及upload_progress-sessions</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/16</span><a class="archive-post-title" href= "/2020/08/16/Jarvis-flag%E5%9C%A8%E7%AE%A1%E7%90%86%E5%91%98%E6%89%8B%E9%87%8C/" >Hash长度拓展攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E5%8F%8D%E5%BC%B9shell%E5%92%8C%E7%95%99%E5%90%8E%E9%97%A8/" >渗透测试之反弹shell和留后门</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E8%BD%AC%E8%BD%BD-CSP%E6%80%BB%E7%BB%93%E5%8F%8ACTF%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90/" >[转载]CSP总结及CTF实例分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/14</span><a class="archive-post-title" href= "/2020/08/14/2019-%E5%BC%BA%E7%BD%91%E6%9D%AF-suersqli/" >堆叠注入、预定义sql语句的知识及例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/14</span><a class="archive-post-title" href= "/2020/08/14/BDJCTF-2020-writeup/" >md5碰撞脚本及shtml在BDJCTF的例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/14</span><a class="archive-post-title" href= "/2020/08/14/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E7%8E%84%E6%AD%A6%E7%BB%84-writeup/" >jwt在网鼎杯的运用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/13</span><a class="archive-post-title" href= "/2020/08/13/HCTF-2018-Web-writeup/" >phpmyAdmin文件包含漏洞在2018-HCTF的例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/13</span><a class="archive-post-title" href= "/2020/08/13/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E9%9D%92%E9%BE%99%E7%BB%84-Web/" >2020-网鼎杯-青龙组-Web</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E6%9C%B1%E9%9B%80%E7%BB%84-Web/" >动态调用函数以及nmap用法在网鼎杯的例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4%E6%99%BA%E8%83%BD%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-Web-hate-php/" >取反异或绕过</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/11</span><a class="archive-post-title" href= "/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/" >[转载]sql注入绕过大集合</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/08</span><a class="archive-post-title" href= "/2020/08/08/JWT%E7%9A%84%E5%88%A9%E7%94%A8/" >JWT的利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令注入知识点整理（更新..）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/SVN%E5%92%8CHG%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/" >SVN和HG源码泄露</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露payload</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2020/08/05/VIM%E7%BC%96%E8%BE%91%E5%99%A8%E5%BC%82%E5%B8%B8%E9%80%80%E5%87%BA%E5%AF%BC%E8%87%B4%E7%9A%84%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/" >VIM编辑器异常退出导致的源码泄露</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2020/08/05/Jarvis-injeect-%E5%8F%8D%E5%BC%95%E5%8F%B7%E6%B3%A8%E5%85%A5/" >Jarvis injeect(反引号注入)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/" >XXE注入payload</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/29</span><a class="archive-post-title" href= "/2020/07/29/%E6%90%AD%E5%BB%BAwordpress%E7%8E%AF%E5%A2%83-docker-%E6%B5%8B%E8%AF%95plugin%E6%BC%8F%E6%B4%9E/" >搭建wordpress环境(docker)测试plugin漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2020/07/23/metasploit%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%AD%A6%E4%B9%A0/" >metasploit之信息收集学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/%E8%BD%AC%E8%BD%BD-%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80-%E5%B8%B8%E7%94%A8Windows%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" >[转载]渗透基础-常用Windows命令大全</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/19</span><a class="archive-post-title" href= "/2020/07/19/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B7%A5%E5%85%B7-%E7%BD%91%E7%AB%99%E6%95%B4%E7%90%86/" >信息收集工具/网站整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/13</span><a class="archive-post-title" href= "/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/" >metasploit魔鬼训练营之初识metasploit</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/01</span><a class="archive-post-title" href= "/2020/07/01/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0/" >PHP代码审计学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" >文件上传漏洞知识点整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/2020/06/10/MD5-collision/" >MD5-collision</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2020/04/27/%E4%BB%8Ectf%E9%A2%98%E7%9B%AE-%E7%AD%94%E6%A1%88%E5%B0%B1%E5%9C%A8index-php-%E7%9C%8BPHP%E4%BC%AA%E9%80%A0%E5%8D%8F%E8%AE%AE/" >从ctf题目(答案就在index.php)看PHP伪造协议</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2020/04/24/http%E5%90%84%E5%A4%B4%E9%83%A8%E5%AD%97%E6%AE%B5%E7%9A%84%E5%90%AB%E4%B9%89%EF%BC%88%E8%BD%AC%E8%BD%BD%EF%BC%89/" >http各头部字段的含义（转载）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/16</span><a class="archive-post-title" href= "/2020/04/16/%E5%88%A9%E7%94%A8ms17-010%E6%BC%8F%E6%B4%9E%E8%BF%9B%E8%A1%8C%E6%94%BB%E5%87%BB/" >利用ms17-010漏洞进行攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2020/04/12/MySQL%E7%9A%84%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C%EF%BC%881%EF%BC%89/" >MySQL的基础操作（1）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/06</span><a class="archive-post-title" href= "/2020/04/06/First-Blog/" >First Blog</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
+    
+        <span class="sidebar-tag-name" data-tags="ctfJarvis"><span class="iconfont-archer">&#xe606;</span>ctfJarvis</span>
+    
+        <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
+    
+        <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+    
+        <span class="sidebar-tag-name" data-tags="前端"><span class="iconfont-archer">&#xe606;</span>前端</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "HacKerQWQ"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+

