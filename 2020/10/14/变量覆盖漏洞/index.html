@@ -20,17 +20,29 @@
     <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="">
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://hackerqwq.github.io/tags/bugs/index.html">
+    <meta name="description" content="引子先看一段php代码 123456&lt;?php$a &#x3D; &quot;aa&quot;;$aa &#x3D; &quot;111111&quot;;echo &quot;aa变量的值为&quot;.$aa;$$a &#x3D; $_GET[&amp;#x27;name&amp;#x27;];echo &quot;aa变量的值为&quot;.$aa; 通过url传入name变量为555之后结果：解析：这里由于$$a&#x3D;$($a)&#x3D;$">
+<meta property="og:type" content="article">
+<meta property="og:title" content="变量覆盖漏洞">
+<meta property="og:url" content="https://hackerqwq.github.io/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="引子先看一段php代码 123456&lt;?php$a &#x3D; &quot;aa&quot;;$aa &#x3D; &quot;111111&quot;;echo &quot;aa变量的值为&quot;.$aa;$$a &#x3D; $_GET[&amp;#x27;name&amp;#x27;];echo &quot;aa变量的值为&quot;.$aa; 通过url传入name变量为555之后结果：解析：这里由于$$a&#x3D;$($a)&#x3D;$">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/1.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/2.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/3.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/4.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/5.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/6.png">
+<meta property="article:published_time" content="2020-10-14T12:05:19.000Z">
+<meta property="article:modified_time" content="2020-10-14T12:46:53.350Z">
 <meta property="article:author" content="HacKerQWQ">
+<meta property="article:tag" content="ctf">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackerqwq.github.io/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/1.png">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>HacKerQWQ&#39;s Studio</title>
+    <title>变量覆盖漏洞 · HacKerQWQ&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -211,12 +223,23 @@
 <meta name="generator" content="Hexo 5.2.0"></head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >HacKerQWQ&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">变量覆盖漏洞</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>HacKerQWQ's Studio.</a>
 </header>
@@ -228,24 +251,69 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            变量覆盖漏洞
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">643</span>Reading time: <span class="post-count reading-time">2 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/10/14</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -346,89 +414,70 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/07/29/%E6%90%AD%E5%BB%BAwordpress%E7%8E%AF%E5%A2%83-docker-%E6%B5%8B%E8%AF%95plugin%E6%BC%8F%E6%B4%9E/" >
             
-                <span>搭建wordpress环境(docker)测试plugin漏洞</span>
-        </a>
-        <div class="abstract-content">
-            参考链接：https://www.cnblogs.com/old-cha/p/12926434.html
-测试环境：kali linux2020技术：docker
+<main class="main post-page">
+    <article class="article-entry">
+        <h1 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h1><p>先看一段php代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a = <span class="string">&quot;aa&quot;</span>;</span><br><span class="line">$aa = <span class="string">&quot;111111&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;aa变量的值为&quot;</span>.$aa;</span><br><span class="line">$$a = $_GET[<span class="string">&#x27;name&#x27;</span>];</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;aa变量的值为&quot;</span>.$aa;</span><br></pre></td></tr></table></figure>
+<p>通过url传入name变量为555之后结果：<br><img src="/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/1.png"><br>解析：这里由于$$a=$($a)=$aa，因此赋值时将name的值赋值给了$aa,造成了变量覆盖漏洞</p>
+<h1 id="register-globals-全局变量覆盖"><a href="#register-globals-全局变量覆盖" class="headerlink" title="register_globals(全局变量覆盖)"></a>register_globals(全局变量覆盖)</h1><p><code>register_globals</code>是php.ini中的一个选项，从PHP 5.3.0起不推荐使用。在PHP 5.4.0中移除该选项<br>该变量的作用是将传入的变量注册为全局变量，但是注册过的变量不会被覆盖</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($a))&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;a的值是：&quot;</span>.$a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/2.png"><br>这里之前没有给$a赋值，但是开启了register_globals选项之后，通过URL传值$a却有了值。<br>但是当a本身有值再赋值的话就会失败</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a=<span class="string">&quot;flag~&quot;</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($a))&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;a的值是：&quot;</span>.$a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/3.png"></p>
+<h1 id="extract"><a href="#extract" class="headerlink" title="extract()"></a>extract()</h1><p>extract() 函数从数组中将变量导入到当前的符号表。<br>该函数使用数组键名作为变量名，使用数组键值作为变量值。针对数组中的每个元素，将在当前符号表中创建对应的一个变量。<br>该函数返回成功设置的变量数目。<br><code>extract(array,extract_rules,perfix)</code><br><img src="/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/4.png"><br>下面看php代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">$auth = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">extract($_GET)；</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>($auth==<span class="number">1</span>)&#123;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;private!&quot;</span>;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;public!&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/5.png"><br>如果想要确保不会覆盖已有的变量可以使用<code>EXTR_SKIP</code>参数</p>
+<h1 id="遍历初始化变量"><a href="#遍历初始化变量" class="headerlink" title="遍历初始化变量"></a>遍历初始化变量</h1><p>一些以变量释放方式执行的代码可能会导致已有变量被覆盖</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    $chs = <span class="string">&#x27;&#x27;</span>;  </span><br><span class="line">    <span class="keyword">if</span>($_POST &amp;&amp; $charset != <span class="string">&#x27;utf-8&#x27;</span>)&#123;  </span><br><span class="line">        $chs = <span class="keyword">new</span> Chinese(<span class="string">&#x27;UTF-8&#x27;</span>, $charset);  </span><br><span class="line">        <span class="keyword">foreach</span>($_POST <span class="keyword">as</span> $key =&gt; $value)&#123;  </span><br><span class="line">            $$key = $chs-&gt;Convert($value);  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">unset</span>($chs);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果此时提交参数名为chs，那么就可以改变$chs的值，变量遍历初始化漏洞其实就是引子里面的错误用法</p>
+<h1 id="import-request-variables变量覆盖"><a href="#import-request-variables变量覆盖" class="headerlink" title="import_request_variables变量覆盖"></a>import_request_variables变量覆盖</h1><p><code>import_request_variables函数可以在register_globals关闭的时候把GET/POST/COOKIE变量导入全局作用域当中</code></p>
+<ul>
+<li>bool import_request_variables ( string types [, string prefix])<br>用法：<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">import_request_variables(<span class="string">&quot;gpc&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
-WordPress安装
-Docker拉取WordPress镜像1docker pull wordpress:latest
-Docker拉取MySQL镜像1docker pull mysql:5.6
-使用MySQL镜像运行容器1docker run -d --privileged=true --name OLDMysql -v /data/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/29</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "bugs">bugs</a>
-    
-</div>
-            
-        </div>
+</li>
+</ul>
+<h1 id="parse-str-变量覆盖"><a href="#parse-str-变量覆盖" class="headerlink" title="parse_str()变量覆盖"></a>parse_str()变量覆盖</h1><p>parse_str()用于把查询字符串解析到变量中：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">parse_str(<span class="string">&quot;name=Bill&amp;age=60&quot;</span>);</span><br><span class="line"><span class="keyword">echo</span> $name.<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> $age;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//var.php?var=new  </span></span><br><span class="line">$var=<span class="string">&#x27;init&#x27;</span>;  </span><br><span class="line">parse_str($_SERVER[<span class="string">&#x27;QUERY_STRING&#x27;</span>]);  </span><br><span class="line"><span class="keyword">print</span> $var;</span><br></pre></td></tr></table></figure>
+<p>$_SERVER[‘QUERY_STRING’]用法：<br><img src="/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/6.png"><br>与parse_str()类似的还有mb_parse_str()</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUyMTA0MjQ4NA==&amp;mid=2247488519&amp;idx=1&amp;sn=73146e7bcca47118e2f3b2727d98c6ca&amp;chksm=f9e07b5cce97f24a46e2f79f0b7d64794a4d60a88c0453788953ce39d54fe81356b66e05ef70&amp;scene=21#wechat_redirect">https://mp.weixin.qq.com/s?__biz=MzUyMTA0MjQ4NA==&amp;mid=2247488519&amp;idx=1&amp;sn=73146e7bcca47118e2f3b2727d98c6ca&amp;chksm=f9e07b5cce97f24a46e2f79f0b7d64794a4d60a88c0453788953ce39d54fe81356b66e05ef70&amp;scene=21#wechat_redirect</a></p>
+
     </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/16/%E5%88%A9%E7%94%A8ms17-010%E6%BC%8F%E6%B4%9E%E8%BF%9B%E8%A1%8C%E6%94%BB%E5%87%BB/" >
-            
-                <span>利用ms17-010漏洞进行攻击</span>
-        </a>
-        <div class="abstract-content">
-            打开kali Linux第一次运行msfconsole需要启动postgresql服务并且初始化
-执行下面的代码：
-12service postgresql startmsfdb init
-
-运行msfconcole1msfconsole
-
-会出现下面的情况（显示的内容不确定）
-
-搜索ms17-010漏洞1search ms17-010
-显示出5个可选用的模块
-选择1并填写要探测的目标IP地址
-探测成功
-选择3payload123show payloadsset paylaod 15
-
-
-填写目标IP地址和本地监听IP地址12set rhosts 192.168.1.44set lhos...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/16</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "bugs">bugs</a>
-    
-</div>
-            
-        </div>
-    </article>
+    <!-- license  -->
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/10/13/SQL%E8%AF%AD%E5%8F%A5%E4%B9%8B%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" title= "SQL语句之增删改查">
+                    <div class="prevTitle">SQL语句之增删改查</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -510,6 +559,24 @@ Docker拉取MySQL镜像1docker pull mysql:5.6
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%95%E5%AD%90"><span class="toc-number">1.</span> <span class="toc-text">引子</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#register-globals-%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96"><span class="toc-number">2.</span> <span class="toc-text">register_globals(全局变量覆盖)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#extract"><span class="toc-number">3.</span> <span class="toc-text">extract()</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%81%8D%E5%8E%86%E5%88%9D%E5%A7%8B%E5%8C%96%E5%8F%98%E9%87%8F"><span class="toc-number">4.</span> <span class="toc-text">遍历初始化变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#import-request-variables%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96"><span class="toc-number">5.</span> <span class="toc-text">import_request_variables变量覆盖</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#parse-str-%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96"><span class="toc-number">6.</span> <span class="toc-text">parse_str()变量覆盖</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">7.</span> <span class="toc-text">参考链接</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1551,6 +1618,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
