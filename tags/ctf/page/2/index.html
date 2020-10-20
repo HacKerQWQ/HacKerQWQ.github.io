@@ -354,6 +354,55 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-CAT-PHP-curl/" >
+            
+                <span>宽字节注入+curl读取文件+Django框架漏洞的组合拳</span>
+        </a>
+        <div class="abstract-content">
+            攻防世界-CAT首先看到的是一个输入域名(怀疑命令注入)的地方
+
+然后输入经典127.0.0.1试试
+
+果然是ping命令的，但是&amp; &amp;&amp; | ;都不行
+模糊测试
+发现没有其他都过滤了，但是这几个没有过滤
+
+@-./
+
+然后试试sql的字典FUZZ一下
+
+宽字节看起来跟其他的不同，将response的代码复制到本地打开看看
+得到一个报错网页
+
+解题
+RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
+
+
+官方提示，然后找到对应的语法，结合之前没有过滤@，我们就可以读取任意文件
+从网上找到的wp...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/19</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/08/19/flask%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" >
             
                 <span>flask模板注入(内含其他的ssti注入链接)</span>
@@ -650,36 +699,6 @@ jwt结合sql注入解题先进行尝试
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/14</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/13/HCTF-2018-Web-writeup/" >
-            
-                <span>phpmyAdmin文件包含漏洞在2018-HCTF的例题</span>
-        </a>
-        <div class="abstract-content">
-            HCTF-2018-Web-warmup来人，把朕的源码端上来：
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748&lt;?phphighlight_file(__FILE__);class emmm&#123;    public static function checkFile(&amp;$page)    &#123;        $whitelist = [&quot;source&quot;=&gt;&quot;source.php&quot;,&q...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/13</span>
             </div>
             <!-- tags  -->
             
@@ -1492,9 +1511,26 @@ jwt结合sql注入解题先进行尝试
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 50
+        Total : 51
         </div>
         <!-- search  -->
         
@@ -1507,6 +1543,11 @@ jwt结合sql注入解题先进行尝试
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/N1CTF-websignin-sql%E6%B3%A8%E5%85%A5-%E9%80%BB%E8%BE%91/" >N1CTF_websignin(sql注入&逻辑)</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1765,9 +1806,9 @@ jwt结合sql注入解题先进行尝试
     
         <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
     
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
-    
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     
