@@ -354,6 +354,208 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/10/12/htaccess%E7%9A%84%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" >
+            
+                <span>.htaccess的漏洞利用总结</span>
+        </a>
+        <div class="abstract-content">
+            .htaccess简介.htaccess全称Hypertext Access(超文本入口)，也叫分布式配置文件，在一个特定的目录放置一个.htaccess可以作用于此目录及其子目录
+如果开启.htaccess，可以在所在文件夹和子文件下改变php.ini的配置。对于黑客来说，如果能控制.htaccess，就可以完成绕WAF、文件包含、文件上传等操作
+.htaccess利用方法(前提条件)首先目标主机必须开启.htaccess，配置在apache2.conf中，这里是部分配置
+123456789101112131415161718192021222324252627282930313233...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/12</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/09/26/CRC32%E7%A2%B0%E6%92%9E%E6%81%A2%E5%A4%8Dpng/" >
+            
+                <span>CRC32碰撞恢复png(含png块的知识)</span>
+        </a>
+        <div class="abstract-content">
+            png块的基本知识前八个字节表示这是一个png文件，然后接着的四个字节表示数据块长度，最后四个字节表示数据块类型码，比如这里的IHDR类型码
+文件署名域8字节的PNG文件署名域用来识别该文件是不是PNG文件。该域的值是：|十进制数|十六进制数||:-:|:-:||137|89||80|50||78|4e||71|47||13|0d||10|0a||26|1a||10|0a|
+数据块数据块分为关键数据块(critical chunk)**和辅助数据块(ancillary chunks)。每个数据块都由下表所示的4个域组成|名称|字节数|说明||:–:|:–:|:–||Length(长度)|...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/09/26</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/09/10/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Reverse-it-xxd%E3%80%81tr%E3%80%81rev%E5%91%BD%E4%BB%A4/" >
+            
+                <span>攻防世界-Reverse-it(xxd、tr、rev命令)</span>
+        </a>
+        <div class="abstract-content">
+            题目附件下载下来binwalk识别了一下只是单纯的data文件，win下用HXD查看也没什么头绪想到题目Reverse it，再看看文件的十六进制结尾FF 8D FF，反过来就是FF D8 FF也就是jpg格式文件的十六进制开头所以这题的思路就很明确了，就是将文件的十六进制反过来
+解题Linux下命令的了解xxd(https://www.cnblogs.com/kwliu/p/3709707.html)tr(http://blog.sina.com.cn/s/blog_58c3f7960100uttl.html)rev(https://man.linuxde.net/rev)
+思路这里我...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/09/10</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/09/06/%E7%A0%B4%E8%A7%A3zip%E5%AF%86%E7%A0%81%E5%91%BD%E4%BB%A4/" >
+            
+                <span>破解zip密码命令</span>
+        </a>
+        <div class="abstract-content">
+            kali下zip2john破解压缩包压缩包爆出hash文件
+1sudo zip2jphn 0.zip &gt;&gt; passwd.txt
+使用john计算hash文件
+1sudo john passwd.txt
+
+使用ARCHPR.exe
+
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/09/06</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/26/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-stegnao-%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%8E%9F%E7%90%86/" >
+            
+                <span>攻防世界-stegnao-二维码原理</span>
+        </a>
+        <div class="abstract-content">
+            前置知识rar块的知识二维码的知识https://blog.csdn.net/ajianyingxiaoqinghan/article/details/78837864
+stegnao下载下来一个.rar结尾的压缩包用kali的unrar命令解压时发现有一个secret.png没有解压出来，显示文件错误用010Editor查看发现secret.png的开头十六进制错误，应该把0x7a改成0x74顺利得到secret.png，010Editor查看文件发现这是一个GIF文件然后到网页上https://ezgif.com/split将GIF分解到两个图片，用stegsolve.jar查看看到...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/26</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/21/2020%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-%E5%88%9D%E8%B5%9B%E9%83%A8%E5%88%86writeup/" >
+            
+                <span>2020全国大学生信息安全大赛-初赛部分writeup</span>
+        </a>
+        <div class="abstract-content">
+            这里放上合天智汇的wp
+Team233_t2战队WRITEUP
+
+一、战队信息战队名称：Team233_t2
+战队排名：428
+二、解题情况
+三、解题过程题目序号：1题目名称：签到操作内容：一开始的图找不到了….每个参赛地区助力人数都达到10个就可以直接获取flag~
+
+flag{同舟共济扬帆起，乘风破浪万里航。}
+题目序号：2题目名称：the_best_ctf_game操作内容：
+下载附件
+得到一个命名为flag的文件，通过linux指令file+文件名确定文件类型为data
+想到应通过记事本、word文档或者音频视频软件打开
+在用记事本打开后，发现是乱码，但是乱码里面又有字符
+适当调...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/21</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-CAT-PHP-curl/" >
             
                 <span>宽字节注入+curl读取文件+Django框架漏洞的组合拳</span>
@@ -495,226 +697,10 @@ RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
         </div>
     </article>
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/18/Jarvis-PHPINFO/" >
-            
-                <span>php反序列化漏洞及upload_progress-sessions</span>
-        </a>
-        <div class="abstract-content">
-            Jarvis-PHPINFO源码+题目分析1234567891011121314151617181920212223242526&lt;?php//A webshell is wait for youini_set(&#x27;session.serialize_handler&#x27;, &#x27;php&#x27;);session_start();class OowoO&#123;    public $mdzz;    function __construct()    &#123;        $this-&gt;mdzz = &#x27;phpinfo();&#x27;...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/18</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/16/Jarvis-flag%E5%9C%A8%E7%AE%A1%E7%90%86%E5%91%98%E6%89%8B%E9%87%8C/" >
-            
-                <span>Hash长度拓展攻击</span>
-        </a>
-        <div class="abstract-content">
-            前置知识深入理解hash长度扩展攻击
-Jarvis-flag在管理员手里只有admin才能看到flag
-然后抓包看看
-发现role，反序列化过来是s:5:”guest”;
-尝试改成admin，不行….,加上这里有个hsh值，事情应该没那么简单
-扫描目录发现index.php~,download到kali用vim -r恢复之后看到源码
-
-解题这里需要用到hashpump工具，可以集成到python中使用
-具体用法看p神hashpump
-直接上脚本
-123456789101112131415161718192021222324import requestsimport urllibfrom ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/16</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/15/%E8%BD%AC%E8%BD%BD-CSP%E6%80%BB%E7%BB%93%E5%8F%8ACTF%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90/" >
-            
-                <span>[转载]CSP总结及CTF实例分析</span>
-        </a>
-        <div class="abstract-content">
-            转载自CSP总结及CTF实例分析
-What is CSP?
-The new Content-Security-Policy HTTP response header helps you reduce XSS risks on modern browsers by declaring what dynamic resources are allowed to load via a HTTP Header.
-
-CSP(Content Security Policy) 在 HTTP 响应头中规定，用来减少 XSS 攻击。在 HTTP 响应中长这样
-1Content-Security-Polic...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/15</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/14/2019-%E5%BC%BA%E7%BD%91%E6%9D%AF-suersqli/" >
-            
-                <span>堆叠注入、预定义sql语句的知识及例题</span>
-        </a>
-        <div class="abstract-content">
-            2019-强网杯supersqli
-随便输入一下发现select等关键词被过滤
-
-尝试绕过关键词，%0a、&lt;\a&gt;、十六进制，内联注释都不行
-解法一前置知识：堆叠注入
-显示列信息
-
-show columns from table_name
-desc table_name
-select * from information_schema.columns where table_schema=&quot;&quot; and table_name=&quot;&quot;
-
-使用;分隔命令，从而执行多个命令
-payload:爆数据库
-11&#x27;/**/and/**/extr...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/14</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/14/BDJCTF-2020-writeup/" >
-            
-                <span>md5碰撞脚本及shtml在BDJCTF的例题</span>
-        </a>
-        <div class="abstract-content">
-            BDJCTF-2020-Web-easy_searchindex.php
-试了几个都弱口令都不行，看了看题目(easy_search)，于是扫了扫目录，发现index.php.swp，down下来之后看到了源代码
-12345678910111213141516171819202122232425262728293031&lt;?php        ob_start();        function get_hash()&#123;                $chars = &#x27;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrst...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/14</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/14/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E7%8E%84%E6%AD%A6%E7%BB%84-writeup/" >
-            
-                <span>jwt在网鼎杯的运用</span>
-        </a>
-        <div class="abstract-content">
-            2020-网鼎杯-玄武组-js_on前置知识jwt(前面的博客已经提到过了)，自行翻看
-看题目先是一个登陆框
-
-使用admin/admin登陆之后看到了jwt的key值
-
-jwt结合sql注入解题先进行尝试
-1admin&#x27;/**/and/**/1=1#
-
-1admin&#x27;/**/and/**/1=2#
-
-结果不一样，说明user存在注入点
-经过尝试，发现select这些都被过滤了，使用进行绕过，构造出最终payload
-1admin&#x27;/**/and/**/as&lt;a&gt;cii(m&lt;a&gt;id((se&lt;a&gt;lect/**/lo&lt...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/14</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/tags/ctf/">&lt; PREV</a><a class="page-number" href="/tags/ctf/">1</a><span class="page-number current">2</span><a class="page-number" href="/tags/ctf/page/3/">3</a><a class="page-number" href="/tags/ctf/page/4/">4</a><a class="extend next" rel="next" href="/tags/ctf/page/3/">NEXT &gt;</a>
+        <a class="extend prev" rel="prev" href="/tags/ctf/">&lt; PREV</a><a class="page-number" href="/tags/ctf/">1</a><span class="page-number current">2</span><a class="page-number" href="/tags/ctf/page/3/">3</a><a class="page-number" href="/tags/ctf/page/4/">4</a><a class="page-number" href="/tags/ctf/page/5/">5</a><a class="extend next" rel="next" href="/tags/ctf/page/3/">NEXT &gt;</a>
     </nav>
     
 </main>
@@ -1528,9 +1514,126 @@ jwt结合sql注入解题先进行尝试
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 51
+        Total : 58
         </div>
         <!-- search  -->
         
@@ -1543,6 +1646,41 @@ jwt结合sql注入解题先进行尝试
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/30</span><a class="archive-post-title" href= "/2020/10/30/escapeshellarg-escapeshellcmd%E9%80%A0%E6%88%90%E5%8F%82%E6%95%B0%E6%B3%A8%E5%85%A5/" >escapeshellarg/escapeshellcmd造成参数注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/29</span><a class="archive-post-title" href= "/2020/10/29/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BHANDLER%E6%9F%A5%E8%A1%A8/" >SQL注入之HANDLER查表</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/29</span><a class="archive-post-title" href= "/2020/10/29/WEB-INF%E7%9B%AE%E5%BD%95%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" >WEB-INF目录下信息泄露</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/29</span><a class="archive-post-title" href= "/2020/10/29/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%A1%E8%AE%A1%E4%BB%A3%E7%A0%81%E5%8F%AF%E5%88%A9%E7%94%A8%E5%8F%98%E9%87%8F/" >python多线程审计代码可利用变量</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2020/10/26/Caculator%E9%A2%98%E7%9A%84exp/" >Caculator题的exp</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/" >渗透测试之提权篇</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%9A-SUCTF-2019-EasySQL/" >刷题记录：[SUCTF 2019]EasySQL</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1810,15 +1948,15 @@ jwt结合sql注入解题先进行尝试
     
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
-        <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
+    
+        <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     
         <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
     
-        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
-    
         <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
         <span class="sidebar-tag-name" data-tags="前端"><span class="iconfont-archer">&#xe606;</span>前端</span>
     
