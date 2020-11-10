@@ -517,13 +517,12 @@ https://mmbiz.qpic.cn/mmbiz_png/K9JoBxX2CgC...
                 <span>渗透测试之提权篇</span>
         </a>
         <div class="abstract-content">
-            find提权
-find / -perm -4000 2&gt; /dev/null
-
-查找有特殊权限的suid命令找到/usr/bin/find后
-123touch testfind test -exec &quot;whoami&quot; \;find test -exec &quot;/bin/bash&quot; \;
-即可提权成功
-
+            查看Linux内核版本1234uname -srmuname -ahostanmectlcat /proc/version
+Linux 3.10.0-957.12.2.el7.x86_64 x86_643 - 内核版本.10 - 主修订版本.0-957 - 次要修订版本.12 - 补丁版本.
+Linux下的用户权限用户管理按照UID划分：0为超级用户root500-6000为普通用户1-499为伪用户，不能登录，用于处理系统进程
+经典用户管理文件:/etc/passwd例子：
+1root:x:0:0:root:&#x2F;root:&#x2F;bin&#x2F;bash
+分为七个部分账号...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -1674,9 +1673,10 @@ register_globals(全局变量覆盖)register_globals是php.ini中的一个选项
     
     
     
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 62
+        Total : 63
         </div>
         <!-- search  -->
         
@@ -1689,6 +1689,11 @@ register_globals(全局变量覆盖)register_globals是php.ini中的一个选项
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/10</span><a class="archive-post-title" href= "/2020/11/10/THINKPHP-poc-collection/" >THINKPHP-poc-collection</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2009,17 +2014,17 @@ register_globals(全局变量覆盖)register_globals是php.ini中的一个选项
     
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
-    
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     
         <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
+    
         <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
     
         <span class="sidebar-tag-name" data-tags="开发"><span class="iconfont-archer">&#xe606;</span>开发</span>
-    
-        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
         <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
     
