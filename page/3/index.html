@@ -367,6 +367,71 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/10/12/htaccess%E7%9A%84%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" >
+            
+                <span>.htaccess的漏洞利用总结</span>
+        </a>
+        <div class="abstract-content">
+            .htaccess简介.htaccess全称Hypertext Access(超文本入口)，也叫分布式配置文件，在一个特定的目录放置一个.htaccess可以作用于此目录及其子目录
+如果开启.htaccess，可以在所在文件夹和子文件下改变php.ini的配置。对于黑客来说，如果能控制.htaccess，就可以完成绕WAF、文件包含、文件上传等操作
+.htaccess利用方法(前提条件)首先目标主机必须开启.htaccess，配置在apache2.conf中，这里是部分配置
+123456789101112131415161718192021222324252627282930313233...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/12</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/10/10/Private-Key-Encryption-1/" >
+            
+                <span>Private-Key Encryption(1)</span>
+        </a>
+        <div class="abstract-content">
+            Principles of Modern CryptographyFormal Definitions(正式的定义)If you don’t understand what you want to achieve, how can you possibly know when (or if) you have achieved it?如果你不知道你想要的做到怎样，那你怎么知道你做到了没有
+
+what security guarantees are desired(要达到怎样的安全)
+
+No recover the key (不能恢复出密钥)No recover any character...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/10</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Crypto">Crypto</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/10/10/Perfectly-Secret-Encryption/" >
             
                 <span>Perfectly Secret Encryption</span>
@@ -621,85 +686,6 @@ flag{同舟共济扬帆起，乘风破浪万里航。}
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/21</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-CAT-PHP-curl/" >
-            
-                <span>宽字节注入+curl读取文件+Django框架漏洞的组合拳</span>
-        </a>
-        <div class="abstract-content">
-            攻防世界-CAT首先看到的是一个输入域名(怀疑命令注入)的地方
-
-然后输入经典127.0.0.1试试
-
-果然是ping命令的，但是&amp; &amp;&amp; | ;都不行
-模糊测试
-发现没有其他都过滤了，但是这几个没有过滤
-
-@-./
-
-然后试试sql的字典FUZZ一下
-
-宽字节看起来跟其他的不同，将response的代码复制到本地打开看看
-得到一个报错网页
-
-解题
-RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
-
-
-官方提示，然后找到对应的语法，结合之前没有过滤@，我们就可以读取任意文件
-从网上找到的wp...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/19</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/19/flask%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" >
-            
-                <span>SSTI模板注入</span>
-        </a>
-        <div class="abstract-content">
-            原理说明：https://www.freebuf.com/column/187845.html一篇文章带你入门ssti内含payload及绕过方法
-知识12345678__class__  返回类型所属的对象__mro__    返回一个包含对象所继承的基类元组，方法在解析时按照元组的顺序解析。__base__   返回该对象所继承的基类&#x2F;&#x2F; __base__和__mro__都是用来寻找基类的__subclasses__   每个新类都保留了子类的引用，这个方法返回一个类中仍然可用的的引用的列表__init__  类的初始化方法__globals__  对包含函数全局...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/19</span>
             </div>
             <!-- tags  -->
             
@@ -1857,9 +1843,33 @@ RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 64
+        Total : 66
         </div>
         <!-- search  -->
         
@@ -1872,6 +1882,16 @@ RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/" >unicode等价替换</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/16</span><a class="archive-post-title" href= "/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/" >浅析SSRF漏洞</a>
+        </li>
     
     
         <li class="archive-post-item">
