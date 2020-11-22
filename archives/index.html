@@ -389,13 +389,14 @@
                 <span>浅析SSRF漏洞</span>
         </a>
         <div class="abstract-content">
-            1.1 SSRF漏洞介绍SSRF(Server Side Request Forgery，服务端请求伪造)，是攻击者通过构造数据进而伪造服务器端发请求的漏洞。形成的原因多是服务器端提供了从外部服务可以获取数据的功能，但是对发起请求的来源进行验证过滤，导致攻击者可以自由构造参数，获取预期外的请求。
-1.1.1 SSRF原理解析URL结构如下
+            0x01 SSRF漏洞介绍SSRF(Server Side Request Forgery，服务端请求伪造)，是攻击者通过构造数据进而伪造服务器端发请求的漏洞。形成的原因多是服务器端提供了从外部服务可以获取数据的功能，但是对发起请求的来源进行验证过滤，导致攻击者可以自由构造参数，获取预期外的请求。
+SSRF原理解析URL结构如下
 1URI &#x3D; schema:[&#x2F;&#x2F;authority]path[?query][#fragment]
 
 
 userinfo 通常用于身份验证，root:passwd，以@结尾
-host就是经常说的主机名，如baidu.co...
+host就是经常说的主机名，如baidu.com
+por...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -777,8 +778,6 @@ escapeshellarg简单来说就是将用户输入的字符串包裹上单引号，
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
     
     
     

