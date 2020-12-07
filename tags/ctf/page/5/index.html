@@ -420,9 +420,12 @@ vim交换文件名在使用vim时会创建临时缓存文件，关闭vim时缓�
                 <span>XXE注入payload</span>
         </a>
         <div class="abstract-content">
-            XML和DTD格式
-XML格式123456&lt;note&gt;&lt;to&gt;Tove&lt;/to&gt;&lt;from&gt;Jani&lt;/from&gt;&lt;heading&gt;Reminder&lt;/heading&gt;&lt;body&gt;Don’t forget me this weekend!&lt;/body&gt;&lt;/note&gt;
-DTD格式123456&lt;!DOCTYPE note [	&lt;!ENTINY to (#PCDATA)&gt;//表示在to之间可以插入字符或者子标签	&lt;!ENTINY from (#CDAT...
+            libxml2.9.0之后默认不解析外部实体，php版本不影响XXE的利用web目录为：
+123456$ tree ..├── dom.php # 示例：使用DOMDocument解析body├── index.php├── SimpleXMLElement.php # 示例：使用SimpleXMLElement类解析body└── simplexml_load_string.php # 示例：使用simplexml_load_string函数解析body
+
+
+XML和DTD格式
+XML格式123456&lt;note&gt;&lt;to&gt;Tove&lt;/to&gt;&lt;fr...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -642,6 +645,14 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
