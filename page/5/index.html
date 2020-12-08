@@ -367,6 +367,37 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/14/BDJCTF-2020-writeup/" >
+            
+                <span>md5碰撞脚本及shtml在BDJCTF的例题</span>
+        </a>
+        <div class="abstract-content">
+            BDJCTF-2020-Web-easy_searchindex.php
+试了几个都弱口令都不行，看了看题目(easy_search)，于是扫了扫目录，发现index.php.swp，down下来之后看到了源代码
+12345678910111213141516171819202122232425262728293031&lt;?php        ob_start();        function get_hash()&#123;                $chars = &#x27;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrst...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/14</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/08/14/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E7%8E%84%E6%AD%A6%E7%BB%84-writeup/" >
             
                 <span>jwt在网鼎杯的运用</span>
@@ -656,70 +687,6 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
 dvcs-ripper工具123./rip-svn.pl -v -u http://www.example.com/.svn./rip-hg.pl -v -u http://www.example.com/.hg./rip-git.pl -v -u http://www.example.com/.git
 之后就可以从下载下来的隐藏目录中找到flag了
 
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >
-            
-                <span>.git源码泄露payload</span>
-        </a>
-        <div class="abstract-content">
-            log泄露
-查看历史记录
-1git log
-
-切换版本
-1git reset
-
-对比两次提交
-1git diff
-
-
-
-解题思路
-Brutesuite用Fuzz扫描发现存在git源码泄露
-
-
-
-用GitHack工具clone源码到本地
-
-
-
-git log 查看版本
-
-
-解法一对比前一个版本
-12git diff f95aegit diff HEAD^
-
-解法二直接恢复到前一个版本
-12git reset --hard f95aegit reset --hard HEAD^
-
-FLAG最后得到flag
-stash工作状态泄露
-查看git保存的工作状态
-1git stash list
-
-恢...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -1916,9 +1883,12 @@ stash工作状态泄露
     
     
     
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 66
+        Total : 67
         </div>
         <!-- search  -->
         
@@ -1931,6 +1901,11 @@ stash工作状态泄露
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/08</span><a class="archive-post-title" href= "/2020/12/08/pickle%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C-jwt-%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E-CISCN2019-%E5%8D%8E%E5%8C%97%E8%B5%9B%E5%8C%BA-Day1-Web2-ikun/" >pickle远程代码执行+jwt+逻辑漏洞[CISCN2019 华北赛区 Day1 Web2]ikun</a>
+        </li>
     
     
         <li class="archive-post-item">

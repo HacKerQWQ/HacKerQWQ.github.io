@@ -367,6 +367,36 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/10/29/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BHANDLER%E6%9F%A5%E8%A1%A8/" >
+            
+                <span>SQL注入之HANDLER查表</span>
+        </a>
+        <div class="abstract-content">
+            Handler注入用法：HANDLER...OPEN语句打开一个表，然后用HANDLER...READ读语句，并且读取不会被其他会话共享，最后用HANDLER...CLOSE关表
+12345678910HANDLER tbl_name OPEN [ [AS] alias]HANDLER tbl_name READ index_name &#123; &#x3D; | &lt;&#x3D; | &gt;&#x3D; | &lt; | &gt; &#125; (value1,value2,...)    [ WHERE where_condition ] [LIMIT ... ]HANDLE...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/29</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/10/29/WEB-INF%E7%9B%AE%E5%BD%95%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" >
             
                 <span>WEB-INF目录下信息泄露</span>
@@ -648,40 +678,6 @@ register_globals(全局变量覆盖)register_globals是php.ini中的一个选项
             <div class= abstract-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "MySQL">MySQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/13/%E9%9B%B6%E5%AE%BD%E5%BA%A6%E5%AD%97%E7%AC%A6%E9%9A%90%E5%86%99/" >
-            
-                <span>零宽度字符隐写</span>
-        </a>
-        <div class="abstract-content">
-            零宽度字符是什么零宽度字符是一些不可见的，不可打印的字符。它们存在于页面中主要用于调整字符的显示格式，下面就是一些常见的零宽度字符及它们的unicode码和原本用途：
-
-零宽度空格符 (zero-width space) U+200B : 用于较长单词的换行分隔
-零宽度非断空格符 (zero width no-break space) U+FEFF : 用于阻止特定位置的换行分隔
-零宽度连字符 (zero-width joiner) U+200D : 用于阿拉伯文与印度语系等文字中，使不会发生连字的字符间产生连字效果
-零宽度断字符 (zero-width non-joiner) U+20...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
     
 </div>
             
@@ -1867,9 +1863,12 @@ register_globals(全局变量覆盖)register_globals是php.ini中的一个选项
     
     
     
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 66
+        Total : 67
         </div>
         <!-- search  -->
         
@@ -1882,6 +1881,11 @@ register_globals(全局变量覆盖)register_globals是php.ini中的一个选项
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/08</span><a class="archive-post-title" href= "/2020/12/08/pickle%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C-jwt-%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E-CISCN2019-%E5%8D%8E%E5%8C%97%E8%B5%9B%E5%8C%BA-Day1-Web2-ikun/" >pickle远程代码执行+jwt+逻辑漏洞[CISCN2019 华北赛区 Day1 Web2]ikun</a>
+        </li>
     
     
         <li class="archive-post-item">
