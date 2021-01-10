@@ -354,6 +354,102 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/" >
+            
+                <span>浅析SSRF漏洞</span>
+        </a>
+        <div class="abstract-content">
+            0x01 SSRF漏洞介绍SSRF(Server Side Request Forgery，服务端请求伪造)，是攻击者通过构造数据进而伪造服务器端发请求的漏洞。形成的原因多是服务器端提供了从外部服务可以获取数据的功能，但是对发起请求的来源进行验证过滤，导致攻击者可以自由构造参数，获取预期外的请求。
+SSRF原理解析URL结构如下
+1URI &#x3D; schema:[&#x2F;&#x2F;authority]path[?query][#fragment]
+
+
+userinfo 通常用于身份验证，root:passwd，以@结尾
+host就是经常说的主机名，如baidu.com
+por...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/16</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/11/14/balckhat%E8%AE%AE%E9%A2%98%E7%9A%84%E5%BA%94%E7%94%A8-python-nignx-pythonignx/" >
+            
+                <span>balckhat议题的应用(python+nignx=pythonignx)</span>
+        </a>
+        <div class="abstract-content">
+            pythonginx12345678910111213141516171819202122232425262728from flask import Flask, Blueprint, request, Response, escape ,render_templatefrom urllib.parse import urlsplit, urlunsplit, unquotefrom urllib import parseimport urllib.requestapp = Flask(__name__)# Index@app.route(&#x27;/&#x27;, methods=[...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/14</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/11/10/THINKPHP-poc-collection/" >
+            
+                <span>THINKPHP-poc-collection</span>
+        </a>
+        <div class="abstract-content">
+            官方公告官方公告:1、https://blog.thinkphp.cn/8690752、https://blog.thinkphp.cn/910675
+thinkphp 2http://your-ip:8080/index.php?s=/index/index/name/$%7B@phpinfo()%7D
+thinkphp 5.0.221、http://192.168.1.1/thinkphp/public/?s=.|think\config/get&amp;name=database.username2、http://192.168.1.1/thinkphp/public/?s=.|t...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/10</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "渗透测试">渗透测试</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/11/09/redis%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E7%AC%94%E8%AE%B0/" >
             
                 <span>redis的基本操作笔记</span>
@@ -580,101 +676,6 @@ WEB-INF主要包含一下文件或目录:/WEB-INF/web.xml：Web应用程序配�
             <div class= abstract-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/29/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%A1%E8%AE%A1%E4%BB%A3%E7%A0%81%E5%8F%AF%E5%88%A9%E7%94%A8%E5%8F%98%E9%87%8F/" >
-            
-                <span>python多线程审计代码可利用变量</span>
-        </a>
-        <div class="abstract-content">
-            [强网杯]高明的黑客index.php直接告诉我们源码在www.tar.gz,那就下载来看看好家伙，直接三千多个文件尝试过放到Seay源码审计软件里面自动审计，但是实在是太多了，发现了可能利用的漏洞眼睛也看不过来下面是上网找的多线程脚本，值得学习，记录一下
-Python多线程脚本123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354import threadingimport timeimport reimport osimport reques...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/29</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/26/Caculator%E9%A2%98%E7%9A%84exp/" >
-            
-                <span>Caculator题的exp</span>
-        </a>
-        <div class="abstract-content">
-            SimpleCalculator没有图片，是个计算的页面允许四则运算、丰富的PHP函数SQL注入、XSS、LFI、模板注入都试过了，那只能是RCE(本地代码执行)了，没有思路，后面看writeup才发现大家都有exp，就我没有~
-1search&#x3D;$cos&#x3D;(is_nan^(6).(4)).(tan^(1).(5));$cos&#x3D;$$cos;$cos&#123;0&#125;($cos&#123;1&#125;)&amp;0&#x3D;system&amp;1&#x3D;ls
-https://mmbiz.qpic.cn/mmbiz_png/K9JoBxX2CgC...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/" >
-            
-                <span>渗透测试之提权篇</span>
-        </a>
-        <div class="abstract-content">
-            查看Linux内核版本1234uname -srmuname -ahostanmectlcat /proc/version
-Linux 3.10.0-957.12.2.el7.x86_64 x86_643 - 内核版本.10 - 主修订版本.0-957 - 次要修订版本.12 - 补丁版本.
-Linux下的用户权限用户管理按照UID划分：0为超级用户root500-6000为普通用户1-499为伪用户，不能登录，用于处理系统进程
-经典用户管理文件:/etc/passwd例子：
-1root:x:0:0:root:&#x2F;root:&#x2F;bin&#x2F;bash
-分为七个部分账号...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "渗透测试">渗透测试</a>
     
 </div>
             
@@ -1859,9 +1860,50 @@ Linux下的用户权限用户管理按照UID划分：0为超级用户root500-600
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 72
+        Total : 75
         </div>
         <!-- search  -->
         
@@ -1872,8 +1914,32 @@ Linux下的用户权限用户管理按照UID划分：0为超级用户root500-600
     
     
     
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2021/01/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%BD%91%E7%BB%9C%E5%B1%82/" >计算机网络第四章-网络层</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/02</span><a class="archive-post-title" href= "/2021/01/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%B8%89%E7%AB%A0%E2%80%94-%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" >计算机网络第三章-数据链路层</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/23</span><a class="archive-post-title" href= "/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/" >计算机网络第二章-物理层</a>
+        </li>
     
     
         <li class="archive-post-item">

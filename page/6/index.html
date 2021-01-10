@@ -367,6 +367,100 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/13/HCTF-2018-Web-writeup/" >
+            
+                <span>phpmyAdmin文件包含漏洞在2018-HCTF的例题</span>
+        </a>
+        <div class="abstract-content">
+            HCTF-2018-Web-warmup来人，把朕的源码端上来：
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748&lt;?phphighlight_file(__FILE__);class emmm&#123;    public static function checkFile(&amp;$page)    &#123;        $whitelist = [&quot;source&quot;=&gt;&quot;source.php&quot;,&q...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/13</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/13/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E9%9D%92%E9%BE%99%E7%BB%84-Web/" >
+            
+                <span>2020-网鼎杯-青龙组-Web</span>
+        </a>
+        <div class="abstract-content">
+            AreUSerialz源码：
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081&lt;?phpinclude(&quot;flag.php&quot;);highlight_file(__FILE__);class FileHandler &#123;    protected $op;    protected $filename;...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/13</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/12/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E6%9C%B1%E9%9B%80%E7%BB%84-Web/" >
+            
+                <span>动态调用函数以及nmap用法在网鼎杯的例题</span>
+        </a>
+        <div class="abstract-content">
+            2020-网鼎杯-phpweb看到题目只有一个背景图还有规范的时间格式
+
+其次注意到每隔一段时间，时间就会刷新，抓包看看
+
+于是想到了这里有可能存在调用函数的破绽，尝试了几个常用的system(),shell_exec(),passthru()都被拦截了之后，试了试file_get_contents()发现可以，于是把index.php源码down下来了
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061&lt;!...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/12</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/08/12/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4%E6%99%BA%E8%83%BD%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-Web-hate-php/" >
             
                 <span>取反异或绕过</span>
@@ -628,104 +722,6 @@ vim交换文件名在使用vim时会创建临时缓存文件，关闭vim时缓�
             <div class= abstract-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/05/Jarvis-injeect-%E5%8F%8D%E5%BC%95%E5%8F%B7%E6%B3%A8%E5%85%A5/" >
-            
-                <span>Jarvis injeect(反引号注入)</span>
-        </a>
-        <div class="abstract-content">
-            源码123456789&lt;?phprequire(&quot;config.php&quot;);$table = $_GET[&#x27;table&#x27;]?$_GET[&#x27;table&#x27;]:&quot;test&quot;;$table = Filter($table);mysqli_query($mysqli,&quot;desc `secret_&#123;$table&#125;`&quot;) or Hacker();$sql = &quot;select &#x27;flag&#123;xxx&#125;&#x27; from secret_&#1...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/05</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/" >
-            
-                <span>XXE注入payload</span>
-        </a>
-        <div class="abstract-content">
-            libxml2.9.0之后默认不解析外部实体，php版本不影响XXE的利用web目录为：
-123456$ tree ..├── dom.php # 示例：使用DOMDocument解析body├── index.php├── SimpleXMLElement.php # 示例：使用SimpleXMLElement类解析body└── simplexml_load_string.php # 示例：使用simplexml_load_string函数解析body
-
-
-XML和DTD格式
-XML格式123456&lt;note&gt;&lt;to&gt;Tove&lt;/to&gt;&lt;fr...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/05</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/07/29/%E6%90%AD%E5%BB%BAwordpress%E7%8E%AF%E5%A2%83-docker-%E6%B5%8B%E8%AF%95plugin%E6%BC%8F%E6%B4%9E/" >
-            
-                <span>搭建wordpress环境(docker)测试plugin漏洞</span>
-        </a>
-        <div class="abstract-content">
-            参考链接：https://www.cnblogs.com/old-cha/p/12926434.html
-测试环境：kali linux2020技术：docker
-
-WordPress安装
-Docker拉取WordPress镜像1docker pull wordpress:latest
-Docker拉取MySQL镜像1docker pull mysql:5.6
-使用MySQL镜像运行容器1docker run -d --privileged=true --name OLDMysql -v /data/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/29</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "bugs">bugs</a>
     
 </div>
             
@@ -2011,9 +2007,50 @@ Docker拉取MySQL镜像1docker pull mysql:5.6
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 72
+        Total : 75
         </div>
         <!-- search  -->
         
@@ -2024,8 +2061,32 @@ Docker拉取MySQL镜像1docker pull mysql:5.6
     
     
     
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2021/01/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%BD%91%E7%BB%9C%E5%B1%82/" >计算机网络第四章-网络层</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/02</span><a class="archive-post-title" href= "/2021/01/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%B8%89%E7%AB%A0%E2%80%94-%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" >计算机网络第三章-数据链路层</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/23</span><a class="archive-post-title" href= "/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/" >计算机网络第二章-物理层</a>
+        </li>
     
     
         <li class="archive-post-item">

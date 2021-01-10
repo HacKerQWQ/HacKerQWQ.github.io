@@ -1,0 +1,2307 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="HacKerQWQ">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="HacKerQWQ">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="">
+    <meta name="description" content="基本概念物理层主要任务：确定与传输媒体接口有关的一些特定&#x3D;&#x3D;&gt;定义标准如：  机械特性(规定物理连接时采用的规格、接口形状、引线数目、引脚个数等) 电气特性(规定传输二进制时，线路上的电压范围、阻抗匹配、传输速率和距离限制等等) 功能特性(指明某条线上出现的某一电平表示何种意义，接口部件的信号线的用途) 规程特性(定义各条物理线路的工作规程和时序的关系)  数据通信基础概念大概图解调制解调器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络第二章-物理层">
+<meta property="og:url" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="基本概念物理层主要任务：确定与传输媒体接口有关的一些特定&#x3D;&#x3D;&gt;定义标准如：  机械特性(规定物理连接时采用的规格、接口形状、引线数目、引脚个数等) 电气特性(规定传输二进制时，线路上的电压范围、阻抗匹配、传输速率和距离限制等等) 功能特性(指明某条线上出现的某一电平表示何种意义，接口部件的信号线的用途) 规程特性(定义各条物理线路的工作规程和时序的关系)  数据通信基础概念大概图解调制解调器">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/1.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/2.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/3.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/4.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/5.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/6.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/7.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/8.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/9.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/10.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/11.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/12.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/13.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/14.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/15.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/16.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/17.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/18.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/19.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/20.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/21.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/22.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/23.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/24.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/25.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/26.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/27.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/28.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/29.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/30.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/31.png">
+<meta property="article:published_time" content="2020-12-23T13:09:20.000Z">
+<meta property="article:modified_time" content="2020-12-31T03:03:50.616Z">
+<meta property="article:author" content="HacKerQWQ">
+<meta property="article:tag" content="考研">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/1.png">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>计算机网络第二章-物理层 · HacKerQWQ&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/avatar/picture.jpeg" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >HacKerQWQ&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">计算机网络第二章-物理层</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>HacKerQWQ's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            计算机网络第二章-物理层
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "考研">考研</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">2.4k</span>Reading time: <span class="post-count reading-time">8 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/12/23</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            
+<main class="main post-page">
+    <article class="article-entry">
+        <h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>物理层主要任务：<br>确定与传输媒体接口有关的一些特定==&gt;定义标准<br>如：</p>
+<ol>
+<li>机械特性(规定物理连接时采用的规格、接口形状、<strong>引线数目</strong>、<strong>引脚个数</strong>等)</li>
+<li>电气特性(规定传输二进制时，线路上的<strong>电压范围</strong>、阻抗匹配、传输<strong>速率</strong>和距离限制等等)</li>
+<li>功能特性(指明某条线上出现的某<strong>一电平表示何种意义</strong>，接口部件的信号线的用途)</li>
+<li>规程特性(定义各条物理线路的工作<strong>规程和时序</strong>的关系)</li>
+</ol>
+<h1 id="数据通信基础概念"><a href="#数据通信基础概念" class="headerlink" title="数据通信基础概念"></a>数据通信基础概念</h1><p>大概图解<br><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/1.png"><br>调制解调器相当于家里的<strong>猫</strong></p>
+<h2 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h2><p><strong>数据</strong>：传送信息的实体，通常是有意义的符号序列<br><strong>信号</strong>：数据的电气/电磁的表现，是数据在传输过程中的形式</p>
+<blockquote>
+<p>数字信号：代表信息的参数取值是离散的<br>模拟信号：代表信息的参数取值是连续的</p>
+</blockquote>
+<p><strong>新源</strong>： 产生和发送数据的源头<br><strong>信宿</strong>： 接收数据的终点<br><strong>信道</strong>：信号的传输媒介，一般用来表示向某一方向传送信息的介质</p>
+<p><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/2.png"><br><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/3.png"></p>
+<h2 id="三种通信方式"><a href="#三种通信方式" class="headerlink" title="三种通信方式"></a>三种通信方式</h2><h3 id="单工通信"><a href="#单工通信" class="headerlink" title="单工通信"></a>单工通信</h3><p>只有一个方向的通信，只有<strong>一条</strong>信道<br>PS：相当于单方面挨喷</p>
+<h3 id="半双工通信"><a href="#半双工通信" class="headerlink" title="半双工通信"></a>半双工通信</h3><p>通信双方都能发送或接收信息，但是不能同时发送和接收，<strong>两条</strong>信道<br>PS：相当于回合制对喷</p>
+<h3 id="双工通信"><a href="#双工通信" class="headerlink" title="双工通信"></a>双工通信</h3><p>通信双方可以同时发送和接收信息，要<strong>两条信道</strong><br>PS：无阻碍对喷</p>
+<h2 id="两种传输方式"><a href="#两种传输方式" class="headerlink" title="两种传输方式"></a>两种传输方式</h2><p><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/4.png"><br>速度<strong>快</strong>所以用并行传输，适合<strong>短距离</strong></p>
+<h1 id="物理层的名词"><a href="#物理层的名词" class="headerlink" title="物理层的名词"></a>物理层的名词</h1><h2 id="码元"><a href="#码元" class="headerlink" title="码元"></a>码元</h2><p><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/5.png"><br><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/6.png"><br>几种<strong>高度</strong>代表几进制码元<br><strong>M进制码元带有log2M的bit信息</strong></p>
+<h2 id="速率"><a href="#速率" class="headerlink" title="速率"></a>速率</h2><p><strong>速率</strong>也叫<strong>数据率</strong>，指数据的传输速率（跟上一章的概念一样），也可以用<strong>码元传输速率</strong>和<strong>信息传输速率</strong>表示</p>
+<h2 id="码元传输速率"><a href="#码元传输速率" class="headerlink" title="码元传输速率"></a>码元传输速率</h2><p>也叫<strong>码元速率</strong>、<strong>波形速率</strong>、<strong>调制速率</strong>、<strong>符号速率</strong>等，表示<strong>单位时间</strong>内数字通信系统传输的码元个数(也叫脉冲次数或信号变化次数)，单位是<strong>波特(Baud)**，即<code>1波特=1码元/s</code>，但码元传输速率与进制数</strong>无关**</p>
+<h2 id="信息传输速率"><a href="#信息传输速率" class="headerlink" title="信息传输速率"></a>信息传输速率</h2><p>别名信息速率、比特率，表示单位时间内数字通信系统传输的二进制码元个数（即<strong>比特数</strong>），单位是<strong>b/s</strong></p>
+<ul>
+<li>关系：若一个码元携带n bit的信息量，则M Baud的码元传输速率对应的信息传输速率为M×n bit/s</li>
+</ul>
+<h2 id="带宽"><a href="#带宽" class="headerlink" title="带宽"></a>带宽</h2><p>表示在单位时间内从网络中的某一点到另一点所能通过的<strong>“最高数据率”</strong>，常用来表示网络的通信线路所能传输数据的能力，单位是<strong>b/s</strong></p>
+<p>理解：我的理解是理论上的理想最高数据率</p>
+<p>练习：<br><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/7.png"></p>
+<h1 id="奈氏准则-amp-香农定理"><a href="#奈氏准则-amp-香农定理" class="headerlink" title="奈氏准则&amp;香农定理"></a>奈氏准则&amp;香农定理</h1><h2 id="失真"><a href="#失真" class="headerlink" title="失真"></a>失真</h2><p><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/8.png"><br>影响因素里面，前三个与失真程度呈<strong>正相关</strong>，最后一个是<strong>负相关</strong></p>
+<h2 id="码间串扰"><a href="#码间串扰" class="headerlink" title="码间串扰"></a>码间串扰</h2><p><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/9.png"><br>低频（200HZ）不能通过的原因是传输距离过长会逐渐损耗，高频（4000HZ）不能通过的原因是码元传输速率过快，码元与码元之间靠的太近不容易辨析<br><strong>需要注意上图的信道带宽的概念</strong></p>
+<h2 id="奈氏准则（奈奎斯特定理）重要"><a href="#奈氏准则（奈奎斯特定理）重要" class="headerlink" title="奈氏准则（奈奎斯特定理）重要"></a>奈氏准则（奈奎斯特定理）重要</h2><p><strong>奈氏准则</strong>：在理想低通（<strong>无噪声</strong>、<strong>带宽受限</strong>）条件下，为了避免码间串扰，<strong>极限码元传输速率</strong>为<strong>2W Baud</strong>，W为信道带宽，单位是<strong>HZ</strong></p>
+<p>名词解释：<br>低通：低于最高频率的，也就是带宽受限的意思</p>
+<p><strong>注意</strong>：只有这两个公式（奈氏准则和香农定理）中信道带宽的单位是HZ，当题目中提到信道带宽是以HZ为单位时应该联想到要用公式<br><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/10.png"></p>
+<p>2W代表极限码元传输速率，log2V代表一个码元携带的bit信息，相乘就得到了极限信息传输速率</p>
+<p>应用：</p>
+<ol>
+<li>在任何信道中，码元传输的速率是有<strong>上限</strong>的。若传输速率超过了上限，就会出现严重的码间串扰问题。</li>
+<li>信道的频带<strong>越宽</strong>（即能通过的信号高频分量越多），就可以用<strong>更高的速率</strong>进行码元的有效传输</li>
+<li><strong>奈氏准则给出了码元传输速率的限制，但是没有对信息传输速率给出限制</strong></li>
+<li>由奈氏准则可知，当每个码元携带的比特数更多时，信息传输速率就会<strong>更高</strong></li>
+</ol>
+<p>例题：<br><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/11.png"></p>
+<h2 id="香农定理"><a href="#香农定理" class="headerlink" title="香农定理"></a>香农定理</h2><p>香农定理：在<strong>带宽受限</strong>且<strong>有噪声</strong>的信道中，为了不产生误差，信息的数据传输速率有上限值。<br>信噪比=<strong>信号</strong>的平均功率/<strong>噪声</strong>的平均功率，通常记为S/N，并且用分贝(dB)作为度量单位，即：<code>信噪比(dB)=10log10(S/N)</code> 他们的数值是<strong>等价</strong>的<br>我的理解：所谓信噪比就是信号和噪声的比值，信号强，噪声若则信号清晰，信号弱，噪声强，则信号模糊<br><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/12.png"></p>
+<p>推论：</p>
+<ol>
+<li>信道的<strong>带宽</strong>或信道中的<strong>信噪比</strong>越大，则信息的<strong>极限传输速率越大</strong></li>
+<li>当信道的带宽和信噪比确定之后，信息传输速率的上限就确定了</li>
+<li>只要当前的信息传输速率低于信道的极限传输速率，就一定能找到某种方法来实现<strong>无差错传输</strong></li>
+<li>实际信道的传输速率比香农定理的极限传输速率低不少</li>
+</ol>
+<p>例题：<br><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/13.png"></p>
+<h2 id="综合总结-amp-例题"><a href="#综合总结-amp-例题" class="headerlink" title="综合总结&amp;例题"></a>综合总结&amp;例题</h2><p><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/14.png"><br>两个极限传输速率选小的那个</p>
+<h1 id="编码与调制"><a href="#编码与调制" class="headerlink" title="编码与调制"></a>编码与调制</h1><h2 id="基带信号与宽带信号"><a href="#基带信号与宽带信号" class="headerlink" title="基带信号与宽带信号"></a>基带信号与宽带信号</h2><p><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/15.png"><br>在传输距离<strong>较近</strong>时，计算机网络采用<strong>基带传输</strong>方式(近距离衰减小，从而信号内容不易发生变化)<br>在传输距离<strong>较远</strong>时，计算机网络采用<strong>宽带传输</strong>方式(远距离衰减大，信号变化大也能过滤出基带信号)<br>不同数据的转换：<br><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/16.png"></p>
+<h2 id="数字数据编码为数字信号"><a href="#数字数据编码为数字信号" class="headerlink" title="数字数据编码为数字信号"></a>数字数据编码为数字信号</h2><p><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/17.png"></p>
+<p><strong>非归零编码</strong>：高1低0，但是没有检错能力，收发双方<strong>难以保持同步</strong><br><strong>归零编码</strong>：信号电平要在一个码元内恢复到0<br><strong>反向不归零编码</strong>：信号电平翻转表示0，信号电平不变表示1<br><strong>曼彻斯特编码</strong>：前低后高表示1、前高后低表示0或者相反，特点是每个码元中间出现电平跳变，位中间的跳变可作为<strong>时钟信号</strong>用于<strong>同步</strong>，它所占的频带宽度是原始基带宽度的<strong>两倍</strong>，因此**<em>数据传输速率只有调制速率的1/2**</em><br><strong>差分曼彻斯特编码</strong>：同1异0，常用于局域网传输，<strong>抗干扰性强于曼彻斯特编码</strong><br>4B/5B编码：<br><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/18.png"></p>
+<h2 id="数字数据调制为模拟信号"><a href="#数字数据调制为模拟信号" class="headerlink" title="数字数据调制为模拟信号"></a>数字数据调制为模拟信号</h2><p>数字数据调制技术就是：数字信号=&gt;模拟信号==传输==&gt;模拟信号=&gt;数字信号<br>数字信号转换为模拟信号是<strong>调制</strong><br>模拟信号转换为数字信号是<strong>解调</strong><br><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/19.png"></p>
+<h2 id="模拟数据编码为数字信号"><a href="#模拟数据编码为数字信号" class="headerlink" title="模拟数据编码为数字信号"></a>模拟数据编码为数字信号</h2><ol>
+<li>最易于理解的例子就是计算机中处理的<strong>数字音频</strong>，通过将模拟音频采样、量化转换成有限个数字表示的离散序列（即实现<strong>数字音频化</strong>）</li>
+<li>最常见的编码方式是<strong>PCM（脉码调制）</strong>，也是能够达到<strong>最高保真水平</strong>的编码</li>
+<li>模拟信号转换为数字信号包括三步，<strong>抽样</strong>，<strong>量化</strong>，<strong>编码</strong></li>
+</ol>
+<blockquote>
+<p>抽样：对模拟信号进行周期性扫描，从连接变为离散，为保证不失真，使用采样定理：f采样频率&gt;=2f信号最高频率<br>量化：把<strong>抽样</strong>得到的电平幅值转换为分级的数字取整，这样就实现了从连续到离散<br>编码：把上一步的转换为二进制编码</p>
+</blockquote>
+<p><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/20.png"></p>
+<p>拓展：<br><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/21.png"><br>而采样频率高也就意味着采样设备要更精确，所以有时候就会发生高频失真</p>
+<h2 id="模拟信号调制为模拟信号"><a href="#模拟信号调制为模拟信号" class="headerlink" title="模拟信号调制为模拟信号"></a>模拟信号调制为模拟信号</h2><p><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/22.png"></p>
+<h1 id="物理层传输介质"><a href="#物理层传输介质" class="headerlink" title="物理层传输介质"></a>物理层传输介质</h1><h2 id="传输介质以及分类"><a href="#传输介质以及分类" class="headerlink" title="传输介质以及分类"></a>传输介质以及分类</h2><p><strong>传输介质</strong>也称<strong>传输媒体/传输媒介</strong>，就是发送设备和接收设备之间的物理通路。</p>
+<p><strong>注意</strong>：传输媒体并不是物理层，且在物理层下面，传输媒体不知道所传输的信号的含义，而物理层定义了电气特性，因此能识别比特流<br><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/23.png"></p>
+<h2 id="导向性传输介质"><a href="#导向性传输介质" class="headerlink" title="导向性传输介质"></a>导向性传输介质</h2><h3 id="导向性传输介质–双绞线"><a href="#导向性传输介质–双绞线" class="headerlink" title="导向性传输介质–双绞线"></a>导向性传输介质–双绞线</h3><p><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/24.png"><br>网线用的就是双绞线</p>
+<h3 id="导向性传输介质–同轴电缆"><a href="#导向性传输介质–同轴电缆" class="headerlink" title="导向性传输介质–同轴电缆"></a>导向性传输介质–同轴电缆</h3><p><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/25.png"></p>
+<h3 id="导向性传输介质–光纤"><a href="#导向性传输介质–光纤" class="headerlink" title="导向性传输介质–光纤"></a>导向性传输介质–光纤</h3><p><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/26.png"><br><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/27.png"><br>光纤特点：</p>
+<ol>
+<li><strong>传输损耗小</strong>，中继距离长，对远距离传输特别经济</li>
+<li><strong>抗雷电和电磁干扰性能好</strong></li>
+<li>无串音干扰，保密性好，不易被窃听</li>
+<li><strong>体积小，重量轻</strong></li>
+</ol>
+<h2 id="非导向性传输介质"><a href="#非导向性传输介质" class="headerlink" title="非导向性传输介质"></a>非导向性传输介质</h2><p><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/28.png"></p>
+<h1 id="物理层设备"><a href="#物理层设备" class="headerlink" title="物理层设备"></a>物理层设备</h1><h2 id="中继器"><a href="#中继器" class="headerlink" title="中继器"></a>中继器</h2><ul>
+<li>功能：由于信号功率会损耗，因此需要中继器对信号<strong>再生和还原</strong>，对衰减信号进行放大，增加信号传输的距离，延长网络长度</li>
+<li>中继器两端要<strong>同一个网段</strong>且<strong>速率相同</strong>，两端要<strong>同一个协议</strong>，可以是不通同媒体</li>
+<li>中继器不会存储转发<br><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/29.png"></li>
+</ul>
+<h2 id="集线器（多口中继器）"><a href="#集线器（多口中继器）" class="headerlink" title="集线器（多口中继器）"></a>集线器（多口中继器）</h2><p><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/30.png"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><img src="/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/31.png"></p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
+            <p>原文链接：<a href="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/">https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/</a>
+            <p>发表日期：<a href="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/">December 23rd 2020, 9:09:20 pm</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/">December 31st 2020, 11:03:50 am</a>
+            <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2021/01/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%B8%89%E7%AB%A0%E2%80%94-%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" title= "计算机网络第三章-数据链路层">
+                    <div class="nextTitle">计算机网络第三章-数据链路层</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/12/22/preg-match%E7%BB%95%E8%BF%87%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" title= "preg_match绕过方法总结">
+                    <div class="prevTitle">preg_match绕过方法总结</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:a785745707@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/HacKerQWQ" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/Misaka.jpg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="toc-number">2.</span> <span class="toc-text">数据通信基础概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AF%E8%AF%AD"><span class="toc-number">2.1.</span> <span class="toc-text">术语</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">三种通信方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%B7%A5%E9%80%9A%E4%BF%A1"><span class="toc-number">2.2.1.</span> <span class="toc-text">单工通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8A%E5%8F%8C%E5%B7%A5%E9%80%9A%E4%BF%A1"><span class="toc-number">2.2.2.</span> <span class="toc-text">半双工通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E5%B7%A5%E9%80%9A%E4%BF%A1"><span class="toc-number">2.2.3.</span> <span class="toc-text">双工通信</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E4%BC%A0%E8%BE%93%E6%96%B9%E5%BC%8F"><span class="toc-number">2.3.</span> <span class="toc-text">两种传输方式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%E7%9A%84%E5%90%8D%E8%AF%8D"><span class="toc-number">3.</span> <span class="toc-text">物理层的名词</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A0%81%E5%85%83"><span class="toc-number">3.1.</span> <span class="toc-text">码元</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9F%E7%8E%87"><span class="toc-number">3.2.</span> <span class="toc-text">速率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A0%81%E5%85%83%E4%BC%A0%E8%BE%93%E9%80%9F%E7%8E%87"><span class="toc-number">3.3.</span> <span class="toc-text">码元传输速率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E4%BC%A0%E8%BE%93%E9%80%9F%E7%8E%87"><span class="toc-number">3.4.</span> <span class="toc-text">信息传输速率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%A6%E5%AE%BD"><span class="toc-number">3.5.</span> <span class="toc-text">带宽</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A5%88%E6%B0%8F%E5%87%86%E5%88%99-amp-%E9%A6%99%E5%86%9C%E5%AE%9A%E7%90%86"><span class="toc-number">4.</span> <span class="toc-text">奈氏准则&amp;香农定理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%B1%E7%9C%9F"><span class="toc-number">4.1.</span> <span class="toc-text">失真</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A0%81%E9%97%B4%E4%B8%B2%E6%89%B0"><span class="toc-number">4.2.</span> <span class="toc-text">码间串扰</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%88%E6%B0%8F%E5%87%86%E5%88%99%EF%BC%88%E5%A5%88%E5%A5%8E%E6%96%AF%E7%89%B9%E5%AE%9A%E7%90%86%EF%BC%89%E9%87%8D%E8%A6%81"><span class="toc-number">4.3.</span> <span class="toc-text">奈氏准则（奈奎斯特定理）重要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A6%99%E5%86%9C%E5%AE%9A%E7%90%86"><span class="toc-number">4.4.</span> <span class="toc-text">香农定理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%BC%E5%90%88%E6%80%BB%E7%BB%93-amp-%E4%BE%8B%E9%A2%98"><span class="toc-number">4.5.</span> <span class="toc-text">综合总结&amp;例题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BC%96%E7%A0%81%E4%B8%8E%E8%B0%83%E5%88%B6"><span class="toc-number">5.</span> <span class="toc-text">编码与调制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E5%B8%A6%E4%BF%A1%E5%8F%B7%E4%B8%8E%E5%AE%BD%E5%B8%A6%E4%BF%A1%E5%8F%B7"><span class="toc-number">5.1.</span> <span class="toc-text">基带信号与宽带信号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E6%95%B0%E6%8D%AE%E7%BC%96%E7%A0%81%E4%B8%BA%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7"><span class="toc-number">5.2.</span> <span class="toc-text">数字数据编码为数字信号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E6%95%B0%E6%8D%AE%E8%B0%83%E5%88%B6%E4%B8%BA%E6%A8%A1%E6%8B%9F%E4%BF%A1%E5%8F%B7"><span class="toc-number">5.3.</span> <span class="toc-text">数字数据调制为模拟信号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E6%8B%9F%E6%95%B0%E6%8D%AE%E7%BC%96%E7%A0%81%E4%B8%BA%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7"><span class="toc-number">5.4.</span> <span class="toc-text">模拟数据编码为数字信号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E6%8B%9F%E4%BF%A1%E5%8F%B7%E8%B0%83%E5%88%B6%E4%B8%BA%E6%A8%A1%E6%8B%9F%E4%BF%A1%E5%8F%B7"><span class="toc-number">5.5.</span> <span class="toc-text">模拟信号调制为模拟信号</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%E4%BC%A0%E8%BE%93%E4%BB%8B%E8%B4%A8"><span class="toc-number">6.</span> <span class="toc-text">物理层传输介质</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%A0%E8%BE%93%E4%BB%8B%E8%B4%A8%E4%BB%A5%E5%8F%8A%E5%88%86%E7%B1%BB"><span class="toc-number">6.1.</span> <span class="toc-text">传输介质以及分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BC%E5%90%91%E6%80%A7%E4%BC%A0%E8%BE%93%E4%BB%8B%E8%B4%A8"><span class="toc-number">6.2.</span> <span class="toc-text">导向性传输介质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%90%91%E6%80%A7%E4%BC%A0%E8%BE%93%E4%BB%8B%E8%B4%A8%E2%80%93%E5%8F%8C%E7%BB%9E%E7%BA%BF"><span class="toc-number">6.2.1.</span> <span class="toc-text">导向性传输介质–双绞线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%90%91%E6%80%A7%E4%BC%A0%E8%BE%93%E4%BB%8B%E8%B4%A8%E2%80%93%E5%90%8C%E8%BD%B4%E7%94%B5%E7%BC%86"><span class="toc-number">6.2.2.</span> <span class="toc-text">导向性传输介质–同轴电缆</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%90%91%E6%80%A7%E4%BC%A0%E8%BE%93%E4%BB%8B%E8%B4%A8%E2%80%93%E5%85%89%E7%BA%A4"><span class="toc-number">6.2.3.</span> <span class="toc-text">导向性传输介质–光纤</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E5%AF%BC%E5%90%91%E6%80%A7%E4%BC%A0%E8%BE%93%E4%BB%8B%E8%B4%A8"><span class="toc-number">6.3.</span> <span class="toc-text">非导向性传输介质</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%E8%AE%BE%E5%A4%87"><span class="toc-number">7.</span> <span class="toc-text">物理层设备</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E7%BB%A7%E5%99%A8"><span class="toc-number">7.1.</span> <span class="toc-text">中继器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E7%BA%BF%E5%99%A8%EF%BC%88%E5%A4%9A%E5%8F%A3%E4%B8%AD%E7%BB%A7%E5%99%A8%EF%BC%89"><span class="toc-number">7.2.</span> <span class="toc-text">集线器（多口中继器）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">总结</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 75
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2021/01/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%BD%91%E7%BB%9C%E5%B1%82/" >计算机网络第四章-网络层</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/02</span><a class="archive-post-title" href= "/2021/01/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%B8%89%E7%AB%A0%E2%80%94-%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" >计算机网络第三章-数据链路层</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/23</span><a class="archive-post-title" href= "/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/" >计算机网络第二章-物理层</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/22</span><a class="archive-post-title" href= "/2020/12/22/preg-match%E7%BB%95%E8%BF%87%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" >preg_match绕过方法总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/21</span><a class="archive-post-title" href= "/2020/12/21/%E4%B8%AD%E7%9A%84%E4%B8%8B%E5%88%92%E7%BA%BF%E7%BB%95%E8%BF%87-%E5%B0%8F%E7%AC%94%E8%AE%B0/" >$_GET中的下划线绕过(小笔记)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/19</span><a class="archive-post-title" href= "/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/" >无字母数字构造shell小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/18</span><a class="archive-post-title" href= "/2020/12/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%B8%80%E7%AB%A0%E6%A6%82%E8%BF%B0/" >计算机网络第一章概述</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2020/12/12/%E5%88%A9%E7%94%A8phar%E6%8B%93%E5%B1%95%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%94%BB%E5%87%BB%E9%9D%A2%E4%BE%8B%E9%A2%98/" >利用phar拓展反序列化攻击面例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/08</span><a class="archive-post-title" href= "/2020/12/08/pickle%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C-jwt-%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E-CISCN2019-%E5%8D%8E%E5%8C%97%E8%B5%9B%E5%8C%BA-Day1-Web2-ikun/" >pickle远程代码执行+jwt+逻辑漏洞[CISCN2019 华北赛区 Day1 Web2]ikun</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/" >unicode等价替换</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/16</span><a class="archive-post-title" href= "/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/" >浅析SSRF漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/14</span><a class="archive-post-title" href= "/2020/11/14/balckhat%E8%AE%AE%E9%A2%98%E7%9A%84%E5%BA%94%E7%94%A8-python-nignx-pythonignx/" >balckhat议题的应用(python+nignx=pythonignx)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/10</span><a class="archive-post-title" href= "/2020/11/10/THINKPHP-poc-collection/" >THINKPHP-poc-collection</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2020/11/09/redis%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E7%AC%94%E8%AE%B0/" >redis的基本操作笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2020/11/09/%E5%BC%80%E6%BA%90Web%E5%BA%94%E7%94%A8%E6%89%AB%E6%8F%8F%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/" >开源Web应用扫描软件使用笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2020/11/08/%E6%97%A0%E5%8F%82%E6%95%B0%E6%9E%84%E9%80%A0payload%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6-%E5%90%ABPHP%E6%95%B0%E7%BB%84%E7%9A%84%E7%9F%A5%E8%AF%86/" >无参数构造payload读取文件(含PHP数组的知识)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/06</span><a class="archive-post-title" href= "/2020/11/06/sql%E4%B9%8Bpython%E8%84%9A%E6%9C%AC%E6%B3%A8%E5%85%A5/" >sql之python脚本注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/30</span><a class="archive-post-title" href= "/2020/10/30/escapeshellarg-escapeshellcmd%E9%80%A0%E6%88%90%E5%8F%82%E6%95%B0%E6%B3%A8%E5%85%A5/" >escapeshellarg/escapeshellcmd造成参数注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/29</span><a class="archive-post-title" href= "/2020/10/29/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BHANDLER%E6%9F%A5%E8%A1%A8/" >SQL注入之HANDLER查表</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/29</span><a class="archive-post-title" href= "/2020/10/29/WEB-INF%E7%9B%AE%E5%BD%95%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" >WEB-INF目录下信息泄露</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/29</span><a class="archive-post-title" href= "/2020/10/29/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%A1%E8%AE%A1%E4%BB%A3%E7%A0%81%E5%8F%AF%E5%88%A9%E7%94%A8%E5%8F%98%E9%87%8F/" >python多线程审计代码可利用变量</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2020/10/26/Caculator%E9%A2%98%E7%9A%84exp/" >Caculator题的exp</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/" >渗透测试之提权篇</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%9A-SUCTF-2019-EasySQL/" >刷题记录：[SUCTF 2019]EasySQL</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/N1CTF-websignin-sql%E6%B3%A8%E5%85%A5-%E9%80%BB%E8%BE%91/" >N1CTF_websignin(sql注入&逻辑)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/18</span><a class="archive-post-title" href= "/2020/10/18/htaccess%E4%B8%8A%E4%BC%A0%E7%BB%93%E5%90%88lua%E8%84%9A%E6%9C%AC%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4/" >.htaccess上传结合lua脚本执行命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/14</span><a class="archive-post-title" href= "/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/" >变量覆盖漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2020/10/13/SQL%E8%AF%AD%E5%8F%A5%E4%B9%8B%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" >SQL语句之增删改查及用户权限</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2020/10/13/%E9%9B%B6%E5%AE%BD%E5%BA%A6%E5%AD%97%E7%AC%A6%E9%9A%90%E5%86%99/" >零宽度字符隐写</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/12</span><a class="archive-post-title" href= "/2020/10/12/htaccess%E7%9A%84%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" >.htaccess的漏洞利用总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2020/10/10/Private-Key-Encryption-1/" >Private-Key Encryption(1)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2020/10/10/Perfectly-Secret-Encryption/" >Perfectly Secret Encryption</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2020/10/10/Hash%E5%87%BD%E6%95%B0%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" >Hash函数的相关知识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2020/10/10/CRC%E5%86%97%E4%BD%99%E7%A0%81%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" >CRC冗余码相关知识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2020/09/26/CRC32%E7%A2%B0%E6%92%9E%E6%81%A2%E5%A4%8Dpng/" >CRC32碰撞恢复png(含png块的知识)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2020/09/10/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Reverse-it-xxd%E3%80%81tr%E3%80%81rev%E5%91%BD%E4%BB%A4/" >攻防世界-Reverse-it(xxd、tr、rev命令)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2020/09/06/%E7%A0%B4%E8%A7%A3zip%E5%AF%86%E7%A0%81%E5%91%BD%E4%BB%A4/" >破解zip密码命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/26</span><a class="archive-post-title" href= "/2020/08/26/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-stegnao-%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%8E%9F%E7%90%86/" >攻防世界-stegnao-二维码原理及rar伪加密</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2020/08/21/2020%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-%E5%88%9D%E8%B5%9B%E9%83%A8%E5%88%86writeup/" >2020全国大学生信息安全大赛-初赛部分writeup</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-CAT-PHP-curl/" >宽字节注入+curl读取文件+Django框架漏洞的组合拳</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/flask%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" >SSTI模板注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Web_php_unserialize/" >__wakeup()的绕过和正则绕过</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E7%BD%91%E9%BC%8E%E6%9D%AF-2018-Web-Unfinish/" >二次注入在实战的运用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/18</span><a class="archive-post-title" href= "/2020/08/18/Jarvis-PHPINFO/" >php反序列化漏洞及upload_progress-sessions</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/16</span><a class="archive-post-title" href= "/2020/08/16/Jarvis-flag%E5%9C%A8%E7%AE%A1%E7%90%86%E5%91%98%E6%89%8B%E9%87%8C/" >Hash长度拓展攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E5%8F%8D%E5%BC%B9shell%E5%92%8C%E7%95%99%E5%90%8E%E9%97%A8/" >渗透测试之反弹shell和留后门</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E8%BD%AC%E8%BD%BD-CSP%E6%80%BB%E7%BB%93%E5%8F%8ACTF%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90/" >[转载]CSP总结及CTF实例分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/14</span><a class="archive-post-title" href= "/2020/08/14/2019-%E5%BC%BA%E7%BD%91%E6%9D%AF-suersqli/" >堆叠注入、预定义sql语句的知识及例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/14</span><a class="archive-post-title" href= "/2020/08/14/BDJCTF-2020-writeup/" >md5碰撞脚本及shtml在BDJCTF的例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/14</span><a class="archive-post-title" href= "/2020/08/14/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E7%8E%84%E6%AD%A6%E7%BB%84-writeup/" >jwt在网鼎杯的运用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/13</span><a class="archive-post-title" href= "/2020/08/13/HCTF-2018-Web-writeup/" >phpmyAdmin文件包含漏洞在2018-HCTF的例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/13</span><a class="archive-post-title" href= "/2020/08/13/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E9%9D%92%E9%BE%99%E7%BB%84-Web/" >2020-网鼎杯-青龙组-Web</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E6%9C%B1%E9%9B%80%E7%BB%84-Web/" >动态调用函数以及nmap用法在网鼎杯的例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4%E6%99%BA%E8%83%BD%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-Web-hate-php/" >取反异或绕过</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/11</span><a class="archive-post-title" href= "/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/" >[转载]sql注入绕过大集合</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/08</span><a class="archive-post-title" href= "/2020/08/08/JWT%E7%9A%84%E5%88%A9%E7%94%A8/" >JWT的利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令注入及远程代码执行大集合！</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/SVN%E5%92%8CHG%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/" >SVN和HG源码泄露</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露payload</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2020/08/05/VIM%E7%BC%96%E8%BE%91%E5%99%A8%E5%BC%82%E5%B8%B8%E9%80%80%E5%87%BA%E5%AF%BC%E8%87%B4%E7%9A%84%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/" >VIM编辑器异常退出导致的源码泄露</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2020/08/05/Jarvis-injeect-%E5%8F%8D%E5%BC%95%E5%8F%B7%E6%B3%A8%E5%85%A5/" >Jarvis injeect(反引号注入)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/" >XXE注入payload</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/29</span><a class="archive-post-title" href= "/2020/07/29/%E6%90%AD%E5%BB%BAwordpress%E7%8E%AF%E5%A2%83-docker-%E6%B5%8B%E8%AF%95plugin%E6%BC%8F%E6%B4%9E/" >搭建wordpress环境(docker)测试plugin漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2020/07/23/metasploit%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%AD%A6%E4%B9%A0/" >metasploit之信息收集学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/%E8%BD%AC%E8%BD%BD-%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80-%E5%B8%B8%E7%94%A8Windows%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" >[转载]渗透基础-常用Windows命令大全</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/19</span><a class="archive-post-title" href= "/2020/07/19/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B7%A5%E5%85%B7-%E7%BD%91%E7%AB%99%E6%95%B4%E7%90%86/" >信息收集工具/网站整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/13</span><a class="archive-post-title" href= "/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/" >metasploit魔鬼训练营之初识metasploit</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/01</span><a class="archive-post-title" href= "/2020/07/01/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0/" >PHP代码审计学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" >文件上传漏洞知识点整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/2020/06/10/MD5-collision/" >MD5-collision</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2020/04/27/%E4%BB%8Ectf%E9%A2%98%E7%9B%AE-%E7%AD%94%E6%A1%88%E5%B0%B1%E5%9C%A8index-php-%E7%9C%8BPHP%E4%BC%AA%E9%80%A0%E5%8D%8F%E8%AE%AE/" >从ctf题目(答案就在index.php)看PHP伪造协议</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2020/04/24/http%E5%90%84%E5%A4%B4%E9%83%A8%E5%AD%97%E6%AE%B5%E7%9A%84%E5%90%AB%E4%B9%89%EF%BC%88%E8%BD%AC%E8%BD%BD%EF%BC%89/" >http各头部字段的含义（转载）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/16</span><a class="archive-post-title" href= "/2020/04/16/%E5%88%A9%E7%94%A8ms17-010%E6%BC%8F%E6%B4%9E%E8%BF%9B%E8%A1%8C%E6%94%BB%E5%87%BB/" >利用ms17-010漏洞进行攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2020/04/12/MySQL%E7%9A%84%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C%EF%BC%881%EF%BC%89/" >MySQL的基础操作（1）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/06</span><a class="archive-post-title" href= "/2020/04/06/First-Blog/" >First Blog</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
+    
+        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
+    
+        <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
+    
+        <span class="sidebar-tag-name" data-tags="开发"><span class="iconfont-archer">&#xe606;</span>开发</span>
+    
+        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+    
+        <span class="sidebar-tag-name" data-tags="考研"><span class="iconfont-archer">&#xe606;</span>考研</span>
+    
+        <span class="sidebar-tag-name" data-tags="前端"><span class="iconfont-archer">&#xe606;</span>前端</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "HacKerQWQ"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+
