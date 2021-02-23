@@ -354,6 +354,38 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2021/02/23/python%E5%BA%93Pillow%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/" >
+            
+                <span>python库Pillow的常见用法</span>
+        </a>
+        <div class="abstract-content">
+            0x00前言由于CTF的misc经常需要用脚本处理图像，处理图像的库比较出名的就是PIL库。
+首先介绍PIL这个库，PIL：Python Imaging Library，该库虽然是第三方库，但是俨然已经成为了图像处理的官方库。官方手册：https://pillow.readthedocs.io/en/latest/handbook/tutorial.html
+由于PIL仅支持到Python 2.7，加上年久失修，于是一群志愿者在PIL的基础上创建了兼容的版本，名字叫Pillow，支持最新Python 3.x，又加入了许多新特性，因此，我们可以直接安装使用Pillow。
+github:ht...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/02/23</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/12/22/preg-match%E7%BB%95%E8%BF%87%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" >
             
                 <span>preg_match绕过方法总结</span>
@@ -642,46 +674,10 @@ file_get_contents ( string $filename [, bool $use_include_...
         </div>
     </article>
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/30/escapeshellarg-escapeshellcmd%E9%80%A0%E6%88%90%E5%8F%82%E6%95%B0%E6%B3%A8%E5%85%A5/" >
-            
-                <span>escapeshellarg/escapeshellcmd造成参数注入</span>
-        </a>
-        <div class="abstract-content">
-            命令用法escapeshellcmd简单来说就是将上述字符转义
-escapeshellarg简单来说就是将用户输入的字符串包裹上单引号，如果已经有单引号则进行转义
-漏洞成因当escapehshellarg将用户输入的字符串包裹上单引号后直接拼接到命令的参数选项位置，而不是参数值位置，比如
-1git grep -i --line-number  &#x27;--open-files-in-pager=id;&#x27; master
-当这样会导致可以由用户自己加命令选项而不是按照escapeshellarg函数者的本意执行命令
-另一个例子：
-
-传入的参数是：172.17.0.2&#39; ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/30</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/tags/ctf/page/2/">2</a><a class="page-number" href="/tags/ctf/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/tags/ctf/page/5/">5</a><a class="extend next" rel="next" href="/tags/ctf/page/2/">NEXT &gt;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/tags/ctf/page/2/">2</a><a class="page-number" href="/tags/ctf/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/tags/ctf/page/6/">6</a><a class="extend next" rel="next" href="/tags/ctf/page/2/">NEXT &gt;</a>
     </nav>
     
 </main>
@@ -1921,9 +1917,50 @@ escapeshellarg简单来说就是将用户输入的字符串包裹上单引号，
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 77
+        Total : 78
         </div>
         <!-- search  -->
         
@@ -1936,6 +1973,11 @@ escapeshellarg简单来说就是将用户输入的字符串包裹上单引号，
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href= "/2021/02/23/python%E5%BA%93Pillow%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/" >python库Pillow的常见用法</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2338,9 +2380,9 @@ escapeshellarg简单来说就是将用户输入的字符串包裹上单引号，
     
         <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
     
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
-    
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     

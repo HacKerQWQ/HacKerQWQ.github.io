@@ -354,6 +354,36 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/26/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-stegnao-%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%8E%9F%E7%90%86/" >
+            
+                <span>攻防世界-stegnao-二维码原理及rar伪加密</span>
+        </a>
+        <div class="abstract-content">
+            前置知识rar块的知识rar伪加密https://www.jianshu.com/p/8e4209bca4af二维码的知识https://blog.csdn.net/ajianyingxiaoqinghan/article/details/78837864
+stegnao下载下来一个.rar结尾的压缩包用kali的unrar命令解压时发现有一个secret.png没有解压出来，显示文件错误用010Editor查看发现secret.png的开头十六进制错误，应该把0x7a改成0x74顺利得到secret.png，010Editor查看文件发现这是一个GIF文件然后到网页上https://e...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/26</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/08/21/2020%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-%E5%88%9D%E8%B5%9B%E9%83%A8%E5%88%86writeup/" >
             
                 <span>2020全国大学生信息安全大赛-初赛部分writeup</span>
@@ -616,7 +646,7 @@ Jarvis-flag在管理员手里只有admin才能看到flag
                 <span>渗透测试之反弹shell和留后门</span>
         </a>
         <div class="abstract-content">
-            反弹shell反弹shell总结
+            反弹shell反弹shell总结https://www.cnblogs.com/20175211lyz/p/12397933.html
 留后门留后门总结
 
         </div>
@@ -658,48 +688,6 @@ CSP(Content Security Policy) 在 HTTP 响应头中规定，用来减少 XSS 攻�
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/15</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/14/2019-%E5%BC%BA%E7%BD%91%E6%9D%AF-suersqli/" >
-            
-                <span>堆叠注入、预定义sql语句的知识及例题</span>
-        </a>
-        <div class="abstract-content">
-            2019-强网杯supersqli
-随便输入一下发现select等关键词被过滤
-
-尝试绕过关键词，%0a、&lt;\a&gt;、十六进制，内联注释都不行
-解法一前置知识：堆叠注入
-显示列信息
-
-show columns from table_name
-desc table_name
-select * from information_schema.columns where table_schema=&quot;&quot; and table_name=&quot;&quot;
-
-使用;分隔命令，从而执行多个命令
-payload:爆数据库
-11&#x27;/**/and/**/extr...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/14</span>
             </div>
             <!-- tags  -->
             
@@ -1955,9 +1943,50 @@ payload:爆数据库
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 77
+        Total : 78
         </div>
         <!-- search  -->
         
@@ -1970,6 +1999,11 @@ payload:爆数据库
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href= "/2021/02/23/python%E5%BA%93Pillow%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/" >python库Pillow的常见用法</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2372,9 +2406,9 @@ payload:爆数据库
     
         <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
     
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
-    
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     

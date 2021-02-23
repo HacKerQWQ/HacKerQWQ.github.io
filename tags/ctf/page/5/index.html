@@ -354,6 +354,44 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/" >
+            
+                <span>[转载]sql注入绕过大集合</span>
+        </a>
+        <div class="abstract-content">
+            0x1 WAF的常见特征之所以要谈到WAF的常见特征，是为了更好的了解WAF的运行机制，这样就能增加几分绕过的机会了。本文不对WAF做详细介绍，只谈及几点相关的。
+总体来说，WAF(Web Application Firewall)的具有以下四个方面的功能：
+
+审计设备：用来截获所有HTTP数据或者仅仅满足某些规则的会话
+
+访问控制设备：用来控制对Web应用的访问，既包括主动安全模式也包括被动安全模式
+
+架构/网络设计工具：当运行在反向代理模式，他们被用来分配职能，集中控制，虚拟基础结构等。
+
+WEB应用加固工具：这些功能增强被保护Web应用的安全性，它不仅能够屏蔽WEB应用固有弱点，而...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/11</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/08/08/JWT%E7%9A%84%E5%88%A9%E7%94%A8/" >
             
                 <span>JWT的利用</span>
@@ -681,49 +719,10 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
         </div>
     </article>
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/27/%E4%BB%8Ectf%E9%A2%98%E7%9B%AE-%E7%AD%94%E6%A1%88%E5%B0%B1%E5%9C%A8index-php-%E7%9C%8BPHP%E4%BC%AA%E9%80%A0%E5%8D%8F%E8%AE%AE/" >
-            
-                <span>从ctf题目(答案就在index.php)看PHP伪造协议</span>
-        </a>
-        <div class="abstract-content">
-            初步探索首先我们看到了一个界面
-
-只有一个链接到”./post/index.php?file=show.php”
-点进去之后只显示test5
-
-查看源代码之后也找不到头绪SQL注入也没用
-查找writeup 结果：
-
-直接显示出网页源代码的Base64编码
-拿去编码之后得出结果
-123456789101112131415&lt;html&gt;    &lt;title&gt;Bugku-ctf&lt;/title&gt;    &lt;?php	error_reporting(0);	if(!$_GET[file])&#123;echo &#x27;&lt;a href=&quot;....
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/tags/ctf/page/4/">&lt; PREV</a><a class="page-number" href="/tags/ctf/">1</a><span class="space">&hellip;</span><a class="page-number" href="/tags/ctf/page/3/">3</a><a class="page-number" href="/tags/ctf/page/4/">4</a><span class="page-number current">5</span>
+        <a class="extend prev" rel="prev" href="/tags/ctf/page/4/">&lt; PREV</a><a class="page-number" href="/tags/ctf/">1</a><span class="space">&hellip;</span><a class="page-number" href="/tags/ctf/page/3/">3</a><a class="page-number" href="/tags/ctf/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/tags/ctf/page/6/">6</a><a class="extend next" rel="next" href="/tags/ctf/page/6/">NEXT &gt;</a>
     </nav>
     
 </main>
@@ -1963,9 +1962,50 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 77
+        Total : 78
         </div>
         <!-- search  -->
         
@@ -1978,6 +2018,11 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href= "/2021/02/23/python%E5%BA%93Pillow%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/" >python库Pillow的常见用法</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2380,9 +2425,9 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
     
         <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
     
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
-    
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     
