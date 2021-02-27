@@ -354,6 +354,43 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/19/%E7%BD%91%E9%BC%8E%E6%9D%AF-2018-Web-Unfinish/" >
+            
+                <span>二次注入在实战的运用</span>
+        </a>
+        <div class="abstract-content">
+            网鼎杯-2018-Web-Unfinish
+首先可以看到这是一个登陆框，感觉不太可能是这么简单的SQL注入，所以先扫扫目录再说
+
+发现register.php页面用于注册账号，目测应该是一个二次注入的页面，也就是在注册页面构造好注入的语句然后在登录的时候返回信息
+测试Mysql环境1select hex(&#x27;test&#x27;);
+返回74657374
+1select &#x27;0&#x27;+hex(&#x27;test&#x27;);
+返回        74657374(注意前面有空格)
+1select &#x27;0&#x27;+hex(&#x27;test&#x27...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/19</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/08/18/Jarvis-PHPINFO/" >
             
                 <span>php反序列化漏洞及upload_progress-sessions</span>
@@ -641,36 +678,6 @@ jwt结合sql注入解题先进行尝试
 
 于是想到了这里有可能存在调用函数的破绽，尝试了几个常用的system(),shell_exec(),passthru()都被拦截了之后，试了试file_get_contents()发现可以，于是把index.php源码down下来了
 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061&lt;!...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/12/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4%E6%99%BA%E8%83%BD%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-Web-hate-php/" >
-            
-                <span>取反异或绕过</span>
-        </a>
-        <div class="abstract-content">
-            前言：垃圾就要多学习
-第五空间智能安全大赛-hate-php源码：1234567891011121314151617&lt;?phperror_reporting(0);if(!isset($_GET[&#x27;code&#x27;]))&#123;    highlight_file(__FILE__);&#125;else&#123;    $code = $_GET[&#x27;code&#x27;];    if (preg_match(&#x27;/(f|l|a|g|\.|p|h|\/|;|\&quot;|\&#x27;|\`|\||\[|\]|\_|=)/i&#x27;,$...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -1972,9 +1979,26 @@ jwt结合sql注入解题先进行尝试
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 78
+        Total : 79
         </div>
         <!-- search  -->
         
@@ -1987,6 +2011,11 @@ jwt结合sql注入解题先进行尝试
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/27</span><a class="archive-post-title" href= "/2021/02/27/XSS%E7%9A%84payload%E5%92%8C%E7%BB%95%E8%BF%87%E6%80%BB%E7%BB%93/" >XSS的payload和绕过总结</a>
+        </li>
     
     
         <li class="archive-post-item">
