@@ -354,6 +354,40 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/12/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E6%9C%B1%E9%9B%80%E7%BB%84-Web/" >
+            
+                <span>动态调用函数以及nmap用法在网鼎杯的例题</span>
+        </a>
+        <div class="abstract-content">
+            2020-网鼎杯-phpweb看到题目只有一个背景图还有规范的时间格式
+
+其次注意到每隔一段时间，时间就会刷新，抓包看看
+
+于是想到了这里有可能存在调用函数的破绽，尝试了几个常用的system(),shell_exec(),passthru()都被拦截了之后，试了试file_get_contents()发现可以，于是把index.php源码down下来了
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061&lt;!...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/12</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/08/12/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4%E6%99%BA%E8%83%BD%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-Web-hate-php/" >
             
                 <span>取反异或绕过</span>
@@ -672,41 +706,6 @@ XML格式123456&lt;note&gt;&lt;to&gt;Tove&lt;/to&gt;&lt;fr...
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/05</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" >
-            
-                <span>文件上传漏洞知识点整理</span>
-        </a>
-        <div class="abstract-content">
-            2020.6.11第一次更新前言：上传漏洞，简单来说，就是后端对用户上传上来的文件没有做好格式验证和内容检测，导致用户可以上传任意文件。
-解析漏洞常见的Web容器有IIS、Nginx、Apache、Tomcat等
-IIS解析漏洞IIS6.0版本存在两个解析漏洞，然而官方并不认为这是漏洞，因此这个漏洞现在依然存在。
-1..asp、.asa后缀的文件夹当建立*.asa、*.asp格式的文件夹时，其下的任意文件都会被当成asp文件来执行。
-example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&lt;%=NOW()%&gt;)
-
-分析：一般来说II...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/11</span>
             </div>
             <!-- tags  -->
             
@@ -2020,9 +2019,26 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 79
+        Total : 80
         </div>
         <!-- search  -->
         
@@ -2035,6 +2051,11 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href= "/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/" >sql注入速查笔记</a>
+        </li>
     
     
         <li class="archive-post-item">

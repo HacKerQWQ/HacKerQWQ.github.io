@@ -354,6 +354,45 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/11/08/%E6%97%A0%E5%8F%82%E6%95%B0%E6%9E%84%E9%80%A0payload%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6-%E5%90%ABPHP%E6%95%B0%E7%BB%84%E7%9A%84%E7%9F%A5%E8%AF%86/" >
+            
+                <span>无参数构造payload读取文件(含PHP数组的知识)</span>
+        </a>
+        <div class="abstract-content">
+            知识点PHP数组处理函数
+
+scandir ( string $directory [, int $sorting_order [, resource $context ]] ) : array列出指定路径中的文件和目录，返回一个数组
+
+
+
+readfile ( string $filename [, bool $use_include_path = FALSE [, resource $context ]] ) : int读取文件并写入到输出缓冲中(直接输出内容)
+
+
+
+file_get_contents ( string $filename [, bool $use_include_...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/08</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/11/06/sql%E4%B9%8Bpython%E8%84%9A%E6%9C%AC%E6%B3%A8%E5%85%A5/" >
             
                 <span>sql之python脚本注入</span>
@@ -623,38 +662,6 @@ websignin12345678910111213141516171819202122232425262728293031323334353637383940
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/18</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/" >
-            
-                <span>变量覆盖漏洞</span>
-        </a>
-        <div class="abstract-content">
-            引子先看一段php代码
-123456&lt;?php$a = &quot;aa&quot;;$aa = &quot;111111&quot;;echo &quot;aa变量的值为&quot;.$aa;$$a = $_GET[&#x27;name&#x27;];echo &quot;aa变量的值为&quot;.$aa;
-通过url传入name变量为555之后结果：解析：这里由于$$a=$($a)=$aa，因此赋值时将name的值赋值给了$aa,造成了变量覆盖漏洞
-register_globals(全局变量覆盖)register_globals是php.ini中的一个选项，从PHP 5.3....
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/14</span>
             </div>
             <!-- tags  -->
             
@@ -1968,9 +1975,26 @@ register_globals(全局变量覆盖)register_globals是php.ini中的一个选项
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 79
+        Total : 80
         </div>
         <!-- search  -->
         
@@ -1983,6 +2007,11 @@ register_globals(全局变量覆盖)register_globals是php.ini中的一个选项
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href= "/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/" >sql注入速查笔记</a>
+        </li>
     
     
         <li class="archive-post-item">

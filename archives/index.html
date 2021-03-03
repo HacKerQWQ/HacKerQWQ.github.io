@@ -354,6 +354,40 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/" >
+            
+                <span>sql注入速查笔记</span>
+        </a>
+        <div class="abstract-content">
+            sql注入分类方式：
+1234提交方式：GET POST COOKIE参数注入：数字型 字符型 搜索型数据库类型：ACCESS&#x2F;Mysql&#x2F;MSSQL&#x2F;ORacle&#x2F;SqlServer手工注入方法：联合查询、报错注入、盲注(基于布尔型、基于时间延迟)
+
+0x01 MysqlMysql划分：权限 root 普通用户 版本 mysql&gt;5.0 mysql&lt;5.0
+1.1 root权限load_file和into outfile用户必须有FILE权限，并且还需要知道网站的绝对路径
+1.1.1 判断是否具有读写权限初步判断当前用户是否对mysq...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/02/28</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2021/02/27/XSS%E7%9A%84payload%E5%92%8C%E7%BB%95%E8%BF%87%E6%80%BB%E7%BB%93/" >
             
                 <span>XSS的payload和绕过总结</span>
@@ -682,41 +716,6 @@ PCRE回溯次数限制pcre.backtrack_limit给pcre设定了一个回溯次数上�
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/12/21</span>
             </div>
             <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/" >
-            
-                <span>无字母数字构造shell小总结</span>
-        </a>
-        <div class="abstract-content">
-            本文参考p牛和其他大牛的文章，稍作补充，读起来更顺畅反正没有人读我的博客，自娱自乐一下
-问题当遇到这样的问题的时候怎么样构造shell绕过限制
-123if(!preg_match(&#x27;/[a-z0-9]/is&#x27;,$_GET[&#x27;shell&#x27;])) &#123;  eval($_GET[&#x27;shell&#x27;]);&#125;
-过滤了数字和大小写字母，这时候就需要一点奇巧淫技
-PHP5 和 PHP7中assert的区别
-PHP5中assert可以动态调用，PHP7中不可以，但是PHP7.0.12前实际上还是可以的
-PHP5,不支持($a)()...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/12/19</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
             
         </div>
     </article>
@@ -2022,9 +2021,26 @@ PHP5,不支持($a)()...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 79
+        Total : 80
         </div>
         <!-- search  -->
         
@@ -2037,6 +2053,11 @@ PHP5,不支持($a)()...
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href= "/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/" >sql注入速查笔记</a>
+        </li>
     
     
         <li class="archive-post-item">

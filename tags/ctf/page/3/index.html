@@ -354,6 +354,38 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/" >
+            
+                <span>变量覆盖漏洞</span>
+        </a>
+        <div class="abstract-content">
+            引子先看一段php代码
+123456&lt;?php$a = &quot;aa&quot;;$aa = &quot;111111&quot;;echo &quot;aa变量的值为&quot;.$aa;$$a = $_GET[&#x27;name&#x27;];echo &quot;aa变量的值为&quot;.$aa;
+通过url传入name变量为555之后结果：解析：这里由于$$a=$($a)=$aa，因此赋值时将name的值赋值给了$aa,造成了变量覆盖漏洞
+register_globals(全局变量覆盖)register_globals是php.ini中的一个选项，从PHP 5.3....
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/14</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/10/13/%E9%9B%B6%E5%AE%BD%E5%BA%A6%E5%AD%97%E7%AC%A6%E9%9A%90%E5%86%99/" >
             
                 <span>零宽度字符隐写</span>
@@ -646,36 +678,6 @@ RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
         <div class="abstract-content">
             原理说明：https://www.freebuf.com/column/187845.html一篇文章带你入门ssti内含payload及绕过方法https://www.cnblogs.com/nongchaoer/p/12431229.htmlgithub上的payload大全
 知识12345678__class__  返回类型所属的对象__mro__    返回一个包含对象所继承的基类元组，方法在解析时按照元组的顺序解析。__base__   返回该对象所继承的基类&#x2F;&#x2F; __base__和__mro__都是用来寻找基类的__subclasses__   每个新类都...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/19</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Web_php_unserialize/" >
-            
-                <span>__wakeup()的绕过和正则绕过</span>
-        </a>
-        <div class="abstract-content">
-            Web_php_unserialize题目直接源码
-123456789101112131415161718192021222324252627&lt;?phpclass Demo &#123;    private $file = &#x27;index.php&#x27;;    public function __construct($file) &#123;        $this-&gt;file = $file;    &#125;    function __destruct() &#123;        echo @highlight_file($this-&gt;fi...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -1994,9 +1996,26 @@ RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 79
+        Total : 80
         </div>
         <!-- search  -->
         
@@ -2009,6 +2028,11 @@ RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href= "/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/" >sql注入速查笔记</a>
+        </li>
     
     
         <li class="archive-post-item">
