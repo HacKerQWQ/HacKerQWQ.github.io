@@ -354,202 +354,6 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/11/08/%E6%97%A0%E5%8F%82%E6%95%B0%E6%9E%84%E9%80%A0payload%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6-%E5%90%ABPHP%E6%95%B0%E7%BB%84%E7%9A%84%E7%9F%A5%E8%AF%86/" >
-            
-                <span>无参数构造payload读取文件(含PHP数组的知识)</span>
-        </a>
-        <div class="abstract-content">
-            知识点PHP数组处理函数
-
-scandir ( string $directory [, int $sorting_order [, resource $context ]] ) : array列出指定路径中的文件和目录，返回一个数组
-
-
-
-readfile ( string $filename [, bool $use_include_path = FALSE [, resource $context ]] ) : int读取文件并写入到输出缓冲中(直接输出内容)
-
-
-
-file_get_contents ( string $filename [, bool $use_include_...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/08</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/11/06/sql%E4%B9%8Bpython%E8%84%9A%E6%9C%AC%E6%B3%A8%E5%85%A5/" >
-            
-                <span>sql之python脚本注入</span>
-        </a>
-        <div class="abstract-content">
-            0x01 前言之所以记录下来是不想再看到相似的题目重新写脚本了，直接用改改数据就好了
-0x02 二分法布尔注入123456789101112131415161718192021222324252627282930313233343536373839import urllib.parseimport requestsurl = &quot;http://b55b8d41-e118-469f-b96e-86b3569754ea.node3.buuoj.cn/index.php&quot;#保持sessionsession = requests.session()#定义http的headerh...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/30/escapeshellarg-escapeshellcmd%E9%80%A0%E6%88%90%E5%8F%82%E6%95%B0%E6%B3%A8%E5%85%A5/" >
-            
-                <span>escapeshellarg/escapeshellcmd造成参数注入</span>
-        </a>
-        <div class="abstract-content">
-            命令用法escapeshellcmd简单来说就是将上述字符转义
-escapeshellarg简单来说就是将用户输入的字符串包裹上单引号，如果已经有单引号则进行转义
-漏洞成因当escapehshellarg将用户输入的字符串包裹上单引号后直接拼接到命令的参数选项位置，而不是参数值位置，比如
-1git grep -i --line-number  &#x27;--open-files-in-pager=id;&#x27; master
-当这样会导致可以由用户自己加命令选项而不是按照escapeshellarg函数者的本意执行命令
-另一个例子：
-
-传入的参数是：172.17.0.2&#39; ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/30</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/29/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BHANDLER%E6%9F%A5%E8%A1%A8/" >
-            
-                <span>SQL注入之HANDLER查表</span>
-        </a>
-        <div class="abstract-content">
-            Handler注入用法：HANDLER...OPEN语句打开一个表，然后用HANDLER...READ读语句，并且读取不会被其他会话共享，最后用HANDLER...CLOSE关表
-12345678910HANDLER tbl_name OPEN [ [AS] alias]HANDLER tbl_name READ index_name &#123; &#x3D; | &lt;&#x3D; | &gt;&#x3D; | &lt; | &gt; &#125; (value1,value2,...)    [ WHERE where_condition ] [LIMIT ... ]HANDLE...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/29</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/29/WEB-INF%E7%9B%AE%E5%BD%95%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" >
-            
-                <span>WEB-INF目录下信息泄露</span>
-        </a>
-        <div class="abstract-content">
-            知识点WEB-INF/web.xml泄露
-
-WEB-INF主要包含一下文件或目录:/WEB-INF/web.xml：Web应用程序配置文件，描述了 servlet 和其他的应用组件配置及命名规则。/WEB-INF/classes/：含了站点所有用的 class 文件，包括 servlet class 和非servlet class，他们不能包含在 .jar文件中/WEB-INF/lib/：存放web应用需要的各种JAR文件，放置仅在这个应用中要求使用的jar文件,如数据库驱动jar文件/WEB-INF/src/：源码目录，按照包名结构放置各个java文件。/WEB-INF/databas...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/29</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/29/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%A1%E8%AE%A1%E4%BB%A3%E7%A0%81%E5%8F%AF%E5%88%A9%E7%94%A8%E5%8F%98%E9%87%8F/" >
-            
-                <span>python多线程审计代码可利用变量</span>
-        </a>
-        <div class="abstract-content">
-            [强网杯]高明的黑客index.php直接告诉我们源码在www.tar.gz,那就下载来看看好家伙，直接三千多个文件尝试过放到Seay源码审计软件里面自动审计，但是实在是太多了，发现了可能利用的漏洞眼睛也看不过来下面是上网找的多线程脚本，值得学习，记录一下
-Python多线程脚本123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354import threadingimport timeimport reimport osimport reques...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/29</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
         <a class="abstract-title" href = "/2020/10/26/Caculator%E9%A2%98%E7%9A%84exp/" >
             
                 <span>Caculator题的exp</span>
@@ -672,6 +476,203 @@ websignin12345678910111213141516171819202122232425262728293031323334353637383940
             <div class= abstract-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/10/18/htaccess%E4%B8%8A%E4%BC%A0%E7%BB%93%E5%90%88lua%E8%84%9A%E6%9C%AC%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4/" >
+            
+                <span>.htaccess上传结合lua脚本执行命令</span>
+        </a>
+        <div class="abstract-content">
+            lua语言介绍：Lua 是一种轻量小巧的脚本语言，用标准C语言编写并以源代码形式开放， 其设计目的是为了嵌入应用程序中，从而为应用程序提供灵活的扩展和定制功能。语法学习:菜鸟教程学习lua
+.htaccess.htaccess是分布式配置文件，作用于当前目录及其子目录用法参考:https://hackerqwq.github.io/2020/10/12/htaccess%E7%9A%84%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/https://mp.weixin.qq.com/s/zhkxabRQ20D7GQXnReco...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/18</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/" >
+            
+                <span>变量覆盖漏洞</span>
+        </a>
+        <div class="abstract-content">
+            引子先看一段php代码
+123456&lt;?php$a = &quot;aa&quot;;$aa = &quot;111111&quot;;echo &quot;aa变量的值为&quot;.$aa;$$a = $_GET[&#x27;name&#x27;];echo &quot;aa变量的值为&quot;.$aa;
+通过url传入name变量为555之后结果：解析：这里由于$$a=$($a)=$aa，因此赋值时将name的值赋值给了$aa,造成了变量覆盖漏洞
+register_globals(全局变量覆盖)register_globals是php.ini中的一个选项，从PHP 5.3....
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/14</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/10/13/SQL%E8%AF%AD%E5%8F%A5%E4%B9%8B%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" >
+            
+                <span>SQL语句之增删改查及用户权限</span>
+        </a>
+        <div class="abstract-content">
+            什么是SQLSQL(发音为S-Q-L或sequel)是Structured Query Language(结构化查询语言)的缩写，是一种专门用来与数据库沟通的语言。
+检索(查)初步检索
+单个列的检索12SELECT prod_name FROM Products;
+从Products表中获取prod_name列的信息
+多个列的检索12SELECT prod_name,prod_id,prod_priceFROM Products;
+从Products中获取prod_name,prod_id,prod_price等列的信息
+检索所有列12SELECT *FROM Products;
+给定通...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/13</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "MySQL">MySQL</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/10/13/%E9%9B%B6%E5%AE%BD%E5%BA%A6%E5%AD%97%E7%AC%A6%E9%9A%90%E5%86%99/" >
+            
+                <span>零宽度字符隐写</span>
+        </a>
+        <div class="abstract-content">
+            零宽度字符是什么零宽度字符是一些不可见的，不可打印的字符。它们存在于页面中主要用于调整字符的显示格式，下面就是一些常见的零宽度字符及它们的unicode码和原本用途：
+
+零宽度空格符 (zero-width space) U+200B : 用于较长单词的换行分隔
+零宽度非断空格符 (zero width no-break space) U+FEFF : 用于阻止特定位置的换行分隔
+零宽度连字符 (zero-width joiner) U+200D : 用于阿拉伯文与印度语系等文字中，使不会发生连字的字符间产生连字效果
+零宽度断字符 (zero-width non-joiner) U+20...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/13</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/10/12/htaccess%E7%9A%84%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" >
+            
+                <span>.htaccess的漏洞利用总结</span>
+        </a>
+        <div class="abstract-content">
+            .htaccess简介.htaccess全称Hypertext Access(超文本入口)，也叫分布式配置文件，在一个特定的目录放置一个.htaccess可以作用于此目录及其子目录
+如果开启.htaccess，可以在所在文件夹和子文件下改变php.ini的配置。对于黑客来说，如果能控制.htaccess，就可以完成绕WAF、文件包含、文件上传等操作
+.htaccess利用方法(前提条件)首先目标主机必须开启.htaccess，配置在apache2.conf中，这里是部分配置
+123456789101112131415161718192021222324252627282930313233...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/12</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/10/10/Private-Key-Encryption-1/" >
+            
+                <span>Private-Key Encryption(1)</span>
+        </a>
+        <div class="abstract-content">
+            Principles of Modern CryptographyFormal Definitions(正式的定义)If you don’t understand what you want to achieve, how can you possibly know when (or if) you have achieved it?如果你不知道你想要的做到怎样，那你怎么知道你做到了没有
+
+what security guarantees are desired(要达到怎样的安全)
+
+No recover the key (不能恢复出密钥)No recover any character...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/10</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Crypto">Crypto</a>
     
 </div>
             
@@ -1888,117 +1889,9 @@ websignin12345678910111213141516171819202122232425262728293031323334353637383940
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 80
+        Total : 74
         </div>
         <!-- search  -->
         
@@ -2028,26 +1921,6 @@ websignin12345678910111213141516171819202122232425262728293031323334353637383940
         </li>
     
     
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/14</span><a class="archive-post-title" href= "/2021/01/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%BA%94%E7%94%A8%E5%B1%82/" >计算机网络第六章-应用层</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/13</span><a class="archive-post-title" href= "/2021/01/13/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%94%E7%AB%A0-%E4%BC%A0%E8%BE%93%E5%B1%82/" >计算机网络第五章-传输层</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2021/01/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%BD%91%E7%BB%9C%E5%B1%82/" >计算机网络第四章-网络层</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/02</span><a class="archive-post-title" href= "/2021/01/02/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%B8%89%E7%AB%A0%E2%80%94-%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" >计算机网络第三章-数据链路层</a>
-        </li>
-    
-    
     
     
     
@@ -2055,11 +1928,6 @@ websignin12345678910111213141516171819202122232425262728293031323334353637383940
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/23</span><a class="archive-post-title" href= "/2020/12/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/" >计算机网络第二章-物理层</a>
-        </li>
     
     
         <li class="archive-post-item">
@@ -2074,11 +1942,6 @@ websignin12345678910111213141516171819202122232425262728293031323334353637383940
     
         <li class="archive-post-item">
             <span class="archive-post-date">12/19</span><a class="archive-post-title" href= "/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/" >无字母数字构造shell小总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/18</span><a class="archive-post-title" href= "/2020/12/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%AC%E4%B8%80%E7%AB%A0%E6%A6%82%E8%BF%B0/" >计算机网络第一章概述</a>
         </li>
     
     
@@ -2443,8 +2306,6 @@ websignin12345678910111213141516171819202122232425262728293031323334353637383940
         <span class="sidebar-tag-name" data-tags="开发"><span class="iconfont-archer">&#xe606;</span>开发</span>
     
         <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
-    
-        <span class="sidebar-tag-name" data-tags="考研"><span class="iconfont-archer">&#xe606;</span>考研</span>
     
         <span class="sidebar-tag-name" data-tags="前端"><span class="iconfont-archer">&#xe606;</span>前端</span>
     
