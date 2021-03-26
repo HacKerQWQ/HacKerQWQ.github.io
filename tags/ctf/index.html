@@ -354,6 +354,36 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2021/03/26/Nep2021%E4%B8%AA%E4%BA%BA%E8%B5%9B%E6%80%BB%E7%BB%93-wp-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >
+            
+                <span>Nep2021个人赛总结&amp;wp(学习笔记)</span>
+        </a>
+        <div class="abstract-content">
+            weblittletrick考点
+命令执行绕过代码1234567891011&lt;?php    error_reporting(0);    highlight_file(__FILE__);    $nep = $_GET[&#x27;nep&#x27;];    $len = $_GET[&#x27;len&#x27;];    if(intval($len)&lt;8 &amp;&amp; strlen($nep)&lt;13)&#123;        eval(substr($nep,0,$len));    &#125;else&#123;        die(&#x2...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/03/26</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/" >
             
                 <span>sql注入速查笔记</span>
@@ -630,35 +660,6 @@ por...
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/16</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/11/14/balckhat%E8%AE%AE%E9%A2%98%E7%9A%84%E5%BA%94%E7%94%A8-python-nignx-pythonignx/" >
-            
-                <span>balckhat议题的应用(python+nignx=pythonignx)</span>
-        </a>
-        <div class="abstract-content">
-            pythonginx12345678910111213141516171819202122232425262728from flask import Flask, Blueprint, request, Response, escape ,render_templatefrom urllib.parse import urlsplit, urlunsplit, unquotefrom urllib import parseimport urllib.requestapp = Flask(__name__)# Index@app.route(&#x27;/&#x27;, methods=[...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/14</span>
             </div>
             <!-- tags  -->
             
@@ -1881,9 +1882,30 @@ por...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 74
+        Total : 75
         </div>
         <!-- search  -->
         
@@ -1896,6 +1918,11 @@ por...
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2021/03/26/Nep2021%E4%B8%AA%E4%BA%BA%E8%B5%9B%E6%80%BB%E7%BB%93-wp-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >Nep2021个人赛总结&wp(学习笔记)</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2253,7 +2280,7 @@ por...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2020/04/27/%E4%BB%8Ectf%E9%A2%98%E7%9B%AE-%E7%AD%94%E6%A1%88%E5%B0%B1%E5%9C%A8index-php-%E7%9C%8BPHP%E4%BC%AA%E9%80%A0%E5%8D%8F%E8%AE%AE/" >从ctf题目(答案就在index.php)看PHP伪造协议</a>
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2020/04/27/%E4%BB%8Ectf%E9%A2%98%E7%9B%AE-%E7%AD%94%E6%A1%88%E5%B0%B1%E5%9C%A8index-php-%E7%9C%8BPHP%E4%BC%AA%E9%80%A0%E5%8D%8F%E8%AE%AE/" >PHP伪协议小总结</a>
         </li>
     
     
@@ -2291,11 +2318,11 @@ por...
     
         <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
-        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
-    
         <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
     
         <span class="sidebar-tag-name" data-tags="开发"><span class="iconfont-archer">&#xe606;</span>开发</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
         <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
     

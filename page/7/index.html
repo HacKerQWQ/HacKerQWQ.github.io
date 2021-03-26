@@ -367,6 +367,35 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/05/Jarvis-injeect-%E5%8F%8D%E5%BC%95%E5%8F%B7%E6%B3%A8%E5%85%A5/" >
+            
+                <span>Jarvis injeect(反引号注入)</span>
+        </a>
+        <div class="abstract-content">
+            源码123456789&lt;?phprequire(&quot;config.php&quot;);$table = $_GET[&#x27;table&#x27;]?$_GET[&#x27;table&#x27;]:&quot;test&quot;;$table = Filter($table);mysqli_query($mysqli,&quot;desc `secret_&#123;$table&#125;`&quot;) or Hacker();$sql = &quot;select &#x27;flag&#123;xxx&#125;&#x27; from secret_&#1...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/05</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/" >
             
                 <span>XXE注入payload</span>
@@ -690,45 +719,6 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/27/%E4%BB%8Ectf%E9%A2%98%E7%9B%AE-%E7%AD%94%E6%A1%88%E5%B0%B1%E5%9C%A8index-php-%E7%9C%8BPHP%E4%BC%AA%E9%80%A0%E5%8D%8F%E8%AE%AE/" >
-            
-                <span>从ctf题目(答案就在index.php)看PHP伪造协议</span>
-        </a>
-        <div class="abstract-content">
-            初步探索首先我们看到了一个界面
-
-只有一个链接到”./post/index.php?file=show.php”
-点进去之后只显示test5
-
-查看源代码之后也找不到头绪SQL注入也没用
-查找writeup 结果：
-
-直接显示出网页源代码的Base64编码
-拿去编码之后得出结果
-123456789101112131415&lt;html&gt;    &lt;title&gt;Bugku-ctf&lt;/title&gt;    &lt;?php	error_reporting(0);	if(!$_GET[file])&#123;echo &#x27;&lt;a href=&quot;....
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/27</span>
             </div>
             <!-- tags  -->
             
@@ -2052,9 +2042,30 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 74
+        Total : 75
         </div>
         <!-- search  -->
         
@@ -2067,6 +2078,11 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2021/03/26/Nep2021%E4%B8%AA%E4%BA%BA%E8%B5%9B%E6%80%BB%E7%BB%93-wp-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >Nep2021个人赛总结&wp(学习笔记)</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2424,7 +2440,7 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2020/04/27/%E4%BB%8Ectf%E9%A2%98%E7%9B%AE-%E7%AD%94%E6%A1%88%E5%B0%B1%E5%9C%A8index-php-%E7%9C%8BPHP%E4%BC%AA%E9%80%A0%E5%8D%8F%E8%AE%AE/" >从ctf题目(答案就在index.php)看PHP伪造协议</a>
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2020/04/27/%E4%BB%8Ectf%E9%A2%98%E7%9B%AE-%E7%AD%94%E6%A1%88%E5%B0%B1%E5%9C%A8index-php-%E7%9C%8BPHP%E4%BC%AA%E9%80%A0%E5%8D%8F%E8%AE%AE/" >PHP伪协议小总结</a>
         </li>
     
     
@@ -2462,11 +2478,11 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
     
         <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
-        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
-    
         <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
     
         <span class="sidebar-tag-name" data-tags="开发"><span class="iconfont-archer">&#xe606;</span>开发</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
         <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
     

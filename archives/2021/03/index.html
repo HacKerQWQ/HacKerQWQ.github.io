@@ -22,7 +22,7 @@
     <meta name="description" content="">
     <meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://hackerqwq.github.io/page/2/index.html">
+<meta property="og:url" content="https://hackerqwq.github.io/archives/2021/03/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="HacKerQWQ">
@@ -85,6 +85,8 @@
 
     <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -209,10 +211,8 @@
 <meta name="generator" content="Hexo 5.2.0"></head>
 
     
-        <body class="home-body">
     
-    
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
@@ -228,34 +228,21 @@
 
 
 
-
-height:50vh;
 ">
     
     <!-- 主页  -->
-    
-    
-    <!-- 文章页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            HacKerQWQ's Studio.
-            <!-- 文章页  -->
-            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
-            
-            
-                You do things when the opportunities come along.
-            
-            <!-- 文章页  -->
             
         </p>
         <!-- 文章页meta -->
@@ -367,322 +354,18 @@ height:50vh;
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/" >
+        <a class="abstract-title" href = "/2021/03/26/Nep2021%E4%B8%AA%E4%BA%BA%E8%B5%9B%E6%80%BB%E7%BB%93-wp-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >
             
-                <span>浅析SSRF漏洞</span>
+                <span>Nep2021个人赛总结&amp;wp(学习笔记)</span>
         </a>
         <div class="abstract-content">
-            0x01 SSRF漏洞介绍SSRF(Server Side Request Forgery，服务端请求伪造)，是攻击者通过构造数据进而伪造服务器端发请求的漏洞。形成的原因多是服务器端提供了从外部服务可以获取数据的功能，但是对发起请求的来源进行验证过滤，导致攻击者可以自由构造参数，获取预期外的请求。
-SSRF原理解析URL结构如下
-1URI &#x3D; schema:[&#x2F;&#x2F;authority]path[?query][#fragment]
-
-
-userinfo 通常用于身份验证，root:passwd，以@结尾
-host就是经常说的主机名，如baidu.com
-por...
+            weblittletrick考点
+命令执行绕过代码1234567891011&lt;?php    error_reporting(0);    highlight_file(__FILE__);    $nep = $_GET[&#x27;nep&#x27;];    $len = $_GET[&#x27;len&#x27;];    if(intval($len)&lt;8 &amp;&amp; strlen($nep)&lt;13)&#123;        eval(substr($nep,0,$len));    &#125;else&#123;        die(&#x2...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/16</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/11/14/balckhat%E8%AE%AE%E9%A2%98%E7%9A%84%E5%BA%94%E7%94%A8-python-nignx-pythonignx/" >
-            
-                <span>balckhat议题的应用(python+nignx=pythonignx)</span>
-        </a>
-        <div class="abstract-content">
-            pythonginx12345678910111213141516171819202122232425262728from flask import Flask, Blueprint, request, Response, escape ,render_templatefrom urllib.parse import urlsplit, urlunsplit, unquotefrom urllib import parseimport urllib.requestapp = Flask(__name__)# Index@app.route(&#x27;/&#x27;, methods=[...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/14</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/11/10/THINKPHP-poc-collection/" >
-            
-                <span>THINKPHP-poc-collection</span>
-        </a>
-        <div class="abstract-content">
-            官方公告官方公告:1、https://blog.thinkphp.cn/8690752、https://blog.thinkphp.cn/910675
-thinkphp 2http://your-ip:8080/index.php?s=/index/index/name/$%7B@phpinfo()%7D
-thinkphp 5.0.221、http://192.168.1.1/thinkphp/public/?s=.|think\config/get&amp;name=database.username2、http://192.168.1.1/thinkphp/public/?s=.|t...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "渗透测试">渗透测试</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/11/09/redis%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E7%AC%94%E8%AE%B0/" >
-            
-                <span>redis的基本操作笔记</span>
-        </a>
-        <div class="abstract-content">
-            Redis介绍REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。
-Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。
-它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Hash), 列表(list), 集合(sets) 和 有序集合(sorted sets)等类型。
-Redis连接
-连接到主机为127.0.0.1,端口为6379,密码为pass的服务器上1...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/09</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "开发">开发</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/11/09/%E5%BC%80%E6%BA%90Web%E5%BA%94%E7%94%A8%E6%89%AB%E6%8F%8F%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/" >
-            
-                <span>开源Web应用扫描软件使用笔记</span>
-        </a>
-        <div class="abstract-content">
-            w3af介绍上手就感觉挺复古的，运行环境用的是python2，很多包都被弃用了还要求安装，可以用docker,docker是个好东西，该框架有三个主要的插件类型：crawl，audit和attack。
-crawl经典案例就是爬虫，循环爬取url就完事了
-audit翻译过来是审计，就是将crawl发送过来的url进行测试，比如说在url后面加?id=1&#39;
-attack利用audit中发现的漏洞进行进一步攻击，在远程服务器上面返回一个shell或者别的
-其他插件
-Infrastructure
-辨识系统信息，比如WAF、操作系统和HTTP daemon
-
-
-grep
-分析其他插件发送过...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/09</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "渗透测试">渗透测试</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/11/08/%E6%97%A0%E5%8F%82%E6%95%B0%E6%9E%84%E9%80%A0payload%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6-%E5%90%ABPHP%E6%95%B0%E7%BB%84%E7%9A%84%E7%9F%A5%E8%AF%86/" >
-            
-                <span>无参数构造payload读取文件(含PHP数组的知识)</span>
-        </a>
-        <div class="abstract-content">
-            知识点PHP数组处理函数
-
-scandir ( string $directory [, int $sorting_order [, resource $context ]] ) : array列出指定路径中的文件和目录，返回一个数组
-
-
-
-readfile ( string $filename [, bool $use_include_path = FALSE [, resource $context ]] ) : int读取文件并写入到输出缓冲中(直接输出内容)
-
-
-
-file_get_contents ( string $filename [, bool $use_include_...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/08</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/11/06/sql%E4%B9%8Bpython%E8%84%9A%E6%9C%AC%E6%B3%A8%E5%85%A5/" >
-            
-                <span>sql之python脚本注入</span>
-        </a>
-        <div class="abstract-content">
-            0x01 前言之所以记录下来是不想再看到相似的题目重新写脚本了，直接用改改数据就好了
-0x02 二分法布尔注入123456789101112131415161718192021222324252627282930313233343536373839import urllib.parseimport requestsurl = &quot;http://b55b8d41-e118-469f-b96e-86b3569754ea.node3.buuoj.cn/index.php&quot;#保持sessionsession = requests.session()#定义http的headerh...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/30/escapeshellarg-escapeshellcmd%E9%80%A0%E6%88%90%E5%8F%82%E6%95%B0%E6%B3%A8%E5%85%A5/" >
-            
-                <span>escapeshellarg/escapeshellcmd造成参数注入</span>
-        </a>
-        <div class="abstract-content">
-            命令用法escapeshellcmd简单来说就是将上述字符转义
-escapeshellarg简单来说就是将用户输入的字符串包裹上单引号，如果已经有单引号则进行转义
-漏洞成因当escapehshellarg将用户输入的字符串包裹上单引号后直接拼接到命令的参数选项位置，而不是参数值位置，比如
-1git grep -i --line-number  &#x27;--open-files-in-pager=id;&#x27; master
-当这样会导致可以由用户自己加命令选项而不是按照escapeshellarg函数者的本意执行命令
-另一个例子：
-
-传入的参数是：172.17.0.2&#39; ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/30</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/29/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BHANDLER%E6%9F%A5%E8%A1%A8/" >
-            
-                <span>SQL注入之HANDLER查表</span>
-        </a>
-        <div class="abstract-content">
-            Handler注入用法：HANDLER...OPEN语句打开一个表，然后用HANDLER...READ读语句，并且读取不会被其他会话共享，最后用HANDLER...CLOSE关表
-12345678910HANDLER tbl_name OPEN [ [AS] alias]HANDLER tbl_name READ index_name &#123; &#x3D; | &lt;&#x3D; | &gt;&#x3D; | &lt; | &gt; &#125; (value1,value2,...)    [ WHERE where_condition ] [LIMIT ... ]HANDLE...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/29</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/29/WEB-INF%E7%9B%AE%E5%BD%95%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" >
-            
-                <span>WEB-INF目录下信息泄露</span>
-        </a>
-        <div class="abstract-content">
-            知识点WEB-INF/web.xml泄露
-
-WEB-INF主要包含一下文件或目录:/WEB-INF/web.xml：Web应用程序配置文件，描述了 servlet 和其他的应用组件配置及命名规则。/WEB-INF/classes/：含了站点所有用的 class 文件，包括 servlet class 和非servlet class，他们不能包含在 .jar文件中/WEB-INF/lib/：存放web应用需要的各种JAR文件，放置仅在这个应用中要求使用的jar文件,如数据库驱动jar文件/WEB-INF/src/：源码目录，按照包名结构放置各个java文件。/WEB-INF/databas...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/29</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/03/26</span>
             </div>
             <!-- tags  -->
             
@@ -697,113 +380,8 @@ WEB-INF主要包含一下文件或目录:/WEB-INF/web.xml：Web应用程序配�
     
     <!-- paginator  -->
     
-    <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/">&lt; PREV</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">NEXT &gt;</a>
-    </nav>
-    
 </main>
             <!-- profile -->
-            
-            <div class="profile">
-    <img class="profile-avatar" alt="avatar" src= /avatar/haer.jpg >
-    <div class="profile-name">HacKerQWQ</div>
-    
-    <div class="profile-signature">
-        striving
-    </div>
-    
-    
-    <div class="profile-social">
-        
-    
-        
-            
-                <a href="mailto:a785745707@gmail.com" class="iconfont-archer email" title=email ></a>
-            
-        
-    
-        
-            
-                <a href="https://github.com/HacKerQWQ" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                  
-                  <img class="profile-qr" src="/assets/Misaka.jpg" />
-                </span>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
-            
-        
-    
-
-    </div>
-    
-    
-        <div class="friends">
-            <div>FRIENDS</div>
-            
-                
-                    <span>
-                        <a href= //www.baidu.com target="_black">friendA</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //www.google.com target="_black">friendB</a>
-                    </span>
-                
-            
-                
-            
-        </div>
-    
-    
-        <div class="about-me">
-            <a href = "/about" >ABOUT ME</a>
-        </div>
-    
-</div>
             
         </div>
         <footer class="footer footer-unloaded">
