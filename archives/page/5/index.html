@@ -355,6 +355,55 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-CAT-PHP-curl/" >
+            
+                <span>宽字节注入+curl读取文件+Django框架漏洞的组合拳</span>
+        </a>
+        <div class="abstract-content">
+            攻防世界-CAT首先看到的是一个输入域名(怀疑命令注入)的地方
+
+然后输入经典127.0.0.1试试
+
+果然是ping命令的，但是&amp; &amp;&amp; | ;都不行
+模糊测试
+发现没有其他都过滤了，但是这几个没有过滤
+
+@-./
+
+然后试试sql的字典FUZZ一下
+
+宽字节看起来跟其他的不同，将response的代码复制到本地打开看看
+得到一个报错网页
+
+解题
+RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
+
+
+官方提示，然后找到对应的语法，结合之前没有过滤@，我们就可以读取任意文件
+从网上找到的wp...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/19</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/08/19/flask%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" >
             
                 <span>SSTI模板注入</span>
@@ -635,47 +684,6 @@ payload:爆数据库
             BDJCTF-2020-Web-easy_searchindex.php
 试了几个都弱口令都不行，看了看题目(easy_search)，于是扫了扫目录，发现index.php.swp，down下来之后看到了源代码
 12345678910111213141516171819202122232425262728293031&lt;?php        ob_start();        function get_hash()&#123;                $chars = &#x27;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrst...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/14</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/14/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E7%8E%84%E6%AD%A6%E7%BB%84-writeup/" >
-            
-                <span>jwt在网鼎杯的运用</span>
-        </a>
-        <div class="abstract-content">
-            2020-网鼎杯-玄武组-js_on前置知识jwt(前面的博客已经提到过了)，自行翻看
-看题目先是一个登陆框
-
-使用admin/admin登陆之后看到了jwt的key值
-
-jwt结合sql注入解题先进行尝试
-1admin&#x27;/**/and/**/1=1#
-
-1admin&#x27;/**/and/**/1=2#
-
-结果不一样，说明user存在注入点
-经过尝试，发现select这些都被过滤了，使用进行绕过，构造出最终payload
-1admin&#x27;/**/and/**/as&lt;a&gt;cii(m&lt;a&gt;id((se&lt;a&gt;lect/**/lo&lt...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -1922,9 +1930,24 @@ jwt结合sql注入解题先进行尝试
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 75
+        Total : 76
         </div>
         <!-- search  -->
         
@@ -1937,6 +1960,11 @@ jwt结合sql注入解题先进行尝试
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2021/04/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E7%AF%87/" >内网渗透-信息收集篇</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2344,6 +2372,8 @@ jwt结合sql注入解题先进行尝试
         <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
         <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
     
         <span class="sidebar-tag-name" data-tags="前端"><span class="iconfont-archer">&#xe606;</span>前端</span>
     

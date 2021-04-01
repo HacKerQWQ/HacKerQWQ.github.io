@@ -368,6 +368,36 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/" >
+            
+                <span>unicode等价替换</span>
+        </a>
+        <div class="abstract-content">
+            前置知识Unicode设计的安全性Unicode等价性浅谈其中提供了一个脚本用于生成替换表
+1234567891011121314151617181920212223242526272829303132#!/usr/bin/env python# -*- coding: utf-8 -*-import jsonfrom unicodedata import normalizedef main():    debug = False    tables = &#123;&#125;    for i in range(1, 0x10000):        src = unichr(i) ...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/17</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/" >
             
                 <span>浅析SSRF漏洞</span>
@@ -648,37 +678,6 @@ escapeshellarg简单来说就是将用户输入的字符串包裹上单引号，
         <div class="abstract-content">
             Handler注入用法：HANDLER...OPEN语句打开一个表，然后用HANDLER...READ读语句，并且读取不会被其他会话共享，最后用HANDLER...CLOSE关表
 12345678910HANDLER tbl_name OPEN [ [AS] alias]HANDLER tbl_name READ index_name &#123; &#x3D; | &lt;&#x3D; | &gt;&#x3D; | &lt; | &gt; &#125; (value1,value2,...)    [ WHERE where_condition ] [LIMIT ... ]HANDLE...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/29</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/29/WEB-INF%E7%9B%AE%E5%BD%95%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" >
-            
-                <span>WEB-INF目录下信息泄露</span>
-        </a>
-        <div class="abstract-content">
-            知识点WEB-INF/web.xml泄露
-
-WEB-INF主要包含一下文件或目录:/WEB-INF/web.xml：Web应用程序配置文件，描述了 servlet 和其他的应用组件配置及命名规则。/WEB-INF/classes/：含了站点所有用的 class 文件，包括 servlet class 和非servlet class，他们不能包含在 .jar文件中/WEB-INF/lib/：存放web应用需要的各种JAR文件，放置仅在这个应用中要求使用的jar文件,如数据库驱动jar文件/WEB-INF/src/：源码目录，按照包名结构放置各个java文件。/WEB-INF/databas...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -2026,9 +2025,24 @@ WEB-INF主要包含一下文件或目录:/WEB-INF/web.xml：Web应用程序配�
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 75
+        Total : 76
         </div>
         <!-- search  -->
         
@@ -2041,6 +2055,11 @@ WEB-INF主要包含一下文件或目录:/WEB-INF/web.xml：Web应用程序配�
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2021/04/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E7%AF%87/" >内网渗透-信息收集篇</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2448,6 +2467,8 @@ WEB-INF主要包含一下文件或目录:/WEB-INF/web.xml：Web应用程序配�
         <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
         <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
     
         <span class="sidebar-tag-name" data-tags="前端"><span class="iconfont-archer">&#xe606;</span>前端</span>
     
