@@ -355,6 +355,42 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/" >
+            
+                <span>浅析SSRF漏洞</span>
+        </a>
+        <div class="abstract-content">
+            0x01 SSRF漏洞介绍SSRF(Server Side Request Forgery，服务端请求伪造)，是攻击者通过构造数据进而伪造服务器端发请求的漏洞。形成的原因多是服务器端提供了从外部服务可以获取数据的功能，但是对发起请求的来源进行验证过滤，导致攻击者可以自由构造参数，获取预期外的请求。
+SSRF原理解析URL结构如下
+1URI &#x3D; schema:[&#x2F;&#x2F;authority]path[?query][#fragment]
+
+
+userinfo 通常用于身份验证，root:passwd，以@结尾
+host就是经常说的主机名，如baidu.com
+por...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/16</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/11/14/balckhat%E8%AE%AE%E9%A2%98%E7%9A%84%E5%BA%94%E7%94%A8-python-nignx-pythonignx/" >
             
                 <span>balckhat议题的应用(python+nignx=pythonignx)</span>
@@ -627,36 +663,6 @@ https://mmbiz.qpic.cn/mmbiz_png/K9JoBxX2CgC...
 
 1;select *,1
 ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/20</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/20/N1CTF-websignin-sql%E6%B3%A8%E5%85%A5-%E9%80%BB%E8%BE%91/" >
-            
-                <span>N1CTF_websignin(sql注入&amp;逻辑)</span>
-        </a>
-        <div class="abstract-content">
-            前言这题好气，知道\_tostring()怎么利用，知道要从数据库里面取出key来，想到了基于时间的注入，也考虑了报错注入，但是没有想到_stristr()的另一个作用，多角度思考还是得锻炼
-websignin123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051&lt;?php class ip &#123;    public $ip;    public function waf($info)&#123;    &#125;    public fun...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -1915,9 +1921,32 @@ websignin12345678910111213141516171819202122232425262728293031323334353637383940
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 76
+        Total : 77
         </div>
         <!-- search  -->
         
@@ -1934,6 +1963,11 @@ websignin12345678910111213141516171819202122232425262728293031323334353637383940
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/2021/04/04/proc%E7%9B%AE%E5%BD%95%E5%9C%A8ctf%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" >proc目录在ctf中的应用</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2151,7 +2185,7 @@ websignin12345678910111213141516171819202122232425262728293031323334353637383940
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/flask%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" >SSTI模板注入</a>
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" >SSTI模板注入</a>
         </li>
     
     
@@ -2331,9 +2365,9 @@ websignin12345678910111213141516171819202122232425262728293031323334353637383940
     
         <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
     
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
-    
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     

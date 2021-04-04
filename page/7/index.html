@@ -368,6 +368,70 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >
+            
+                <span>.git源码泄露payload</span>
+        </a>
+        <div class="abstract-content">
+            log泄露
+查看历史记录
+1git log
+
+切换版本
+1git reset
+
+对比两次提交
+1git diff
+
+
+
+解题思路
+Brutesuite用Fuzz扫描发现存在git源码泄露
+
+
+
+用GitHack工具clone源码到本地
+
+
+
+git log 查看版本
+
+
+解法一对比前一个版本
+12git diff f95aegit diff HEAD^
+
+解法二直接恢复到前一个版本
+12git reset --hard f95aegit reset --hard HEAD^
+
+FLAG最后得到flag
+stash工作状态泄露
+查看git保存的工作状态
+1git stash list
+
+恢...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/06</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/08/05/VIM%E7%BC%96%E8%BE%91%E5%99%A8%E5%BC%82%E5%B8%B8%E9%80%80%E5%87%BA%E5%AF%BC%E8%87%B4%E7%9A%84%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/" >
             
                 <span>VIM编辑器异常退出导致的源码泄露</span>
@@ -693,41 +757,6 @@ com.all...
             <div class= abstract-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "PHP">PHP</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" >
-            
-                <span>文件上传漏洞知识点整理</span>
-        </a>
-        <div class="abstract-content">
-            2020.6.11第一次更新前言：上传漏洞，简单来说，就是后端对用户上传上来的文件没有做好格式验证和内容检测，导致用户可以上传任意文件。
-解析漏洞常见的Web容器有IIS、Nginx、Apache、Tomcat等
-IIS解析漏洞IIS6.0版本存在两个解析漏洞，然而官方并不认为这是漏洞，因此这个漏洞现在依然存在。
-1..asp、.asa后缀的文件夹当建立*.asa、*.asp格式的文件夹时，其下的任意文件都会被当成asp文件来执行。
-example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&lt;%=NOW()%&gt;)
-
-分析：一般来说II...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/11</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
     
 </div>
             
@@ -2076,9 +2105,32 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 76
+        Total : 77
         </div>
         <!-- search  -->
         
@@ -2095,6 +2147,11 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/2021/04/04/proc%E7%9B%AE%E5%BD%95%E5%9C%A8ctf%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" >proc目录在ctf中的应用</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2312,7 +2369,7 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/flask%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" >SSTI模板注入</a>
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" >SSTI模板注入</a>
         </li>
     
     
@@ -2492,9 +2549,9 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
     
         <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
     
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
-    
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     
