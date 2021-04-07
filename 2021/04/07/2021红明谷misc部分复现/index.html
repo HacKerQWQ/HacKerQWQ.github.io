@@ -21,17 +21,31 @@
     <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="">
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://hackerqwq.github.io/tags/ctf/page/5/index.html">
+    <meta name="description" content="红明谷misc部分复现InputMonitor考点 输入法取证 pdf隐写解法了解输入法取证https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;0p3vbLub5vPKO5Pik9zmUQ  这里用深蓝词库转换工具 发现存在6位密码，但是另一个词库文件打不开，因此直接看，这里我没有找到，因此直接用网上的 转换为word，就隐藏在图片下面 我的心是冰冰的考点 盲水印解密 流量分析键盘数据解题文件夹">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2021红明谷misc部分复现">
+<meta property="og:url" content="https://hackerqwq.github.io/2021/04/07/2021%E7%BA%A2%E6%98%8E%E8%B0%B7misc%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="红明谷misc部分复现InputMonitor考点 输入法取证 pdf隐写解法了解输入法取证https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;0p3vbLub5vPKO5Pik9zmUQ  这里用深蓝词库转换工具 发现存在6位密码，但是另一个词库文件打不开，因此直接看，这里我没有找到，因此直接用网上的 转换为word，就隐藏在图片下面 我的心是冰冰的考点 盲水印解密 流量分析键盘数据解题文件夹">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210407093625.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210407093727.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210407094156.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/out.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210407175643.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210407175714.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210407192300.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210407192502.png">
+<meta property="article:published_time" content="2021-04-07T11:28:22.000Z">
+<meta property="article:modified_time" content="2021-04-07T11:29:24.009Z">
 <meta property="article:author" content="HacKerQWQ">
+<meta property="article:tag" content="ctf">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210407093625.png">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>HacKerQWQ&#39;s Studio</title>
+    <title>2021红明谷misc部分复现 · HacKerQWQ&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -212,12 +226,23 @@
 <meta name="generator" content="Hexo 5.2.0"></head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >HacKerQWQ&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">2021红明谷misc部分复现</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>HacKerQWQ's Studio.</a>
 </header>
@@ -229,24 +254,74 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            2021红明谷misc部分复现
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">799</span>Reading time: <span class="post-count reading-time">4 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2021/04/07</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -347,390 +422,75 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/14/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E7%8E%84%E6%AD%A6%E7%BB%84-writeup/" >
             
-                <span>jwt在网鼎杯的运用</span>
-        </a>
-        <div class="abstract-content">
-            2020-网鼎杯-玄武组-js_on前置知识jwt(前面的博客已经提到过了)，自行翻看
-看题目先是一个登陆框
+<main class="main post-page">
+    <article class="article-entry">
+        <h1 id="红明谷misc部分复现"><a href="#红明谷misc部分复现" class="headerlink" title="红明谷misc部分复现"></a>红明谷misc部分复现</h1><h2 id="InputMonitor"><a href="#InputMonitor" class="headerlink" title="InputMonitor"></a>InputMonitor</h2><h3 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h3><ul>
+<li>输入法取证</li>
+<li>pdf隐写<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3>了解输入法取证<br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0p3vbLub5vPKO5Pik9zmUQ">https://mp.weixin.qq.com/s/0p3vbLub5vPKO5Pik9zmUQ</a></li>
+</ul>
+<p>这里用深蓝词库转换工具<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210407093625.png" alt="20210407093625"></p>
+<p>发现存在6位密码，但是另一个词库文件打不开，因此直接看，这里我没有找到，因此直接用网上的<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210407093727.png" alt="20210407093727"></p>
+<p>转换为word，就隐藏在图片下面<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210407094156.png" alt="20210407094156"></p>
+<h2 id="我的心是冰冰的"><a href="#我的心是冰冰的" class="headerlink" title="我的心是冰冰的"></a>我的心是冰冰的</h2><h3 id="考点-1"><a href="#考点-1" class="headerlink" title="考点"></a>考点</h3><ul>
+<li>盲水印解密</li>
+<li>流量分析键盘数据<h3 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h3>文件夹下存在bingbing.png和bingbing.zip两个文件，思路应该是解出bingbing.jpg的密码，然后得到zip的文件</li>
+</ul>
+<p>bingbing.jpg拿去盲水印解密，得到<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/out.png" alt="out"><br>密码：bingbing<br>（这里爆破密码也可以）<br>然后得到了bignbing.pcapng,发现是键盘流量<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210407175643.png" alt="20210407175643"><br>直接上工具<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210407175714.png" alt="20210407175714"><br>&lt;DEL&gt;两边分开解密得到flag<br>flag{8f9ed2f933ef14a8d0523d0349e1299c}</p>
+<h2 id="歪比歪比"><a href="#歪比歪比" class="headerlink" title="歪比歪比"></a>歪比歪比</h2><h3 id="考点-2"><a href="#考点-2" class="headerlink" title="考点"></a>考点</h3><ul>
+<li>哈夫曼编码</li>
+<li>流量分析</li>
+</ul>
+<h3 id="解题-1"><a href="#解题-1" class="headerlink" title="解题"></a>解题</h3><p>追踪tcp之后发现<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210407192300.png" alt="20210407192300"><br>导出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">Surprise</span><br><span class="line">Wabby Wabby: </span><br><span class="line">j 29</span><br><span class="line">z 31</span><br><span class="line">7 25</span><br><span class="line">e 31</span><br><span class="line">l 23</span><br><span class="line">6 37</span><br><span class="line">4 32</span><br><span class="line">p 38</span><br><span class="line">h 27</span><br><span class="line">g 26</span><br><span class="line">x 28</span><br><span class="line">i 25</span><br><span class="line">u 27</span><br><span class="line">n 25</span><br><span class="line">8 36</span><br><span class="line">0 24</span><br><span class="line">o 23</span><br><span class="line">c 28</span><br><span class="line">y 24</span><br><span class="line">1 29</span><br><span class="line">b 26</span><br><span class="line">m 27</span><br><span class="line">2 28</span><br><span class="line">v 25</span><br><span class="line">d 33</span><br><span class="line">f 28</span><br><span class="line">9 33</span><br><span class="line">t 21</span><br><span class="line">w 22</span><br><span class="line">a 31</span><br><span class="line">r 24</span><br><span class="line">s 16</span><br><span class="line">k 32</span><br><span class="line">5 25</span><br><span class="line">q 23</span><br><span class="line">3 32</span><br><span class="line">&#123; 1</span><br><span class="line">- 4</span><br><span class="line">&#125; 1</span><br><span class="line">Wabby Wabbo: </span><br><span class="line">0111110001000011001010001111011110101010011011011110100000110010111101000010010010001100001110010000011110011101101111011001111101000000111010100000101101001000111100000000010100110100101001011101110010001100011100010010111001100011100110011010011000101010100011011110001111111110111001011100010100101111100001011011001001001000010111110101110111010111100010111011000011001011001101001010010111111001110101000110001001001100101110111101111000110010010111111000111110000101001100100100001001110100101011111101111110011101011101000000100100100011111111001000101110101001001101110001011101101001001001011010000101111111001011111100110010100111111110001001100100010010010011110111110110110001101000010010110110001011010000100011010111110101110000110000010001111111110000101000100101101111000111100101101011001100010101011000110010011111001010011110100100011000101111110111011011000011011010100011011100010001010001010000000001101001010010100111111010010110110011110100101010010101001010100010101011010011110001000011000100001010111001110001100101100001010111011110110111110000001011011111011101101000111111110100111100110011101111100111100101101101101010100110001100100110101011110000011111111100011110011101010011110101010111100111100001000111110111110100010011110011000010000100001100101111101010110101100011100010010100001110001001010110010010010100010101101101001110000101111110101010110110110000010011000111000010001001101101101101100111000011000011010101111010101100101000011011001011000101101110100011110001100111101111011000100110110000111010101101111101001111111111100001000111000001001011111011110010110101011110001110001101010011000101111100001111111011100110101001000011111101111111011001111110001110111110110010111000111011011110010101010110011001110110011110001111010000011010101000111110111011100101100100100100001111101010011101111100110011100000010100101000111100100011001011111000000111111111000000011111111101110111111001110100100000100000011011111010000000011110101110111101101011001111011010101111000010110001101000111000111000001110110111000100011110101100100100011100111100101101010010110101011111110011100100000111011011010101101110111000001001100110111001000111001000000111000110010110000100100010001001111010101000101101111000000110101110011101001011100110111101101111100001111000110001101010000111100100011110001100110111001101011100010101011110111111111100101100101010001101110101101101010101001110100001101011000100001111011011100101011000001001000011011000111011101110011001101110100000010100000101111010000001000011001101101111010011101000000101101101011101001101110000010011110001110100111000101111101010110111010011010011000011000110110010110001001000101101111000010010001011110100010111010100101100101111010100001110111100000100101101011110010110001000111111001000000101110010111010001101101111101110111000010101100100001010101001010010001011101001100101010101001111110000010011010011110101001001001110010110100111011110110000111101000010011111000111111001111010011101011010011100010001111101001110011110101111111111111011010100000010100010010011110100110011011101011101011101100000100111110111100100000101011000110110000010110001001111111111011101011000010101111110111001011101111111100111011101001000111011110110111101001011110011000110011000010011011001001100010010111110000110100001110111100110110100101010010111001001100101111010010001001111111000010111101010110000001110101000111011010111100110101001001110001110001001111110001000010011011110100111011111000101111110011000011010001000101000110011100011001001011000111011100101101000110001110011011101010101001010011101110100100111101011101010011010101010111101110101101000001111100111111010011010111101000101011111101011100101101101001100011001111101111100100111101101101110111111010111010100100101110111000011100001001000011100010101110100111110011001100101111110110100111101000010001000011011110000011010110111010110001110011111110000011110010001011010010111111101010101110010000001010011111011100101000101101010101101101000101000110011101101010110001100101011101110111100000001010000011110011010011000011111110100111011100100111000001101001110111100000101010110000010000100001110111000011111110010010100111111101010110000000000111011010000101100100111001110000001011101100000110110101011001011000111001111110010101111001011011101000010001100011101110010100111000011111001110001100111110110111101010101011001000101011010001100000010001111110011001101111111010110010001111001100111110001110011100010011011100100010011011000110000100101111100111110111101010010001101010011100110001011001111000100011011110100011101011101010111111110000011110110111011110000010111100110011100011010111101111110100000010001111100101100011110001101011111101111111011111011101010001101001000111000101111110101000110011000111011111101111110100001111011110010100011101110111111010101100111000101100100010011101001011110011111001111101110001110111111011100111100010110010011011010100011100101010101010110000001010111001101111100111110010100111000010101111001110011011011111001101110011111001000000000111101011000111110001101010011011000010100100100111011111110010000000101001111111110101100001010000001110100101001111001011011001001001011100101111110</span><br><span class="line">surprise message len: 1000</span><br></pre></td></tr></table></figure>
+<p>猜测是频率，上哈夫曼编码脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 统计字符出现频率，生成映射表</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">count_frequency</span>(<span class="params">text</span>):</span></span><br><span class="line">    chars = []</span><br><span class="line">    ret = []</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> char <span class="keyword">in</span> text:</span><br><span class="line">        <span class="keyword">if</span> char <span class="keyword">in</span> chars:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            chars.append(char)</span><br><span class="line">            ret.append((char, text.count(char)))</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 节点类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, frequency</span>):</span></span><br><span class="line">        self.left = <span class="literal">None</span></span><br><span class="line">        self.right = <span class="literal">None</span></span><br><span class="line">        self.father = <span class="literal">None</span></span><br><span class="line">        self.frequency = frequency</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_left</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.father.left == self</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 创建叶子节点</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_nodes</span>(<span class="params">frequency_list</span>):</span></span><br><span class="line">    <span class="keyword">return</span> [Node(frequency) <span class="keyword">for</span> frequency <span class="keyword">in</span> frequency_list]</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 创建Huffman树</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_huffman_tree</span>(<span class="params">nodes</span>):</span></span><br><span class="line">    queue = nodes[:]</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">while</span> len(queue) &gt; <span class="number">1</span>:</span><br><span class="line">        queue.sort(key=<span class="keyword">lambda</span> item: item.frequency)</span><br><span class="line">        node_left = queue.pop(<span class="number">0</span>)</span><br><span class="line">        node_right = queue.pop(<span class="number">0</span>)</span><br><span class="line">        node_father = Node(node_left.frequency + node_right.frequency)</span><br><span class="line">        node_father.left = node_left</span><br><span class="line">        node_father.right = node_right</span><br><span class="line">        node_left.father = node_father</span><br><span class="line">        node_right.father = node_father</span><br><span class="line">        queue.append(node_father)</span><br><span class="line"> </span><br><span class="line">    queue[<span class="number">0</span>].father = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">return</span> queue[<span class="number">0</span>]</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># Huffman编码</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">huffman_encoding</span>(<span class="params">nodes, root</span>):</span></span><br><span class="line">    huffman_code = [<span class="string">&#x27;&#x27;</span>] * len(nodes)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nodes)):</span><br><span class="line">        node = nodes[i]</span><br><span class="line">        <span class="keyword">while</span> node != root:</span><br><span class="line">            <span class="keyword">if</span> node.is_left():</span><br><span class="line">                huffman_code[i] = <span class="string">&#x27;0&#x27;</span> + huffman_code[i]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                huffman_code[i] = <span class="string">&#x27;1&#x27;</span> + huffman_code[i]</span><br><span class="line">            node = node.father</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> huffman_code</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 编码整个字符串</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">encode_str</span>(<span class="params">text, char_frequency, codes</span>):</span></span><br><span class="line">    ret = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> char <span class="keyword">in</span> text:</span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> char_frequency:</span><br><span class="line">            <span class="keyword">if</span> char == item[<span class="number">0</span>]:</span><br><span class="line">                ret += codes[i]</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 解码整个字符串</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decode_str</span>(<span class="params">huffman_str, char_frequency, codes</span>):</span></span><br><span class="line">    ret = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">while</span> huffman_str != <span class="string">&#x27;&#x27;</span>:</span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> codes:</span><br><span class="line">            <span class="keyword">if</span> item <span class="keyword">in</span> huffman_str <span class="keyword">and</span> huffman_str.index(item) == <span class="number">0</span>:</span><br><span class="line">                ret += char_frequency[i][<span class="number">0</span>]</span><br><span class="line">                huffman_str = huffman_str[len(item):]</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># text = raw_input(&#x27;The text to encode:&#x27;)</span></span><br><span class="line"> </span><br><span class="line">    char_frequency = [(<span class="string">&#x27;j&#x27;</span>, <span class="number">29</span>), (<span class="string">&#x27;z&#x27;</span>, <span class="number">31</span>), (<span class="string">&#x27;7&#x27;</span>, <span class="number">25</span>), (<span class="string">&#x27;e&#x27;</span>, <span class="number">31</span>), (<span class="string">&#x27;l&#x27;</span>, <span class="number">23</span>), (<span class="string">&#x27;6&#x27;</span>, <span class="number">37</span>), (<span class="string">&#x27;4&#x27;</span>, <span class="number">32</span>), (<span class="string">&#x27;p&#x27;</span>, <span class="number">38</span>), (<span class="string">&#x27;h&#x27;</span>, <span class="number">27</span>), (<span class="string">&#x27;g&#x27;</span>, <span class="number">26</span>), (<span class="string">&#x27;x&#x27;</span>, <span class="number">28</span>), (<span class="string">&#x27;i&#x27;</span>, <span class="number">25</span>), (<span class="string">&#x27;u&#x27;</span>, <span class="number">27</span>), (<span class="string">&#x27;n&#x27;</span>, <span class="number">25</span>), (<span class="string">&#x27;8&#x27;</span>, <span class="number">36</span>), (<span class="string">&#x27;0&#x27;</span>, <span class="number">24</span>), (<span class="string">&#x27;o&#x27;</span>, <span class="number">23</span>), (<span class="string">&#x27;c&#x27;</span>, <span class="number">28</span>), (<span class="string">&#x27;y&#x27;</span>, <span class="number">24</span>), (<span class="string">&#x27;1&#x27;</span>, <span class="number">29</span>), (<span class="string">&#x27;b&#x27;</span>, <span class="number">26</span>), (<span class="string">&#x27;m&#x27;</span>, <span class="number">27</span>), (<span class="string">&#x27;2&#x27;</span>, <span class="number">28</span>), (<span class="string">&#x27;v&#x27;</span>, <span class="number">25</span>), (<span class="string">&#x27;d&#x27;</span>, <span class="number">33</span>), (<span class="string">&#x27;f&#x27;</span>, <span class="number">28</span>), (<span class="string">&#x27;9&#x27;</span>, <span class="number">33</span>), (<span class="string">&#x27;t&#x27;</span>, <span class="number">21</span>), (<span class="string">&#x27;w&#x27;</span>, <span class="number">22</span>), (<span class="string">&#x27;a&#x27;</span>, <span class="number">31</span>), (<span class="string">&#x27;r&#x27;</span>, <span class="number">24</span>), (<span class="string">&#x27;s&#x27;</span>, <span class="number">16</span>), (<span class="string">&#x27;k&#x27;</span>, <span class="number">32</span>), (<span class="string">&#x27;5&#x27;</span>, <span class="number">25</span>), (<span class="string">&#x27;q&#x27;</span>, <span class="number">23</span>), (<span class="string">&#x27;3&#x27;</span>, <span class="number">32</span>), (<span class="string">&#x27;&#123;&#x27;</span>, <span class="number">1</span>), (<span class="string">&#x27;-&#x27;</span>, <span class="number">4</span>), (<span class="string">&#x27;&#125;&#x27;</span>, <span class="number">1</span>)]</span><br><span class="line"> </span><br><span class="line">    nodes = create_nodes([item[<span class="number">1</span>] <span class="keyword">for</span> item <span class="keyword">in</span> char_frequency])</span><br><span class="line">    root = create_huffman_tree(nodes)</span><br><span class="line">    codes = huffman_encoding(nodes, root)</span><br><span class="line"> </span><br><span class="line">    huffman_str = <span class="string">&#x27;0111110001000011001010001111011110101010011011011110100000110010111101000010010010001100001110010000011110011101101111011001111101000000111010100000101101001000111100000000010100110100101001011101110010001100011100010010111001100011100110011010011000101010100011011110001111111110111001011100010100101111100001011011001001001000010111110101110111010111100010111011000011001011001101001010010111111001110101000110001001001100101110111101111000110010010111111000111110000101001100100100001001110100101011111101111110011101011101000000100100100011111111001000101110101001001101110001011101101001001001011010000101111111001011111100110010100111111110001001100100010010010011110111110110110001101000010010110110001011010000100011010111110101110000110000010001111111110000101000100101101111000111100101101011001100010101011000110010011111001010011110100100011000101111110111011011000011011010100011011100010001010001010000000001101001010010100111111010010110110011110100101010010101001010100010101011010011110001000011000100001010111001110001100101100001010111011110110111110000001011011111011101101000111111110100111100110011101111100111100101101101101010100110001100100110101011110000011111111100011110011101010011110101010111100111100001000111110111110100010011110011000010000100001100101111101010110101100011100010010100001110001001010110010010010100010101101101001110000101111110101010110110110000010011000111000010001001101101101101100111000011000011010101111010101100101000011011001011000101101110100011110001100111101111011000100110110000111010101101111101001111111111100001000111000001001011111011110010110101011110001110001101010011000101111100001111111011100110101001000011111101111111011001111110001110111110110010111000111011011110010101010110011001110110011110001111010000011010101000111110111011100101100100100100001111101010011101111100110011100000010100101000111100100011001011111000000111111111000000011111111101110111111001110100100000100000011011111010000000011110101110111101101011001111011010101111000010110001101000111000111000001110110111000100011110101100100100011100111100101101010010110101011111110011100100000111011011010101101110111000001001100110111001000111001000000111000110010110000100100010001001111010101000101101111000000110101110011101001011100110111101101111100001111000110001101010000111100100011110001100110111001101011100010101011110111111111100101100101010001101110101101101010101001110100001101011000100001111011011100101011000001001000011011000111011101110011001101110100000010100000101111010000001000011001101101111010011101000000101101101011101001101110000010011110001110100111000101111101010110111010011010011000011000110110010110001001000101101111000010010001011110100010111010100101100101111010100001110111100000100101101011110010110001000111111001000000101110010111010001101101111101110111000010101100100001010101001010010001011101001100101010101001111110000010011010011110101001001001110010110100111011110110000111101000010011111000111111001111010011101011010011100010001111101001110011110101111111111111011010100000010100010010011110100110011011101011101011101100000100111110111100100000101011000110110000010110001001111111111011101011000010101111110111001011101111111100111011101001000111011110110111101001011110011000110011000010011011001001100010010111110000110100001110111100110110100101010010111001001100101111010010001001111111000010111101010110000001110101000111011010111100110101001001110001110001001111110001000010011011110100111011111000101111110011000011010001000101000110011100011001001011000111011100101101000110001110011011101010101001010011101110100100111101011101010011010101010111101110101101000001111100111111010011010111101000101011111101011100101101101001100011001111101111100100111101101101110111111010111010100100101110111000011100001001000011100010101110100111110011001100101111110110100111101000010001000011011110000011010110111010110001110011111110000011110010001011010010111111101010101110010000001010011111011100101000101101010101101101000101000110011101101010110001100101011101110111100000001010000011110011010011000011111110100111011100100111000001101001110111100000101010110000010000100001110111000011111110010010100111111101010110000000000111011010000101100100111001110000001011101100000110110101011001011000111001111110010101111001011011101000010001100011101110010100111000011111001110001100111110110111101010101011001000101011010001100000010001111110011001101111111010110010001111001100111110001110011100010011011100100010011011000110000100101111100111110111101010010001101010011100110001011001111000100011011110100011101011101010111111110000011110110111011110000010111100110011100011010111101111110100000010001111100101100011110001101011111101111111011111011101010001101001000111000101111110101000110011000111011111101111110100001111011110010100011101110111111010101100111000101100100010011101001011110011111001111101110001110111111011100111100010110010011011010100011100101010101010110000001010111001101111100111110010100111000010101111001110011011011111001101110011111001000000000111101011000111110001101010011011000010100100100111011111110010000000101001111111110101100001010000001110100101001111001011011001001001011100101111110&#x27;</span></span><br><span class="line"> </span><br><span class="line">    origin_str = decode_str(huffman_str, char_frequency, codes)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">print</span> <span class="string">&#x27;Encode result:&#x27;</span> + huffman_str</span><br><span class="line">    <span class="keyword">print</span> <span class="string">&#x27;Decode result:&#x27;</span> + origin_str</span><br></pre></td></tr></table></figure>
+<p>得到flag<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210407192502.png" alt="20210407192502"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>没啥好说的，积累吧,还有信息收集能力</p>
 
-使用admin/admin登陆之后看到了jwt的key值
-
-jwt结合sql注入解题先进行尝试
-1admin&#x27;/**/and/**/1=1#
-
-1admin&#x27;/**/and/**/1=2#
-
-结果不一样，说明user存在注入点
-经过尝试，发现select这些都被过滤了，使用进行绕过，构造出最终payload
-1admin&#x27;/**/and/**/as&lt;a&gt;cii(m&lt;a&gt;id((se&lt;a&gt;lect/**/lo&lt...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/14</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/13/HCTF-2018-Web-writeup/" >
-            
-                <span>phpmyAdmin文件包含漏洞在2018-HCTF的例题</span>
-        </a>
-        <div class="abstract-content">
-            HCTF-2018-Web-warmup来人，把朕的源码端上来：
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748&lt;?phphighlight_file(__FILE__);class emmm&#123;    public static function checkFile(&amp;$page)    &#123;        $whitelist = [&quot;source&quot;=&gt;&quot;source.php&quot;,&q...
+        <div class="license-wrapper">
+            <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
+            <p>原文链接：<a href="https://hackerqwq.github.io/2021/04/07/2021%E7%BA%A2%E6%98%8E%E8%B0%B7misc%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/">https://hackerqwq.github.io/2021/04/07/2021%E7%BA%A2%E6%98%8E%E8%B0%B7misc%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/</a>
+            <p>发表日期：<a href="https://hackerqwq.github.io/2021/04/07/2021%E7%BA%A2%E6%98%8E%E8%B0%B7misc%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/">April 7th 2021, 7:28:22 pm</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2021/04/07/2021%E7%BA%A2%E6%98%8E%E8%B0%B7misc%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/">April 7th 2021, 7:29:24 pm</a>
+            <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/13/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E9%9D%92%E9%BE%99%E7%BB%84-Web/" >
-            
-                <span>2020-网鼎杯-青龙组-Web</span>
-        </a>
-        <div class="abstract-content">
-            AreUSerialz源码：
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081&lt;?phpinclude(&quot;flag.php&quot;);highlight_file(__FILE__);class FileHandler &#123;    protected $op;    protected $filename;...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/12/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E6%9C%B1%E9%9B%80%E7%BB%84-Web/" >
-            
-                <span>动态调用函数以及nmap用法在网鼎杯的例题</span>
-        </a>
-        <div class="abstract-content">
-            2020-网鼎杯-phpweb看到题目只有一个背景图还有规范的时间格式
-
-其次注意到每隔一段时间，时间就会刷新，抓包看看
-
-于是想到了这里有可能存在调用函数的破绽，尝试了几个常用的system(),shell_exec(),passthru()都被拦截了之后，试了试file_get_contents()发现可以，于是把index.php源码down下来了
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061&lt;!...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/12/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4%E6%99%BA%E8%83%BD%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-Web-hate-php/" >
-            
-                <span>取反异或绕过</span>
-        </a>
-        <div class="abstract-content">
-            前言：垃圾就要多学习
-第五空间智能安全大赛-hate-php源码：1234567891011121314151617&lt;?phperror_reporting(0);if(!isset($_GET[&#x27;code&#x27;]))&#123;    highlight_file(__FILE__);&#125;else&#123;    $code = $_GET[&#x27;code&#x27;];    if (preg_match(&#x27;/(f|l|a|g|\.|p|h|\/|;|\&quot;|\&#x27;|\`|\||\[|\]|\_|=)/i&#x27;,$...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/" >
-            
-                <span>[转载]sql注入绕过大集合</span>
-        </a>
-        <div class="abstract-content">
-            0x1 WAF的常见特征之所以要谈到WAF的常见特征，是为了更好的了解WAF的运行机制，这样就能增加几分绕过的机会了。本文不对WAF做详细介绍，只谈及几点相关的。
-总体来说，WAF(Web Application Firewall)的具有以下四个方面的功能：
-
-审计设备：用来截获所有HTTP数据或者仅仅满足某些规则的会话
-
-访问控制设备：用来控制对Web应用的访问，既包括主动安全模式也包括被动安全模式
-
-架构/网络设计工具：当运行在反向代理模式，他们被用来分配职能，集中控制，虚拟基础结构等。
-
-WEB应用加固工具：这些功能增强被保护Web应用的安全性，它不仅能够屏蔽WEB应用固有弱点，而...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/11</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/08/JWT%E7%9A%84%E5%88%A9%E7%94%A8/" >
-            
-                <span>JWT的利用</span>
-        </a>
-        <div class="abstract-content">
-            网站工具：https://jwt.io/
-JWT(JSON Web Token)目前最流行的跨域身份验证解决方案
-分为三部分：头部、载荷、签名
-
-头部包含签名的算法原始数据：
-1&#123;  &quot;alg&quot;: &quot;HS256&quot;,  &quot;typ&quot;: &quot;JWT&quot;&#125;
-*alg表示用了HS256算法，typ表示这是JWT**base64加密后
-1eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
-
-载荷用于服务器识别数据来自哪里比如：原始数据
-1&#123;  &quot;sub&quot;...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/08</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >
-            
-                <span>命令注入及远程代码执行大集合！</span>
-        </a>
-        <div class="abstract-content">
-            代码执行PHP危险函数
-phpinfo()功能描述：输出 PHP 环境信息以及相关的模块、WEB 环境等信息。危险等级：中 
-
-passthru()功能描述：允许执行一个外部程序并回显输出，类似于 exec()。危险等级：高 
-
-exec()功能描述：允许执行一个外部程序（如 UNIX Shell 或 CMD 命令等）。危险等级：高 
-
-system()功能描述：允许执行一个外部程序并回显输出，类似于 passthru()。危险等级：高 
-
-chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系统支持 CLI 模式PHP 时才能工作，且该函数不适用于 Windows 系统...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/07</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/06/SVN%E5%92%8CHG%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/" >
-            
-                <span>SVN和HG源码泄露</span>
-        </a>
-        <div class="abstract-content">
-            预备知识Brutesuite的Fuzz扫描
-dvcs-ripper工具123./rip-svn.pl -v -u http://www.example.com/.svn./rip-hg.pl -v -u http://www.example.com/.hg./rip-git.pl -v -u http://www.example.com/.git
-之后就可以从下载下来的隐藏目录中找到flag了
-
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >
-            
-                <span>.git源码泄露payload</span>
-        </a>
-        <div class="abstract-content">
-            log泄露
-查看历史记录
-1git log
-
-切换版本
-1git reset
-
-对比两次提交
-1git diff
-
-
-
-解题思路
-Brutesuite用Fuzz扫描发现存在git源码泄露
-
-
-
-用GitHack工具clone源码到本地
-
-
-
-git log 查看版本
-
-
-解法一对比前一个版本
-12git diff f95aegit diff HEAD^
-
-解法二直接恢复到前一个版本
-12git reset --hard f95aegit reset --hard HEAD^
-
-FLAG最后得到flag
-stash工作状态泄露
-查看git保存的工作状态
-1git stash list
-
-恢...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2021/04/04/proc%E7%9B%AE%E5%BD%95%E5%9C%A8ctf%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" title= "proc目录在ctf中的应用">
+                    <div class="prevTitle">proc目录在ctf中的应用</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-    <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/tags/ctf/page/4/">&lt; PREV</a><a class="page-number" href="/tags/ctf/">1</a><span class="space">&hellip;</span><a class="page-number" href="/tags/ctf/page/3/">3</a><a class="page-number" href="/tags/ctf/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/tags/ctf/page/6/">6</a><a class="extend next" rel="next" href="/tags/ctf/page/6/">NEXT &gt;</a>
-    </nav>
     
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -819,6 +579,24 @@ stash工作状态泄露
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%A2%E6%98%8E%E8%B0%B7misc%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0"><span class="toc-number">1.</span> <span class="toc-text">红明谷misc部分复现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#InputMonitor"><span class="toc-number">1.1.</span> <span class="toc-text">InputMonitor</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%80%83%E7%82%B9"><span class="toc-number">1.1.1.</span> <span class="toc-text">考点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95"><span class="toc-number">1.1.2.</span> <span class="toc-text">解法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E7%9A%84%E5%BF%83%E6%98%AF%E5%86%B0%E5%86%B0%E7%9A%84"><span class="toc-number">1.2.</span> <span class="toc-text">我的心是冰冰的</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%80%83%E7%82%B9-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">考点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98"><span class="toc-number">1.2.2.</span> <span class="toc-text">解题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%AA%E6%AF%94%E6%AD%AA%E6%AF%94"><span class="toc-number">1.3.</span> <span class="toc-text">歪比歪比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%80%83%E7%82%B9-2"><span class="toc-number">1.3.1.</span> <span class="toc-text">考点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98-1"><span class="toc-number">1.3.2.</span> <span class="toc-text">解题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.4.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -2536,6 +2314,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
