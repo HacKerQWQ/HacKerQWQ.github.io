@@ -355,6 +355,70 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >
+            
+                <span>.git源码泄露payload</span>
+        </a>
+        <div class="abstract-content">
+            log泄露
+查看历史记录
+1git log
+
+切换版本
+1git reset
+
+对比两次提交
+1git diff
+
+
+
+解题思路
+Brutesuite用Fuzz扫描发现存在git源码泄露
+
+
+
+用GitHack工具clone源码到本地
+
+
+
+git log 查看版本
+
+
+解法一对比前一个版本
+12git diff f95aegit diff HEAD^
+
+解法二直接恢复到前一个版本
+12git reset --hard f95aegit reset --hard HEAD^
+
+FLAG最后得到flag
+stash工作状态泄露
+查看git保存的工作状态
+1git stash list
+
+恢...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/06</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/08/05/VIM%E7%BC%96%E8%BE%91%E5%99%A8%E5%BC%82%E5%B8%B8%E9%80%80%E5%87%BA%E5%AF%BC%E8%87%B4%E7%9A%84%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/" >
             
                 <span>VIM编辑器异常退出导致的源码泄露</span>
@@ -1825,9 +1889,22 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 78
+        Total : 79
         </div>
         <!-- search  -->
         
@@ -1844,6 +1921,11 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2021/04/08/sql%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4%E9%80%9F%E6%9F%A5/" >sql绕过过滤速查</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2263,9 +2345,9 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
     
         <span class="sidebar-tag-name" data-tags="开发"><span class="iconfont-archer">&#xe606;</span>开发</span>
     
-        <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
-    
         <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
     
         <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
     

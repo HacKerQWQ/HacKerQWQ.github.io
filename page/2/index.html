@@ -368,6 +368,41 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/" >
+            
+                <span>无字母数字构造shell小总结</span>
+        </a>
+        <div class="abstract-content">
+            本文参考p牛和其他大牛的文章，稍作补充，读起来更顺畅反正没有人读我的博客，自娱自乐一下
+问题当遇到这样的问题的时候怎么样构造shell绕过限制
+123if(!preg_match(&#x27;/[a-z0-9]/is&#x27;,$_GET[&#x27;shell&#x27;])) &#123;  eval($_GET[&#x27;shell&#x27;]);&#125;
+过滤了数字和大小写字母，这时候就需要一点奇巧淫技
+PHP5 和 PHP7中assert的区别
+PHP5中assert可以动态调用，PHP7中不可以，但是PHP7.0.12前实际上还是可以的
+PHP5,不支持($a)()...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/12/19</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/12/12/%E5%88%A9%E7%94%A8phar%E6%8B%93%E5%B1%95%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%94%BB%E5%87%BB%E9%9D%A2%E4%BE%8B%E9%A2%98/" >
             
                 <span>利用phar拓展反序列化攻击面例题</span>
@@ -649,36 +684,6 @@ file_get_contents ( string $filename [, bool $use_include_...
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/08</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/11/06/sql%E4%B9%8Bpython%E8%84%9A%E6%9C%AC%E6%B3%A8%E5%85%A5/" >
-            
-                <span>sql之python脚本注入</span>
-        </a>
-        <div class="abstract-content">
-            0x01 前言之所以记录下来是不想再看到相似的题目重新写脚本了，直接用改改数据就好了
-0x02 二分法布尔注入123456789101112131415161718192021222324252627282930313233343536373839import urllib.parseimport requestsurl = &quot;http://b55b8d41-e118-469f-b96e-86b3569754ea.node3.buuoj.cn/index.php&quot;#保持sessionsession = requests.session()#定义http的headerh...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/06</span>
             </div>
             <!-- tags  -->
             
@@ -2069,9 +2074,22 @@ file_get_contents ( string $filename [, bool $use_include_...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 78
+        Total : 79
         </div>
         <!-- search  -->
         
@@ -2088,6 +2106,11 @@ file_get_contents ( string $filename [, bool $use_include_...
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2021/04/08/sql%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4%E9%80%9F%E6%9F%A5/" >sql绕过过滤速查</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2507,9 +2530,9 @@ file_get_contents ( string $filename [, bool $use_include_...
     
         <span class="sidebar-tag-name" data-tags="开发"><span class="iconfont-archer">&#xe606;</span>开发</span>
     
-        <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
-    
         <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
     
         <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
     

