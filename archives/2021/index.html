@@ -355,6 +355,74 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2021/04/13/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96getshell-%E5%BC%BA%E7%BD%91%E6%9D%AF-2019-Upload/" >
+            
+                <span>文件上传反序列化getshell-[强网杯 2019]Upload</span>
+        </a>
+        <div class="abstract-content">
+            [强网杯 2019]Upload考点
+图片马
+php反序列化利用
+
+描述上来是一个登录框注册一个账号然后发现一个上传文件的地方,初步猜测这是一个文件上传getshell的点
+解题思路通过爆破发现源码在www.tar.gz,同时发现cookie的user字段有点奇怪base64解码后发现是一段序列化后的字符串那么先在文件夹找cookie字符串,发现进行了反序列化同时在Register.php发现了__destruct函数，此处调用了checker的index方法可以结合Profile.php的__get和__call函数利用(__get用于访问不存在或不可访问的属性，__call用于调用不...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/13</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/04/09/%E8%AF%BB%E5%8F%96%E5%8F%98%E9%87%8Fgetflag-BJDCTF2020-EzPHP/" >
+            
+                <span>读取变量getflag-[BJDCTF2020]EzPHP</span>
+        </a>
+        <div class="abstract-content">
+            考点
+sha1绕过
+$SERVER绕过
+php伪协议
+$REQUEST绕过
+create_function注入源码123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051&lt;?phphighlight_file(__FILE__);error_reporting(0); $file = &quot;1nD3x.php&quot;;$shana = $_GET[&#x27;shana&#x27;];$passwd = $_GET[&#x27;passwd&#...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/09</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2021/04/08/sql%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4%E9%80%9F%E6%9F%A5/" >
             
                 <span>sql绕过过滤速查</span>
@@ -365,10 +433,9 @@
 回车绕过ascii码为chr(13)&amp;chr(10)，url编码为%0d%0a
 括号绕过1select(user())from dual where(1=1)and(2=2)
 
+另类空格%0a、%0b、%0c、%0d、%09、%a0等
 引号过滤使用十六进制1select column_name  from information_schema.tables where table_name=0x7573657273
-宽字符数据库使用gbk编码时可以用宽字符%df%27 %bf%27 %aa%27
-逗号过滤使用fromfrom：
-1select substr(database(0 ...
+使用反斜杠\1SELECT * FROM wp_news WHERE id = &#x27;a\&#x27;...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -1915,9 +1982,55 @@ github:ht...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 79
+        Total : 81
         </div>
         <!-- search  -->
         
@@ -1934,6 +2047,16 @@ github:ht...
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2021/04/13/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96getshell-%E5%BC%BA%E7%BD%91%E6%9D%AF-2019-Upload/" >文件上传反序列化getshell-[强网杯 2019]Upload</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2021/04/09/%E8%AF%BB%E5%8F%96%E5%8F%98%E9%87%8Fgetflag-BJDCTF2020-EzPHP/" >读取变量getflag-[BJDCTF2020]EzPHP</a>
+        </li>
     
     
         <li class="archive-post-item">
