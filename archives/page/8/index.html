@@ -355,6 +355,42 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/" >
+            
+                <span>XXE注入payload</span>
+        </a>
+        <div class="abstract-content">
+            libxml2.9.0之后默认不解析外部实体，php版本不影响XXE的利用web目录为：
+123456$ tree ..├── dom.php # 示例：使用DOMDocument解析body├── index.php├── SimpleXMLElement.php # 示例：使用SimpleXMLElement类解析body└── simplexml_load_string.php # 示例：使用simplexml_load_string函数解析body
+
+
+XML和DTD格式
+XML格式123456&lt;note&gt;&lt;to&gt;Tove&lt;/to&gt;&lt;fr...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/05</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "XXE">XXE</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/07/29/%E6%90%AD%E5%BB%BAwordpress%E7%8E%AF%E5%A2%83-docker-%E6%B5%8B%E8%AF%95plugin%E6%BC%8F%E6%B4%9E/" >
             
                 <span>搭建wordpress环境(docker)测试plugin漏洞</span>
@@ -703,41 +739,6 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
         <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "PHP伪协议">PHP伪协议</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/24/http%E5%90%84%E5%A4%B4%E9%83%A8%E5%AD%97%E6%AE%B5%E7%9A%84%E5%90%AB%E4%B9%89%EF%BC%88%E8%BD%AC%E8%BD%BD%EF%BC%89/" >
-            
-                <span>http各头部字段的含义（转载）</span>
-        </a>
-        <div class="abstract-content">
-            HTTP请求头
-HTTP 头部解释
-Accept：告诉WEB服务器自己接受什么介质类型，*/* 表示任何类型，type/* 表示该类型下的所有子类型，type/sub-type。 
-
-Accept-Charset： 浏览器申明自己接收的字符集Accept-Encoding： 浏览器申明自己接收的编码方法，通常指定压缩方法，是否支持压缩，支持什么压缩方法 （gzip，deflate）Accept-Language：：浏览器申明自己接收的语言语言跟字符集的区别：中文是语言，中文有多种字符集，比如big5，gb2312，gbk等等。 
-
-Accept-Ranges：WEB服务器表明自己是否接受...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/24</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "HTTP协议">HTTP协议</a>
     
 </div>
             
@@ -2112,9 +2113,28 @@ Accept-Ranges：WEB服务器表明自己是否接受...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 83
+        Total : 84
         </div>
         <!-- search  -->
         
@@ -2131,6 +2151,11 @@ Accept-Ranges：WEB服务器表明自己是否接受...
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2021/04/20/nodejs%E5%88%A9%E7%94%A8%E5%B0%8F%E6%80%BB%E7%BB%93/" >nodejs利用小总结</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2603,9 +2628,9 @@ Accept-Ranges：WEB服务器表明自己是否接受...
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
-        <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
-    
         <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
@@ -2627,6 +2652,8 @@ Accept-Ranges：WEB服务器表明自己是否接受...
     
         <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
     
+        <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
+    
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
     
         <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
@@ -2635,17 +2662,17 @@ Accept-Ranges：WEB服务器表明自己是否接受...
     
         <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
     
+        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
+    
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
     
-        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
+        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
     
         <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
     
         <span class="sidebar-tag-name" data-tags="内网渗透"><span class="iconfont-archer">&#xe606;</span>内网渗透</span>
-    
-        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
     
         <span class="sidebar-tag-name" data-tags="phar反序列化"><span class="iconfont-archer">&#xe606;</span>phar反序列化</span>
     
@@ -2690,8 +2717,6 @@ Accept-Ranges：WEB服务器表明自己是否接受...
         <span class="sidebar-tag-name" data-tags="ThinkPHP"><span class="iconfont-archer">&#xe606;</span>ThinkPHP</span>
     
         <span class="sidebar-tag-name" data-tags="原型链污染"><span class="iconfont-archer">&#xe606;</span>原型链污染</span>
-    
-        <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
     
         <span class="sidebar-tag-name" data-tags="HTTP协议"><span class="iconfont-archer">&#xe606;</span>HTTP协议</span>
     
