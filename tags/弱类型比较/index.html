@@ -23,7 +23,7 @@
     <meta name="description" content="">
     <meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://hackerqwq.github.io/tags/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/index.html">
+<meta property="og:url" content="https://hackerqwq.github.io/tags/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="HacKerQWQ">
@@ -355,26 +355,22 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >
+        <a class="abstract-title" href = "/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/" >
             
-                <span>命令注入及远程代码执行大集合！</span>
+                <span>弱类型比较小笔记</span>
         </a>
         <div class="abstract-content">
-            代码执行PHP危险函数
-phpinfo()功能描述：输出 PHP 环境信息以及相关的模块、WEB 环境等信息。危险等级：中 
+            松散比较当比较类型不同时自动转换类型
+1234&lt;?phpvar_dump(null ==false); //bool(true)var_dump(&#x27;aa&#x27;==0); //bool(true)?&gt;
 
-passthru()功能描述：允许执行一个外部程序并回显输出，类似于 exec()。危险等级：高 
-
-exec()功能描述：允许执行一个外部程序（如 UNIX Shell 或 CMD 命令等）。危险等级：高 
-
-system()功能描述：允许执行一个外部程序并回显输出，类似于 passthru()。危险等级：高 
-
-chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系统支持 CLI 模式PHP 时才能工作，且该函数不适用于 Windows 系统...
+Hash函数绕过https://hackerqwq.github.io/2020/06/10/MD5-collision/
+弱类型函数is_numeric()is_numeric() 检测变量是否为数字或数字字符串。如果 是数字和数字字符串则返回 TRUE，否则返回 FALSE。
+它的弱类型问题是他支持十六进制0x格式，攻击者把payload改成十六进制0x，i...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/07</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/24</span>
             </div>
             <!-- tags  -->
             
@@ -382,9 +378,7 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "命令注入">命令注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "远程代码执行">远程代码执行</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "弱类型比较">弱类型比较</a>
     
 </div>
             
@@ -1774,9 +1768,47 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 84
+        Total : 86
         </div>
         <!-- search  -->
         
@@ -1793,6 +1825,16 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/" >弱类型比较小笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/" >代码执行小总结</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2130,7 +2172,7 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令注入及远程代码执行大集合！</a>
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令执行小总结</a>
         </li>
     
     
@@ -2232,9 +2274,9 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
     
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
-    
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
     
@@ -2252,11 +2294,11 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
-        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
@@ -2270,15 +2312,15 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
-        <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
-    
         <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
+    
+        <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
     
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
-        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
-    
         <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
+    
+        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
         <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
     
@@ -2294,9 +2336,9 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
     
         <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
     
-        <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
+    
+        <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
     
         <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
     
@@ -2304,25 +2346,27 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
     
         <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
     
-        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
-    
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
     
-        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
+    
+        <span class="sidebar-tag-name" data-tags="代码执行"><span class="iconfont-archer">&#xe606;</span>代码执行</span>
     
         <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
     
         <span class="sidebar-tag-name" data-tags="内网渗透"><span class="iconfont-archer">&#xe606;</span>内网渗透</span>
     
+        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+    
         <span class="sidebar-tag-name" data-tags="phar反序列化"><span class="iconfont-archer">&#xe606;</span>phar反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="变量覆盖漏洞"><span class="iconfont-archer">&#xe606;</span>变量覆盖漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="命令注入"><span class="iconfont-archer">&#xe606;</span>命令注入</span>
+        <span class="sidebar-tag-name" data-tags="命令执行"><span class="iconfont-archer">&#xe606;</span>命令执行</span>
     
-        <span class="sidebar-tag-name" data-tags="远程代码执行"><span class="iconfont-archer">&#xe606;</span>远程代码执行</span>
+        <span class="sidebar-tag-name" data-tags="弱类型比较"><span class="iconfont-archer">&#xe606;</span>弱类型比较</span>
     
         <span class="sidebar-tag-name" data-tags="Django"><span class="iconfont-archer">&#xe606;</span>Django</span>
     
@@ -2347,8 +2391,6 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
         <span class="sidebar-tag-name" data-tags="零宽度字符"><span class="iconfont-archer">&#xe606;</span>零宽度字符</span>
     
         <span class="sidebar-tag-name" data-tags="2021Nep"><span class="iconfont-archer">&#xe606;</span>2021Nep</span>
-    
-        <span class="sidebar-tag-name" data-tags="命令执行"><span class="iconfont-archer">&#xe606;</span>命令执行</span>
     
         <span class="sidebar-tag-name" data-tags="PHP原生类"><span class="iconfont-archer">&#xe606;</span>PHP原生类</span>
     

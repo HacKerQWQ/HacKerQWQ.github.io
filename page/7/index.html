@@ -368,6 +368,83 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/14/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E7%8E%84%E6%AD%A6%E7%BB%84-writeup/" >
+            
+                <span>jwt在网鼎杯的运用</span>
+        </a>
+        <div class="abstract-content">
+            2020-网鼎杯-玄武组-js_on前置知识jwt(前面的博客已经提到过了)，自行翻看
+看题目先是一个登陆框
+
+使用admin/admin登陆之后看到了jwt的key值
+
+jwt结合sql注入解题先进行尝试
+1admin&#x27;/**/and/**/1=1#
+
+1admin&#x27;/**/and/**/1=2#
+
+结果不一样，说明user存在注入点
+经过尝试，发现select这些都被过滤了，使用进行绕过，构造出最终payload
+1admin&#x27;/**/and/**/as&lt;a&gt;cii(m&lt;a&gt;id((se&lt;a&gt;lect/**/lo&lt...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/14</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "sql">sql</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "jwt">jwt</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/13/HCTF-2018-Web-writeup/" >
+            
+                <span>phpmyAdmin文件包含漏洞在2018-HCTF的例题</span>
+        </a>
+        <div class="abstract-content">
+            HCTF-2018-Web-warmup来人，把朕的源码端上来：
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748&lt;?phphighlight_file(__FILE__);class emmm&#123;    public static function checkFile(&amp;$page)    &#123;        $whitelist = [&quot;source&quot;=&gt;&quot;source.php&quot;,&q...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/13</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "CVE">CVE</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/08/13/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E9%9D%92%E9%BE%99%E7%BB%84-Web/" >
             
                 <span>2020-网鼎杯-青龙组-Web</span>
@@ -551,19 +628,18 @@ JWT(JSON Web Token)目前最流行的跨域身份验证解决方案
     <article class="index-post">
         <a class="abstract-title" href = "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >
             
-                <span>命令注入及远程代码执行大集合！</span>
+                <span>命令执行小总结</span>
         </a>
         <div class="abstract-content">
-            代码执行PHP危险函数
+            命令执行例子
+12345&lt;?php$target=$_REQUEST[&#x27;ip&#x27;];$cmd = shell_exec(&#x27;ping &#x27;.$target);echo &quot;&lt;pre&gt;&#123;$cmd&#125;&lt;/pre&gt;&quot;;?&gt;
+传入?ip=|whoami就可以执行命令
+PHP危险函数
 phpinfo()功能描述：输出 PHP 环境信息以及相关的模块、WEB 环境等信息。危险等级：中 
 
 passthru()功能描述：允许执行一个外部程序并回显输出，类似于 exec()。危险等级：高 
 
-exec()功能描述：允许执行一个外部程序（如 UNIX Shell 或 CMD 命令等）。危险等级：高 
-
-system()功能描述：允许执行一个外部程序并回显输出，类似于 passthru()。危险等级：高 
-
-chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系统支持 CLI 模式PHP 时才能工作，且该函数不适用于 Windows 系统...
+exe...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -576,9 +652,7 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "命令注入">命令注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "远程代码执行">远程代码执行</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "命令执行">命令执行</a>
     
 </div>
             
@@ -679,71 +753,6 @@ stash工作状态泄露
         <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "源码泄露">源码泄露</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/05/VIM%E7%BC%96%E8%BE%91%E5%99%A8%E5%BC%82%E5%B8%B8%E9%80%80%E5%87%BA%E5%AF%BC%E8%87%B4%E7%9A%84%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/" >
-            
-                <span>VIM编辑器异常退出导致的源码泄露</span>
-        </a>
-        <div class="abstract-content">
-            前言：vim不正常退出会导致残留隐藏文件，会造成源码泄露
-vim交换文件名在使用vim时会创建临时缓存文件，关闭vim时缓存文件则会被删除，当vim异常退出后，因为未处理缓存文件，导致可以通过缓存文件恢复原始文件内容以 index.php 为例：第一次产生的交换文件名为 .index.php.swp再次意外退出后，将会产生名为 .index.php.swo 的交换文件第三次产生的交换文件则为 .index.php.swn
-利用思路
-思路一利用curl访问即可直接看到flag，因为vim使用的缓存存储为一种固定格式的二进制文件。而我们一般编辑的时明问可见字符，在vim的缓存中这些可见字符会...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/05</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "源码泄露">源码泄露</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/05/Jarvis-injeect-%E5%8F%8D%E5%BC%95%E5%8F%B7%E6%B3%A8%E5%85%A5/" >
-            
-                <span>Jarvis injeect(反引号注入)</span>
-        </a>
-        <div class="abstract-content">
-            源码123456789&lt;?phprequire(&quot;config.php&quot;);$table = $_GET[&#x27;table&#x27;]?$_GET[&#x27;table&#x27;]:&quot;test&quot;;$table = Filter($table);mysqli_query($mysqli,&quot;desc `secret_&#123;$table&#125;`&quot;) or Hacker();$sql = &quot;select &#x27;flag&#123;xxx&#125;&#x27; from secret_&#1...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/05</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "sql">sql</a>
     
 </div>
             
@@ -2238,9 +2247,47 @@ vim交换文件名在使用vim时会创建临时缓存文件，关闭vim时缓�
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 84
+        Total : 86
         </div>
         <!-- search  -->
         
@@ -2257,6 +2304,16 @@ vim交换文件名在使用vim时会创建临时缓存文件，关闭vim时缓�
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/" >弱类型比较小笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/" >代码执行小总结</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2594,7 +2651,7 @@ vim交换文件名在使用vim时会创建临时缓存文件，关闭vim时缓�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令注入及远程代码执行大集合！</a>
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令执行小总结</a>
         </li>
     
     
@@ -2696,9 +2753,9 @@ vim交换文件名在使用vim时会创建临时缓存文件，关闭vim时缓�
     
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
-    
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
     
@@ -2716,11 +2773,11 @@ vim交换文件名在使用vim时会创建临时缓存文件，关闭vim时缓�
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
-        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
@@ -2734,15 +2791,15 @@ vim交换文件名在使用vim时会创建临时缓存文件，关闭vim时缓�
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
-        <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
-    
         <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
+    
+        <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
     
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
-        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
-    
         <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
+    
+        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
         <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
     
@@ -2758,9 +2815,9 @@ vim交换文件名在使用vim时会创建临时缓存文件，关闭vim时缓�
     
         <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
     
-        <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
+    
+        <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
     
         <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
     
@@ -2768,25 +2825,27 @@ vim交换文件名在使用vim时会创建临时缓存文件，关闭vim时缓�
     
         <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
     
-        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
-    
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
     
-        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
+    
+        <span class="sidebar-tag-name" data-tags="代码执行"><span class="iconfont-archer">&#xe606;</span>代码执行</span>
     
         <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
     
         <span class="sidebar-tag-name" data-tags="内网渗透"><span class="iconfont-archer">&#xe606;</span>内网渗透</span>
     
+        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+    
         <span class="sidebar-tag-name" data-tags="phar反序列化"><span class="iconfont-archer">&#xe606;</span>phar反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="变量覆盖漏洞"><span class="iconfont-archer">&#xe606;</span>变量覆盖漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="命令注入"><span class="iconfont-archer">&#xe606;</span>命令注入</span>
+        <span class="sidebar-tag-name" data-tags="命令执行"><span class="iconfont-archer">&#xe606;</span>命令执行</span>
     
-        <span class="sidebar-tag-name" data-tags="远程代码执行"><span class="iconfont-archer">&#xe606;</span>远程代码执行</span>
+        <span class="sidebar-tag-name" data-tags="弱类型比较"><span class="iconfont-archer">&#xe606;</span>弱类型比较</span>
     
         <span class="sidebar-tag-name" data-tags="Django"><span class="iconfont-archer">&#xe606;</span>Django</span>
     
@@ -2811,8 +2870,6 @@ vim交换文件名在使用vim时会创建临时缓存文件，关闭vim时缓�
         <span class="sidebar-tag-name" data-tags="零宽度字符"><span class="iconfont-archer">&#xe606;</span>零宽度字符</span>
     
         <span class="sidebar-tag-name" data-tags="2021Nep"><span class="iconfont-archer">&#xe606;</span>2021Nep</span>
-    
-        <span class="sidebar-tag-name" data-tags="命令执行"><span class="iconfont-archer">&#xe606;</span>命令执行</span>
     
         <span class="sidebar-tag-name" data-tags="PHP原生类"><span class="iconfont-archer">&#xe606;</span>PHP原生类</span>
     

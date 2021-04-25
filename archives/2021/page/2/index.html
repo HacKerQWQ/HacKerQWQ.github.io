@@ -355,6 +355,100 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2021/04/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E7%AF%87/" >
+            
+                <span>内网渗透-信息收集篇</span>
+        </a>
+        <div class="abstract-content">
+            介绍当我们通过渗透进入内网环境后，面对的是一片未知区域。需要对当前机器角色判断，对机器所处区域分析。
+判断当前机器区域判断机器所处于网络拓扑哪个区域，是在DMZ区、办公区、核心区。区域界限是相对的
+机器角色判断
+文件服务器：配合社工，生成payload捆绑到文件服务器公用文件上，可批量上线主机
+
+DNS服务器：端口53，可通过DNS服务器获取内网web系统信息，或者探测域信息
+
+DHCP服务器：查看内网多组网段信息，更多的获取拓补信息
+
+开发测试服务器：获取源码，新的信息资产，多存在弱口令
+
+代理服务器：获取服务器账号，拿到各种密码
+
+web服务器：可能需要提权(一般接触到的环境)
+
+个...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/01</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "信息收集">信息收集</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "渗透">渗透</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "内网渗透">内网渗透</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/03/26/Nep2021%E4%B8%AA%E4%BA%BA%E8%B5%9B%E6%80%BB%E7%BB%93-wp-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >
+            
+                <span>Nep2021个人赛总结&amp;wp(学习笔记)</span>
+        </a>
+        <div class="abstract-content">
+            weblittletrick考点
+命令执行绕过代码1234567891011&lt;?php    error_reporting(0);    highlight_file(__FILE__);    $nep = $_GET[&#x27;nep&#x27;];    $len = $_GET[&#x27;len&#x27;];    if(intval($len)&lt;8 &amp;&amp; strlen($nep)&lt;13)&#123;        eval(substr($nep,0,$len));    &#125;else&#123;        die(&#x2...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/03/26</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "nodejs">nodejs</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "命令执行">命令执行</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "2021Nep">2021Nep</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP原生类">PHP原生类</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "云函数">云函数</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "JAVA_WEB">JAVA_WEB</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ThinkPHP">ThinkPHP</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "原型链污染">原型链污染</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/" >
             
                 <span>sql注入速查笔记</span>
@@ -1840,9 +1934,47 @@ github:ht...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 84
+        Total : 86
         </div>
         <!-- search  -->
         
@@ -1859,6 +1991,16 @@ github:ht...
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/" >弱类型比较小笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/" >代码执行小总结</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2196,7 +2338,7 @@ github:ht...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令注入及远程代码执行大集合！</a>
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令执行小总结</a>
         </li>
     
     
@@ -2298,9 +2440,9 @@ github:ht...
     
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
-    
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
     
@@ -2318,11 +2460,11 @@ github:ht...
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
-        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
@@ -2336,15 +2478,15 @@ github:ht...
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
-        <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
-    
         <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
+    
+        <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
     
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
-        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
-    
         <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
+    
+        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
         <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
     
@@ -2360,9 +2502,9 @@ github:ht...
     
         <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
     
-        <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
+    
+        <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
     
         <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
     
@@ -2370,25 +2512,27 @@ github:ht...
     
         <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
     
-        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
-    
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
     
-        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
+    
+        <span class="sidebar-tag-name" data-tags="代码执行"><span class="iconfont-archer">&#xe606;</span>代码执行</span>
     
         <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
     
         <span class="sidebar-tag-name" data-tags="内网渗透"><span class="iconfont-archer">&#xe606;</span>内网渗透</span>
     
+        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+    
         <span class="sidebar-tag-name" data-tags="phar反序列化"><span class="iconfont-archer">&#xe606;</span>phar反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="变量覆盖漏洞"><span class="iconfont-archer">&#xe606;</span>变量覆盖漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="命令注入"><span class="iconfont-archer">&#xe606;</span>命令注入</span>
+        <span class="sidebar-tag-name" data-tags="命令执行"><span class="iconfont-archer">&#xe606;</span>命令执行</span>
     
-        <span class="sidebar-tag-name" data-tags="远程代码执行"><span class="iconfont-archer">&#xe606;</span>远程代码执行</span>
+        <span class="sidebar-tag-name" data-tags="弱类型比较"><span class="iconfont-archer">&#xe606;</span>弱类型比较</span>
     
         <span class="sidebar-tag-name" data-tags="Django"><span class="iconfont-archer">&#xe606;</span>Django</span>
     
@@ -2413,8 +2557,6 @@ github:ht...
         <span class="sidebar-tag-name" data-tags="零宽度字符"><span class="iconfont-archer">&#xe606;</span>零宽度字符</span>
     
         <span class="sidebar-tag-name" data-tags="2021Nep"><span class="iconfont-archer">&#xe606;</span>2021Nep</span>
-    
-        <span class="sidebar-tag-name" data-tags="命令执行"><span class="iconfont-archer">&#xe606;</span>命令执行</span>
     
         <span class="sidebar-tag-name" data-tags="PHP原生类"><span class="iconfont-archer">&#xe606;</span>PHP原生类</span>
     

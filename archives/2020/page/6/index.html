@@ -438,19 +438,18 @@ JWT(JSON Web Token)目前最流行的跨域身份验证解决方案
     <article class="index-post">
         <a class="abstract-title" href = "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >
             
-                <span>命令注入及远程代码执行大集合！</span>
+                <span>命令执行小总结</span>
         </a>
         <div class="abstract-content">
-            代码执行PHP危险函数
+            命令执行例子
+12345&lt;?php$target=$_REQUEST[&#x27;ip&#x27;];$cmd = shell_exec(&#x27;ping &#x27;.$target);echo &quot;&lt;pre&gt;&#123;$cmd&#125;&lt;/pre&gt;&quot;;?&gt;
+传入?ip=|whoami就可以执行命令
+PHP危险函数
 phpinfo()功能描述：输出 PHP 环境信息以及相关的模块、WEB 环境等信息。危险等级：中 
 
 passthru()功能描述：允许执行一个外部程序并回显输出，类似于 exec()。危险等级：高 
 
-exec()功能描述：允许执行一个外部程序（如 UNIX Shell 或 CMD 命令等）。危险等级：高 
-
-system()功能描述：允许执行一个外部程序并回显输出，类似于 passthru()。危险等级：高 
-
-chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系统支持 CLI 模式PHP 时才能工作，且该函数不适用于 Windows 系统...
+exe...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -463,9 +462,7 @@ chroot()功能描述：可改变当前 PHP 进程的工作根目录，仅当系�
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "命令注入">命令注入</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "远程代码执行">远程代码执行</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "命令执行">命令执行</a>
     
 </div>
             
@@ -2140,9 +2137,47 @@ type=A(对IP地址进行解析)type=MX(查找邮件转发服务器)type=CNAME(�
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 84
+        Total : 86
         </div>
         <!-- search  -->
         
@@ -2159,6 +2194,16 @@ type=A(对IP地址进行解析)type=MX(查找邮件转发服务器)type=CNAME(�
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/" >弱类型比较小笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/" >代码执行小总结</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2496,7 +2541,7 @@ type=A(对IP地址进行解析)type=MX(查找邮件转发服务器)type=CNAME(�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令注入及远程代码执行大集合！</a>
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令执行小总结</a>
         </li>
     
     
@@ -2598,9 +2643,9 @@ type=A(对IP地址进行解析)type=MX(查找邮件转发服务器)type=CNAME(�
     
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
-    
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
     
@@ -2618,11 +2663,11 @@ type=A(对IP地址进行解析)type=MX(查找邮件转发服务器)type=CNAME(�
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
-        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
@@ -2636,15 +2681,15 @@ type=A(对IP地址进行解析)type=MX(查找邮件转发服务器)type=CNAME(�
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
-        <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
-    
         <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
+    
+        <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
     
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
-        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
-    
         <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
+    
+        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
         <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
     
@@ -2660,9 +2705,9 @@ type=A(对IP地址进行解析)type=MX(查找邮件转发服务器)type=CNAME(�
     
         <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
     
-        <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
+    
+        <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
     
         <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
     
@@ -2670,25 +2715,27 @@ type=A(对IP地址进行解析)type=MX(查找邮件转发服务器)type=CNAME(�
     
         <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
     
-        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
-    
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
     
-        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
+    
+        <span class="sidebar-tag-name" data-tags="代码执行"><span class="iconfont-archer">&#xe606;</span>代码执行</span>
     
         <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
     
         <span class="sidebar-tag-name" data-tags="内网渗透"><span class="iconfont-archer">&#xe606;</span>内网渗透</span>
     
+        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+    
         <span class="sidebar-tag-name" data-tags="phar反序列化"><span class="iconfont-archer">&#xe606;</span>phar反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="变量覆盖漏洞"><span class="iconfont-archer">&#xe606;</span>变量覆盖漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="命令注入"><span class="iconfont-archer">&#xe606;</span>命令注入</span>
+        <span class="sidebar-tag-name" data-tags="命令执行"><span class="iconfont-archer">&#xe606;</span>命令执行</span>
     
-        <span class="sidebar-tag-name" data-tags="远程代码执行"><span class="iconfont-archer">&#xe606;</span>远程代码执行</span>
+        <span class="sidebar-tag-name" data-tags="弱类型比较"><span class="iconfont-archer">&#xe606;</span>弱类型比较</span>
     
         <span class="sidebar-tag-name" data-tags="Django"><span class="iconfont-archer">&#xe606;</span>Django</span>
     
@@ -2713,8 +2760,6 @@ type=A(对IP地址进行解析)type=MX(查找邮件转发服务器)type=CNAME(�
         <span class="sidebar-tag-name" data-tags="零宽度字符"><span class="iconfont-archer">&#xe606;</span>零宽度字符</span>
     
         <span class="sidebar-tag-name" data-tags="2021Nep"><span class="iconfont-archer">&#xe606;</span>2021Nep</span>
-    
-        <span class="sidebar-tag-name" data-tags="命令执行"><span class="iconfont-archer">&#xe606;</span>命令执行</span>
     
         <span class="sidebar-tag-name" data-tags="PHP原生类"><span class="iconfont-archer">&#xe606;</span>PHP原生类</span>
     
