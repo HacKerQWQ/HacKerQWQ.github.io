@@ -368,6 +368,40 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/10/10/Hash%E5%87%BD%E6%95%B0%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" >
+            
+                <span>Hash函数的相关知识</span>
+        </a>
+        <div class="abstract-content">
+            Hash基本概念Hash也就是我们俗称的哈希，也叫”散列”,意思是“混杂、拼凑、杂乱”Hash其实可以看做是排序的一种相反的操作，排序是按照某种规则将元素排列起来，而散列通过计算哈希值将元素之间的关系打破，形成新的序列
+Hash的作用Hash 算法的原理是试图将一个空间的数据集映射到另外一个空间（通常比原空间要小），并利用质数将数据集能够均匀的映射。Hash通过计算大幅度缩小查找范围，比直接从全部数据里面查找速度更快
+Hash的特点
+免碰撞：即不会出现输入 x≠y ，但是H(x)=H(y) 的情况，其实这个特点在理论上并不成立，比如目前比特币使用的 SHA256 算法，会有 2^256 ...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/10</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Crypto">Crypto</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Hash">Hash</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/10/10/CRC%E5%86%97%E4%BD%99%E7%A0%81%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" >
             
                 <span>CRC冗余码相关知识</span>
@@ -687,45 +721,6 @@ RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
         <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "PHP反序列化">PHP反序列化</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/19/%E7%BD%91%E9%BC%8E%E6%9D%AF-2018-Web-Unfinish/" >
-            
-                <span>二次注入在实战的运用</span>
-        </a>
-        <div class="abstract-content">
-            网鼎杯-2018-Web-Unfinish
-首先可以看到这是一个登陆框，感觉不太可能是这么简单的SQL注入，所以先扫扫目录再说
-
-发现register.php页面用于注册账号，目测应该是一个二次注入的页面，也就是在注册页面构造好注入的语句然后在登录的时候返回信息
-测试Mysql环境1select hex(&#x27;test&#x27;);
-返回74657374
-1select &#x27;0&#x27;+hex(&#x27;test&#x27;);
-返回        74657374(注意前面有空格)
-1select &#x27;0&#x27;+hex(&#x27;test&#x27...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/19</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "sql">sql</a>
     
 </div>
             
@@ -2364,9 +2359,26 @@ RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 92
+        Total : 93
         </div>
         <!-- search  -->
         
@@ -2383,6 +2395,11 @@ RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/26</span><a class="archive-post-title" href= "/2021/06/26/TP5SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90TP5%E5%85%A8%E7%89%88%E6%9C%AC/" >TP5SQL注入漏洞分析TP5全版本</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2862,11 +2879,9 @@ RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
     
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
-    
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
     
@@ -2878,6 +2893,12 @@ RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
     
         <span class="sidebar-tag-name" data-tags="php反射类利用"><span class="iconfont-archer">&#xe606;</span>php反射类利用</span>
     
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+    
+        <span class="sidebar-tag-name" data-tags="md5"><span class="iconfont-archer">&#xe606;</span>md5</span>
+    
+        <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
+    
         <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
     
         <span class="sidebar-tag-name" data-tags="输入法取证"><span class="iconfont-archer">&#xe606;</span>输入法取证</span>
@@ -2888,10 +2909,6 @@ RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
     
         <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
     
-        <span class="sidebar-tag-name" data-tags="md5"><span class="iconfont-archer">&#xe606;</span>md5</span>
-    
-        <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
-    
         <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
@@ -2900,9 +2917,9 @@ RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
     
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
-        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
-    
         <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
     
@@ -2922,11 +2939,11 @@ RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
+        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
+    
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
         <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
-    
-        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
         <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
     
@@ -2940,8 +2957,6 @@ RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
     
         <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
     
-        <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
     
         <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
@@ -2950,21 +2965,23 @@ RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
     
         <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
     
+        <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
+    
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
-        <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
-    
         <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
+    
+        <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
     
         <span class="sidebar-tag-name" data-tags="提权"><span class="iconfont-archer">&#xe606;</span>提权</span>
     
         <span class="sidebar-tag-name" data-tags="代码执行"><span class="iconfont-archer">&#xe606;</span>代码执行</span>
     
+        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+    
         <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
     
         <span class="sidebar-tag-name" data-tags="内网渗透"><span class="iconfont-archer">&#xe606;</span>内网渗透</span>
-    
-        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
     
         <span class="sidebar-tag-name" data-tags="phar反序列化"><span class="iconfont-archer">&#xe606;</span>phar反序列化</span>
     
@@ -2992,9 +3009,9 @@ RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
     
         <span class="sidebar-tag-name" data-tags="url取反绕过"><span class="iconfont-archer">&#xe606;</span>url取反绕过</span>
     
-        <span class="sidebar-tag-name" data-tags="零宽度字符"><span class="iconfont-archer">&#xe606;</span>零宽度字符</span>
-    
         <span class="sidebar-tag-name" data-tags="create_function注入"><span class="iconfont-archer">&#xe606;</span>create_function注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="零宽度字符"><span class="iconfont-archer">&#xe606;</span>零宽度字符</span>
     
         <span class="sidebar-tag-name" data-tags="2021Nep"><span class="iconfont-archer">&#xe606;</span>2021Nep</span>
     

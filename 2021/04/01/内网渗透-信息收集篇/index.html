@@ -41,7 +41,7 @@
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210402114218.png">
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210402114228.png">
 <meta property="article:published_time" content="2021-04-01T02:06:36.000Z">
-<meta property="article:modified_time" content="2021-06-20T15:17:27.668Z">
+<meta property="article:modified_time" content="2021-06-25T15:14:59.601Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="信息收集">
 <meta property="article:tag" content="渗透">
@@ -456,7 +456,7 @@ height:50vh;
 <h1 id="本机信息收集"><a href="#本机信息收集" class="headerlink" title="本机信息收集"></a>本机信息收集</h1><p>包括操作系统、权限、内网IP段、杀软、端口、服务、补丁情况、网络连接、共享、会话等。如果是域内主机，那么操作系统、应用软件、补丁、服务、杀软一般都是批量安装的。文件共享/FTP连接记录、浏览器访问记录、mstsc连接记录、ssh连接记录。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">查询网络配置信息。进行IP地址段、端口、arp记录内网段信息收集</span></span><br><span class="line">ipconfig /all &amp;&amp; netstat -ano &amp;&amp; arp -a</span><br><span class="line"><span class="meta">#</span><span class="bash">查看当前系统版本</span></span><br><span class="line">wmic OS get Caption,CSDVersion,OSArchitecture,Version</span><br><span class="line"><span class="meta">#</span><span class="bash">查询操作系统及软件信息</span></span><br><span class="line">systeminfo | findstr /B /C:&quot;OS Name&quot; /C:&quot;OS Version&quot; # 英文系统</span><br><span class="line">systeminfo | findstr /B /C:&quot;OS 名称&quot; /C:&quot;OS 版本&quot; #中文系统</span><br><span class="line"><span class="meta">#</span><span class="bash">查看补丁列表</span></span><br><span class="line">systeminfo</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看补丁的名称、描述、ID、安装时间等</span></span><br><span class="line">wmic qfe get Caption,Description,HotFixID,InstalledOn</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看系统体系结构</span></span><br><span class="line">echo %PROCESSOR_ARCHITECTURE% </span><br><span class="line"><span class="meta">#</span><span class="bash">PowerShell收集软件的版本信息</span></span><br><span class="line">powershell &quot;Get-WmiObject -class Win32_Product |Select-Object -Property name, version&quot; </span><br><span class="line"><span class="meta">#</span><span class="bash">查看安装的软件的版本、路径等</span></span><br><span class="line">wmic product get name, version</span><br><span class="line"><span class="meta">#</span><span class="bash">查看软件比较靠谱的做法是将远程加载本地ps文件，cs中可以使用powershell-import,上传ListInstallProgram.ps1后输入</span></span><br><span class="line">powershell Get-list</span><br><span class="line"><span class="meta">#</span><span class="bash"> 将文件放到靶机，本地加载也可以</span></span><br><span class="line">shell powershell -exec bypass -Command &quot;&amp; &#123;Import-Module &#x27;C:\Users\HackerQWQ\Desktop\ListInstalledProgram.ps1&#x27;;Get-list&#125;&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash">查看当前用户权限</span></span><br><span class="line">whoami &amp;&amp; whoami /priv</span><br><span class="line"><span class="meta">#</span><span class="bash">查询本机服务信息</span></span><br><span class="line">wmic service list brief</span><br><span class="line"><span class="meta">#</span><span class="bash">查询进程信息</span></span><br><span class="line">wmic process list brief</span><br><span class="line"><span class="meta">#</span><span class="bash">查看启动程序信息</span></span><br><span class="line">wmic startup get command,caption </span><br><span class="line"><span class="meta">#</span><span class="bash">查看计划任务(需要高权限)</span></span><br><span class="line">at（win10之前）</span><br><span class="line">schtasks /query /fo LIST /v（win10）</span><br><span class="line"><span class="meta">#</span><span class="bash">查看主机开机时间</span></span><br><span class="line">net statistics workstation</span><br><span class="line"><span class="meta">#</span><span class="bash">查看本机用户列表</span></span><br><span class="line">net user </span><br><span class="line"><span class="meta">#</span><span class="bash">获取本地管理员信息</span></span><br><span class="line">net localgroup administrators </span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#查看当前在线用户</span></span></span><br><span class="line">query user || qwinsta</span><br><span class="line"><span class="meta">#</span><span class="bash">查看在线用户</span></span><br><span class="line">quser</span><br><span class="line"><span class="meta">#</span><span class="bash">列出或断开本地计算机与所连接的客户端的对话(需要高权限)</span></span><br><span class="line">net session</span><br><span class="line"><span class="meta">#</span><span class="bash">查询端口列表</span></span><br><span class="line">Windows: netstat -ano</span><br><span class="line">linux: netstat -tnlp</span><br><span class="line"><span class="meta">#</span><span class="bash">查看本机共享列表和可访问的域共享列表</span></span><br><span class="line">net share （445端口）</span><br><span class="line"><span class="meta">#</span><span class="bash">查找共享列表</span></span><br><span class="line">wmic share get name,path,status </span><br><span class="line"><span class="meta">#</span><span class="bash">磁盘映射</span></span><br><span class="line">net use k: \\192.168.1.10\c$</span><br><span class="line"><span class="meta">#</span><span class="bash">查询路由表</span></span><br><span class="line">route print</span><br><span class="line"><span class="meta">#</span><span class="bash">可用接口的ARP缓存表。局域网内arp -a，查看是否有重复的mac地址判断是否存在arp欺骗。服务器绑定mac地址方式防止arp欺骗</span></span><br><span class="line">arp -a</span><br><span class="line"><span class="meta">#</span><span class="bash">查看进程</span></span><br><span class="line">tasklist</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看开启的服务</span></span><br><span class="line">net start</span><br><span class="line"><span class="meta">#</span><span class="bash">查看远程连接信息</span></span><br><span class="line">cmdkey /l</span><br><span class="line"><span class="meta">#</span><span class="bash">查看杀软</span></span><br><span class="line">WMIC /Node:localhost /Namespace:\\root\SecurityCenter2 Path AntiVirusProduct Get displayName /Format:List</span><br><span class="line"><span class="meta">#</span><span class="bash">查看本地密码策略</span></span><br><span class="line">net accounts </span><br><span class="line"><span class="meta">#</span><span class="bash">查看hosts文件：</span></span><br><span class="line">linux:cat  /etc/hosts</span><br><span class="line">windows:type  c:\Windows\system32\drivers\etc\hosts</span><br><span class="line"><span class="meta">#</span><span class="bash">查看dns缓存</span></span><br><span class="line">ipconfig  /displaydns</span><br></pre></td></tr></table></figure>
 <p>ListInstalledProgram项目地址:<a target="_blank" rel="noopener" href="https://github.com/3gstudent/ListInstalledPrograms">https://github.com/3gstudent/ListInstalledPrograms</a></p>
-<p>我们可使用自动化脚本WMIC（Windows Management Instrumentation Command-Line，Windows管理工具命令行）。在默认情况下，任何版本的Windows XP的低权限用户不能访问WMIC，Windows 7以上版本的低权限用户允许访问WMIC并执行相关操作。 执行后，会将信息收集的结果写入HTML文档。</p>
+<p>我们可使用自动化脚本WMIC（Windows Management Instrumentation Command-Line，Windows管理工具命令行）。在默认情况下，任何版本的Windows XP的低权限用户不能访问WMIC，<strong>Windows 7</strong>以上版本的低权限用户允许访问<strong>WMIC</strong>并执行相关操作。 执行后，会将信息收集的结果写入HTML文档。</p>
 <p>项目地址：<br><a target="_blank" rel="noopener" href="http://www.fuzzysecurity.com/scripts/files/wmic_info.rar">http://www.fuzzysecurity.com/scripts/files/wmic_info.rar</a><br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210402114028.png" alt="20210402114028"></p>
 <p>获取主机信息也可以用Seatbelt.exe，项目地址：<a target="_blank" rel="noopener" href="https://github.com/GhostPack/Seatbelt/tree/master%EF%BC%8C%E9%9C%80%E8%A6%81%E7%BC%96%E8%AF%91,%E6%94%BE%E5%88%B0%E9%9D%B6%E6%9C%BA%E4%B8%8A%E6%89%A7%E8%A1%8C%E4%B8%8B%E5%88%97%E5%91%BD%E4%BB%A4">https://github.com/GhostPack/Seatbelt/tree/master，需要编译,放到靶机上执行下列命令</a></p>
 <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell Seatbelt.exe -group=all &gt; env.txt</span><br></pre></td></tr></table></figure>
@@ -569,10 +569,18 @@ height:50vh;
 <p>MSF建立会话拿到shell，即可直接执行DOS命令至今进行信息收集。也可以进行直接执行run winenum可以一键收集记录。</p>
 <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run winenum</span><br></pre></td></tr></table></figure>
 
-<h2 id="powershell-信息收集"><a href="#powershell-信息收集" class="headerlink" title="powershell 信息收集"></a>powershell 信息收集</h2><p>默认powershell是不能执行脚本的，获取脚本策略之后才能使用：</p>
+<h2 id="powershell-信息收集"><a href="#powershell-信息收集" class="headerlink" title="powershell 信息收集"></a>powershell 信息收集</h2><p>查看powshell执行策略</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">get-executionpolicy</span></span><br></pre></td></tr></table></figure>
-<p>更改执行策略必须以管理员身份执行才可以，否则报错注册表安全问题</p>
+<p>有四种情况</p>
+<ul>
+<li>默认情况是<code>restricted</code>,即<strong>不允许</strong>执行脚本</li>
+<li><code>RemoteSigned</code>,<strong>本地创建</strong>的脚本可以运行，如果要运行网上下载的脚本，必需要有<strong>数字签名</strong>才可以</li>
+<li><code>AllSigned</code>，所有脚本都要<strong>发布者签名</strong>才能运行</li>
+<li><code>Unrestricted</code>,运行所有脚本运行</li>
+</ul>
+<p>更改执行策略必须以<strong>管理员身份</strong>执行才可以，否则报错注册表安全问题</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set-executionpolicy</span> unrestricted</span><br></pre></td></tr></table></figure>
+
 
 <h2 id="powersploit-信息收集"><a href="#powersploit-信息收集" class="headerlink" title="powersploit 信息收集"></a>powersploit 信息收集</h2><p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/PowerShellMafia/PowerSploit">https://github.com/PowerShellMafia/PowerSploit</a><br>，已经停止维护</p>
 <p>建立会话后的meterpreter：</p>
@@ -595,7 +603,7 @@ height:50vh;
             <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
             <p>原文链接：<a href="https://hackerqwq.github.io/2021/04/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E7%AF%87/">https://hackerqwq.github.io/2021/04/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E7%AF%87/</a>
             <p>发表日期：<a href="https://hackerqwq.github.io/2021/04/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E7%AF%87/">April 1st 2021, 10:06:36 am</a>
-            <p>更新日期：<a href="https://hackerqwq.github.io/2021/04/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E7%AF%87/">June 20th 2021, 11:17:27 pm</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2021/04/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E7%AF%87/">June 25th 2021, 11:14:59 pm</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -2179,9 +2187,26 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 92
+        Total : 93
         </div>
         <!-- search  -->
         
@@ -2198,6 +2223,11 @@ top:50vh;
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/26</span><a class="archive-post-title" href= "/2021/06/26/TP5SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90TP5%E5%85%A8%E7%89%88%E6%9C%AC/" >TP5SQL注入漏洞分析TP5全版本</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2677,11 +2707,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
-    
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
     
@@ -2693,6 +2721,12 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="php反射类利用"><span class="iconfont-archer">&#xe606;</span>php反射类利用</span>
     
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+    
+        <span class="sidebar-tag-name" data-tags="md5"><span class="iconfont-archer">&#xe606;</span>md5</span>
+    
+        <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
+    
         <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
     
         <span class="sidebar-tag-name" data-tags="输入法取证"><span class="iconfont-archer">&#xe606;</span>输入法取证</span>
@@ -2703,10 +2737,6 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
     
-        <span class="sidebar-tag-name" data-tags="md5"><span class="iconfont-archer">&#xe606;</span>md5</span>
-    
-        <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
-    
         <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
@@ -2715,9 +2745,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
-        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
-    
         <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
     
@@ -2737,11 +2767,11 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
+        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
+    
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
         <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
-    
-        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
         <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
     
@@ -2755,8 +2785,6 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
     
-        <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
     
         <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
@@ -2765,21 +2793,23 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
     
+        <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
+    
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
-        <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
-    
         <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
+    
+        <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
     
         <span class="sidebar-tag-name" data-tags="提权"><span class="iconfont-archer">&#xe606;</span>提权</span>
     
         <span class="sidebar-tag-name" data-tags="代码执行"><span class="iconfont-archer">&#xe606;</span>代码执行</span>
     
+        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+    
         <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
     
         <span class="sidebar-tag-name" data-tags="内网渗透"><span class="iconfont-archer">&#xe606;</span>内网渗透</span>
-    
-        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
     
         <span class="sidebar-tag-name" data-tags="phar反序列化"><span class="iconfont-archer">&#xe606;</span>phar反序列化</span>
     
@@ -2807,9 +2837,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="url取反绕过"><span class="iconfont-archer">&#xe606;</span>url取反绕过</span>
     
-        <span class="sidebar-tag-name" data-tags="零宽度字符"><span class="iconfont-archer">&#xe606;</span>零宽度字符</span>
-    
         <span class="sidebar-tag-name" data-tags="create_function注入"><span class="iconfont-archer">&#xe606;</span>create_function注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="零宽度字符"><span class="iconfont-archer">&#xe606;</span>零宽度字符</span>
     
         <span class="sidebar-tag-name" data-tags="2021Nep"><span class="iconfont-archer">&#xe606;</span>2021Nep</span>
     
