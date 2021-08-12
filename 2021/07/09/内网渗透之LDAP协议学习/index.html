@@ -48,8 +48,24 @@
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210710175256.png">
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210710175456.png">
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210710175748.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716163512.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716170138.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716170355.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716170443.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716165623.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716172817.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716173113.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716173321.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716173807.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716175655.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716180230.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716180324.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716180429.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716180531.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716180901.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716181008.png">
 <meta property="article:published_time" content="2021-07-09T14:37:00.000Z">
-<meta property="article:modified_time" content="2021-07-10T09:57:59.213Z">
+<meta property="article:modified_time" content="2021-07-16T10:14:27.008Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="信息收集">
 <meta property="article:tag" content="内网渗透">
@@ -310,7 +326,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">2.9k</span>Reading time: <span class="post-count reading-time">11 min</span></span>
+                        <span>Word count: <span class="post-count word-count">4k</span>Reading time: <span class="post-count reading-time">15 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -587,7 +603,81 @@ height:50vh;
 <p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210710175748.png" alt="20210710175748"><br>查询OU里面的账户，可以指定BaseDN为OU就行</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ADFind.exe -s subtree -b &quot;OU&#x3D;IT,DC&#x3D;pentest,DC&#x3D;com&quot; -dn</span><br></pre></td></tr></table></figure>
 
+<h1 id="组策略"><a href="#组策略" class="headerlink" title="组策略"></a>组策略</h1><h2 id="组策略简介"><a href="#组策略简介" class="headerlink" title="组策略简介"></a>组策略简介</h2><p>组策略可以控制用户帐户和计算机帐户的工作环境。他提供了操作系统、应用程序和活动目录中用户设置的集中化管理和配置。<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716163512.png" alt="20210716163512"></p>
+<h2 id="组策略更新"><a href="#组策略更新" class="headerlink" title="组策略更新"></a>组策略更新</h2><p>客户端更新组策略的方式主要有：</p>
+<ol>
+<li>后台轮询，查看sysvol 里面GPT.ini，如果版本高于本地保存的组策略版本，客户端将会更新本地的组策略。轮询的时间是，默认情况下，计算机组策略会在后台每隔 90 分钟更新一次，并将时间作 0 到 30 分钟的随机调整。域控制器上的组策略会每隔 5 分钟更新一次。</li>
+<li>计算机开机，用户登录时，查看sysvol 里面GPT.ini，如果版本高于本地保存的组策略版本，客户端将会更新本地的组策略。<br>客户端强制更新，执行gupdate /force。</li>
+<li>域控强制客户端更新，执行 Invoke-GPUpdate -Computer “TEST\win10” -Target “User”<br>如果域控制器强制客户端刷新组策略，那么不会比较域共享目录中组策略的版本</li>
+</ol>
+<h2 id="组策略的存储"><a href="#组策略的存储" class="headerlink" title="组策略的存储"></a>组策略的存储</h2><h3 id="GPC和GPT"><a href="#GPC和GPT" class="headerlink" title="GPC和GPT"></a>GPC和GPT</h3><p>GPO在于内的存储分为两个部分，<code>GPC</code>和<code>GPT</code></p>
+<ol>
+<li>GPC位于<code>CN=Policies,CN=System,&lt;BaseDn&gt;</code>底下,每个条目对应一个GPC<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716170138.png" alt="20210716170138"><br>例如这里的Default Domain Policy的GPC就是<code>CN=&#123;31B2F340-016D-11D2-945F-00C04FB984F9&#125;,CN=Policies,CN=System,DC=pentest,DC=com</code>，GPC包含了GPO的属性，例如版本信息，GPO状态和其他组件设置</li>
+<li>GPC的<code>gPCFileSysPath</code>链接到GPT<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716170355.png" alt="20210716170355"><br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716170443.png" alt="20210716170443"><br>里面记录了一些策略的数据</li>
+</ol>
+<p>OU通过<code>gPLink</code>标识这个OU应该使用的组策略,通过<code>gPOptions</code>标识是否继承组策略</p>
+<h2 id="组策略相关ACL"><a href="#组策略相关ACL" class="headerlink" title="组策略相关ACL"></a>组策略相关ACL</h2><h3 id="创建GPO的权限"><a href="#创建GPO的权限" class="headerlink" title="创建GPO的权限"></a>创建GPO的权限</h3><p>创建GPO的权限其实就是对<code>CN=Policies,CN=System,&lt;BaseDn&gt;</code>具备<code>CreateChild</code>的权限。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AdFind.exe -b &quot;CN&#x3D;Policies,CN&#x3D;System,DC&#x3D;pentest,DC&#x3D;com&quot;-sddl+++ -s base -sdna -sddlfilter &gt;..&#x2F;GPO_privilege.txt</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716165623.png" alt="20210716165623"></p>
+<h3 id="GPO链接的权限"><a href="#GPO链接的权限" class="headerlink" title="GPO链接的权限"></a>GPO链接的权限</h3><p>OU上的<code>gPLink</code>可以标识使用的组策略,我们只要遍历所有站点、OU、OU上的ACE，如果有对<code>gPLink</code>属性或者<code>gPOpptions</code>属性的修改权限，就可以修改这个这个域/站点/OU链接的OU。</p>
+<ol>
+<li>遍历站点、OU<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#遍历站点</span><br><span class="line">adfind -b CN&#x3D;Configuration,DC&#x3D;pentest,DC&#x3D;com -f &quot;(objectCategory&#x3D;site)&quot; -s subtree -dn</span><br><span class="line">adfind -sites -f &quot;(objectCategory&#x3D;site)&quot;  -dn</span><br><span class="line">#遍历OU</span><br><span class="line">adfind -b DC&#x3D;pentest,DC&#x3D;com -f &quot;(objectCategory&#x3D;organizationalUnit)&quot; dn</span><br></pre></td></tr></table></figure></li>
+<li>遍历域、站点、OU上的ACE<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#查看修改gPlink权限</span><br><span class="line">adfind -b OU&#x3D;财务,DC&#x3D;test,DC&#x3D;local -sddl+++ -s base  -sdna -sddlfilter ;;;gPlink;;</span><br><span class="line">#或修改gPOpptions的权限</span><br><span class="line">adfind -b OU&#x3D;财务,DC&#x3D;test,DC&#x3D;local -sddl+++ -s base -sdna -sddlfilter ;;;gPOpptions;;</span><br></pre></td></tr></table></figure>
 
+</li>
+</ol>
+<h3 id="修改现有GPO的权限"><a href="#修改现有GPO的权限" class="headerlink" title="修改现有GPO的权限"></a>修改现有GPO的权限</h3><p>主要关注</p>
+<ul>
+<li>GPC链接到GPT的权限</li>
+<li>修改GPT的权限</li>
+</ul>
+<ol>
+<li>GPC链接到GPT的权限对应OU的<code>gPCFileSysPath</code>,只需查找对这个属性的<code>WriteProperty</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AdFind.exe -b &quot;CN&#x3D;Policies,CN&#x3D;System,DC&#x3D;pentest,DC&#x3D;com&quot; nTSecurityDescriptor -sddl+++ -s subtree -sdna -sddlfilter ;;;gPCFileSysPath;; -recmute</span><br></pre></td></tr></table></figure>
+<img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716172817.png" alt="20210716172817"></li>
+<li>修改GPT的属性,这里使用系统自带的<code>icacls</code>能查看文件夹<code>ACL</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">icacls \\pentest.com\sysvol\pentest.com\scripts*</span><br><span class="line">icacls \\pentest.com\sysvol\pentest.com\policies*</span><br></pre></td></tr></table></figure>
+<img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716173113.png" alt="20210716173113"></li>
+</ol>
+<p>因为可以修改GPT，就等同于可以随意修改组策略配置。</p>
+<p>查看对应GPO标识对应组策略的名字</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\AdFind.exe -b &quot;CN&#x3D;&#123;31B2F340-016D-11D2-945F-00C04FB984F9&#125;,CN&#x3D;Policies,CN&#x3D;System,DC&#x3D;pentest,DC&#x3D;com&quot; -s base displayName</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716173321.png" alt="20210716173321"></p>
+<h3 id="SYSVOL漏洞-MS14-025"><a href="#SYSVOL漏洞-MS14-025" class="headerlink" title="SYSVOL漏洞(MS14-025)"></a>SYSVOL漏洞(MS14-025)</h3><p><strong>早起版本中</strong>，某些组策略<code>首选项</code>可以存储加密过的密码，加密方式为AES-256，且微软公开了私钥<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716173807.png" alt="20210716173807"><br>主要存在于一下组策略首选项中</p>
+<ul>
+<li>驱动器映射</li>
+<li>本地用户和组</li>
+<li>计划任务</li>
+<li>服务</li>
+<li>数据源</li>
+</ul>
+<p>可以用以下命令搜索:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">findstr &#x2F;S cpassword \\pentest.com\sysvol\*.xml</span><br></pre></td></tr></table></figure>
+
+<p>工具地址：<a target="_blank" rel="noopener" href="https://github.com/securethelogs/PassVol.git">https://github.com/securethelogs/PassVol.git</a><br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716175655.png" alt="20210716175655"></p>
+<h2 id="组策略横向移动方式"><a href="#组策略横向移动方式" class="headerlink" title="组策略横向移动方式"></a>组策略横向移动方式</h2><ol>
+<li>软件安装推出<code>.msi</code>软件<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716180230.png" alt="20210716180230"></li>
+<li>推出特定的启动脚本<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716180324.png" alt="20210716180324"></li>
+<li>计划任务<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716180429.png" alt="20210716180429"></li>
+</ol>
+<h2 id="组策略后门"><a href="#组策略后门" class="headerlink" title="组策略后门"></a>组策略后门</h2><ol>
+<li>将域账户添加到本地管理员/RDP组<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716180531.png" alt="20210716180531"></li>
+<li>添加特权<br>一般用<code>SeEnableDelegationPrivilege</code>特权</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41874930/article/details/111560977">https://blog.csdn.net/qq_41874930/article/details/111560977</a></p>
+<ol start="3">
+<li><p>降级凭据保护<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716180901.png" alt="20210716180901">   </p>
+</li>
+<li><p>启用明文密码提取<br>微软很早就更新了补丁来防止获取高版本windows的明文密码，但是可以修改注册表…使<code>HKEY_LOCAL_MACHINESYSTEMCurrentControlSetControlSecurityProvidersWDigest下的UseLogonCredentiald</code>的键值为1<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716181008.png" alt="20210716181008"></p>
+</li>
+<li><p>组策略ACL后门<br>三种特权:</p>
+</li>
+<li><p>创建GPO的权限</p>
+</li>
+<li><p>GPO链接OU的权限</p>
+</li>
+<li><p>修改现有的GPO的权限</p>
+</li>
+</ol>
+<p>拥有这些权限就相当于拥有域管的权限，比如修改<code>Default Domain Policy</code>的权限，那么这个用户就可以授予别的用户<code>SeEnableDelegationPrivilege</code>的权限</p>
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
 <li><a target="_blank" rel="noopener" href="https://hackergu.com/kerberos-ldap/">https://hackergu.com/kerberos-ldap/</a></li>
 <li><a target="_blank" rel="noopener" href="https://daiker.gitbook.io/windows-protocol/ldap-pian/10">https://daiker.gitbook.io/windows-protocol/ldap-pian/10</a></li>
@@ -600,7 +690,7 @@ height:50vh;
             <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
             <p>原文链接：<a href="https://hackerqwq.github.io/2021/07/09/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLDAP%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0/">https://hackerqwq.github.io/2021/07/09/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLDAP%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0/</a>
             <p>发表日期：<a href="https://hackerqwq.github.io/2021/07/09/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLDAP%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0/">July 9th 2021, 10:37:00 pm</a>
-            <p>更新日期：<a href="https://hackerqwq.github.io/2021/07/09/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLDAP%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0/">July 10th 2021, 5:57:59 pm</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2021/07/09/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLDAP%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0/">July 16th 2021, 6:14:27 pm</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -745,7 +835,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LDAP%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">LDAP简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DN%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-number">1.1.</span> <span class="toc-text">DN的属性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AD-Active-Directory-%E7%AE%80%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">AD(Active Directory)简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nameing-Context"><span class="toc-number">3.</span> <span class="toc-text">Nameing Context</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Configuration-NC"><span class="toc-number">3.1.</span> <span class="toc-text">Configuration NC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Schema-NC"><span class="toc-number">3.2.</span> <span class="toc-text">Schema NC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Domain-NC"><span class="toc-number">3.3.</span> <span class="toc-text">Domain NC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9A%E4%BF%A1%E6%81%AF"><span class="toc-number">3.4.</span> <span class="toc-text">更多信息</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2Active-Directory"><span class="toc-number">4.</span> <span class="toc-text">搜索Active Directory</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E8%A7%84%E5%88%99"><span class="toc-number">4.1.</span> <span class="toc-text">过滤规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LDAP%E4%B8%AD%E6%9F%A5%E6%89%BEobjectCategory%E5%92%8CobjectClass"><span class="toc-number">4.2.</span> <span class="toc-text">LDAP中查找objectCategory和objectClass</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%84"><span class="toc-number">5.</span> <span class="toc-text">组</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E7%AE%80%E4%BB%8B"><span class="toc-number">5.1.</span> <span class="toc-text">组简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E8%8C%83%E5%9B%B4"><span class="toc-number">5.1.1.</span> <span class="toc-text">组范围</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%BB%84"><span class="toc-number">5.1.2.</span> <span class="toc-text">常见组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AGDLP"><span class="toc-number">5.1.3.</span> <span class="toc-text">AGDLP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ADFind%E6%9F%A5%E8%AF%A2%E7%BB%84"><span class="toc-number">5.2.</span> <span class="toc-text">ADFind查询组</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OU%E7%BB%84%E7%BB%87%E5%8D%95%E4%BD%8D-Organization-Unit"><span class="toc-number">6.</span> <span class="toc-text">OU组织单位(Organization Unit)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OU%E5%A7%94%E6%B4%BE"><span class="toc-number">6.1.</span> <span class="toc-text">OU委派</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OU%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.2.</span> <span class="toc-text">OU查询</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">7.</span> <span class="toc-text">参考链接</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LDAP%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">LDAP简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DN%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-number">1.1.</span> <span class="toc-text">DN的属性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AD-Active-Directory-%E7%AE%80%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">AD(Active Directory)简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nameing-Context"><span class="toc-number">3.</span> <span class="toc-text">Nameing Context</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Configuration-NC"><span class="toc-number">3.1.</span> <span class="toc-text">Configuration NC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Schema-NC"><span class="toc-number">3.2.</span> <span class="toc-text">Schema NC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Domain-NC"><span class="toc-number">3.3.</span> <span class="toc-text">Domain NC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9A%E4%BF%A1%E6%81%AF"><span class="toc-number">3.4.</span> <span class="toc-text">更多信息</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2Active-Directory"><span class="toc-number">4.</span> <span class="toc-text">搜索Active Directory</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E8%A7%84%E5%88%99"><span class="toc-number">4.1.</span> <span class="toc-text">过滤规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LDAP%E4%B8%AD%E6%9F%A5%E6%89%BEobjectCategory%E5%92%8CobjectClass"><span class="toc-number">4.2.</span> <span class="toc-text">LDAP中查找objectCategory和objectClass</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%84"><span class="toc-number">5.</span> <span class="toc-text">组</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E7%AE%80%E4%BB%8B"><span class="toc-number">5.1.</span> <span class="toc-text">组简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E8%8C%83%E5%9B%B4"><span class="toc-number">5.1.1.</span> <span class="toc-text">组范围</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%BB%84"><span class="toc-number">5.1.2.</span> <span class="toc-text">常见组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AGDLP"><span class="toc-number">5.1.3.</span> <span class="toc-text">AGDLP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ADFind%E6%9F%A5%E8%AF%A2%E7%BB%84"><span class="toc-number">5.2.</span> <span class="toc-text">ADFind查询组</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OU%E7%BB%84%E7%BB%87%E5%8D%95%E4%BD%8D-Organization-Unit"><span class="toc-number">6.</span> <span class="toc-text">OU组织单位(Organization Unit)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OU%E5%A7%94%E6%B4%BE"><span class="toc-number">6.1.</span> <span class="toc-text">OU委派</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OU%E6%9F%A5%E8%AF%A2"><span class="toc-number">6.2.</span> <span class="toc-text">OU查询</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%84%E7%AD%96%E7%95%A5"><span class="toc-number">7.</span> <span class="toc-text">组策略</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E7%AD%96%E7%95%A5%E7%AE%80%E4%BB%8B"><span class="toc-number">7.1.</span> <span class="toc-text">组策略简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E7%AD%96%E7%95%A5%E6%9B%B4%E6%96%B0"><span class="toc-number">7.2.</span> <span class="toc-text">组策略更新</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E7%AD%96%E7%95%A5%E7%9A%84%E5%AD%98%E5%82%A8"><span class="toc-number">7.3.</span> <span class="toc-text">组策略的存储</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GPC%E5%92%8CGPT"><span class="toc-number">7.3.1.</span> <span class="toc-text">GPC和GPT</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E7%AD%96%E7%95%A5%E7%9B%B8%E5%85%B3ACL"><span class="toc-number">7.4.</span> <span class="toc-text">组策略相关ACL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAGPO%E7%9A%84%E6%9D%83%E9%99%90"><span class="toc-number">7.4.1.</span> <span class="toc-text">创建GPO的权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GPO%E9%93%BE%E6%8E%A5%E7%9A%84%E6%9D%83%E9%99%90"><span class="toc-number">7.4.2.</span> <span class="toc-text">GPO链接的权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E7%8E%B0%E6%9C%89GPO%E7%9A%84%E6%9D%83%E9%99%90"><span class="toc-number">7.4.3.</span> <span class="toc-text">修改现有GPO的权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SYSVOL%E6%BC%8F%E6%B4%9E-MS14-025"><span class="toc-number">7.4.4.</span> <span class="toc-text">SYSVOL漏洞(MS14-025)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E7%AD%96%E7%95%A5%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">7.5.</span> <span class="toc-text">组策略横向移动方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E7%AD%96%E7%95%A5%E5%90%8E%E9%97%A8"><span class="toc-number">7.6.</span> <span class="toc-text">组策略后门</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">8.</span> <span class="toc-text">参考链接</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -2303,9 +2393,154 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 99
+        Total : 106
         </div>
         <!-- search  -->
         
@@ -2322,6 +2557,41 @@ top:50vh;
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/09</span><a class="archive-post-title" href= "/2021/08/09/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0/" >Java动态代理学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/03</span><a class="archive-post-title" href= "/2021/08/03/pickle%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" >pickle序列化与反序列化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/28</span><a class="archive-post-title" href= "/2021/07/28/Java%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0-%E4%B8%80/" >Java序列化与反序列化学习(一)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/28</span><a class="archive-post-title" href= "/2021/07/28/Java-IO-NIO%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6/" >Java IO/NIO读写文件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/26</span><a class="archive-post-title" href= "/2021/07/26/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6%E5%92%8C%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/" >Java类加载机制和反射机制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2021/07/24/TP5RCE%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-0-7-5-0-22-5-1-0-5-1-30/" >TP5RCE代码执行漏洞分析(5.0.7-5.0.22,5.1.0-5.1.30)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2021/07/24/TP5%E5%86%99WebShell-5-0-0-5-0-10/" >TP5写WebShell(5.0.0-5.0.10)</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2836,11 +3106,21 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
-    
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
         <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
+    
+        <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件上传"><span class="iconfont-archer">&#xe606;</span>文件上传</span>
+    
+        <span class="sidebar-tag-name" data-tags="uncide欺骗"><span class="iconfont-archer">&#xe606;</span>uncide欺骗</span>
+    
+        <span class="sidebar-tag-name" data-tags="无列名注入"><span class="iconfont-archer">&#xe606;</span>无列名注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="php反射类利用"><span class="iconfont-archer">&#xe606;</span>php反射类利用</span>
     
         <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
     
@@ -2856,31 +3136,23 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
-    
-        <span class="sidebar-tag-name" data-tags="文件上传"><span class="iconfont-archer">&#xe606;</span>文件上传</span>
-    
-        <span class="sidebar-tag-name" data-tags="uncide欺骗"><span class="iconfont-archer">&#xe606;</span>uncide欺骗</span>
-    
-        <span class="sidebar-tag-name" data-tags="无列名注入"><span class="iconfont-archer">&#xe606;</span>无列名注入</span>
-    
-        <span class="sidebar-tag-name" data-tags="php反射类利用"><span class="iconfont-archer">&#xe606;</span>php反射类利用</span>
-    
         <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
-    
         <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
     
         <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     

