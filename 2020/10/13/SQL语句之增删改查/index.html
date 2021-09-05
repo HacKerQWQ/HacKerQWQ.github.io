@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://hackerqwq.github.io/2020/10/13/SQL%E8%AF%AD%E5%8F%A5%E4%B9%8B%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/3.png">
 <meta property="og:image" content="https://hackerqwq.github.io/2020/10/13/SQL%E8%AF%AD%E5%8F%A5%E4%B9%8B%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/4.png">
 <meta property="article:published_time" content="2020-10-13T14:01:47.000Z">
-<meta property="article:modified_time" content="2021-04-17T17:32:19.738Z">
+<meta property="article:modified_time" content="2021-08-26T11:06:02.634Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="sql">
 <meta property="article:tag" content="MySQL">
@@ -491,34 +491,26 @@ DEFAULT一般用于日期或者时间戳<br><img src="/2020/10/13/SQL%E8%AF%AD%E
 </ul>
 <p>键约束等内容参考<code>SQL必知必会</code></p>
 <h1 id="用户权限"><a href="#用户权限" class="headerlink" title="用户权限"></a>用户权限</h1><p>1、创建新用户</p>
-<p>　　通过root用户登录之后创建</p>
-<p>　　&gt;&gt; grant all privileges on <em>.</em> to testuser@localhost identified by “123456” ;　　//　　创建新用户，用户名为testuser，密码为123456 ；</p>
-<p>　　&gt;&gt; grant all privileges on <em>.</em> to testuser@localhost identified by “123456” ;　　//　　设置用户testuser，可以在本地访问mysql</p>
-<p>　　&gt;&gt; grant all privileges on <em>.</em> to testuser@”%” identified by “123456” ;　　　//　　设置用户testuser，可以在远程访问mysql</p>
-<p>　　&gt;&gt; flush privileges ;　　//　　mysql 新设置用户或更改密码后需用flush privileges刷新MySQL的系统权限相关表，否则会出现拒绝访问，还有一种方法，就是重新启动mysql服务器，来使新设置生效</p>
-<p>　　</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">　　通过root用户登录之后创建</span><br><span class="line"></span><br><span class="line">　　&gt;&gt; grant all privileges on *.* to testuser@localhost identified by &quot;123456&quot; ;　　//　　创建新用户，用户名为testuser，密码为123456 ；</span><br><span class="line"></span><br><span class="line">　　&gt;&gt; grant all privileges on *.* to testuser@localhost identified by &quot;123456&quot; ;　　//　　设置用户testuser，可以在本地访问mysql</span><br><span class="line"></span><br><span class="line">　　&gt;&gt; grant all privileges on *.* to testuser@&quot;%&quot; identified by &quot;123456&quot; ;　　　//　　设置用户testuser，可以在远程访问mysql</span><br><span class="line"></span><br><span class="line">　　&gt;&gt; flush privileges ;　　//　　mysql 新设置用户或更改密码后需用flush privileges刷新MySQL的系统权限相关表，否则会出现拒绝访问，还有一种方法，就是重新启动mysql服务器，来使新设置生效</span><br></pre></td></tr></table></figure>
+
 <p>　　2、设置用户访问数据库权限</p>
-<p>　　&gt;&gt; grant all privileges on test_db.* to testuser@localhost identified by “123456” ;　　//　　设置用户testuser，只能访问数据库test_db，其他数据库均不能访问 ；</p>
-<p>　　&gt;&gt; grant all privileges on <em>.</em> to testuser@localhost identified by “123456” ;　　//　　设置用户testuser，可以访问mysql上的所有数据库 ；</p>
-<p>　　&gt;&gt; grant all privileges on test_db.user_infor to testuser@localhost identified by “123456” ;　　//　　设置用户testuser，只能访问数据库test_db的表user_infor，数据库中的其他表均不能访问 ；</p>
-<p>　　</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">　　&gt;&gt; grant all privileges on test_db.* to testuser@localhost identified by &quot;123456&quot; ;　　//　　设置用户testuser，只能访问数据库test_db，其他数据库均不能访问 ；</span><br><span class="line"></span><br><span class="line">　　&gt;&gt; grant all privileges on *.* to testuser@localhost identified by &quot;123456&quot; ;　　//　　设置用户testuser，可以访问mysql上的所有数据库 ；</span><br><span class="line"></span><br><span class="line">　　&gt;&gt; grant all privileges on test_db.user_infor to testuser@localhost identified by &quot;123456&quot; ;　　//　　设置用户testuser，只能访问数据库test_db的表user_infor，数据库中的其他表均不能访问 ；</span><br></pre></td></tr></table></figure>
+
 <p>　　3、设置用户操作权限</p>
-<p>　　&gt;&gt; grant all privileges on <em>.</em> to testuser@localhost identified by “123456” WITH GRANT OPTION ;　　//设置用户testuser，拥有所有的操作权限，也就是管理员 ；</p>
-<p>　　&gt;&gt; grant select on <em>.</em> to testuser@localhost identified by “123456” WITH GRANT OPTION ;　　//设置用户testuser，只拥有【查询】操作权限 ；</p>
-<p>　　&gt;&gt; grant select,insert on <em>.</em> to testuser@localhost identified by “123456”  ;　　//设置用户testuser，只拥有【查询\插入】操作权限 ；</p>
-<p>　　&gt;&gt; grant select,insert,update,delete on <em>.</em> to testuser@localhost identified by “123456”  ;　　//设置用户testuser，只拥有【查询\插入】操作权限 ；</p>
-<p>　　&gt;&gt; REVOKE select,insert ON what FROM testuser　　//取消用户testuser的【查询\插入】操作权限 ；</p>
-<p>　　</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">　　&gt;&gt; grant all privileges on *.* to testuser@localhost identified by &quot;123456&quot; WITH GRANT OPTION ;　　//设置用户testuser，拥有所有的操作权限，也就是管理员 ；</span><br><span class="line"></span><br><span class="line">　　&gt;&gt; grant select on *.* to testuser@localhost identified by &quot;123456&quot; WITH GRANT OPTION ;　　//设置用户testuser，只拥有【查询】操作权限 ；</span><br><span class="line"></span><br><span class="line">　　&gt;&gt; grant select,insert on *.* to testuser@localhost identified by &quot;123456&quot;  ;　　//设置用户testuser，只拥有【查询\插入】操作权限 ；</span><br><span class="line"></span><br><span class="line">　　&gt;&gt; grant select,insert,update,delete on *.* to testuser@localhost identified by &quot;123456&quot;  ;　　//设置用户testuser，只拥有【查询\插入】操作权限 ；</span><br><span class="line"></span><br><span class="line">　　&gt;&gt; REVOKE select,insert ON what FROM testuser　　//取消用户testuser的【查询\插入】操作权限 ；</span><br></pre></td></tr></table></figure>
+
 <p>　　4、设置用户远程访问权限</p>
-<p>　　&gt;&gt; grant all privileges on <em>.</em> to testuser@“192.168.1.100” identified by “123456” ;　　//设置用户testuser，只能在客户端IP为192.168.1.100上才能远程访问mysql ；</p>
-<p>　　</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　　&gt;&gt; grant all privileges on *.* to testuser@“192.168.1.100” identified by &quot;123456&quot; ;　　//设置用户testuser，只能在客户端IP为192.168.1.100上才能远程访问mysql ；</span><br></pre></td></tr></table></figure>
+
 <p>　　5、关于root用户的访问设置</p>
 <p>　　设置所有用户可以远程访问mysql，修改my.cnf配置文件，将bind-address = 127.0.0.1前面加“#”注释掉，这样就可以允许其他机器远程访问本机mysql了；</p>
-<p>　　&gt;&gt; grant all privileges on <em>.</em> to root@”%” identified by “123456” ;　　　//　　设置用户root，可以在远程访问mysql</p>
-<p>　　&gt;&gt; select host,user from user; 　　//查询mysql中所有用户权限</p>
-<p>　　关闭root用户远程访问权限</p>
-<p>　　&gt;&gt; delete from user where user=”root” and host=”%” ;　　//禁止root用户在远程机器上访问mysql</p>
-<p>　　&gt;&gt; flush privileges ;　　//修改权限之后，刷新MySQL的系统权限相关表方可生效</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">　　&gt;&gt; grant all privileges on *.* to root@&quot;%&quot; identified by &quot;123456&quot; ;　　　//　　设置用户root，可以在远程访问mysql</span><br><span class="line"></span><br><span class="line">　　&gt;&gt; select host,user from user; 　　//查询mysql中所有用户权限</span><br><span class="line"></span><br><span class="line">　　关闭root用户远程访问权限</span><br><span class="line"></span><br><span class="line">　　&gt;&gt; delete from user where user=&quot;root&quot; and host=&quot;%&quot; ;　　//禁止root用户在远程机器上访问mysql</span><br><span class="line"></span><br><span class="line">　　&gt;&gt; flush privileges ;　　//修改权限之后，刷新MySQL的系统权限相关表方可生效</span><br></pre></td></tr></table></figure>
+
+<p>Mysql8.0修改用户密码</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">USER</span> <span class="string">&#x27;root&#x27;</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">WITH</span> mysql_native_password <span class="keyword">BY</span> <span class="string">&#x27;root&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+
 <h1 id="设置utf8编码"><a href="#设置utf8编码" class="headerlink" title="设置utf8编码"></a>设置utf8编码</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_34129696/article/details/92531034">https://blog.csdn.net/weixin_34129696/article/details/92531034</a></p>
 <h1 id="联合主键"><a href="#联合主键" class="headerlink" title="联合主键"></a>联合主键</h1><p>create table hello(id int,name varchar(20),CONSTRAINT 别名 PRIMARY KEY (id,name));</p>
 <h1 id="外键设置"><a href="#外键设置" class="headerlink" title="外键设置"></a>外键设置</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43054397/article/details/91349095">https://blog.csdn.net/weixin_43054397/article/details/91349095</a></p>
@@ -530,7 +522,7 @@ DEFAULT一般用于日期或者时间戳<br><img src="/2020/10/13/SQL%E8%AF%AD%E
             <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
             <p>原文链接：<a href="https://hackerqwq.github.io/2020/10/13/SQL%E8%AF%AD%E5%8F%A5%E4%B9%8B%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/">https://hackerqwq.github.io/2020/10/13/SQL%E8%AF%AD%E5%8F%A5%E4%B9%8B%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/</a>
             <p>发表日期：<a href="https://hackerqwq.github.io/2020/10/13/SQL%E8%AF%AD%E5%8F%A5%E4%B9%8B%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/">October 13th 2020, 10:01:47 pm</a>
-            <p>更新日期：<a href="https://hackerqwq.github.io/2020/10/13/SQL%E8%AF%AD%E5%8F%A5%E4%B9%8B%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/">April 18th 2021, 1:32:19 am</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2020/10/13/SQL%E8%AF%AD%E5%8F%A5%E4%B9%8B%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/">August 26th 2021, 7:06:02 pm</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -2378,9 +2370,88 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 106
+        Total : 111
         </div>
         <!-- search  -->
         
@@ -2397,6 +2468,31 @@ top:50vh;
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/05</span><a class="archive-post-title" href= "/2021/09/05/python%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97%E7%9A%84%E5%AF%BC%E5%85%A5%E5%8F%8A%E8%A6%86%E7%9B%96%E7%9F%A5%E8%AF%86/" >python内置模块的导入及覆盖知识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/02</span><a class="archive-post-title" href= "/2021/09/02/TP5RCE%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-0-0-ThinkPHP5-5-0-23-5-1-0-ThinkPHP-5-1-30/" >TP5RCE代码执行漏洞分析(5.0.0<=ThinkPHP5<=5.0.23,5.1.0<=ThinkPHP<=5.1.30</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/2021/08/31/php%E5%8F%8D%E5%B0%84%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" >php反射利用总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/2021/08/31/php%E5%86%85%E7%BD%AE%E7%B1%BB%E7%9A%84%E5%88%A9%E7%94%A8/" >php内置类的利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/29</span><a class="archive-post-title" href= "/2021/08/29/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%B0%8F%E6%8A%80%E5%B7%A7%E4%B9%8BFast-Destruct/" >PHP反序列化小技巧之Fast Destruct</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2948,9 +3044,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
+    
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
     
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
     
@@ -2976,15 +3072,15 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
-        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
-    
-        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
+    
+        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
@@ -2997,6 +3093,8 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     
         <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
         <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
@@ -3034,11 +3132,17 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
     
+        <span class="sidebar-tag-name" data-tags="php"><span class="iconfont-archer">&#xe606;</span>php</span>
+    
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
+    
         <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
     
         <span class="sidebar-tag-name" data-tags="逻辑漏洞"><span class="iconfont-archer">&#xe606;</span>逻辑漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
+    
+        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
     
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
@@ -3072,9 +3176,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="文件上传漏洞"><span class="iconfont-archer">&#xe606;</span>文件上传漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
-    
         <span class="sidebar-tag-name" data-tags="无参数构造payload"><span class="iconfont-archer">&#xe606;</span>无参数构造payload</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
     

