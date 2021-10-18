@@ -21,26 +21,43 @@
     <meta name="keywords" content="hexo,HackerQWQ,blog,CTFer">
     
     <meta name="description" content="">
-    <meta name="description" content="预备知识Brutesuite的Fuzz扫描 dvcs-ripper工具123.&#x2F;rip-svn.pl -v -u http:&#x2F;&#x2F;www.example.com&#x2F;.svn.&#x2F;rip-hg.pl -v -u http:&#x2F;&#x2F;www.example.com&#x2F;.hg.&#x2F;rip-git.pl -v -u http:&#x2F;&#x2F;www.example.com&#x2F;.git 之后就可以从下载下来的隐藏目录中找到flag了">
+    <meta name="description" content="漏洞简介配置12345composer create-project topthink&#x2F;think tp6cd tp6# 修改composer.json&quot;topthink&#x2F;framework&quot;: &quot;6.0.0&quot;composer update  在app&#x2F;controller&#x2F;Index.php下修改代码 12345678910111213">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SVN和HG源码泄露">
-<meta property="og:url" content="https://hackerqwq.github.io/2020/08/06/SVN%E5%92%8CHG%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/index.html">
+<meta property="og:title" content="TP6任意文件写漏洞分析">
+<meta property="og:url" content="https://hackerqwq.github.io/2021/10/18/TP6%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%86%99%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="预备知识Brutesuite的Fuzz扫描 dvcs-ripper工具123.&#x2F;rip-svn.pl -v -u http:&#x2F;&#x2F;www.example.com&#x2F;.svn.&#x2F;rip-hg.pl -v -u http:&#x2F;&#x2F;www.example.com&#x2F;.hg.&#x2F;rip-git.pl -v -u http:&#x2F;&#x2F;www.example.com&#x2F;.git 之后就可以从下载下来的隐藏目录中找到flag了">
+<meta property="og:description" content="漏洞简介配置12345composer create-project topthink&#x2F;think tp6cd tp6# 修改composer.json&quot;topthink&#x2F;framework&quot;: &quot;6.0.0&quot;composer update  在app&#x2F;controller&#x2F;Index.php下修改代码 12345678910111213">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://hackerqwq.github.io/2020/08/06/SVN%E5%92%8CHG%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/1.png">
-<meta property="og:image" content="https://hackerqwq.github.io/2020/08/06/SVN%E5%92%8CHG%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/2.png">
-<meta property="article:published_time" content="2020-08-06T11:07:08.000Z">
-<meta property="article:modified_time" content="2021-04-19T03:27:44.629Z">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018230703197.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018231015988.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018232442385.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018232729471.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018232937002.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018233133688.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018233247942.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018233332133.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018233517551.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018233700718.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018233744630.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018234024529.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018234249153.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018234335145.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018234622739.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018235120409.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018235609426.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018235728341.png">
+<meta property="article:published_time" content="2021-10-18T15:01:09.000Z">
+<meta property="article:modified_time" content="2021-10-18T15:59:03.508Z">
 <meta property="article:author" content="HacKerQWQ">
-<meta property="article:tag" content="ctf">
-<meta property="article:tag" content="源码泄露">
+<meta property="article:tag" content="ThinkPHP">
+<meta property="article:tag" content="漏洞分析">
+<meta property="article:tag" content="代码审计">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://hackerqwq.github.io/2020/08/06/SVN%E5%92%8CHG%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/1.png">
+<meta name="twitter:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018230703197.png">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>SVN和HG源码泄露 · HacKerQWQ&#39;s Studio</title>
+    <title>TP6任意文件写漏洞分析 · HacKerQWQ&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -235,7 +252,7 @@
                 <a href="/" >HacKerQWQ的博客空间</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">SVN和HG源码泄露</a>
+                <a href="#" class="post-name">TP6任意文件写漏洞分析</a>
             </div>
     </div>
     
@@ -265,7 +282,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            SVN和HG源码泄露
+            TP6任意文件写漏洞分析
             <!-- 404 -->
             
         </h1>
@@ -284,20 +301,22 @@ height:50vh;
                 
                     <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ThinkPHP">ThinkPHP</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "源码泄露">源码泄露</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞分析">漏洞分析</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "代码审计">代码审计</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">62</span>Reading time: <span class="post-count reading-time">1 min</span></span>
+                        <span>Word count: <span class="post-count word-count">785</span>Reading time: <span class="post-count reading-time">3 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2020/08/06</span>
+                    <span class="post-intro-time">2021/10/18</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -422,18 +441,71 @@ height:50vh;
             
 <main class="main post-page">
     <article class="article-entry">
-        <h1 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h1><h2 id="Brutesuite的Fuzz扫描"><a href="#Brutesuite的Fuzz扫描" class="headerlink" title="Brutesuite的Fuzz扫描"></a>Brutesuite的Fuzz扫描</h2><p><img src="/2020/08/06/SVN%E5%92%8CHG%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/1.png"></p>
-<h2 id="dvcs-ripper工具"><a href="#dvcs-ripper工具" class="headerlink" title="dvcs-ripper工具"></a>dvcs-ripper工具</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./rip-svn.pl -v -u http://www.example.com/.svn</span><br><span class="line">./rip-hg.pl -v -u http://www.example.com/.hg</span><br><span class="line">./rip-git.pl -v -u http://www.example.com/.git</span><br></pre></td></tr></table></figure>
-<p>之后就可以从下载下来的隐藏目录中找到flag了<br><img src="/2020/08/06/SVN%E5%92%8CHG%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/2.png"></p>
+        <h1 id="漏洞简介"><a href="#漏洞简介" class="headerlink" title="漏洞简介"></a>漏洞简介</h1><h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">composer create-project topthink&#x2F;think tp6</span><br><span class="line">cd tp6</span><br><span class="line"># 修改composer.json</span><br><span class="line">&quot;topthink&#x2F;framework&quot;: &quot;6.0.0&quot;</span><br><span class="line">composer update</span><br></pre></td></tr></table></figure>
+
+<p>在<code>app/controller/Index.php</code>下修改代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">app</span>\<span class="title">controller</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">app</span>\<span class="title">BaseController</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Index</span> <span class="keyword">extends</span> <span class="title">BaseController</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        session(<span class="string">&#x27;demo&#x27;</span>, $_GET[<span class="string">&#x27;c&#x27;</span>]);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;ThinkPHP V6.0.0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">hello</span>(<span class="params">$name = <span class="string">&#x27;ThinkPHP6&#x27;</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;hello,&#x27;</span> . $name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>app/middleware.php</code>开启session功能(默认开启)</p>
+<p>官网关于session的配置：<a target="_blank" rel="noopener" href="https://www.kancloud.cn/manual/thinkphp6_0/1037635">https://www.kancloud.cn/manual/thinkphp6_0/1037635</a></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">// 全局中间件定义文件</span></span><br><span class="line"><span class="keyword">return</span> [</span><br><span class="line">    <span class="comment">// 全局请求缓存</span></span><br><span class="line">    <span class="comment">// \think\middleware\CheckRequestCache::class,</span></span><br><span class="line">    <span class="comment">// 多语言加载</span></span><br><span class="line">    <span class="comment">// \think\middleware\LoadLangPack::class,</span></span><br><span class="line">    <span class="comment">// Session初始化</span></span><br><span class="line">     \think\middleware\SessionInit::class</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p>正常访问页面如下</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018230703197.png" alt="image-20211018230703197"></p>
+<h1 id="漏洞演示"><a href="#漏洞演示" class="headerlink" title="漏洞演示"></a>漏洞演示</h1><p>cookie设置为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PHPSESSID&#x3D;&#x2F;..&#x2F;..&#x2F;..&#x2F;public&#x2F;shell123456.php</span><br></pre></td></tr></table></figure>
+
+<p>需要32位的Cookie，然后通过c传参设置cookie中的demo</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?c=<span class="meta">&lt;?php</span> phpinfo();<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>访问shell123456.php</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018231015988.png" alt="image-20211018231015988"></p>
+<h1 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h1><p>在框架运行前，先进入<code>src/think/middleware/SessionInit.php</code>的<code>handle</code>方法初始化session</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">handle</span>(<span class="params">$request, <span class="built_in">Closure</span> $next</span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// Session初始化</span></span><br><span class="line">        $varSessionId = <span class="keyword">$this</span>-&gt;app-&gt;config-&gt;get(<span class="string">&#x27;session.var_session_id&#x27;</span>);</span><br><span class="line">        $cookieName   = <span class="keyword">$this</span>-&gt;session-&gt;getName();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ($varSessionId &amp;&amp; $request-&gt;request($varSessionId)) &#123;</span><br><span class="line">            $sessionId = $request-&gt;request($varSessionId);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            $sessionId = $request-&gt;cookie($cookieName);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ($sessionId) &#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;session-&gt;setId($sessionId);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">$this</span>-&gt;session-&gt;init();</span><br><span class="line"></span><br><span class="line">        $request-&gt;withSession(<span class="keyword">$this</span>-&gt;session);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/** <span class="doctag">@var</span> Response $response */</span></span><br><span class="line">        $response = $next($request);</span><br><span class="line"></span><br><span class="line">        $response-&gt;setSession(<span class="keyword">$this</span>-&gt;session);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">$this</span>-&gt;app-&gt;cookie-&gt;set($cookieName, <span class="keyword">$this</span>-&gt;session-&gt;getId());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> $response;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018232442385.png" alt="image-20211018232442385"></p>
+<p><code>$sessionId</code>为cookie传入的<code>/../../../public/shell123456.php</code>,调用<code>think\Session</code>的setId方法设置<code>$this-&gt;id</code></p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018232729471.png" alt="image-20211018232729471"></p>
+<p>可以看到需要<code>$id</code>的长度为32，才能将<code>$this-&gt;id</code>设置为<code>PHPSESSID</code>中的值</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018232937002.png" alt="image-20211018232937002"></p>
+<p>由于第一次初始化，此时session文件为空，会将<code>$this-&gt;init</code>设置为<code>true</code>然后继续执行<code>handle</code>代码</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018233133688.png" alt="image-20211018233133688"></p>
+<p>在$next处会进行类的反射调用，处理用户的请求，进入到Index.php</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018233247942.png" alt="image-20211018233247942"></p>
+<p>跟进session方法初始化session</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018233332133.png" alt="image-20211018233332133"></p>
+<p>调用ThinkPHP官方文档中的session设置函数Session::set设置session，设置好session后回到<code>SessionInit</code>的handle函数处理剩下的代码</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018233517551.png" alt="image-20211018233517551"></p>
+<p>这里调用了<code>think\Cookie</code>方法设置Cookie为<code>$this-&gt;id</code>也就是我们传入的<code>PHPSESSID</code>=&gt;<code>/../../../public/shell123456.php</code></p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018233700718.png" alt="image-20211018233700718"></p>
+<p>在<code>public/index.php</code>中调用end方法处理响应后的信息</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018233744630.png" alt="image-20211018233744630"></p>
+<p>在<code>think/Http.php</code>中的<code>$this-&gt;app-&gt;middleware-&gt;end</code>处通过反射获取<code>think\Middleware</code>类执行end方法</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018234024529.png" alt="image-20211018234024529"></p>
+<p>实例化一个<code>SessionInit</code>方法调用<code>end</code>方法</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018234249153.png" alt="image-20211018234249153"></p>
+<p>调用<code>think/session/Store.php</code>的save函数准备将session信息写入文件</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018234335145.png" alt="image-20211018234335145"></p>
+<p>调用<code>$this-&gt;handler</code>即<code>think\session\driver\File</code>的write函数处理<code>$sessionId=&gt;/../../../public/shell123456.php</code>和<code>$data=&gt;a:1:&#123;s:4:&quot;demo&quot;;s:18:&quot;&lt;?php phpinfo();?&gt;&quot;;&#125;</code></p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018234622739.png" alt="image-20211018234622739"></p>
+<p>通过<code>$this-&gt;getFileName</code>获取<code>$sessionId</code>中的文件名</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">getFileName</span>(<span class="params"><span class="keyword">string</span> $name, <span class="keyword">bool</span> $auto = <span class="literal">false</span></span>): <span class="title">string</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;config[<span class="string">&#x27;prefix&#x27;</span>]) &#123;</span><br><span class="line">            <span class="comment">// 使用子目录</span></span><br><span class="line">            $name = <span class="keyword">$this</span>-&gt;config[<span class="string">&#x27;prefix&#x27;</span>] . DIRECTORY_SEPARATOR . <span class="string">&#x27;sess_&#x27;</span> . $name;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            $name = <span class="string">&#x27;sess_&#x27;</span> . $name;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        $filename = <span class="keyword">$this</span>-&gt;config[<span class="string">&#x27;path&#x27;</span>] . $name;</span><br><span class="line">        $dir      = dirname($filename);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ($auto &amp;&amp; !is_dir($dir)) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                mkdir($dir, <span class="number">0755</span>, <span class="literal">true</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (\<span class="built_in">Exception</span> $e) &#123;</span><br><span class="line">                <span class="comment">// 创建失败</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> $filename;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>直接将sess和<code>$sessionId</code>拼接到一起形成<code>sess_/../../../public/shell123456.php</code>为<code>$filename</code>,然后用<code>dirname</code>截取<code>$dir</code>创建目录<code>sess_</code></p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018235120409.png" alt="image-20211018235120409"></p>
+<p>最后在writeFile函数中写入shell文件，分析到这里就结束了</p>
+<h1 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h1><p>在<code>src/think/session/Store.php</code>处的setId使用了ctype_alnum方法确保传入的session文件名是字母和数字</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018235609426.png" alt="image-20211018235609426"></p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211018235728341.png" alt="image-20211018235728341"></p>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
-            <p>原文链接：<a href="https://hackerqwq.github.io/2020/08/06/SVN%E5%92%8CHG%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/">https://hackerqwq.github.io/2020/08/06/SVN%E5%92%8CHG%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/</a>
-            <p>发表日期：<a href="https://hackerqwq.github.io/2020/08/06/SVN%E5%92%8CHG%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/">August 6th 2020, 7:07:08 pm</a>
-            <p>更新日期：<a href="https://hackerqwq.github.io/2020/08/06/SVN%E5%92%8CHG%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/">April 19th 2021, 11:27:44 am</a>
+            <p>原文链接：<a href="https://hackerqwq.github.io/2021/10/18/TP6%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%86%99%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">https://hackerqwq.github.io/2021/10/18/TP6%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%86%99%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/</a>
+            <p>发表日期：<a href="https://hackerqwq.github.io/2021/10/18/TP6%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%86%99%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">October 18th 2021, 11:01:09 pm</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2021/10/18/TP6%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%86%99%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">October 18th 2021, 11:59:03 pm</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -441,17 +513,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" title= "命令执行小总结">
-                    <div class="nextTitle">命令执行小总结</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" title= ".git源码泄露payload">
-                    <div class="prevTitle">.git源码泄露payload</div>
+                <a href= "/2021/10/10/TP5-1-X%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" title= "TP5.1.X反序列化漏洞分析">
+                    <div class="prevTitle">TP5.1.X反序列化漏洞分析</div>
                 </a>
             
         </li>
@@ -578,7 +645,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">预备知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Brutesuite%E7%9A%84Fuzz%E6%89%AB%E6%8F%8F"><span class="toc-number">1.1.</span> <span class="toc-text">Brutesuite的Fuzz扫描</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dvcs-ripper%E5%B7%A5%E5%85%B7"><span class="toc-number">1.2.</span> <span class="toc-text">dvcs-ripper工具</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">漏洞简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E6%BC%94%E7%A4%BA"><span class="toc-number">3.</span> <span class="toc-text">漏洞演示</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">漏洞分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D"><span class="toc-number">5.</span> <span class="toc-text">漏洞修复</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
