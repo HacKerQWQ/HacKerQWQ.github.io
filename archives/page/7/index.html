@@ -355,6 +355,151 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Web_php_unserialize/" >
+            
+                <span>__wakeup()的绕过和正则绕过</span>
+        </a>
+        <div class="abstract-content">
+            Web_php_unserialize题目直接源码
+123456789101112131415161718192021222324252627&lt;?phpclass Demo &#123;    private $file = &#x27;index.php&#x27;;    public function __construct($file) &#123;        $this-&gt;file = $file;    &#125;    function __destruct() &#123;        echo @highlight_file($this-&gt;fi...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/19</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP反序列化">PHP反序列化</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/19/%E7%BD%91%E9%BC%8E%E6%9D%AF-2018-Web-Unfinish/" >
+            
+                <span>二次注入在实战的运用</span>
+        </a>
+        <div class="abstract-content">
+            网鼎杯-2018-Web-Unfinish
+首先可以看到这是一个登陆框，感觉不太可能是这么简单的SQL注入，所以先扫扫目录再说
+
+发现register.php页面用于注册账号，目测应该是一个二次注入的页面，也就是在注册页面构造好注入的语句然后在登录的时候返回信息
+测试Mysql环境1select hex(&#x27;test&#x27;);
+返回74657374
+1select &#x27;0&#x27;+hex(&#x27;test&#x27;);
+返回        74657374(注意前面有空格)
+1select &#x27;0&#x27;+hex(&#x27;test&#x27...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/19</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "sql">sql</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/18/Jarvis-PHPINFO/" >
+            
+                <span>php反序列化漏洞及upload_progress_sessions</span>
+        </a>
+        <div class="abstract-content">
+            Jarvis-PHPINFO源码+题目分析1234567891011121314151617181920212223242526&lt;?php//A webshell is wait for youini_set(&#x27;session.serialize_handler&#x27;, &#x27;php&#x27;);session_start();class OowoO&#123;    public $mdzz;    function __construct()    &#123;        $this-&gt;mdzz = &#x27;phpinfo();&#x27;...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/18</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP反序列化">PHP反序列化</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "php_upload_progress_session">php_upload_progress_session</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/16/Jarvis-flag%E5%9C%A8%E7%AE%A1%E7%90%86%E5%91%98%E6%89%8B%E9%87%8C/" >
+            
+                <span>Hash长度拓展攻击</span>
+        </a>
+        <div class="abstract-content">
+            前置知识深入理解hash长度扩展攻击
+Jarvis-flag在管理员手里只有admin才能看到flag
+然后抓包看看
+发现role，反序列化过来是s:5:”guest”;
+尝试改成admin，不行….,加上这里有个hsh值，事情应该没那么简单
+扫描目录发现index.php~,download到kali用vim -r恢复之后看到源码
+
+解题这里需要用到hashpump工具，可以集成到python中使用
+具体用法看p神hashpump
+直接上脚本
+123456789101112131415161718192021222324import requestsimport urllibfrom ...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/16</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "hash长度拓展攻击">hash长度拓展攻击</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/08/15/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E5%8F%8D%E5%BC%B9shell%E5%92%8C%E7%95%99%E5%90%8E%E9%97%A8/" >
             
                 <span>渗透测试之反弹shell和留后门</span>
@@ -753,183 +898,10 @@ JWT(JSON Web Token)目前最流行的跨域身份验证解决方案
         </div>
     </article>
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >
-            
-                <span>命令执行小总结</span>
-        </a>
-        <div class="abstract-content">
-            命令执行例子
-12345&lt;?php$target=$_REQUEST[&#x27;ip&#x27;];$cmd = shell_exec(&#x27;ping &#x27;.$target);echo &quot;&lt;pre&gt;&#123;$cmd&#125;&lt;/pre&gt;&quot;;?&gt;
-传入?ip=|whoami就可以执行命令
-PHP危险函数
-phpinfo()功能描述：输出 PHP 环境信息以及相关的模块、WEB 环境等信息。危险等级：中 
-
-passthru()功能描述：允许执行一个外部程序并回显输出，类似于 exec()。危险等级：高 
-
-exe...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/07</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "命令执行">命令执行</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/06/SVN%E5%92%8CHG%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/" >
-            
-                <span>SVN和HG源码泄露</span>
-        </a>
-        <div class="abstract-content">
-            预备知识Brutesuite的Fuzz扫描
-dvcs-ripper工具123./rip-svn.pl -v -u http://www.example.com/.svn./rip-hg.pl -v -u http://www.example.com/.hg./rip-git.pl -v -u http://www.example.com/.git
-之后就可以从下载下来的隐藏目录中找到flag了
-
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "源码泄露">源码泄露</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >
-            
-                <span>.git源码泄露payload</span>
-        </a>
-        <div class="abstract-content">
-            log泄露
-查看历史记录
-1git log
-
-切换版本
-1git reset
-
-对比两次提交
-1git diff
-
-
-
-解题思路
-Brutesuite用Fuzz扫描发现存在git源码泄露
-
-
-
-用GitHack工具clone源码到本地
-
-
-
-git log 查看版本
-
-
-解法一对比前一个版本
-12git diff f95aegit diff HEAD^
-
-解法二直接恢复到前一个版本
-12git reset --hard f95aegit reset --hard HEAD^
-
-FLAG最后得到flag
-stash工作状态泄露
-查看git保存的工作状态
-1git stash list
-
-恢...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "源码泄露">源码泄露</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/05/VIM%E7%BC%96%E8%BE%91%E5%99%A8%E5%BC%82%E5%B8%B8%E9%80%80%E5%87%BA%E5%AF%BC%E8%87%B4%E7%9A%84%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/" >
-            
-                <span>VIM编辑器异常退出导致的源码泄露</span>
-        </a>
-        <div class="abstract-content">
-            前言：vim不正常退出会导致残留隐藏文件，会造成源码泄露
-vim交换文件名在使用vim时会创建临时缓存文件，关闭vim时缓存文件则会被删除，当vim异常退出后，因为未处理缓存文件，导致可以通过缓存文件恢复原始文件内容以 index.php 为例：第一次产生的交换文件名为 .index.php.swp再次意外退出后，将会产生名为 .index.php.swo 的交换文件第三次产生的交换文件则为 .index.php.swn
-利用思路
-思路一利用curl访问即可直接看到flag，因为vim使用的缓存存储为一种固定格式的二进制文件。而我们一般编辑的时明问可见字符，在vim的缓存中这些可见字符会...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/05</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "源码泄露">源码泄露</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/page/6/">&lt; PREV</a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/5/">5</a><a class="page-number" href="/archives/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/archives/page/8/">8</a><a class="extend next" rel="next" href="/archives/page/8/">NEXT &gt;</a>
+        <a class="extend prev" rel="prev" href="/archives/page/6/">&lt; PREV</a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/5/">5</a><a class="page-number" href="/archives/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/archives/page/8/">8</a><a class="page-number" href="/archives/page/9/">9</a><a class="extend next" rel="next" href="/archives/page/8/">NEXT &gt;</a>
     </nav>
     
 </main>
@@ -2997,9 +2969,77 @@ vim交换文件名在使用vim时会创建临时缓存文件，关闭vim时缓�
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 120
+        Total : 124
         </div>
         <!-- search  -->
         
@@ -3016,6 +3056,26 @@ vim交换文件名在使用vim时会创建临时缓存文件，关闭vim时缓�
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/01</span><a class="archive-post-title" href= "/2021/11/01/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-sql%E6%B3%A8%E5%85%A5/" >javaweb漏洞学习(sql注入)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2021/10/26/%E6%97%A0%E5%8F%82%E6%95%B0rce%E6%96%B0%E8%A7%A3%E6%B3%95-2021%E6%85%95%E6%B5%8Bweb%E5%BA%94%E7%94%A8%E4%B8%AA%E4%BA%BA%E8%B5%9Bnorce/" >无参数rce新解法(2021慕测web应用个人赛norce)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2021/10/23/Android%E5%AE%89%E5%85%A8%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" >Android安全之环境搭建及基础知识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/19</span><a class="archive-post-title" href= "/2021/10/19/TP6-0-X%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%93%BE%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" >TP6.0.X反序列化链漏洞分析</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -3633,9 +3693,9 @@ vim交换文件名在使用vim时会创建临时缓存文件，关闭vim时缓�
     
         <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
-    
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
@@ -3671,17 +3731,17 @@ vim交换文件名在使用vim时会创建临时缓存文件，关闭vim时缓�
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
-    
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
-        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
+        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
-        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
+        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
+    
+        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
     
         <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
     
@@ -3723,9 +3783,9 @@ vim交换文件名在使用vim时会创建临时缓存文件，关闭vim时缓�
     
         <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
-    
         <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
+    
+        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
         <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
     
@@ -3733,37 +3793,37 @@ vim交换文件名在使用vim时会创建临时缓存文件，关闭vim时缓�
     
         <span class="sidebar-tag-name" data-tags=".htaccess利用"><span class="iconfont-archer">&#xe606;</span>.htaccess利用</span>
     
+        <span class="sidebar-tag-name" data-tags="HTTP协议"><span class="iconfont-archer">&#xe606;</span>HTTP协议</span>
+    
         <span class="sidebar-tag-name" data-tags="内网渗透"><span class="iconfont-archer">&#xe606;</span>内网渗透</span>
     
         <span class="sidebar-tag-name" data-tags="横向移动"><span class="iconfont-archer">&#xe606;</span>横向移动</span>
     
-        <span class="sidebar-tag-name" data-tags="HTTP协议"><span class="iconfont-archer">&#xe606;</span>HTTP协议</span>
+        <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
+    
+        <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
     
         <span class="sidebar-tag-name" data-tags="漏洞利用"><span class="iconfont-archer">&#xe606;</span>漏洞利用</span>
     
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
     
-        <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
-    
-        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
-    
-        <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
-    
         <span class="sidebar-tag-name" data-tags="php"><span class="iconfont-archer">&#xe606;</span>php</span>
     
         <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
     
-        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
-    
-        <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
     
         <span class="sidebar-tag-name" data-tags="逻辑漏洞"><span class="iconfont-archer">&#xe606;</span>逻辑漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
     
+        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
+    
+        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
+    
         <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
     
-        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
+        <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
     
         <span class="sidebar-tag-name" data-tags="提权"><span class="iconfont-archer">&#xe606;</span>提权</span>
     
@@ -3777,9 +3837,9 @@ vim交换文件名在使用vim时会创建临时缓存文件，关闭vim时缓�
     
         <span class="sidebar-tag-name" data-tags="变量覆盖漏洞"><span class="iconfont-archer">&#xe606;</span>变量覆盖漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="扫描软件"><span class="iconfont-archer">&#xe606;</span>扫描软件</span>
-    
         <span class="sidebar-tag-name" data-tags="弱类型比较"><span class="iconfont-archer">&#xe606;</span>弱类型比较</span>
+    
+        <span class="sidebar-tag-name" data-tags="扫描软件"><span class="iconfont-archer">&#xe606;</span>扫描软件</span>
     
         <span class="sidebar-tag-name" data-tags="Django"><span class="iconfont-archer">&#xe606;</span>Django</span>
     

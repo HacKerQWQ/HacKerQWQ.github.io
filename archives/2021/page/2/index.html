@@ -355,6 +355,140 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2021/08/31/php%E5%8F%8D%E5%B0%84%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" >
+            
+                <span>php反射利用总结</span>
+        </a>
+        <div class="abstract-content">
+            反射的概念反射通常被定义为程序在执行时检查自身并修改其逻辑的能力。在技术方面，反射是要求对象告诉你它的属性和方法，并改变那些成员（甚至是私有成员）
+反射的利用ReflectionClass123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263ReflectionClass implements Reflector &#123;	/* 常量 */	const integer IS_IMPLICIT_ABSTRAC...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/08/31</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "php">php</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/08/31/php%E5%86%85%E7%BD%AE%E7%B1%BB%E7%9A%84%E5%88%A9%E7%94%A8/" >
+            
+                <span>php内置类的利用</span>
+        </a>
+        <div class="abstract-content">
+            SPLSPL是Standard PHP Library的缩写，是用于解决典型问题(standard problems)的一组接口与类的集合
+一些处理文件的SPL类
+遍历目录的类
+FilesystemIteratorThe Filesystem iterator
+123456&lt;?php$iterator = new FilesystemIterator(__DIR__, FilesystemIterator::CURRENT_AS_PATHNAME);foreach ($iterator as $fileinfo) &#123;    echo $iterator-&gt;curre...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/08/31</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP">PHP</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF">CTF</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/08/29/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%B0%8F%E6%8A%80%E5%B7%A7%E4%B9%8BFast-Destruct/" >
+            
+                <span>PHP反序列化小技巧之Fast Destruct</span>
+        </a>
+        <div class="abstract-content">
+            Fast DestructFast Destruct一般通过破坏序列化字符串的结构来实现，payload如下
+123$payload &#x3D; &#39;a:2:&#123;i:0;O:7:&quot;classes&quot;:0:&#123;&#125;i:1;O:4:&quot;Test&quot;:0:&#123;&#125;&#39;;$payload &#x3D; &#39;a:3:&#123;i:0;O:7:&quot;classes&quot;:0:&#123;&#125;i:1;O:4:&quot;Test&quot;:0:&#123;&#125;&#125;&#3...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/08/29</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP">PHP</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/08/09/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0/" >
+            
+                <span>Java动态代理学习</span>
+        </a>
+        <div class="abstract-content">
+            代理模式概念
+代理就是帮别人做事情，如：工厂的中介，中介负责为工厂招收工人，那么中介就是工厂的代理；客户通过商家购买东西，商家向厂家购买货物，商家就是工厂的代理 
+
+在开发中存在a类需要调用c类的方法，完成某一个功能，但是c禁止a调用。这时，可以在a和c之间创建一个b类代理，a类访问b类，b类访问c类。例如：登录的时候需要进行短信验证，这个时候代理就是中国移动的子公司来完成短信的发送功能
+
+代理模式就是为其他对象提供一种代理来控制这个对象的访问，在某些情况下一个对象不适合或不能直接引用另一个对象，而代理对象可以在客户类和目标对象直接起到中介的作用
+
+
+功能增强：其中目标对象实现真正的功能...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/08/09</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Java安全">Java安全</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2021/08/03/pickle%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" >
             
                 <span>pickle序列化与反序列化</span>
@@ -754,153 +888,6 @@ Ticket Grantng Service，票据授予服务，简称TGS，用于KDC向Client和S
         <a class="post-tag" href="javascript:void(0);" data-tags = "内网渗透">内网渗透</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "横向移动">横向移动</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/06/27/XMLDecoder%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" >
-            
-                <span>XMLDecoder反序列化漏洞</span>
-        </a>
-        <div class="abstract-content">
-            XMLDecoder和XMLEncoderXMLEncoder类是互补替代ObjectOutputStream，并且可以以相同的方式用于产生的文本表示的JavaBean组件,而XMLDecoder从XMLEncoder生成的xml文档中获取JavaBean组件
-XMLEncoder用法12345678public class test &#123;    public static void main(String[] args) throws Exception&#123;        XMLEncoder a = new XMLEncoder(new BufferedOutputS...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "XML">XML</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞">漏洞</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/06/26/TP5SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90TP5%E5%85%A8%E7%89%88%E6%9C%AC/" >
-            
-                <span>TP5SQL注入漏洞分析TP5全版本</span>
-        </a>
-        <div class="abstract-content">
-            配置通过以下命令获取测试环境代码：
-1composer create-project --prefer-dist topthink/think=5.0.10 tpdemo
-
-将 composer.json 文件的 require 字段设置成如下：
-1234&quot;require&quot;: &#123;    &quot;php&quot;: &quot;&gt;=5.4.0&quot;,    &quot;topthink/framework&quot;: &quot;5.0.10&quot;&#125;,
-
-然后执行 composer update ，并将 applicatio...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ThinkPHP">ThinkPHP</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞分析">漏洞分析</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "代码审计">代码审计</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/06/25/TP5SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-1-6-5-1-7/" >
-            
-                <span>TP5SQL注入漏洞分析(5.1.6-5.1.7)</span>
-        </a>
-        <div class="abstract-content">
-            参考学习连接
-
-https://github.com/Mochazz/ThinkPHP-Vuln/blob/master/ThinkPHP5/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8BSQL%E6%B3%A8%E5%85%A52.md漏洞简介thinkphp/library/think/db/builder/Mysql.php中的parseArrayData没有对传入的数据进行过滤，导致可拼接sql语句，造成sql注入
-
-配置1234567891011121314151617181920212223242526272829...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/25</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ThinkPHP">ThinkPHP</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞分析">漏洞分析</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "代码审计">代码审计</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/06/25/TP5SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-0-13-5-0-15-5-1-0-5-1-5/" >
-            
-                <span>TP5SQL注入漏洞分析(5.0.13-5.0.15,5.1.0-5.1.5)</span>
-        </a>
-        <div class="abstract-content">
-            参考学习链接
-
-https://github.com/Mochazz/ThinkPHP-Vuln/blob/master/ThinkPHP5/ThinkPHP5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8BSQL%E6%B3%A8%E5%85%A51.md简介thinkphp/library/think/db/Builder.php中的parseData对传入的字符没有进行检测，拼接到了sql语句中，导致了sql注入
-
-配置环境
-下载源码
-12345678910#composer 选择特定分支composer create-project --...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/25</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ThinkPHP">ThinkPHP</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞分析">漏洞分析</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "代码审计">代码审计</a>
     
 </div>
             
@@ -2978,9 +2965,77 @@ https://github.com/Mochazz/ThinkPHP-Vuln/blob/master/ThinkPHP5/ThinkPHP5%E6%BC%8
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 120
+        Total : 124
         </div>
         <!-- search  -->
         
@@ -2997,6 +3052,26 @@ https://github.com/Mochazz/ThinkPHP-Vuln/blob/master/ThinkPHP5/ThinkPHP5%E6%BC%8
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/01</span><a class="archive-post-title" href= "/2021/11/01/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-sql%E6%B3%A8%E5%85%A5/" >javaweb漏洞学习(sql注入)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2021/10/26/%E6%97%A0%E5%8F%82%E6%95%B0rce%E6%96%B0%E8%A7%A3%E6%B3%95-2021%E6%85%95%E6%B5%8Bweb%E5%BA%94%E7%94%A8%E4%B8%AA%E4%BA%BA%E8%B5%9Bnorce/" >无参数rce新解法(2021慕测web应用个人赛norce)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2021/10/23/Android%E5%AE%89%E5%85%A8%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" >Android安全之环境搭建及基础知识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/19</span><a class="archive-post-title" href= "/2021/10/19/TP6-0-X%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%93%BE%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" >TP6.0.X反序列化链漏洞分析</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -3614,9 +3689,9 @@ https://github.com/Mochazz/ThinkPHP-Vuln/blob/master/ThinkPHP5/ThinkPHP5%E6%BC%8
     
         <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
-    
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
@@ -3652,17 +3727,17 @@ https://github.com/Mochazz/ThinkPHP-Vuln/blob/master/ThinkPHP5/ThinkPHP5%E6%BC%8
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
-    
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
-        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
+        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
-        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
+        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
+    
+        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
     
         <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
     
@@ -3704,9 +3779,9 @@ https://github.com/Mochazz/ThinkPHP-Vuln/blob/master/ThinkPHP5/ThinkPHP5%E6%BC%8
     
         <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
-    
         <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
+    
+        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
         <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
     
@@ -3714,37 +3789,37 @@ https://github.com/Mochazz/ThinkPHP-Vuln/blob/master/ThinkPHP5/ThinkPHP5%E6%BC%8
     
         <span class="sidebar-tag-name" data-tags=".htaccess利用"><span class="iconfont-archer">&#xe606;</span>.htaccess利用</span>
     
+        <span class="sidebar-tag-name" data-tags="HTTP协议"><span class="iconfont-archer">&#xe606;</span>HTTP协议</span>
+    
         <span class="sidebar-tag-name" data-tags="内网渗透"><span class="iconfont-archer">&#xe606;</span>内网渗透</span>
     
         <span class="sidebar-tag-name" data-tags="横向移动"><span class="iconfont-archer">&#xe606;</span>横向移动</span>
     
-        <span class="sidebar-tag-name" data-tags="HTTP协议"><span class="iconfont-archer">&#xe606;</span>HTTP协议</span>
+        <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
+    
+        <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
     
         <span class="sidebar-tag-name" data-tags="漏洞利用"><span class="iconfont-archer">&#xe606;</span>漏洞利用</span>
     
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
     
-        <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
-    
-        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
-    
-        <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
-    
         <span class="sidebar-tag-name" data-tags="php"><span class="iconfont-archer">&#xe606;</span>php</span>
     
         <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
     
-        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
-    
-        <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
     
         <span class="sidebar-tag-name" data-tags="逻辑漏洞"><span class="iconfont-archer">&#xe606;</span>逻辑漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
     
+        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
+    
+        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
+    
         <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
     
-        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
+        <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
     
         <span class="sidebar-tag-name" data-tags="提权"><span class="iconfont-archer">&#xe606;</span>提权</span>
     
@@ -3758,9 +3833,9 @@ https://github.com/Mochazz/ThinkPHP-Vuln/blob/master/ThinkPHP5/ThinkPHP5%E6%BC%8
     
         <span class="sidebar-tag-name" data-tags="变量覆盖漏洞"><span class="iconfont-archer">&#xe606;</span>变量覆盖漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="扫描软件"><span class="iconfont-archer">&#xe606;</span>扫描软件</span>
-    
         <span class="sidebar-tag-name" data-tags="弱类型比较"><span class="iconfont-archer">&#xe606;</span>弱类型比较</span>
+    
+        <span class="sidebar-tag-name" data-tags="扫描软件"><span class="iconfont-archer">&#xe606;</span>扫描软件</span>
     
         <span class="sidebar-tag-name" data-tags="Django"><span class="iconfont-archer">&#xe606;</span>Django</span>
     

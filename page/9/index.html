@@ -368,6 +368,147 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/10/10/Perfectly-Secret-Encryption/" >
+            
+                <span>Perfectly Secret Encryption</span>
+        </a>
+        <div class="abstract-content">
+            Perfect Secrecy(完全保密)Outline
+Basic Probability Theory(基本概率论)
+Conditional probability(传统概率论)Total probability formula(全概率公式)Baye’s formula(贝叶斯公式)
+
+
+
+
+ℳ:  Message space    M    m
+𝒦:  Key space               K     k
+𝒞:  Ciphertext space   C     c
+
+Definitionciphertext reveals nothing about the und...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/10</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Crypto">Crypto</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/10/10/Hash%E5%87%BD%E6%95%B0%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" >
+            
+                <span>Hash函数的相关知识</span>
+        </a>
+        <div class="abstract-content">
+            Hash基本概念Hash也就是我们俗称的哈希，也叫”散列”,意思是“混杂、拼凑、杂乱”Hash其实可以看做是排序的一种相反的操作，排序是按照某种规则将元素排列起来，而散列通过计算哈希值将元素之间的关系打破，形成新的序列
+Hash的作用Hash 算法的原理是试图将一个空间的数据集映射到另外一个空间（通常比原空间要小），并利用质数将数据集能够均匀的映射。Hash通过计算大幅度缩小查找范围，比直接从全部数据里面查找速度更快
+Hash的特点
+免碰撞：即不会出现输入 x≠y ，但是H(x)=H(y) 的情况，其实这个特点在理论上并不成立，比如目前比特币使用的 SHA256 算法，会有 2^256 ...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/10</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Crypto">Crypto</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Hash">Hash</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/10/10/CRC%E5%86%97%E4%BD%99%E7%A0%81%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" >
+            
+                <span>CRC冗余码相关知识</span>
+        </a>
+        <div class="abstract-content">
+            CRC校验基本原理CRC校验码就是一个m长的二进制信息序列加上n长的二进制校验序列，形成的m+n长的CRC冗余码。当n长的信息序列在传递过程中发生错误时，由于信息序列与校验序列在传递前存在某种关联，因此可以凭借这种关联将错误位矫正，这就是CRC校验码
+实现信息发送方和接收方事先约定了一个生成多项式g(x)V(x)=A(x)g(x)=xn*m(x)+r(x)其中m(x)为信息多项式，r(x)为n-1次的校验多项式，xn代表x的n次方r(x)的计算方法为：在K位信息字段的后面添加n个0，再除以g ( x )对应的代码序列，得到的余数即为r ( x )对应的代码(应为n－1位；若不足，而在高位...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/10</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "CRC32">CRC32</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Crypto">Crypto</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/09/26/CRC32%E7%A2%B0%E6%92%9E%E6%81%A2%E5%A4%8Dpng/" >
+            
+                <span>CRC32碰撞恢复png(含png块的知识)</span>
+        </a>
+        <div class="abstract-content">
+            png块的基本知识前八个字节表示这是一个png文件，然后接着的四个字节表示数据块长度，最后四个字节表示数据块类型码，比如这里的IHDR类型码
+文件署名域8字节的PNG文件署名域用来识别该文件是不是PNG文件。该域的值是：|十进制数|十六进制数||:-:|:-:||137|89||80|50||78|4e||71|47||13|0d||10|0a||26|1a||10|0a|
+数据块数据块分为关键数据块(critical chunk)**和辅助数据块(ancillary chunks)。每个数据块都由下表所示的4个域组成|名称|字节数|说明||:–:|:–:|:–||Length(长度)|...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/09/26</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "png结构">png结构</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "CRC32">CRC32</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/09/10/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Reverse-it-xxd%E3%80%81tr%E3%80%81rev%E5%91%BD%E4%BB%A4/" >
             
                 <span>攻防世界-Reverse-it(xxd、tr、rev命令)</span>
@@ -603,155 +744,10 @@ SSTI漏洞SSTI的原理就是服务端接收了用户的输入，将其作为 We
         </div>
     </article>
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Web_php_unserialize/" >
-            
-                <span>__wakeup()的绕过和正则绕过</span>
-        </a>
-        <div class="abstract-content">
-            Web_php_unserialize题目直接源码
-123456789101112131415161718192021222324252627&lt;?phpclass Demo &#123;    private $file = &#x27;index.php&#x27;;    public function __construct($file) &#123;        $this-&gt;file = $file;    &#125;    function __destruct() &#123;        echo @highlight_file($this-&gt;fi...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/19</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP反序列化">PHP反序列化</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/19/%E7%BD%91%E9%BC%8E%E6%9D%AF-2018-Web-Unfinish/" >
-            
-                <span>二次注入在实战的运用</span>
-        </a>
-        <div class="abstract-content">
-            网鼎杯-2018-Web-Unfinish
-首先可以看到这是一个登陆框，感觉不太可能是这么简单的SQL注入，所以先扫扫目录再说
-
-发现register.php页面用于注册账号，目测应该是一个二次注入的页面，也就是在注册页面构造好注入的语句然后在登录的时候返回信息
-测试Mysql环境1select hex(&#x27;test&#x27;);
-返回74657374
-1select &#x27;0&#x27;+hex(&#x27;test&#x27;);
-返回        74657374(注意前面有空格)
-1select &#x27;0&#x27;+hex(&#x27;test&#x27...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/19</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "sql">sql</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/18/Jarvis-PHPINFO/" >
-            
-                <span>php反序列化漏洞及upload_progress_sessions</span>
-        </a>
-        <div class="abstract-content">
-            Jarvis-PHPINFO源码+题目分析1234567891011121314151617181920212223242526&lt;?php//A webshell is wait for youini_set(&#x27;session.serialize_handler&#x27;, &#x27;php&#x27;);session_start();class OowoO&#123;    public $mdzz;    function __construct()    &#123;        $this-&gt;mdzz = &#x27;phpinfo();&#x27;...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/18</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP反序列化">PHP反序列化</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "php_upload_progress_session">php_upload_progress_session</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/16/Jarvis-flag%E5%9C%A8%E7%AE%A1%E7%90%86%E5%91%98%E6%89%8B%E9%87%8C/" >
-            
-                <span>Hash长度拓展攻击</span>
-        </a>
-        <div class="abstract-content">
-            前置知识深入理解hash长度扩展攻击
-Jarvis-flag在管理员手里只有admin才能看到flag
-然后抓包看看
-发现role，反序列化过来是s:5:”guest”;
-尝试改成admin，不行….,加上这里有个hsh值，事情应该没那么简单
-扫描目录发现index.php~,download到kali用vim -r恢复之后看到源码
-
-解题这里需要用到hashpump工具，可以集成到python中使用
-具体用法看p神hashpump
-直接上脚本
-123456789101112131415161718192021222324import requestsimport urllibfrom ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/16</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "hash长度拓展攻击">hash长度拓展攻击</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/page/8/">&lt; PREV</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/10/">NEXT &gt;</a>
+        <a class="extend prev" rel="prev" href="/page/8/">&lt; PREV</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/10/">NEXT &gt;</a>
     </nav>
     
 </main>
@@ -2920,9 +2916,77 @@ Jarvis-flag在管理员手里只有admin才能看到flag
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 120
+        Total : 124
         </div>
         <!-- search  -->
         
@@ -2939,6 +3003,26 @@ Jarvis-flag在管理员手里只有admin才能看到flag
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/01</span><a class="archive-post-title" href= "/2021/11/01/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-sql%E6%B3%A8%E5%85%A5/" >javaweb漏洞学习(sql注入)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2021/10/26/%E6%97%A0%E5%8F%82%E6%95%B0rce%E6%96%B0%E8%A7%A3%E6%B3%95-2021%E6%85%95%E6%B5%8Bweb%E5%BA%94%E7%94%A8%E4%B8%AA%E4%BA%BA%E8%B5%9Bnorce/" >无参数rce新解法(2021慕测web应用个人赛norce)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2021/10/23/Android%E5%AE%89%E5%85%A8%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" >Android安全之环境搭建及基础知识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/19</span><a class="archive-post-title" href= "/2021/10/19/TP6-0-X%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%93%BE%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" >TP6.0.X反序列化链漏洞分析</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -3556,9 +3640,9 @@ Jarvis-flag在管理员手里只有admin才能看到flag
     
         <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
-    
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
@@ -3594,17 +3678,17 @@ Jarvis-flag在管理员手里只有admin才能看到flag
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
-    
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
-        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
+        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
-        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
+        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
+    
+        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
     
         <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
     
@@ -3646,9 +3730,9 @@ Jarvis-flag在管理员手里只有admin才能看到flag
     
         <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
-    
         <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
+    
+        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
         <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
     
@@ -3656,37 +3740,37 @@ Jarvis-flag在管理员手里只有admin才能看到flag
     
         <span class="sidebar-tag-name" data-tags=".htaccess利用"><span class="iconfont-archer">&#xe606;</span>.htaccess利用</span>
     
+        <span class="sidebar-tag-name" data-tags="HTTP协议"><span class="iconfont-archer">&#xe606;</span>HTTP协议</span>
+    
         <span class="sidebar-tag-name" data-tags="内网渗透"><span class="iconfont-archer">&#xe606;</span>内网渗透</span>
     
         <span class="sidebar-tag-name" data-tags="横向移动"><span class="iconfont-archer">&#xe606;</span>横向移动</span>
     
-        <span class="sidebar-tag-name" data-tags="HTTP协议"><span class="iconfont-archer">&#xe606;</span>HTTP协议</span>
+        <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
+    
+        <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
     
         <span class="sidebar-tag-name" data-tags="漏洞利用"><span class="iconfont-archer">&#xe606;</span>漏洞利用</span>
     
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
     
-        <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
-    
-        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
-    
-        <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
-    
         <span class="sidebar-tag-name" data-tags="php"><span class="iconfont-archer">&#xe606;</span>php</span>
     
         <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
     
-        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
-    
-        <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
     
         <span class="sidebar-tag-name" data-tags="逻辑漏洞"><span class="iconfont-archer">&#xe606;</span>逻辑漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
     
+        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
+    
+        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
+    
         <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
     
-        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
+        <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
     
         <span class="sidebar-tag-name" data-tags="提权"><span class="iconfont-archer">&#xe606;</span>提权</span>
     
@@ -3700,9 +3784,9 @@ Jarvis-flag在管理员手里只有admin才能看到flag
     
         <span class="sidebar-tag-name" data-tags="变量覆盖漏洞"><span class="iconfont-archer">&#xe606;</span>变量覆盖漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="扫描软件"><span class="iconfont-archer">&#xe606;</span>扫描软件</span>
-    
         <span class="sidebar-tag-name" data-tags="弱类型比较"><span class="iconfont-archer">&#xe606;</span>弱类型比较</span>
+    
+        <span class="sidebar-tag-name" data-tags="扫描软件"><span class="iconfont-archer">&#xe606;</span>扫描软件</span>
     
         <span class="sidebar-tag-name" data-tags="Django"><span class="iconfont-archer">&#xe606;</span>Django</span>
     
