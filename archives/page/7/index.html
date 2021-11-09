@@ -355,6 +355,247 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/09/10/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Reverse-it-xxd%E3%80%81tr%E3%80%81rev%E5%91%BD%E4%BB%A4/" >
+            
+                <span>攻防世界-Reverse-it(xxd、tr、rev命令)</span>
+        </a>
+        <div class="abstract-content">
+            题目附件下载下来binwalk识别了一下只是单纯的data文件，win下用HXD查看也没什么头绪想到题目Reverse it，再看看文件的十六进制结尾FF 8D FF，反过来就是FF D8 FF也就是jpg格式文件的十六进制开头所以这题的思路就很明确了，就是将文件的十六进制反过来
+解题Linux下命令的了解xxd(https://www.cnblogs.com/kwliu/p/3709707.html)tr(http://blog.sina.com.cn/s/blog_58c3f7960100uttl.html)rev(https://man.linuxde.net/rev)
+思路这里我...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/09/10</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/09/06/%E7%A0%B4%E8%A7%A3zip%E5%AF%86%E7%A0%81%E5%91%BD%E4%BB%A4/" >
+            
+                <span>破解zip密码命令</span>
+        </a>
+        <div class="abstract-content">
+            kali下zip2john破解压缩包压缩包爆出hash文件
+1sudo zip2jphn 0.zip &gt;&gt; passwd.txt
+使用john计算hash文件
+1sudo john passwd.txt
+
+使用ARCHPR.exe
+
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/09/06</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "misc_zip">misc_zip</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/26/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-stegnao-%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%8E%9F%E7%90%86/" >
+            
+                <span>攻防世界-stegnao-二维码原理及rar伪加密</span>
+        </a>
+        <div class="abstract-content">
+            前置知识rar块的知识rar伪加密https://www.jianshu.com/p/8e4209bca4af二维码的知识https://blog.csdn.net/ajianyingxiaoqinghan/article/details/78837864
+stegnao下载下来一个.rar结尾的压缩包用kali的unrar命令解压时发现有一个secret.png没有解压出来，显示文件错误用010Editor查看发现secret.png的开头十六进制错误，应该把0x7a改成0x74顺利得到secret.png，010Editor查看文件发现这是一个GIF文件然后到网页上https://e...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/26</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "rar伪加密">rar伪加密</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "二维码">二维码</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/21/2020%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-%E5%88%9D%E8%B5%9B%E9%83%A8%E5%88%86writeup/" >
+            
+                <span>2020全国大学生信息安全大赛-初赛部分writeup</span>
+        </a>
+        <div class="abstract-content">
+            这里放上合天智汇的wp
+Team233_t2战队WRITEUP
+
+一、战队信息战队名称：Team233_t2
+战队排名：428
+二、解题情况
+三、解题过程题目序号：1题目名称：签到操作内容：一开始的图找不到了….每个参赛地区助力人数都达到10个就可以直接获取flag~
+
+flag{同舟共济扬帆起，乘风破浪万里航。}
+题目序号：2题目名称：the_best_ctf_game操作内容：
+下载附件
+得到一个命名为flag的文件，通过linux指令file+文件名确定文件类型为data
+想到应通过记事本、word文档或者音频视频软件打开
+在用记事本打开后，发现是乱码，但是乱码里面又有字符
+适当调...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/21</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "2020CISCN">2020CISCN</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-CAT-PHP-curl/" >
+            
+                <span>宽字节注入+curl读取文件+Django框架漏洞的组合拳</span>
+        </a>
+        <div class="abstract-content">
+            攻防世界-CAT首先看到的是一个输入域名(怀疑命令注入)的地方
+
+然后输入经典127.0.0.1试试
+
+果然是ping命令的，但是&amp; &amp;&amp; | ;都不行
+模糊测试
+发现没有其他都过滤了，但是这几个没有过滤
+
+@-./
+
+然后试试sql的字典FUZZ一下
+
+宽字节看起来跟其他的不同，将response的代码复制到本地打开看看
+得到一个报错网页
+
+解题
+RTFM of PHP CURL===&gt;&gt;read the fuck manul of PHP CURL???
+
+
+官方提示，然后找到对应的语法，结合之前没有过滤@，我们就可以读取任意文件
+从网上找到的wp...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/19</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "sql">sql</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Django">Django</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2020/08/19/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" >
+            
+                <span>SSTI模板注入</span>
+        </a>
+        <div class="abstract-content">
+            原理说明：一篇文章带你入门ssti内含payload及绕过方法github上的payload大全
+hacktricks
+SSTI漏洞SSTI的原理就是服务端接收了用户的输入，将其作为 Web 应用模板内容的一部分，在进行目标编译渲染的过程中，执行了用户插入的恶意内容。
+
+&#123;&#123;&#125;&#125;`并不仅仅可以传递变量，还可以执行一些简单的表达式，python语法的表达式都可以执行
+
+简单例子：
+
+1https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210818100505026.png
+
+![im...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/19</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "SSTI">SSTI</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Web_php_unserialize/" >
             
                 <span>__wakeup()的绕过和正则绕过</span>
@@ -677,219 +918,6 @@ jwt结合sql注入解题先进行尝试
         <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "sql">sql</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "jwt">jwt</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/13/HCTF-2018-Web-writeup/" >
-            
-                <span>phpmyAdmin文件包含漏洞在2018-HCTF的例题</span>
-        </a>
-        <div class="abstract-content">
-            HCTF-2018-Web-warmup来人，把朕的源码端上来：
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748&lt;?phphighlight_file(__FILE__);class emmm&#123;    public static function checkFile(&amp;$page)    &#123;        $whitelist = [&quot;source&quot;=&gt;&quot;source.php&quot;,&q...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "CVE">CVE</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/13/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E9%9D%92%E9%BE%99%E7%BB%84-Web/" >
-            
-                <span>2020-网鼎杯-青龙组-Web</span>
-        </a>
-        <div class="abstract-content">
-            AreUSerialz源码：
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081&lt;?phpinclude(&quot;flag.php&quot;);highlight_file(__FILE__);class FileHandler &#123;    protected $op;    protected $filename;...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP反序列化">PHP反序列化</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/12/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E6%9C%B1%E9%9B%80%E7%BB%84-Web/" >
-            
-                <span>动态调用函数以及nmap用法在网鼎杯的例题</span>
-        </a>
-        <div class="abstract-content">
-            2020-网鼎杯-phpweb看到题目只有一个背景图还有规范的时间格式
-
-其次注意到每隔一段时间，时间就会刷新，抓包看看
-
-于是想到了这里有可能存在调用函数的破绽，尝试了几个常用的system(),shell_exec(),passthru()都被拦截了之后，试了试file_get_contents()发现可以，于是把index.php源码down下来了
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061&lt;!...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP反序列化">PHP反序列化</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/12/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4%E6%99%BA%E8%83%BD%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-Web-hate-php/" >
-            
-                <span>取反异或绕过</span>
-        </a>
-        <div class="abstract-content">
-            前言：垃圾就要多学习
-第五空间智能安全大赛-hate-php源码：1234567891011121314151617&lt;?phperror_reporting(0);if(!isset($_GET[&#x27;code&#x27;]))&#123;    highlight_file(__FILE__);&#125;else&#123;    $code = $_GET[&#x27;code&#x27;];    if (preg_match(&#x27;/(f|l|a|g|\.|p|h|\/|;|\&quot;|\&#x27;|\`|\||\[|\]|\_|=)/i&#x27;,$...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "url取反绕过">url取反绕过</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/" >
-            
-                <span>[转载]sql注入绕过大集合</span>
-        </a>
-        <div class="abstract-content">
-            0x1 WAF的常见特征之所以要谈到WAF的常见特征，是为了更好的了解WAF的运行机制，这样就能增加几分绕过的机会了。本文不对WAF做详细介绍，只谈及几点相关的。
-总体来说，WAF(Web Application Firewall)的具有以下四个方面的功能：
-
-审计设备：用来截获所有HTTP数据或者仅仅满足某些规则的会话
-
-访问控制设备：用来控制对Web应用的访问，既包括主动安全模式也包括被动安全模式
-
-架构/网络设计工具：当运行在反向代理模式，他们被用来分配职能，集中控制，虚拟基础结构等。
-
-WEB应用加固工具：这些功能增强被保护Web应用的安全性，它不仅能够屏蔽WEB应用固有弱点，而...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/11</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "sql">sql</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/08/08/JWT%E7%9A%84%E5%88%A9%E7%94%A8/" >
-            
-                <span>JWT的利用</span>
-        </a>
-        <div class="abstract-content">
-            网站工具：https://jwt.io/
-JWT(JSON Web Token)目前最流行的跨域身份验证解决方案
-分为三部分：头部、载荷、签名
-
-头部包含签名的算法原始数据：
-1&#123;  &quot;alg&quot;: &quot;HS256&quot;,  &quot;typ&quot;: &quot;JWT&quot;&#125;
-*alg表示用了HS256算法，typ表示这是JWT**base64加密后
-1eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
-
-载荷用于服务器识别数据来自哪里比如：原始数据
-1&#123;  &quot;sub&quot;...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/08/08</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "jwt">jwt</a>
     
@@ -3037,9 +3065,133 @@ JWT(JSON Web Token)目前最流行的跨域身份验证解决方案
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 124
+        Total : 130
         </div>
         <!-- search  -->
         
@@ -3059,7 +3211,37 @@ JWT(JSON Web Token)目前最流行的跨域身份验证解决方案
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/01</span><a class="archive-post-title" href= "/2021/11/01/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-sql%E6%B3%A8%E5%85%A5/" >javaweb漏洞学习(sql注入)</a>
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2021/11/09/open-basedir%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" >open_basedir方法总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/06</span><a class="archive-post-title" href= "/2021/11/06/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-xss/" >javaweb代码审计学习(xss)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/php%E5%87%A0%E9%81%93%E9%9A%8F%E6%9C%BA%E6%95%B0%E9%A2%98%E5%B0%8F%E6%80%BB%E7%BB%93/" >php几道随机数题小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/%E5%BC%BA%E7%BD%91%E6%9D%AF%E6%8B%9F%E6%80%81easy-filter%E8%A7%A3%E6%9E%90/" >强网杯拟态easy filter解析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95php%E5%BA%95%E5%B1%82%E4%BB%A3%E7%A0%81/" >vscode远程调试php底层代码</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/02</span><a class="archive-post-title" href= "/2021/11/02/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E5%B0%8F%E6%80%BB%E7%BB%93/" >文件包含漏洞小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/01</span><a class="archive-post-title" href= "/2021/11/01/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-sql%E6%B3%A8%E5%85%A5/" >javaweb代码审计学习(sql注入)</a>
         </li>
     
     
@@ -3695,19 +3877,9 @@ JWT(JSON Web Token)目前最流行的跨域身份验证解决方案
     
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
-    
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
-        <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
-    
-        <span class="sidebar-tag-name" data-tags="输入法取证"><span class="iconfont-archer">&#xe606;</span>输入法取证</span>
-    
-        <span class="sidebar-tag-name" data-tags="盲水印隐写"><span class="iconfont-archer">&#xe606;</span>盲水印隐写</span>
-    
-        <span class="sidebar-tag-name" data-tags="哈夫曼编码"><span class="iconfont-archer">&#xe606;</span>哈夫曼编码</span>
-    
-        <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
+        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
     
@@ -3723,25 +3895,35 @@ JWT(JSON Web Token)目前最流行的跨域身份验证解决方案
     
         <span class="sidebar-tag-name" data-tags="Android"><span class="iconfont-archer">&#xe606;</span>Android</span>
     
-        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+        <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
     
-        <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
+        <span class="sidebar-tag-name" data-tags="输入法取证"><span class="iconfont-archer">&#xe606;</span>输入法取证</span>
+    
+        <span class="sidebar-tag-name" data-tags="盲水印隐写"><span class="iconfont-archer">&#xe606;</span>盲水印隐写</span>
+    
+        <span class="sidebar-tag-name" data-tags="哈夫曼编码"><span class="iconfont-archer">&#xe606;</span>哈夫曼编码</span>
+    
+        <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
     
         <span class="sidebar-tag-name" data-tags="md5"><span class="iconfont-archer">&#xe606;</span>md5</span>
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+    
+        <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
+    
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
         <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
-    
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
-        <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
-    
         <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
+    
+        <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
     
         <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
     
@@ -3777,15 +3959,15 @@ JWT(JSON Web Token)目前最流行的跨域身份验证解决方案
     
         <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
-        <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
-    
         <span class="sidebar-tag-name" data-tags="XML"><span class="iconfont-archer">&#xe606;</span>XML</span>
     
         <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
+        <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
         <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
+    
+        <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
     
         <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
     
@@ -3799,11 +3981,13 @@ JWT(JSON Web Token)目前最流行的跨域身份验证解决方案
     
         <span class="sidebar-tag-name" data-tags="横向移动"><span class="iconfont-archer">&#xe606;</span>横向移动</span>
     
+        <span class="sidebar-tag-name" data-tags="漏洞利用"><span class="iconfont-archer">&#xe606;</span>漏洞利用</span>
+    
         <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
     
         <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
     
-        <span class="sidebar-tag-name" data-tags="漏洞利用"><span class="iconfont-archer">&#xe606;</span>漏洞利用</span>
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
     
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
     
@@ -3811,35 +3995,35 @@ JWT(JSON Web Token)目前最流行的跨域身份验证解决方案
     
         <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
     
-        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
-    
         <span class="sidebar-tag-name" data-tags="逻辑漏洞"><span class="iconfont-archer">&#xe606;</span>逻辑漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
     
-        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
-    
         <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
     
-        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
+        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
     
+        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
+    
         <span class="sidebar-tag-name" data-tags="提权"><span class="iconfont-archer">&#xe606;</span>提权</span>
+    
+        <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
     
         <span class="sidebar-tag-name" data-tags="代码执行"><span class="iconfont-archer">&#xe606;</span>代码执行</span>
     
         <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
     
-        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
-    
         <span class="sidebar-tag-name" data-tags="phar反序列化"><span class="iconfont-archer">&#xe606;</span>phar反序列化</span>
+    
+        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
     
         <span class="sidebar-tag-name" data-tags="变量覆盖漏洞"><span class="iconfont-archer">&#xe606;</span>变量覆盖漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="弱类型比较"><span class="iconfont-archer">&#xe606;</span>弱类型比较</span>
-    
         <span class="sidebar-tag-name" data-tags="扫描软件"><span class="iconfont-archer">&#xe606;</span>扫描软件</span>
+    
+        <span class="sidebar-tag-name" data-tags="弱类型比较"><span class="iconfont-archer">&#xe606;</span>弱类型比较</span>
     
         <span class="sidebar-tag-name" data-tags="Django"><span class="iconfont-archer">&#xe606;</span>Django</span>
     
@@ -3850,6 +4034,8 @@ JWT(JSON Web Token)目前最流行的跨域身份验证解决方案
         <span class="sidebar-tag-name" data-tags="文件上传漏洞"><span class="iconfont-archer">&#xe606;</span>文件上传漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件包含"><span class="iconfont-archer">&#xe606;</span>文件包含</span>
     
         <span class="sidebar-tag-name" data-tags="无参数构造payload"><span class="iconfont-archer">&#xe606;</span>无参数构造payload</span>
     
