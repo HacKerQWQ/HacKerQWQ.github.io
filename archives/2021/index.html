@@ -355,6 +355,297 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2021/12/13/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" >
+            
+                <span>javaweb代码审计(反序列化漏洞)</span>
+        </a>
+        <div class="abstract-content">
+            Java序列化与反序列化用法序列化与反序列化介绍对象序列化的目的：
+Java是面向对象编程，在javaweb中常见的序列化的例子是SESSION，为了方便存储，将对象转换为字符串大大节省了内存空间。
+
+对象的序列化是将Object=&gt;byte[],反序列化是将byte[]=&gt;Object
+对象序列化须实现java.io.Serializable接口，相当于一个标准
+序列化通过ObjectOutputStream的writeObject方法，反序列化通过ObjectInputStream的readObject方法
+将不需要序列化的属性前添加关键字transient，序列化对象的...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/12/13</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Java安全">Java安全</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/12/12/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SpEL%E6%BC%8F%E6%B4%9E/" >
+            
+                <span>javaweb代码审计学习(SpEL漏洞)</span>
+        </a>
+        <div class="abstract-content">
+            SpEL表达式Spring 表达式语言 (SpEL) 是一种强大的表达式语言，支持在运行时查询和操作对象图。它可以与 XML 或基于注解的 Spring 配置一起使用。
+该语言有几种可用的运算符：
+
+
+
+类型
+运营商
+
+
+
+算术
++、-、*、/、%、^、div、mod
+
+
+关系型
+&lt;, &gt;, ==, !=, &lt;=, &gt;=, lt, gt, eq, ne, le, ge
+
+
+逻辑的
+and, or, not, &amp;&amp;, ||, !
+
+
+有条件的
+？：
+
+
+正则表达式
+matches
+
+
+SpEL使用#&#123;&#125;作为界定符。
+EL表达式主要...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/12/12</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Java安全">Java安全</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/12/11/log4j%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" >
+            
+                <span>log4j远程代码执行漏洞分析</span>
+        </a>
+        <div class="abstract-content">
+            漏洞简介CVE编号：CVE-2021-44228
+Apache Log4j 是 Apache 的一个开源项目，Apache Log4j2是一个基于Java的日志记录工具。该工具重写了Log4j框架，并且引入了大量丰富的特性。我们可以控制日志信息输送的目的地为控制台、文件、GUI组件等，通过定义每一条日志信息的级别，能够更加细致地控制日志的生成过程。该日志框架被大量用于业务系统开发，用来记录日志信息。Log4j-2中存在JNDI注入漏洞，当程序将用户输入的数据被日志记录时，即可触发此漏洞，成功利用此漏洞可以在目标服务器上执行任意代码。鉴于此漏洞危害较大，建议客户尽快采取措施防护此漏洞
+
+影...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/12/11</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞分析">漏洞分析</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/12/05/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-XXE%E6%BC%8F%E6%B4%9E/" >
+            
+                <span>javaweb代码审计(XXE漏洞)</span>
+        </a>
+        <div class="abstract-content">
+            XXE漏洞XXE(XML External Entity Injection)，中文称作XML外部实体注入。和SQL注入、XSS、XPath注入等类似，都是违反了“数据与代码分离原则”的产物。
+XXE危害：配合各种协议和老哥们的骚思路，可以读取任意文件、执行系统命令、探测内网端口、攻击内网网站等。
+XML常见接口XMLReader
+SAX2(Simple API for XML 2)
+
+XMLReader接口是XML解析器实现SAX2驱动程序所必需的接口，当XMLReader使用默认的解析方法并且没有对XML进行过滤时，会造成XXE漏洞。
+123456try&#123;         ...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/12/05</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Java安全">Java安全</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/12/05/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" >
+            
+                <span>javaweb代码审计学习(命令执行)</span>
+        </a>
+        <div class="abstract-content">
+            命令执行漏洞在java中，命令执行有ProcessBuilder和Runtime两种，常常出现于ping、nslookup等调用系统shell的功能点
+ProcessBuilder命令执行123456789101112131415161718@RestControllerpublic class proexec &#123;    @RequestMapping(&quot;/proexec&quot;)    public static void exec(HttpServletRequest request, HttpServletResponse response) throws ...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/12/05</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Java安全">Java安全</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/11/30/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E7%9B%AE%E5%BD%95%E7%A9%BF%E8%B6%8A-URL%E8%B7%B3%E8%BD%AC/" >
+            
+                <span>javaweb代码审计学习(目录穿越&amp;URL跳转)</span>
+        </a>
+        <div class="abstract-content">
+            目录穿越漏洞目录穿越漏洞常常出现在需要用户提供路径或文件名时，如文件下载，如果没有对类似../的字符进行过滤，有可能会造成目录穿越漏洞。
+示例代码如下:
+123456789101112131415161718192021222324252627282930313233343536@RestControllerpublic class download &#123;    @RequestMapping(&quot;/download&quot;)    public String downlaodFile(@RequestParam(&quot;img&quot;)String img,...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/11/30</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Java安全">Java安全</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/11/29/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" >
+            
+                <span>javaweb代码审计学习(文件上传漏洞)</span>
+        </a>
+        <div class="abstract-content">
+            环境配置在IDEA中创建Spring项目，在包下创建如下代码
+
+12345678910111213141516171819202122232425262728293031323334353637383940package com.example.demo;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.RequestParam;import org.springframework.web.bind.annotation....
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/11/29</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Java安全">Java安全</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/11/17/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%A5%E9%97%A8-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%80%E4%BB%8B/" >
+            
+                <span>神经网络入门(1):神经网络和机器学习简介</span>
+        </a>
+        <div class="abstract-content">
+            神经网络&amp;机器学习神经网络和机器学习基础入门：https://blog.csdn.net/qq_22521211/article/details/81011099
+词汇解释
+人工神经网络(artificial neural network,缩写ANN)
+神经元(neuron)
+深度学习(Deep Learning)
+机器学习(Machine Learning)
+神经语言程序学(Neuro-Linguistic Programming,NLP)
+分类(Classification)：输入的训练数据有特征(feature)，有标签(label)。
+聚类(Clustering): 输入...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/11/17</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "神经网络">神经网络</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2021/11/15/%E6%9E%81%E8%87%B4cms-v1-9-5%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" >
             
                 <span>极致cms v1.9.5文件上传漏洞</span>
@@ -587,294 +878,6 @@ php根据mt_srand()设置种子
         <a class="post-tag" href="javascript:void(0);" data-tags = "PHP">PHP</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "C">C</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/11/02/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E5%B0%8F%E6%80%BB%E7%BB%93/" >
-            
-                <span>文件包含漏洞小总结</span>
-        </a>
-        <div class="abstract-content">
-            文件包含漏洞12345678910111213&lt;?phperror_reporting(0);if(isset($_GET[&#x27;c&#x27;]))&#123;    $c = $_GET[&#x27;c&#x27;];    if(!preg_match(&quot;/flag/i&quot;, $c))&#123;        include($c);        echo $flag;        &#125;        &#125;else&#123;    highlight_file(__FILE__);&#125;
-
-如上文件就存在文件包含漏洞，可将...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/11/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "文件包含">文件包含</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/11/01/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-sql%E6%B3%A8%E5%85%A5/" >
-            
-                <span>javaweb代码审计学习(sql注入)</span>
-        </a>
-        <div class="abstract-content">
-            环境配置链接：https://pan.baidu.com/s/1jAXBe7_EqiPtSo1RUcoxLg提取码：fd7a 
-创建数据库sec_sql
-1create database sec_sql charset utf8;
-
-创建表admin、userinfo并插入数据
-12345678910111213141516171819202122232425262728DROP TABLE IF EXISTS `admin`;CREATE TABLE `admin` (`uid` int(11) NOT NULL AUTO_INCREMENT COMMENT &#x27;uid&#x2...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/11/01</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Java安全">Java安全</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/10/26/%E6%97%A0%E5%8F%82%E6%95%B0rce%E6%96%B0%E8%A7%A3%E6%B3%95-2021%E6%85%95%E6%B5%8Bweb%E5%BA%94%E7%94%A8%E4%B8%AA%E4%BA%BA%E8%B5%9Bnorce/" >
-            
-                <span>无参数rce新解法(2021慕测web应用个人赛norce)</span>
-        </a>
-        <div class="abstract-content">
-            本文来源：https://blog.csdn.net/qq_33008305/article/details/120950537?spm=1001.2014.3001.5502
-源码：
-1234567891011121314&lt;?phphighlight_file(__FILE__);$exp = $_GET[&#x27;exp&#x27;];//php7.3 + Apacheif(&#x27;;&#x27; === preg_replace(&#x27;/[^\W]+\((?R)?\)/&#x27;, &#x27;&#x27;, $exp))&#123;	if (!preg_mat...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/10/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "代码执行">代码执行</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/10/23/Android%E5%AE%89%E5%85%A8%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" >
-            
-                <span>Android安全之环境搭建及基础知识</span>
-        </a>
-        <div class="abstract-content">
-            Android环境安装ADT
- ADT：Android Development Tools，用于Android开发
-
-安装网站：https://developer.android.com/studio
-通过安装android studio顺带安装sdk
-更新API通过sdk安装路径中的sdkmanager.bat文件直接运行进行更新，如果有代理问题，可以通过添加hosts文件信息进行更新
-1234203.208.46.146 www.google.com74.125.113.121 developer.android.com203.208.46.146 dl.google.com203....
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/10/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Android">Android</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/10/19/TP6-0-X%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%93%BE%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" >
-            
-                <span>TP6.0.X反序列化链漏洞分析</span>
-        </a>
-        <div class="abstract-content">
-            漏洞简介TP6删除了Windows类，但是可以通过Model类的__destruct()方法触发save函数，在checkAllowFields方法中存在$this-&gt;table与$this-&gt;suffix的拼接，触发__toString()方法，最后实现$closure的动态调用
-配置123composer create-project --prefer-dist topthink&#x2F;think&#x3D;6.0.x-dev tp6xcd tp6xphp .&#x2F;think run
-
-将 application/index/controller/Index.p...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/10/19</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ThinkPHP">ThinkPHP</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞分析">漏洞分析</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "代码审计">代码审计</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/10/18/TP6%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%86%99%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" >
-            
-                <span>TP6任意文件写漏洞分析</span>
-        </a>
-        <div class="abstract-content">
-            漏洞简介think\Session中的setId方法未对PHPSESSID进行校验，因此造成了任意文件写漏洞，漏洞存在版本：ThinkPHPv6.0.0-v6.0.1
-配置12345composer create-project topthink&#x2F;think tp6cd tp6# 修改composer.json&quot;topthink&#x2F;framework&quot;: &quot;6.0.0&quot;composer update
-
-在app/controller/Index.php下修改代码
-123456789101112131415161718&lt;?ph...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/10/18</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ThinkPHP">ThinkPHP</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞分析">漏洞分析</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "代码审计">代码审计</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/10/10/TP5-1-X%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" >
-            
-                <span>TP5.1.X反序列化漏洞分析</span>
-        </a>
-        <div class="abstract-content">
-            漏洞简介5.1.X版本存在反序列化链子，可以执行任意代码
-漏洞演示使用以下命令下载代码
-12#下载指定版本的thinkphp源码composer create-project --prefer-dist topthink&#x2F;think&#x3D;v5.1.37 tpdemo
-
-
-
-漏洞利用前提以下两个条件满足一个即可
-
-存在反序列化的点如unserialize
-存在文件上传、文件名完全可控、使用了文件操作函数，例如： file_exists(&#39;phar://恶意文件&#39;)
-
-poc1
-12345678910111213141516171819202122232425...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/10/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ThinkPHP">ThinkPHP</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞分析">漏洞分析</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "代码审计">代码审计</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/10/08/Android%E6%9D%83%E9%99%90%E6%A8%A1%E5%9E%8B/" >
-            
-                <span>Android权限模型</span>
-        </a>
-        <div class="abstract-content">
-            Android系统架构Android的总体架构被描述为“运行在Linux上的Java”，但是仅仅指的是Android应用层和框架层。
-Android架构分为
-
-Android应用层(允许开发者不需要关注底层代码即可对设备功能进行拓展和提升)
-Android框架层(为上层提供API，充当应用层和Dalvik层的“粘合剂”，API包含各种构件(Building Block),如管理UI元素、访问共享数据存储等)
-Dalvik虚拟机层(为基层操作系统提供高效的抽象层，基于寄存器)
-用户空间原生代码层(为Dalvik提供服务，包含系统服务、网络服务、程序库)
-Linux内核
-
-
-安全边界和安全策...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/10/08</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Android">Android</a>
     
 </div>
             
@@ -3174,9 +3177,142 @@ Linux内核
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 132
+        Total : 139
         </div>
         <!-- search  -->
         
@@ -3193,6 +3329,46 @@ Linux内核
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/13</span><a class="archive-post-title" href= "/2021/12/13/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" >javaweb代码审计(反序列化漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2021/12/12/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SpEL%E6%BC%8F%E6%B4%9E/" >javaweb代码审计学习(SpEL漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/11</span><a class="archive-post-title" href= "/2021/12/11/log4j%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" >log4j远程代码执行漏洞分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/05</span><a class="archive-post-title" href= "/2021/12/05/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-XXE%E6%BC%8F%E6%B4%9E/" >javaweb代码审计(XXE漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/05</span><a class="archive-post-title" href= "/2021/12/05/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" >javaweb代码审计学习(命令执行)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/30</span><a class="archive-post-title" href= "/2021/11/30/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E7%9B%AE%E5%BD%95%E7%A9%BF%E8%B6%8A-URL%E8%B7%B3%E8%BD%AC/" >javaweb代码审计学习(目录穿越&URL跳转)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/29</span><a class="archive-post-title" href= "/2021/11/29/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" >javaweb代码审计学习(文件上传漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2021/11/17/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%A5%E9%97%A8-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%80%E4%BB%8B/" >神经网络入门(1):神经网络和机器学习简介</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -3332,11 +3508,6 @@ Linux内核
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/03</span><a class="archive-post-title" href= "/2021/08/03/pickle%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" >pickle序列化与反序列化</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/28</span><a class="archive-post-title" href= "/2021/07/28/Java%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0-%E4%B8%80/" >Java序列化与反序列化学习(一)</a>
         </li>
     
     
@@ -3872,9 +4043,21 @@ Linux内核
     
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
     
+        <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
+    
         <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
-        <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+    
+        <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
+    
+        <span class="sidebar-tag-name" data-tags="输入法取证"><span class="iconfont-archer">&#xe606;</span>输入法取证</span>
+    
+        <span class="sidebar-tag-name" data-tags="盲水印隐写"><span class="iconfont-archer">&#xe606;</span>盲水印隐写</span>
+    
+        <span class="sidebar-tag-name" data-tags="哈夫曼编码"><span class="iconfont-archer">&#xe606;</span>哈夫曼编码</span>
+    
+        <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
     
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
     
@@ -3888,33 +4071,21 @@ Linux内核
     
         <span class="sidebar-tag-name" data-tags="Android"><span class="iconfont-archer">&#xe606;</span>Android</span>
     
-        <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
-    
-        <span class="sidebar-tag-name" data-tags="输入法取证"><span class="iconfont-archer">&#xe606;</span>输入法取证</span>
-    
-        <span class="sidebar-tag-name" data-tags="盲水印隐写"><span class="iconfont-archer">&#xe606;</span>盲水印隐写</span>
-    
-        <span class="sidebar-tag-name" data-tags="哈夫曼编码"><span class="iconfont-archer">&#xe606;</span>哈夫曼编码</span>
-    
-        <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
-    
         <span class="sidebar-tag-name" data-tags="md5"><span class="iconfont-archer">&#xe606;</span>md5</span>
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
-    
-        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
+        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+    
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
-        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
-    
-        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
     
@@ -3944,9 +4115,9 @@ Linux内核
     
         <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
-        <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
-    
         <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
         <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
@@ -3982,9 +4153,9 @@ Linux内核
     
         <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
     
-        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
+    
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
     
         <span class="sidebar-tag-name" data-tags="php"><span class="iconfont-archer">&#xe606;</span>php</span>
     
@@ -4030,13 +4201,15 @@ Linux内核
     
         <span class="sidebar-tag-name" data-tags="文件包含"><span class="iconfont-archer">&#xe606;</span>文件包含</span>
     
-        <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
-    
         <span class="sidebar-tag-name" data-tags="无参数构造payload"><span class="iconfont-archer">&#xe606;</span>无参数构造payload</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
     
         <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
+    
+        <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
     
         <span class="sidebar-tag-name" data-tags="url取反绕过"><span class="iconfont-archer">&#xe606;</span>url取反绕过</span>
     

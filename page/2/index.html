@@ -368,6 +368,282 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2021/11/09/open-basedir%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" >
+            
+                <span>open_basedir方法总结</span>
+        </a>
+        <div class="abstract-content">
+            open_basedir简介当php.ini设置了open_basedir的时候，所有读取文件、跨目录读取的操作都应该限制在open_basedir中,设置如下
+1234# linux写法open_basedir &#x3D; &#x2F;var&#x2F;www&#x2F;html:&#x2F;tmp# windows写法open_basedir &#x3D; c:&#x2F;www;c:&#x2F;windows&#x2F;temp
+
+当尝试读取限制之外的目录或者文件时，会出现以下提示
+
+open_basedir绕过方法部分参考p神博客，部分其他文章
+https://www.leav...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/11/09</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "渗透测试">渗透测试</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF">CTF</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/11/06/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-xss/" >
+            
+                <span>javaweb代码审计学习(xss)</span>
+        </a>
+        <div class="abstract-content">
+            环境配置https://github.com/cn-panda/JavaCodeAudit/tree/master/%E3%80%9003%E3%80%91XSS%20%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E9%99%85%E6%A1%88%E4%BE%8B%E4%BB%8B%E7%BB%8D
+下载xss文件夹后，创建数据库添加数据
+123456789101112131415161718192021222324252627282930313233#创建数据库create database sec_xss charse...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/11/06</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Java安全">Java安全</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/11/05/php%E5%87%A0%E9%81%93%E9%9A%8F%E6%9C%BA%E6%95%B0%E9%A2%98%E5%B0%8F%E6%80%BB%E7%BB%93/" >
+            
+                <span>php几道随机数题小总结</span>
+        </a>
+        <div class="abstract-content">
+            前置知识
+php根据mt_srand()设置种子
+
+同一个种子生成出来的随机数列相同
+
+使用mt_rand()生成随机数
+
+生成的随机数列会由于php版本有所不同
+
+
+例子：
+12345&lt;?php    mt_srand(123);	echo mt_rand().&quot;\n&quot;;	echo mt_rand().&quot;\n&quot;;	echo mt_rand().&quot;\n&quot;;
+
+结果
+
+每次的结果都一样
+例题1123456789101112131415161718192021222324252627&lt;?php/*# -*- coding...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/11/05</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "php">php</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/11/05/%E5%BC%BA%E7%BD%91%E6%9D%AF%E6%8B%9F%E6%80%81easy-filter%E8%A7%A3%E6%9E%90/" >
+            
+                <span>强网杯拟态easy filter解析</span>
+        </a>
+        <div class="abstract-content">
+            Easy Filter看了P神的easy filter的分析，简单做一下记录
+题目如下
+1234567891011121314151617&lt;?php    ini_set(&quot;open_basedir&quot;,&quot;./&quot;);    if(!isset($_GET[&#x27;action&#x27;]))&#123;        highlight_file(__FILE__);        die();    &#125;    if($_GET[&#x27;action&#x27;] == &#x27;w&#x27;)&#123;       ...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/11/05</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "CTF">CTF</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "C">C</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/11/05/vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95php%E5%BA%95%E5%B1%82%E4%BB%A3%E7%A0%81/" >
+            
+                <span>vscode远程调试php底层代码</span>
+        </a>
+        <div class="abstract-content">
+            环境配置这里以P神的DockerFile为例,https://github.com/phith0n/phpsrc-debug-docker/blob/master/7.4/Dockerfile
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/11/05</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP">PHP</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "C">C</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/11/02/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E5%B0%8F%E6%80%BB%E7%BB%93/" >
+            
+                <span>文件包含漏洞小总结</span>
+        </a>
+        <div class="abstract-content">
+            文件包含漏洞12345678910111213&lt;?phperror_reporting(0);if(isset($_GET[&#x27;c&#x27;]))&#123;    $c = $_GET[&#x27;c&#x27;];    if(!preg_match(&quot;/flag/i&quot;, $c))&#123;        include($c);        echo $flag;        &#125;        &#125;else&#123;    highlight_file(__FILE__);&#125;
+
+如上文件就存在文件包含漏洞，可将...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/11/02</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "文件包含">文件包含</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/11/01/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-sql%E6%B3%A8%E5%85%A5/" >
+            
+                <span>javaweb代码审计学习(sql注入)</span>
+        </a>
+        <div class="abstract-content">
+            环境配置链接：https://pan.baidu.com/s/1jAXBe7_EqiPtSo1RUcoxLg提取码：fd7a 
+创建数据库sec_sql
+1create database sec_sql charset utf8;
+
+创建表admin、userinfo并插入数据
+12345678910111213141516171819202122232425262728DROP TABLE IF EXISTS `admin`;CREATE TABLE `admin` (`uid` int(11) NOT NULL AUTO_INCREMENT COMMENT &#x27;uid&#x2...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/11/01</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Java安全">Java安全</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/10/26/%E6%97%A0%E5%8F%82%E6%95%B0rce%E6%96%B0%E8%A7%A3%E6%B3%95-2021%E6%85%95%E6%B5%8Bweb%E5%BA%94%E7%94%A8%E4%B8%AA%E4%BA%BA%E8%B5%9Bnorce/" >
+            
+                <span>无参数rce新解法(2021慕测web应用个人赛norce)</span>
+        </a>
+        <div class="abstract-content">
+            本文来源：https://blog.csdn.net/qq_33008305/article/details/120950537?spm=1001.2014.3001.5502
+源码：
+1234567891011121314&lt;?phphighlight_file(__FILE__);$exp = $_GET[&#x27;exp&#x27;];//php7.3 + Apacheif(&#x27;;&#x27; === preg_replace(&#x27;/[^\W]+\((?R)?\)/&#x27;, &#x27;&#x27;, $exp))&#123;	if (!preg_mat...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/10/26</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "代码执行">代码执行</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2021/10/23/Android%E5%AE%89%E5%85%A8%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" >
             
                 <span>Android安全之环境搭建及基础知识</span>
@@ -427,313 +703,6 @@ height:50vh;
         <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞分析">漏洞分析</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "代码审计">代码审计</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/10/18/TP6%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%86%99%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" >
-            
-                <span>TP6任意文件写漏洞分析</span>
-        </a>
-        <div class="abstract-content">
-            漏洞简介think\Session中的setId方法未对PHPSESSID进行校验，因此造成了任意文件写漏洞，漏洞存在版本：ThinkPHPv6.0.0-v6.0.1
-配置12345composer create-project topthink&#x2F;think tp6cd tp6# 修改composer.json&quot;topthink&#x2F;framework&quot;: &quot;6.0.0&quot;composer update
-
-在app/controller/Index.php下修改代码
-123456789101112131415161718&lt;?ph...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/10/18</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ThinkPHP">ThinkPHP</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞分析">漏洞分析</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "代码审计">代码审计</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/10/10/TP5-1-X%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" >
-            
-                <span>TP5.1.X反序列化漏洞分析</span>
-        </a>
-        <div class="abstract-content">
-            漏洞简介5.1.X版本存在反序列化链子，可以执行任意代码
-漏洞演示使用以下命令下载代码
-12#下载指定版本的thinkphp源码composer create-project --prefer-dist topthink&#x2F;think&#x3D;v5.1.37 tpdemo
-
-
-
-漏洞利用前提以下两个条件满足一个即可
-
-存在反序列化的点如unserialize
-存在文件上传、文件名完全可控、使用了文件操作函数，例如： file_exists(&#39;phar://恶意文件&#39;)
-
-poc1
-12345678910111213141516171819202122232425...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/10/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ThinkPHP">ThinkPHP</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞分析">漏洞分析</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "代码审计">代码审计</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/10/08/Android%E6%9D%83%E9%99%90%E6%A8%A1%E5%9E%8B/" >
-            
-                <span>Android权限模型</span>
-        </a>
-        <div class="abstract-content">
-            Android系统架构Android的总体架构被描述为“运行在Linux上的Java”，但是仅仅指的是Android应用层和框架层。
-Android架构分为
-
-Android应用层(允许开发者不需要关注底层代码即可对设备功能进行拓展和提升)
-Android框架层(为上层提供API，充当应用层和Dalvik层的“粘合剂”，API包含各种构件(Building Block),如管理UI元素、访问共享数据存储等)
-Dalvik虚拟机层(为基层操作系统提供高效的抽象层，基于寄存器)
-用户空间原生代码层(为Dalvik提供服务，包含系统服务、网络服务、程序库)
-Linux内核
-
-
-安全边界和安全策...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/10/08</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Android">Android</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/10/07/TP5-0-X%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" >
-            
-                <span>TP5.0.X反序列化漏洞分析</span>
-        </a>
-        <div class="abstract-content">
-            漏洞介绍存在反序列化链子，可实现写shell
-漏洞演示poc.php
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121&lt;?ph...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/10/07</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ThinkPHP">ThinkPHP</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞分析">漏洞分析</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "代码审计">代码审计</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/09/26/TP5%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-0-0-5-0-18-5-1-0-5-1-10/" >
-            
-                <span>TP5文件包含漏洞分析(5.0.0-5.0.18,5.1.0-5.1.10)</span>
-        </a>
-        <div class="abstract-content">
-            漏洞介绍在fetch渲染模板的方法中，调用了File类的read方法中使用了extract方法造成了变量覆盖，覆盖掉了模板文件，造成文件包含漏洞
-漏洞演示现将图片马上传public目录(实际情况是文件上传上传图片马)
-传入?cacheFile=hello.jpg进行文件包含
-
-漏洞分析在application/index/controller/Index.php中添加如下代码触发漏洞
-1234567891011&lt;?phpnamespace app\index\controller;use think\Controller;class Index extends Controller...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/09/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ThinkPHP">ThinkPHP</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞分析">漏洞分析</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "代码审计">代码审计</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/09/21/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB-%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB/" >
-            
-                <span>内网渗透之非约束委派攻击&amp;约束委派攻击</span>
-        </a>
-        <div class="abstract-content">
-            前置知识概述域委派是指将域内用户的权限委派给服务账号或主机用户账号，使得服务账号能以用户的权限在域内展开活动，
-委派分为三类：
-
-非约束委派(Unconstrained delegation)
-约束委派(Constrained delegation)
-基于资源的约束委派(Resource Based Constrained Delegation)
-
-主要还是充分发挥windows的权限控制，假设用户A利用自己的身份可以访问到一个网站B，请求网站的资源C，但是网站B上边本身没有资源C，那么网站B就需要用用户A的身份去访问另外一台机器去获取资源C再给到用户
-非约束委派原理用户A去访问服务B，...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/09/21</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "内网渗透">内网渗透</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "横向移动">横向移动</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "提权">提权</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/09/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87%E4%B8%89-Windows%E6%8F%90%E6%9D%83/" >
-            
-                <span>渗透测试之提权篇三(Windows提权)</span>
-        </a>
-        <div class="abstract-content">
-            提权简介提权从目的可分为纵向提权与横向提权：
-
-纵向提权：低权限角色获得高权限角色的权限。（最常见的）
-
-横向提权：获取同级别角色的权限。（根据实际的需求）
-
-
-Windows常用的提权方法有：系统内核溢出漏洞提权、数据库提权、错误的系统配置提权、组策略首选项提权、窃取令牌提权、bypassuac提权，第三方软件/服务提权，WEB中间件漏洞提权等。
-
-提权思路可信服务路径提权(Trusted Service Paths)简介思路：当某项服务的启动路径未被双引号包起来的话，SYSTEM用户会按照固定顺序遍历路径，如果遍历到我们的恶意程序，就能进行反弹shell等操作提权
-假如存在以下服务启...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/09/17</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "渗透测试">渗透测试</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "提权">提权</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/09/15/laravel%20RCE%E6%BC%8F%E6%B4%9E-CVE-2021-3129-%E5%88%A9%E7%94%A8/" >
-            
-                <span>laravel RCE漏洞(CVE-2021-3129)利用</span>
-        </a>
-        <div class="abstract-content">
-            原文链接：https://whoamianony.top/2021/01/15/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/Laravel/Laravel%20Debug%20mode%20RCE%EF%BC%88CVE-2021-3129%EF%BC%89%E5%88%A9%E7%94%A8%E5%A4%8D%E7%8E%B0/
-漏洞简介Laravel是一套简洁、开源的PHP Web开发框架，旨在实现Web软件的MVC架构。
-2021年01月12日，Laravel被披露存在一个远程代码执行漏洞（CVE-2021-3129）。当Laravel开启了Debug...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/09/15</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞利用">漏洞利用</a>
     
 </div>
             
@@ -3134,9 +3103,142 @@ Windows常用的提权方法有：系统内核溢出漏洞提权、数据库提�
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 132
+        Total : 139
         </div>
         <!-- search  -->
         
@@ -3153,6 +3255,46 @@ Windows常用的提权方法有：系统内核溢出漏洞提权、数据库提�
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/13</span><a class="archive-post-title" href= "/2021/12/13/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" >javaweb代码审计(反序列化漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2021/12/12/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SpEL%E6%BC%8F%E6%B4%9E/" >javaweb代码审计学习(SpEL漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/11</span><a class="archive-post-title" href= "/2021/12/11/log4j%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" >log4j远程代码执行漏洞分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/05</span><a class="archive-post-title" href= "/2021/12/05/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-XXE%E6%BC%8F%E6%B4%9E/" >javaweb代码审计(XXE漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/05</span><a class="archive-post-title" href= "/2021/12/05/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" >javaweb代码审计学习(命令执行)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/30</span><a class="archive-post-title" href= "/2021/11/30/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E7%9B%AE%E5%BD%95%E7%A9%BF%E8%B6%8A-URL%E8%B7%B3%E8%BD%AC/" >javaweb代码审计学习(目录穿越&URL跳转)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/29</span><a class="archive-post-title" href= "/2021/11/29/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" >javaweb代码审计学习(文件上传漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2021/11/17/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%A5%E9%97%A8-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%80%E4%BB%8B/" >神经网络入门(1):神经网络和机器学习简介</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -3292,11 +3434,6 @@ Windows常用的提权方法有：系统内核溢出漏洞提权、数据库提�
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/03</span><a class="archive-post-title" href= "/2021/08/03/pickle%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" >pickle序列化与反序列化</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/28</span><a class="archive-post-title" href= "/2021/07/28/Java%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0-%E4%B8%80/" >Java序列化与反序列化学习(一)</a>
         </li>
     
     
@@ -3832,9 +3969,21 @@ Windows常用的提权方法有：系统内核溢出漏洞提权、数据库提�
     
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
     
+        <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
+    
         <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
-        <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+    
+        <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
+    
+        <span class="sidebar-tag-name" data-tags="输入法取证"><span class="iconfont-archer">&#xe606;</span>输入法取证</span>
+    
+        <span class="sidebar-tag-name" data-tags="盲水印隐写"><span class="iconfont-archer">&#xe606;</span>盲水印隐写</span>
+    
+        <span class="sidebar-tag-name" data-tags="哈夫曼编码"><span class="iconfont-archer">&#xe606;</span>哈夫曼编码</span>
+    
+        <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
     
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
     
@@ -3848,33 +3997,21 @@ Windows常用的提权方法有：系统内核溢出漏洞提权、数据库提�
     
         <span class="sidebar-tag-name" data-tags="Android"><span class="iconfont-archer">&#xe606;</span>Android</span>
     
-        <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
-    
-        <span class="sidebar-tag-name" data-tags="输入法取证"><span class="iconfont-archer">&#xe606;</span>输入法取证</span>
-    
-        <span class="sidebar-tag-name" data-tags="盲水印隐写"><span class="iconfont-archer">&#xe606;</span>盲水印隐写</span>
-    
-        <span class="sidebar-tag-name" data-tags="哈夫曼编码"><span class="iconfont-archer">&#xe606;</span>哈夫曼编码</span>
-    
-        <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
-    
         <span class="sidebar-tag-name" data-tags="md5"><span class="iconfont-archer">&#xe606;</span>md5</span>
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
-    
-        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
+        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+    
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
-        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
-    
-        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
     
@@ -3904,9 +4041,9 @@ Windows常用的提权方法有：系统内核溢出漏洞提权、数据库提�
     
         <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
-        <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
-    
         <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
         <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
@@ -3942,9 +4079,9 @@ Windows常用的提权方法有：系统内核溢出漏洞提权、数据库提�
     
         <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
     
-        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
+    
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
     
         <span class="sidebar-tag-name" data-tags="php"><span class="iconfont-archer">&#xe606;</span>php</span>
     
@@ -3990,13 +4127,15 @@ Windows常用的提权方法有：系统内核溢出漏洞提权、数据库提�
     
         <span class="sidebar-tag-name" data-tags="文件包含"><span class="iconfont-archer">&#xe606;</span>文件包含</span>
     
-        <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
-    
         <span class="sidebar-tag-name" data-tags="无参数构造payload"><span class="iconfont-archer">&#xe606;</span>无参数构造payload</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
     
         <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
+    
+        <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
     
         <span class="sidebar-tag-name" data-tags="url取反绕过"><span class="iconfont-archer">&#xe606;</span>url取反绕过</span>
     

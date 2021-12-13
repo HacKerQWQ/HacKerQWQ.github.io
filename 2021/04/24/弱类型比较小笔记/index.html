@@ -30,8 +30,16 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210424215555.png">
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210424220204.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211122003601693.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211122003917600.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211122005242389.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211122005412272.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211122005528763.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211122011022222.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211122011341664.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211122011738744.png">
 <meta property="article:published_time" content="2021-04-24T13:52:21.000Z">
-<meta property="article:modified_time" content="2021-04-24T14:08:39.127Z">
+<meta property="article:modified_time" content="2021-11-21T17:17:53.831Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="ctf">
 <meta property="article:tag" content="弱类型比较">
@@ -292,7 +300,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">413</span>Reading time: <span class="post-count reading-time">1 min</span></span>
+                        <span>Word count: <span class="post-count word-count">934</span>Reading time: <span class="post-count reading-time">3 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -437,6 +445,67 @@ height:50vh;
 <li>当比较数组和字符串的时候，返回是0</li>
 <li>如果参数不是string类型，直接return</li>
 </ol>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211122003601693.png" alt="image-20211122003601693"></p>
+<p>构造数组绕过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?value[]&#x3D;1</span><br></pre></td></tr></table></figure>
+
+<h2 id="urldecode二次编码绕过"><a href="#urldecode二次编码绕过" class="headerlink" title="urldecode二次编码绕过"></a>urldecode二次编码绕过</h2><p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211122003917600.png" alt="image-20211122003917600"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">id&#x3D;%25%36%38%25%36%31%25%36%33%25%36%62%25%36%35%25%37%32%25%34%34%25%34%61</span><br><span class="line"># hackerDJ的二次url编码</span><br></pre></td></tr></table></figure>
+
+<h2 id="inval"><a href="#inval" class="headerlink" title="inval()"></a>inval()</h2><p>获取变量的整数值.</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211122005242389.png" alt="image-20211122005242389"></p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211122005412272.png" alt="image-20211122005412272"></p>
+<p>这个函数涉及到整型溢出的问题</p>
+<p>最大的值取决于操作系统。 32 位系统最大带符号的 integer 范围是 -2147483648 到 2147483647。举例，在这样的系统上，<code>intval(&#39;1000000000000&#39;)</code> 会返回 2147483647。64 位系统上，最大带符号的 integer 值是 9223372036854775807。</p>
+<ul>
+<li>字符串有可能返回 0，虽然取决于字符串<strong>最左侧</strong>的字符。 使用 <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/language.types.integer.php#language.types.integer.casting">整型转换</a> 的共同规则。</li>
+</ul>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211122005528763.png" alt="image-20211122005528763"></p>
+<p>传入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">key&#x3D;0.99999999999999999</span><br></pre></td></tr></table></figure>
+
+<p>就会被intval转换为最左侧的字符0，就会通过intval($key)&lt;1</p>
+<h2 id="正则截断"><a href="#正则截断" class="headerlink" title="正则截断"></a>正则截断</h2><h3 id="erge-函数"><a href="#erge-函数" class="headerlink" title="erge()函数"></a>erge()函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int ereg(string pattern, string originalstring, [array regs])</span><br></pre></td></tr></table></figure>
+
+<p>如果有找到模式匹配，则返回true，否则返回false</p>
+<p>php版本&lt; 5.3</p>
+<p>当遇见%00字符时，默认字符串已结束</p>
+<h3 id="preg-match-函数"><a href="#preg-match-函数" class="headerlink" title="preg_match()函数"></a>preg_match()函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int preg_match ( string $pattern , string $subject [, array &amp;$matches [, int $flags &#x3D; 0 [, int $offset &#x3D; 0 ]]] )</span><br></pre></td></tr></table></figure>
+
+<p>返回 0或1，即不匹配或 1 次匹配</p>
+<p>php版本&gt;=5.3</p>
+<p>php版本&gt;=5.3</p>
+<p>当遇见%00字符时，默认字符串已结束</p>
+<h2 id="科学计数法"><a href="#科学计数法" class="headerlink" title="科学计数法"></a>科学计数法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">9e9</span><br></pre></td></tr></table></figure>
+
+<h2 id="sha1-amp-md5强比较绕过"><a href="#sha1-amp-md5强比较绕过" class="headerlink" title="sha1&amp;md5强比较绕过"></a>sha1&amp;md5强比较绕过</h2><p>一般要求两个变量值不同，但是sha1后相同，这种情况用数组绕过就好了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?name[]&#x3D;1&amp;password[]&#x3D;2</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211122011022222.png" alt="image-20211122011022222"></p>
+<h2 id="strpos绕过"><a href="#strpos绕过" class="headerlink" title="strpos绕过"></a>strpos绕过</h2><ul>
+<li><p>定义和用法</p>
+<p>函数查找字符串在另一字符串中第一次出现的位置。</p>
+</li>
+<li><p>语法</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strpos(string, find, start) </span><br></pre></td></tr></table></figure>
+
+<p>string：必需，规定要搜索的字符串。</p>
+<p>  find：  必需，规定要查找的字符串。</p>
+<p>  start： 可选，规定在何处开始搜索。</p>
+</li>
+<li><p>返回值</p>
+<p>返回字符串在另一字符串中第一次出现的位置，如果没有找到字符串则返回 FALSE。</p>
+</li>
+</ul>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211122011341664.png" alt="image-20211122011341664"></p>
+<p><code>strpos</code>在处理数组时会返回NULL,而NULL!==FALSE以此绕过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id[]&#x3D;111</span><br></pre></td></tr></table></figure>
+
+<h2 id="session绕过"><a href="#session绕过" class="headerlink" title="session绕过"></a>session绕过</h2><p>如果程序没有在开始就初始化session，存在被绕过的可能</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211122011738744.png" alt="image-20211122011738744"></p>
+<p>传入password为空即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?password&#x3D;</span><br></pre></td></tr></table></figure>
+
 
     </article>
     <!-- license  -->
@@ -445,7 +514,7 @@ height:50vh;
             <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
             <p>原文链接：<a href="https://hackerqwq.github.io/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/">https://hackerqwq.github.io/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/</a>
             <p>发表日期：<a href="https://hackerqwq.github.io/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/">April 24th 2021, 9:52:21 pm</a>
-            <p>更新日期：<a href="https://hackerqwq.github.io/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/">April 24th 2021, 10:08:39 pm</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/">November 22nd 2021, 1:17:53 am</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -590,7 +659,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%BE%E6%95%A3%E6%AF%94%E8%BE%83"><span class="toc-number">1.</span> <span class="toc-text">松散比较</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hash%E5%87%BD%E6%95%B0%E7%BB%95%E8%BF%87"><span class="toc-number">2.</span> <span class="toc-text">Hash函数绕过</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%B1%E7%B1%BB%E5%9E%8B%E5%87%BD%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">弱类型函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#is-numeric"><span class="toc-number">3.1.</span> <span class="toc-text">is_numeric()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#in-array"><span class="toc-number">3.2.</span> <span class="toc-text">in_array()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#strcmp"><span class="toc-number">3.3.</span> <span class="toc-text">strcmp()</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%BE%E6%95%A3%E6%AF%94%E8%BE%83"><span class="toc-number">1.</span> <span class="toc-text">松散比较</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hash%E5%87%BD%E6%95%B0%E7%BB%95%E8%BF%87"><span class="toc-number">2.</span> <span class="toc-text">Hash函数绕过</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%B1%E7%B1%BB%E5%9E%8B%E5%87%BD%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">弱类型函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#is-numeric"><span class="toc-number">3.1.</span> <span class="toc-text">is_numeric()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#in-array"><span class="toc-number">3.2.</span> <span class="toc-text">in_array()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#strcmp"><span class="toc-number">3.3.</span> <span class="toc-text">strcmp()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#urldecode%E4%BA%8C%E6%AC%A1%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87"><span class="toc-number">3.4.</span> <span class="toc-text">urldecode二次编码绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#inval"><span class="toc-number">3.5.</span> <span class="toc-text">inval()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E6%88%AA%E6%96%AD"><span class="toc-number">3.6.</span> <span class="toc-text">正则截断</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#erge-%E5%87%BD%E6%95%B0"><span class="toc-number">3.6.1.</span> <span class="toc-text">erge()函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#preg-match-%E5%87%BD%E6%95%B0"><span class="toc-number">3.6.2.</span> <span class="toc-text">preg_match()函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%91%E5%AD%A6%E8%AE%A1%E6%95%B0%E6%B3%95"><span class="toc-number">3.7.</span> <span class="toc-text">科学计数法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sha1-amp-md5%E5%BC%BA%E6%AF%94%E8%BE%83%E7%BB%95%E8%BF%87"><span class="toc-number">3.8.</span> <span class="toc-text">sha1&amp;md5强比较绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#strpos%E7%BB%95%E8%BF%87"><span class="toc-number">3.9.</span> <span class="toc-text">strpos绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#session%E7%BB%95%E8%BF%87"><span class="toc-number">3.10.</span> <span class="toc-text">session绕过</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -2791,9 +2860,142 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 132
+        Total : 139
         </div>
         <!-- search  -->
         
@@ -2810,6 +3012,46 @@ top:50vh;
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/13</span><a class="archive-post-title" href= "/2021/12/13/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" >javaweb代码审计(反序列化漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2021/12/12/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SpEL%E6%BC%8F%E6%B4%9E/" >javaweb代码审计学习(SpEL漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/11</span><a class="archive-post-title" href= "/2021/12/11/log4j%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" >log4j远程代码执行漏洞分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/05</span><a class="archive-post-title" href= "/2021/12/05/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-XXE%E6%BC%8F%E6%B4%9E/" >javaweb代码审计(XXE漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/05</span><a class="archive-post-title" href= "/2021/12/05/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" >javaweb代码审计学习(命令执行)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/30</span><a class="archive-post-title" href= "/2021/11/30/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E7%9B%AE%E5%BD%95%E7%A9%BF%E8%B6%8A-URL%E8%B7%B3%E8%BD%AC/" >javaweb代码审计学习(目录穿越&URL跳转)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/29</span><a class="archive-post-title" href= "/2021/11/29/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" >javaweb代码审计学习(文件上传漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2021/11/17/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%A5%E9%97%A8-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%80%E4%BB%8B/" >神经网络入门(1):神经网络和机器学习简介</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2949,11 +3191,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/03</span><a class="archive-post-title" href= "/2021/08/03/pickle%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" >pickle序列化与反序列化</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/28</span><a class="archive-post-title" href= "/2021/07/28/Java%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0-%E4%B8%80/" >Java序列化与反序列化学习(一)</a>
         </li>
     
     
@@ -3489,9 +3726,21 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
     
+        <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
+    
         <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
-        <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+    
+        <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
+    
+        <span class="sidebar-tag-name" data-tags="输入法取证"><span class="iconfont-archer">&#xe606;</span>输入法取证</span>
+    
+        <span class="sidebar-tag-name" data-tags="盲水印隐写"><span class="iconfont-archer">&#xe606;</span>盲水印隐写</span>
+    
+        <span class="sidebar-tag-name" data-tags="哈夫曼编码"><span class="iconfont-archer">&#xe606;</span>哈夫曼编码</span>
+    
+        <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
     
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
     
@@ -3505,33 +3754,21 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="Android"><span class="iconfont-archer">&#xe606;</span>Android</span>
     
-        <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
-    
-        <span class="sidebar-tag-name" data-tags="输入法取证"><span class="iconfont-archer">&#xe606;</span>输入法取证</span>
-    
-        <span class="sidebar-tag-name" data-tags="盲水印隐写"><span class="iconfont-archer">&#xe606;</span>盲水印隐写</span>
-    
-        <span class="sidebar-tag-name" data-tags="哈夫曼编码"><span class="iconfont-archer">&#xe606;</span>哈夫曼编码</span>
-    
-        <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
-    
         <span class="sidebar-tag-name" data-tags="md5"><span class="iconfont-archer">&#xe606;</span>md5</span>
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
-    
-        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
+        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+    
         <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
-        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
-    
-        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
     
@@ -3561,9 +3798,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
-        <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
-    
         <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
         <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
@@ -3599,9 +3836,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
     
-        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
+    
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
     
         <span class="sidebar-tag-name" data-tags="php"><span class="iconfont-archer">&#xe606;</span>php</span>
     
@@ -3647,13 +3884,15 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="文件包含"><span class="iconfont-archer">&#xe606;</span>文件包含</span>
     
-        <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
-    
         <span class="sidebar-tag-name" data-tags="无参数构造payload"><span class="iconfont-archer">&#xe606;</span>无参数构造payload</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
     
         <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
     
         <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
+    
+        <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
     
         <span class="sidebar-tag-name" data-tags="url取反绕过"><span class="iconfont-archer">&#xe606;</span>url取反绕过</span>
     
