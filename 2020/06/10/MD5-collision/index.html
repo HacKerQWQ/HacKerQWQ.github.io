@@ -21,16 +21,19 @@
     <meta name="keywords" content="hexo,HackerQWQ,blog,CTFer">
     
     <meta name="description" content="">
-    <meta name="description" content="这个问题困扰了很久了，很多ctf题目都出现了，也就这篇博客解决了我的问题，记录下来奖励一下自己作者转载自：https:&#x2F;&#x2F;blog.csdn.net&#x2F;zz_Caleb&#x2F;article&#x2F;details&#x2F;84947371md5的碰撞，在PHP的数的处理中，0开头的字符串会被转换成0，所以才会有md5碰撞。 123456789101112131415161718192021222324252627282">
+    <meta name="description" content="参考：https:&#x2F;&#x2F;blog.csdn.net&#x2F;zz_Caleb&#x2F;article&#x2F;details&#x2F;84947371md5的碰撞，在PHP的数的处理中，0开头的字符串会被转换成0，所以才会有md5碰撞。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MD5-collision">
 <meta property="og:url" content="https://hackerqwq.github.io/2020/06/10/MD5-collision/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="这个问题困扰了很久了，很多ctf题目都出现了，也就这篇博客解决了我的问题，记录下来奖励一下自己作者转载自：https:&#x2F;&#x2F;blog.csdn.net&#x2F;zz_Caleb&#x2F;article&#x2F;details&#x2F;84947371md5的碰撞，在PHP的数的处理中，0开头的字符串会被转换成0，所以才会有md5碰撞。 123456789101112131415161718192021222324252627282">
+<meta property="og:description" content="参考：https:&#x2F;&#x2F;blog.csdn.net&#x2F;zz_Caleb&#x2F;article&#x2F;details&#x2F;84947371md5的碰撞，在PHP的数的处理中，0开头的字符串会被转换成0，所以才会有md5碰撞。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blogs/pictures/20210619211605.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20221030153005828.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20221030153549005.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20221030160253162.png">
 <meta property="article:published_time" content="2020-06-10T14:13:37.000Z">
-<meta property="article:modified_time" content="2021-06-19T13:16:10.553Z">
+<meta property="article:modified_time" content="2022-10-30T08:07:50.060Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="ctf">
 <meta property="article:tag" content="md5">
@@ -291,7 +294,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">555</span>Reading time: <span class="post-count reading-time">2 min</span></span>
+                        <span>Word count: <span class="post-count word-count">587</span>Reading time: <span class="post-count reading-time">3 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -421,7 +424,7 @@ height:50vh;
             
 <main class="main post-page">
     <article class="article-entry">
-        <p>这个问题困扰了很久了，很多ctf题目都出现了，也就这篇博客解决了我的问题，记录下来奖励一下<del>自己</del>作者<br>转载自：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zz_Caleb/article/details/84947371">https://blog.csdn.net/zz_Caleb/article/details/84947371</a><br><u>md5的碰撞，在PHP的数的处理中，0开头的字符串会被转换成0，所以才会有md5碰撞。</u></p>
+        <p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zz_Caleb/article/details/84947371">https://blog.csdn.net/zz_Caleb/article/details/84947371</a><br><u>md5的碰撞，在PHP的数的处理中，0开头的字符串会被转换成0，所以才会有md5碰撞。</u></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">0e开头的md5和原值：</span><br><span class="line"> </span><br><span class="line">QNKCDZO</span><br><span class="line">0e830400451993494058024219903391</span><br><span class="line">s878926199a</span><br><span class="line">0e545993274517709034328855841020</span><br><span class="line">s155964671a</span><br><span class="line">0e342768416822451524974117254469</span><br><span class="line">s214587387a</span><br><span class="line">0e848240448830537924465865611904</span><br><span class="line">s214587387a</span><br><span class="line">0e848240448830537924465865611904</span><br><span class="line">s878926199a</span><br><span class="line">0e545993274517709034328855841020</span><br><span class="line">s1091221200a</span><br><span class="line">0e940624217856561557816327384675</span><br><span class="line">s1885207154a</span><br><span class="line">0e509367213418206700842008763514</span><br><span class="line">s1502113478a</span><br><span class="line">0e861580163291561247404381396064</span><br><span class="line">s1885207154a</span><br><span class="line">0e509367213418206700842008763514</span><br><span class="line">s1836677006a</span><br><span class="line">0e481036490867661113260034900752</span><br><span class="line">s155964671a</span><br><span class="line">0e342768416822451524974117254469</span><br><span class="line">s1184209335a</span><br><span class="line">0e072485820392773389523109082030</span><br><span class="line">s1665632922a</span><br><span class="line">0e731198061491163073197128363787</span><br><span class="line">s1502113478a</span><br><span class="line">0e861580163291561247404381396064</span><br><span class="line">s1836677006a</span><br><span class="line">0e481036490867661113260034900752</span><br><span class="line">s1091221200a</span><br><span class="line">0e940624217856561557816327384675</span><br><span class="line">s155964671a</span><br><span class="line">0e342768416822451524974117254469</span><br><span class="line">s1502113478a</span><br><span class="line">0e861580163291561247404381396064</span><br><span class="line">s155964671a</span><br><span class="line">0e342768416822451524974117254469</span><br><span class="line">s1665632922a</span><br><span class="line">0e731198061491163073197128363787</span><br><span class="line">s155964671a</span><br><span class="line">0e342768416822451524974117254469</span><br><span class="line">s1091221200a</span><br><span class="line">0e940624217856561557816327384675</span><br><span class="line">s1836677006a</span><br><span class="line">0e481036490867661113260034900752</span><br><span class="line">s1885207154a</span><br><span class="line">0e509367213418206700842008763514</span><br><span class="line">s532378020a</span><br><span class="line">0e220463095855511507588041205815</span><br><span class="line">s878926199a</span><br><span class="line">0e545993274517709034328855841020</span><br><span class="line">s1091221200a</span><br><span class="line">0e940624217856561557816327384675</span><br><span class="line">s214587387a</span><br><span class="line">0e848240448830537924465865611904</span><br><span class="line">s1502113478a</span><br><span class="line">0e861580163291561247404381396064</span><br><span class="line">s1091221200a</span><br><span class="line">0e940624217856561557816327384675</span><br><span class="line">s1665632922a</span><br><span class="line">0e731198061491163073197128363787</span><br><span class="line">s1885207154a</span><br><span class="line">0e509367213418206700842008763514</span><br><span class="line">s1836677006a</span><br><span class="line">0e481036490867661113260034900752</span><br><span class="line">s1665632922a</span><br><span class="line">0e731198061491163073197128363787</span><br><span class="line">s878926199a</span><br></pre></td></tr></table></figure>
 <p>MD5值(哈希值)相等的问题可以用哈希值碰撞，也可以用数组绕过，如：username[]=1&amp;password[]=2.</p>
 <p>sha1也一样</p>
@@ -440,6 +443,15 @@ height:50vh;
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">prefix = <span class="string">&#x27;0e&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">breakit</span>():</span></span><br><span class="line">    iters = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">        s = prefix + str(iters)</span><br><span class="line">        hashed_s = hashlib.md5(s).hexdigest()</span><br><span class="line">        iters = iters + <span class="number">1</span></span><br><span class="line">        r = re.match(<span class="string">&#x27;^0e[0-9]&#123;30&#125;&#x27;</span>, hashed_s)</span><br><span class="line">        <span class="keyword">if</span> r:</span><br><span class="line">            <span class="keyword">print</span> <span class="string">&quot;[+] found! md5( &#123;&#125; ) ---&gt; &#123;&#125;&quot;</span>.format(s, hashed_s)</span><br><span class="line">            <span class="keyword">print</span> <span class="string">&quot;[+] in &#123;&#125; iterations&quot;</span>.format(iters)</span><br><span class="line">            exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> iters % <span class="number">1000000</span> == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">print</span> <span class="string">&quot;[+] current value: &#123;&#125;       &#123;&#125; iterations, continue...&quot;</span>.format(s, iters)</span><br><span class="line"></span><br><span class="line">breakit()</span><br></pre></td></tr></table></figure>
 
 <p>md5(0e215962017)=0e291242476940776845150308577824<br>md5(0e123456)=0e4456789</p>
+<hr>
+<p>还有一种文件内容不同，但是MD5值相同的利用方法</p>
+<p>参考链接：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/wysngblogs/p/15905398.html">https://www.cnblogs.com/wysngblogs/p/15905398.html</a></p>
+<p>创建一个test.txt,随意输入字符串，拖入fastcoll</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20221030153005828.png" alt="image-20221030153005828"></p>
+<p>生成两个txt</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20221030153549005.png" alt="image-20221030153549005"></p>
+<p>此时查看生成的md5值是一样的，可以用于绕过某些情况</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20221030160253162.png" alt="image-20221030160253162"></p>
 
     </article>
     <!-- license  -->
@@ -3241,9 +3253,161 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 155
+        Total : 163
         </div>
         <!-- search  -->
         
@@ -3258,8 +3422,57 @@ top:50vh;
     
     
     
+    <div class="archive-year"> 2023 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href= "/2023/02/23/Despercate-Cat-%E5%B8%A6%E6%9D%A5%E7%9A%84Tomcat%E5%88%A9%E7%94%A8%E6%80%9D%E8%B7%AF/" >Despercate Cat 带来的Tomcat利用思路</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2022 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/02</span><a class="archive-post-title" href= "/2022/10/02/%E5%88%A9%E7%94%A8%E9%93%BE%E7%A5%9E%E5%99%A8-tabby%E4%BD%BF%E7%94%A8/" >利用链神器-tabby使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2022/10/01/neo4j%E5%9B%BE%E5%BD%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AC%94%E8%AE%B0/" >neo4j图形数据库笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/24</span><a class="archive-post-title" href= "/2022/09/24/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8%E9%9D%A2%E6%80%BB%E7%BB%93/" >PHP反序列化利用面总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/22</span><a class="archive-post-title" href= "/2022/09/22/Webshell%E5%85%8D%E6%9D%80%E4%B9%8Bphp/" >Webshell免杀之php(WebShell免杀篇一)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2022/09/21/source-map%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2%E5%88%A9%E7%94%A8/" >source map源码泄露利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/01</span><a class="archive-post-title" href= "/2022/09/01/%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%88%A9%E7%94%A8%E9%9D%A2/" >中间件利用面</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/2022/08/31/java%E5%9F%BA%E7%A1%80%E4%B9%8Bjndi/" >java基础之jndi</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -3971,7 +4184,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露payload</a>
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露</a>
         </li>
     
     
@@ -4067,8 +4280,6 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
-    
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
     
         <span class="sidebar-tag-name" data-tags="文件上传"><span class="iconfont-archer">&#xe606;</span>文件上传</span>
@@ -4095,31 +4306,37 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+    
         <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
+        <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
+    
         <span class="sidebar-tag-name" data-tags="权限提升"><span class="iconfont-archer">&#xe606;</span>权限提升</span>
     
         <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
-    
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
         <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
-        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
-    
-        <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
-    
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
+    
+        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
     
         <span class="sidebar-tag-name" data-tags="红蓝对抗"><span class="iconfont-archer">&#xe606;</span>红蓝对抗</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
         <span class="sidebar-tag-name" data-tags="2021Nep"><span class="iconfont-archer">&#xe606;</span>2021Nep</span>
     
@@ -4137,27 +4354,25 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
-    
-        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
-    
         <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
     
         <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
-        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
-    
         <span class="sidebar-tag-name" data-tags="漏洞分析"><span class="iconfont-archer">&#xe606;</span>漏洞分析</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
-        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
-    
         <span class="sidebar-tag-name" data-tags="XML"><span class="iconfont-archer">&#xe606;</span>XML</span>
     
         <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="免杀"><span class="iconfont-archer">&#xe606;</span>免杀</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
     
         <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
@@ -4249,9 +4464,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
     
-        <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
-    
         <span class="sidebar-tag-name" data-tags="url取反绕过"><span class="iconfont-archer">&#xe606;</span>url取反绕过</span>
+    
+        <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
     
         <span class="sidebar-tag-name" data-tags="create_function注入"><span class="iconfont-archer">&#xe606;</span>create_function注入</span>
     

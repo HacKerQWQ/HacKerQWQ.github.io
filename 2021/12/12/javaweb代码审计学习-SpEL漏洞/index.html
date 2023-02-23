@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211212223210380.png">
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20211212230714701.png">
 <meta property="article:published_time" content="2021-12-12T11:18:38.000Z">
-<meta property="article:modified_time" content="2022-07-18T08:03:29.658Z">
+<meta property="article:modified_time" content="2023-02-12T02:22:40.201Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="Java安全">
 <meta name="twitter:card" content="summary">
@@ -290,7 +290,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">1.6k</span>Reading time: <span class="post-count reading-time">7 min</span></span>
+                        <span>Word count: <span class="post-count word-count">2k</span>Reading time: <span class="post-count reading-time">9 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -453,16 +453,29 @@ height:50vh;
 <p>SpEL使用<code>#&#123;&#125;</code>作为界定符，EL使用<code>$&#123;&#125;</code>作为定界符</p>
 <p><code>EL</code>表达式主要功能如下：</p>
 <ul>
-<li>获取数据：EL表达式主要用于替换JSP页面中的脚本表达式，以从各种类型的Web域中检索Java对象、获取数据（某个Web域中的对象，访问JavaBean的属性、访问List集合、访问Map集合、访问数组）；</li>
-<li>执行运算：利用EL表达式可以在JSP页面中执行一些基本的关系运算、逻辑运算和算术运算，以在JSP页面中完成一些简单的逻辑运算，例如<code>$&#123;user==null&#125;</code>；</li>
-<li>获取Web开发常用对象：EL表达式定义了一些隐式对象，利用这些隐式对象，Web开发人员可以很轻松获得对Web常用对象的引用，从而获得这些对象中的数据；</li>
-<li>调用Java方法：EL表达式允许用户开发自定义EL函数，以在JSP页面中通过EL表达式调用Java类的方法；</li>
+<li><p>获取数据：EL表达式主要用于替换JSP页面中的脚本表达式，以从各种类型的Web域中检索Java对象、获取数据（某个Web域中的对象，访问JavaBean的属性、访问List集合、访问Map集合、访问数组）；</p>
+</li>
+<li><p>执行运算：利用EL表达式可以在JSP页面中执行一些基本的关系运算、逻辑运算和算术运算，以在JSP页面中完成一些简单的逻辑运算，例如<code>$&#123;user==null&#125;</code>；</p>
+</li>
+<li><p>获取Web开发常用对象：EL表达式定义了一些隐式对象，利用这些隐式对象，Web开发人员可以很轻松获得对Web常用对象的引用，从而获得这些对象中的数据,<strong>EL表达式的隐式对象跟jsp不尽相同</strong></p>
+<p><a target="_blank" rel="noopener" href="https://docs.oracle.com/javaee/5/tutorial/doc/bnahq.html#bnaij">https://docs.oracle.com/javaee/5/tutorial/doc/bnahq.html#bnaij</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">pageContext：JSP 页面的上下文。提供对各种对象的访问，包括：</span><br><span class="line">	servletContext：JSP 页面的 servlet 和同一应用程序中包含的任何 Web 组件的上下文。请参阅访问 Web 上下文。</span><br><span class="line">	session：客户端的会话对象。请参阅维护客户端状态。</span><br><span class="line">	request：触发 JSP 页面执行的请求。请参阅从请求中获取信息。</span><br><span class="line">	response：JSP 页面返回的响应。请参阅构建响应。</span><br><span class="line">param：将请求参数名称映射到单个值</span><br><span class="line">paramValues：将请求参数名称映射到值数组</span><br><span class="line">header：将请求标头名称映射到单个值</span><br><span class="line">headerValues：将请求标头名称映射到值数组</span><br><span class="line">cookie：将 cookie 名称映射到单个 cookie</span><br><span class="line">initParam：将上下文初始化参数名称映射到单个值</span><br><span class="line">pageScope：将页面范围的变量名称映射到它们的值</span><br><span class="line">requestScope：将请求范围的变量名称映射到它们的值</span><br><span class="line">sessionScope：将会话范围的变量名称映射到它们的值</span><br><span class="line">applicationScope：将应用程序范围的变量名称映射到它们的值</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>调用Java方法：EL表达式允许用户开发自定义EL函数，以在JSP页面中通过EL表达式调用Java类的方法；</p>
+<p>在<a target="_blank" rel="noopener" href="https://docs.oracle.com/javaee/7/api/javax/el/package-summary.html#ExpressionObjects">官方文档</a>中说明了el表达式是如何调用对象的方法和获取/设置属性的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#调用handler的process方法</span><br><span class="line">$&#123;handler.process&#125;</span><br><span class="line">#带参数调用方法</span><br><span class="line">$&#123;trader.buy(&quot;JAVA&quot;)&#125;</span><br><span class="line">#获取customer的name属性</span><br><span class="line">$&#123;customer.name&#125;</span><br><span class="line">$&#123;customer[&#39;name&#39;]&#125;</span><br><span class="line">#设置customer的name属性</span><br><span class="line">$&#123;customer.name&#x3D;&quot;Tomcat&quot;&#125;</span><br><span class="line">#获取当前ClassLoader,相当于pageContext.getServletContext().getClassLoader()</span><br><span class="line">$&#123;pageContext.servletContext.classLoader&#125;</span><br><span class="line">#获取变量</span><br><span class="line">$&#123;param.name&#125; 等价于request.getParamter(“name”)</span><br></pre></td></tr></table></figure>
+
+<p>在Tomcat中，常用该方法获取Tomcat的ClassLoader来修改某些对象的属性或者调用方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pageContext.getServletContext().getClassLoader()</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 <ul>
 <li><p>更多用法：<a target="_blank" rel="noopener" href="http://rui0.cn/archives/1043">http://rui0.cn/archives/1043</a></p>
 </li>
 <li><p>EL表达式解析启用/禁用<br>默认为启用，jsp会解析EL表达式，除非配置&lt;%@ page isELIgnored =”true|false” %&gt;，或者是全局pom.xml设置</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">jsp-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">jsp-property-group</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.jsp<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-ignored</span>&gt;</span>true<span class="tag">&lt;/<span class="name">el-ignored</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">jsp-property-group</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">jsp-config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
 
 </li>
 </ul>
@@ -523,7 +536,7 @@ height:50vh;
             <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
             <p>原文链接：<a href="https://hackerqwq.github.io/2021/12/12/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SpEL%E6%BC%8F%E6%B4%9E/">https://hackerqwq.github.io/2021/12/12/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SpEL%E6%BC%8F%E6%B4%9E/</a>
             <p>发表日期：<a href="https://hackerqwq.github.io/2021/12/12/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SpEL%E6%BC%8F%E6%B4%9E/">December 12th 2021, 7:18:38 pm</a>
-            <p>更新日期：<a href="https://hackerqwq.github.io/2021/12/12/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SpEL%E6%BC%8F%E6%B4%9E/">July 18th 2022, 4:03:29 pm</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2021/12/12/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SpEL%E6%BC%8F%E6%B4%9E/">February 12th 2023, 10:22:40 am</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -3324,9 +3337,161 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 155
+        Total : 163
         </div>
         <!-- search  -->
         
@@ -3341,8 +3506,57 @@ top:50vh;
     
     
     
+    <div class="archive-year"> 2023 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href= "/2023/02/23/Despercate-Cat-%E5%B8%A6%E6%9D%A5%E7%9A%84Tomcat%E5%88%A9%E7%94%A8%E6%80%9D%E8%B7%AF/" >Despercate Cat 带来的Tomcat利用思路</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2022 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/02</span><a class="archive-post-title" href= "/2022/10/02/%E5%88%A9%E7%94%A8%E9%93%BE%E7%A5%9E%E5%99%A8-tabby%E4%BD%BF%E7%94%A8/" >利用链神器-tabby使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2022/10/01/neo4j%E5%9B%BE%E5%BD%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AC%94%E8%AE%B0/" >neo4j图形数据库笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/24</span><a class="archive-post-title" href= "/2022/09/24/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8%E9%9D%A2%E6%80%BB%E7%BB%93/" >PHP反序列化利用面总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/22</span><a class="archive-post-title" href= "/2022/09/22/Webshell%E5%85%8D%E6%9D%80%E4%B9%8Bphp/" >Webshell免杀之php(WebShell免杀篇一)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2022/09/21/source-map%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2%E5%88%A9%E7%94%A8/" >source map源码泄露利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/01</span><a class="archive-post-title" href= "/2022/09/01/%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%88%A9%E7%94%A8%E9%9D%A2/" >中间件利用面</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/2022/08/31/java%E5%9F%BA%E7%A1%80%E4%B9%8Bjndi/" >java基础之jndi</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -4054,7 +4268,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露payload</a>
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露</a>
         </li>
     
     
@@ -4150,8 +4364,6 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
-    
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
     
         <span class="sidebar-tag-name" data-tags="文件上传"><span class="iconfont-archer">&#xe606;</span>文件上传</span>
@@ -4178,31 +4390,37 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+    
         <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
+        <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
+    
         <span class="sidebar-tag-name" data-tags="权限提升"><span class="iconfont-archer">&#xe606;</span>权限提升</span>
     
         <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
-    
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
         <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
-        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
-    
-        <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
-    
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
+    
+        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
     
         <span class="sidebar-tag-name" data-tags="红蓝对抗"><span class="iconfont-archer">&#xe606;</span>红蓝对抗</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
         <span class="sidebar-tag-name" data-tags="2021Nep"><span class="iconfont-archer">&#xe606;</span>2021Nep</span>
     
@@ -4220,27 +4438,25 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
-    
-        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
-    
         <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
     
         <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
-        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
-    
         <span class="sidebar-tag-name" data-tags="漏洞分析"><span class="iconfont-archer">&#xe606;</span>漏洞分析</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
-        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
-    
         <span class="sidebar-tag-name" data-tags="XML"><span class="iconfont-archer">&#xe606;</span>XML</span>
     
         <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="免杀"><span class="iconfont-archer">&#xe606;</span>免杀</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
     
         <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
@@ -4332,9 +4548,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
     
-        <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
-    
         <span class="sidebar-tag-name" data-tags="url取反绕过"><span class="iconfont-archer">&#xe606;</span>url取反绕过</span>
+    
+        <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
     
         <span class="sidebar-tag-name" data-tags="create_function注入"><span class="iconfont-archer">&#xe606;</span>create_function注入</span>
     

